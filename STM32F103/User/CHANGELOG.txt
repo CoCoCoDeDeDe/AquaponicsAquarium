@@ -1,29 +1,29 @@
 Things TO DO
-	OK		ÐÞ¸´Tx
-	OK		ÐÞ¸´Rx
-	OK		ÅäÖÃUSART3µÄ½ÓÊÕ×Ö·û´®
-	OK		ÅäÖÃUSART3µÄ·¢ËÍ×Ö·û´®
+	DONE		ÐÞ¸´Tx
+	DONE		ÐÞ¸´Rx
+	DONE		ÅäÖÃUSART3µÄ½ÓÊÕ×Ö·û´®
+	DONE		ÅäÖÃUSART3µÄ·¢ËÍ×Ö·û´®
 	HALF		ÅäÖÃPA0,PA1,PB0,PB1µÄDACºÍDMA(//»¹²»È·¶¨»¹ÓÐÊ²Ã´Éè±¸ÒªDAC)
-	OK		ÅäÖÃTIM1
-	OK		ÅäÖÃ¶æ»ú¡ª¡ªPWM
-	OK		ÅäÖÃTB6612¡ª¡ªPWM && GPIO
-	OK		¹æ·¶¸÷Ä£¿é´úÂë
-	OK		ÍêÉÆAllInit.c\AllInit.h
-	OK		¸Ä»ØmainÖÐInit
-	OK		ÐÞOLED Bug£¬¸Ã¼ÆÊ±·½·¨
-	OK		ÅäÖÃ³¬Éù²¨Ä£¿é¡ª¡ªPWM && GPIO
-	OK		ÐÞHCSR04Bug
-	OK		ÅäÖÃDHT11
-	OK		ÅäÖÃÉú³¤µÆ¼ÌµçÆ÷
-	OK		ÅäÖÃÆø±Ã¼ÌµçÆ÷
-	OK		ÅäÖÃ¼ÓÈÈÆ÷¼ÌµçÆ÷
-	OK		¸ÄDHT11Òý½ÅÎªODÄ£Ê½
-	OK		¸ÄTIM3DIV100ÎªÓÐ²ÎÊý
-	OK			ÅäÖÃTIM4
-	OK		ÅäÖÃPWMLEDµÆ
+	DONE		ÅäÖÃTIM1
+	DONE		ÅäÖÃ¶æ»ú¡ª¡ªPWM
+	DONE		ÅäÖÃTB6612¡ª¡ªPWM && GPIO
+	DONE		¹æ·¶¸÷Ä£¿é´úÂë
+	DONE		ÍêÉÆAllInit.c\AllInit.h
+	DONE		¸Ä»ØmainÖÐInit
+	DONE		ÐÞOLED Bug£¬¸Ã¼ÆÊ±·½·¨
+	DONE		ÅäÖÃ³¬Éù²¨Ä£¿é¡ª¡ªPWM && GPIO
+	DONE		ÐÞHCSR04Bug
+	DONE		ÅäÖÃDHT11
+	DONE		ÅäÖÃÉú³¤µÆ¼ÌµçÆ÷
+	DONE		ÅäÖÃÆø±Ã¼ÌµçÆ÷
+	DONE		ÅäÖÃ¼ÓÈÈÆ÷¼ÌµçÆ÷
+	DONE		¸ÄDHT11Òý½ÅÎªODÄ£Ê½
+	DONE		¸ÄTIM3DIV100ÎªÓÐ²ÎÊý
+	DONE		ÅäÖÃTIM4
+	DONE		ÅäÖÃPWMLEDµÆ
+	DONE		ÅäÖÃË®ÖÊ´«¸ÐÆ÷
 	DOING		ÅäÖÃDS18B20
 	DOING		ÅäÖÃMQTT-MCU-Server
-	TODO		ÅäÖÃË®ÖÊ´«¸ÐÆ÷
 	TODO		Í³³ïNVICÓÅÏÈ¼¶
 	TODO		×é×°Ô­ÐÍ»ú
 	TODO		ÅäÖÃAT24C02
@@ -32,20 +32,20 @@ Things TO DO
 	TODO		ÅäÖÃPWM±ä»¯»º³å
 	GIVEUP		ÅäÖÃWS2812
 	Things TO DO:OnlineVersion
-	OK	ä¿®å¤Tx
-	OK	ä¿®å¤Rx
-	OK	é…ç½®USART3çš„æŽ¥æ”¶å­—ç¬¦ä¸²
-	OK	é…ç½®USART3çš„å‘é€å­—ç¬¦ä¸²
+	DONE	ä¿®å¤Tx
+	DONE	ä¿®å¤Rx
+	DONE	é…ç½®USART3çš„æŽ¥æ”¶å­—ç¬¦ä¸²
+	DONE	é…ç½®USART3çš„å‘é€å­—ç¬¦ä¸²
 	HALF	é…ç½®PA0,PA1,PB0,PB1çš„DACå’ŒDMA
-	OK	é…ç½®TIM1
-	OK	é…ç½®èˆµæœºâ€”â€”PWM
-	OK	é…ç½®TB6612â€”â€”PWM && GPIO
-	OK	è§„èŒƒå„æ¨¡å—ä»£ç ?	OK	å®Œå–„AllInit.c\AllInit.h
-	OK	æ”¹å›žmainä¸­Init
-	OK	ä¿®OLED Bugï¼Œè¯¥è®¡æ—¶æ–¹æ³•
-	OK	é…ç½®è¶…å£°æ³¢æ¨¡å—â€”â€”PWM && GPIO
-	OK	ä¿®HCSR04Bug
-	OK	é…ç½®DHT11
+	DONE	é…ç½®TIM1
+	DONE	é…ç½®èˆµæœºâ€”â€”PWM
+	DONE	é…ç½®TB6612â€”â€”PWM && GPIO
+	DONE	è§„èŒƒå„æ¨¡å—ä»£ç ?	DONE	å®Œå–„AllInit.c\AllInit.h
+	DONE	æ”¹å›žmainä¸­Init
+	DONE	ä¿®OLED Bugï¼Œè¯¥è®¡æ—¶æ–¹æ³•
+	DONE	é…ç½®è¶…å£°æ³¢æ¨¡å—â€”â€”PWM && GPIO
+	DONE	ä¿®HCSR04Bug
+	DONE	é…ç½®DHT11
 	TODO	é…ç½®DS18B12
 	TODO	é…ç½®WS2812
 	TODO	é…ç½®ç”Ÿé•¿ç¯ç»§ç”µå™¨
@@ -54,8 +54,8 @@ Things TO DO
 	TODO	ç»Ÿç­¹NVICä¼˜å…ˆçº?	TODO	é…ç½®MQTT:MCUâ€”â€”Server
 	TODO	é…ç½®æ—¶é—´ç³»ç»Ÿã€?	TODO	è®¾è®¡é±¼ç¼¸ã€PCBã€å–‚é£Ÿå™¨
 OLD TASK
-	HALFè°ƒæŸ¥å„ä¸ªå¤–è®¾çš„çŽ°æœ‰ä»£ç å’Œåº?	OKè°ƒæŸ¥åœŸå£¤æ¹¿åº¦ä¼ æ„Ÿå™¨åŽŸç?	OKè°ƒæŸ¥æ°´æ¸©ä¼ æ„Ÿå™¨åŽŸç?	é‡æ–°é…ç½®DAC+DMA
+	HALFè°ƒæŸ¥å„ä¸ªå¤–è®¾çš„çŽ°æœ‰ä»£ç å’Œåº?	DONEè°ƒæŸ¥åœŸå£¤æ¹¿åº¦ä¼ æ„Ÿå™¨åŽŸç?	DONEè°ƒæŸ¥æ°´æ¸©ä¼ æ„Ÿå™¨åŽŸç?	é‡æ–°é…ç½®DAC+DMA
 	é‡æ–°è§„åˆ’å¼•è„š
-	OKè°ƒæŸ¥DHT11åŽŸç†
+	DONEè°ƒæŸ¥DHT11åŽŸç†
 	è°ƒæŸ¥è¶…å£°æ³¢æ¨¡å—åŽŸç?	è°ƒæŸ¥æ°´æ³µæ¨¡å—åŽŸç†
-	OKç ”ç©¶ç»§ç”µå™?	é…ç½®ä¸ŽUSART3é€šä¿¡å†…å®¹æ˜¾ç¤ºçš„æ–¹æ¡?
+	DONEç ”ç©¶ç»§ç”µå™?	é…ç½®ä¸ŽUSART3é€šä¿¡å†…å®¹æ˜¾ç¤ºçš„æ–¹æ¡?

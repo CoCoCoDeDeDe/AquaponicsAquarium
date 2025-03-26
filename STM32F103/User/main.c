@@ -21,7 +21,7 @@
 #include "MyDHT11.h"
 #include "MyDS18B20.h"
 
-#include "MyWaterQualitySensor.h"
+#include "MyWaterQSensor.h"
 #include "MySoilMoistureSensor.h"
 #include "MyLightSensor.h"
 
@@ -89,7 +89,7 @@ int main(void)
 	MyDHT11_Init();//【错点】遗漏main中运行Init
 	MyDS18B20_Init();//【错点】遗漏Init
 	
-	MyWaterQualitySensor_Init();
+	MyWaterQSensor_Init();
 	MySoilMoistureSensor_Init();
 	MyLightSensor_Init();
 	
@@ -105,30 +105,32 @@ int main(void)
 	
 //Run=====
 	while(1) {
-		if(Serial_RxFlag[3] == 1) {
-			OLED_ShowString(1, 1, "USART3:");
-			OLED_ShowString(2, 1, "                ");
-			OLED_ShowString(2, 1, Serial_Rx3StringPacket);
-			
-			Serial_SendStringPacketV2(USART2, Serial_Rx3StringPacket);
-			
-			Serial_RxFlag[3] = 0;
-		}
+//		if(Serial_RxFlag[3] == 1) {
+//			OLED_ShowString(1, 1, "USART3:");
+//			OLED_ShowString(2, 1, "                ");
+//			OLED_ShowString(2, 1, Serial_Rx3StringPacket);
+//			
+//			Serial_SendStringPacketV2(USART2, Serial_Rx3StringPacket);
+//			
+//			Serial_RxFlag[3] = 0;
+//		}
 
-		if (Serial_RxFlag[2] == 1) {
-			OLED_ShowString(3, 1, "USART2:");
-			OLED_ShowString(4, 1, "                ");
-			OLED_ShowString(4, 1, Serial_Rx2StringPacket);
-			
-			Serial_SendStringPacketV2(USART3, Serial_Rx2StringPacket);
-			
-			Serial_RxFlag[2] = 0;
-		}
+//		if (Serial_RxFlag[2] == 1) {
+//			OLED_ShowString(3, 1, "USART2:");
+//			OLED_ShowString(4, 1, "                ");
+//			OLED_ShowString(4, 1, Serial_Rx2StringPacket);
+//			
+//			Serial_SendStringPacketV2(USART3, Serial_Rx2StringPacket);
+//			
+//			Serial_RxFlag[2] = 0;
+//		}
 		
-//			OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
-//			OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
-//			OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
-//			OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
+
+		
+			OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
+			OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
+			OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
+			OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
 		
 //		float HCSR04_distanceTemp = HCSR04_distance;
 //		if(HCSR04_distanceTemp != HCSR04_distance) {
@@ -163,6 +165,8 @@ int main(void)
 //		OLED_ShowNum(1, 1, MyDS18B20_Result_7BitUint, 16);
 //		OLED_ShowNum(2, 1, MyDS18B20_TaskStateOrder_Index, 16);
 //		OLED_ShowNum(3, 1, MyDS18B20_InitStateOrder_Index, 16);
+
+		Delay_ms(100);//以免循环太快，CPU压力太大
 	}
 }
 

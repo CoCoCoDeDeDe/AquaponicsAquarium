@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17" pages="12">
   <diagram name="连接图" id="3rJq7PluwZheI7Nyh-d6">
-    <mxGraphModel dx="4968" dy="2477" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="5554" dy="2830" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -31,7 +31,7 @@
         <mxCell id="-04VGZRKX8EQLclcuj3o-9" value="HC_SR04-&amp;gt;Echo——PB15——PB15" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;spacingLeft=5;align=left;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
           <mxGeometry x="-1217" y="-318" width="270" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="-04VGZRKX8EQLclcuj3o-10" value="WaterQualitySensorMH-A11A-&amp;gt;AO——PA1——ADC——DMA" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fillColor=#f8cecc;strokeColor=#b85450;align=right;spacingRight=5;" parent="1" vertex="1">
+        <mxCell id="-04VGZRKX8EQLclcuj3o-10" value="WaterQualitySensor-&amp;gt;AO——PA1——ADC——DMA" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fillColor=#f8cecc;strokeColor=#b85450;align=right;spacingRight=5;" parent="1" vertex="1">
           <mxGeometry x="-3027" y="-638" width="370" height="40" as="geometry" />
         </mxCell>
         <mxCell id="-04VGZRKX8EQLclcuj3o-12" value="AquariumHeater-&amp;gt;Relay-&amp;gt;IN——PB12" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;spacingLeft=5;align=left;" parent="1" vertex="1">
@@ -397,7 +397,7 @@
         <mxCell id="aSKrNLAsM8hv9U6J5pQr-8" value="DHT11-&amp;gt;DATA——PA4——OneWire" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fillColor=#e1d5e7;strokeColor=#9673a6;align=center;spacingRight=5;" parent="1" vertex="1">
           <mxGeometry x="-2067" y="-1093.5" width="410" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="aSKrNLAsM8hv9U6J5pQr-9" value="WaterQualitySensorMH-A11A-&amp;gt;AO——PA1——ADC——DMA" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fillColor=#f8cecc;strokeColor=#b85450;align=center;spacingRight=5;" parent="1" vertex="1">
+        <mxCell id="aSKrNLAsM8hv9U6J5pQr-9" value="WaterQualitySensor-&amp;gt;AO——PA1——ADC——DMA" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fillColor=#f8cecc;strokeColor=#b85450;align=center;spacingRight=5;" parent="1" vertex="1">
           <mxGeometry x="-2067" y="-1213.5" width="410" height="40" as="geometry" />
         </mxCell>
         <mxCell id="aSKrNLAsM8hv9U6J5pQr-11" value="LightSensor-&amp;gt;AO——PB1——ADC——DMA" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;fillColor=#f8cecc;strokeColor=#b85450;align=center;spacingRight=5;" parent="1" vertex="1">
@@ -583,7 +583,7 @@
             <mxPoint x="-440" y="-269.65999999999997" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kOnA2Gbytt7niQ_ej2XY-1" value="AquariumLight-&amp;gt;基极——&lt;span style=&quot;background-color: initial;&quot;&gt;PA8——OC——TIM1&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;align=center;spacingRight=5;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+        <mxCell id="kOnA2Gbytt7niQ_ej2XY-1" value="AquariumLight-&amp;gt;基极——&lt;span style=&quot;background-color: initial;&quot;&gt;PA8——OC——TIM1&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;align=center;spacingRight=5;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="-2067" y="-1493.5" width="410" height="40" as="geometry" />
         </mxCell>
       </root>

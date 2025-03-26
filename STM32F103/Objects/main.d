@@ -44,7 +44,7 @@
 .\objects\main.o: .\Hardware\MyAquariumHeater.h
 .\objects\main.o: .\Hardware\MySG90.h
 .\objects\main.o: .\Hardware\MyWaterPump.h
-.\objects\main.o: .\Hardware\MyWaterQualitySensor.h
+.\objects\main.o: .\Hardware\MyWaterQSensor.h
 .\objects\main.o: .\Hardware\MySoilMoistureSensor.h
 .\objects\main.o: .\Hardware\MyLightSensor.h
 .\objects\main.o: .\Hardware\MyADCAndDMA.h

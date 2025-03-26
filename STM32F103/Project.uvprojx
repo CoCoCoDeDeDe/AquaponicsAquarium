@@ -731,26 +731,6 @@
               <FilePath>.\Hardware\OLED.h</FilePath>
             </File>
             <File>
-              <FileName>MyWaterQualitySensor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterQualitySensor.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterQualitySensor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterQualitySensor.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterPump.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterPump.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterPump.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterPump.h</FilePath>
-            </File>
-            <File>
               <FileName>MyTB6612.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\MyTB6612.c</FilePath>
@@ -761,16 +741,6 @@
               <FilePath>.\Hardware\MyTB6612.h</FilePath>
             </File>
             <File>
-              <FileName>MySoilMoistureSensor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MySoilMoistureSensor.c</FilePath>
-            </File>
-            <File>
-              <FileName>MySoilMoistureSensor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MySoilMoistureSensor.h</FilePath>
-            </File>
-            <File>
               <FileName>MySG90.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\MySG90.c</FilePath>
@@ -779,26 +749,6 @@
               <FileName>MySG90.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\MySG90.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyPlantGrowLamp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyPlantGrowLamp.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyPlantGrowLamp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyPlantGrowLamp.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyLightSensor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyLightSensor.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyLightSensor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyLightSensor.h</FilePath>
             </File>
             <File>
               <FileName>MyHCSR04.c</FileName>
@@ -841,14 +791,14 @@
               <FilePath>.\Hardware\MyAquariumLight.h</FilePath>
             </File>
             <File>
-              <FileName>MyAquariumHeater.c</FileName>
+              <FileName>MyESP8266.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAquariumHeater.c</FilePath>
+              <FilePath>.\Hardware\MyESP8266.c</FilePath>
             </File>
             <File>
-              <FileName>MyAquariumHeater.h</FileName>
+              <FileName>MyESP8266.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAquariumHeater.h</FilePath>
+              <FilePath>.\Hardware\MyESP8266.h</FilePath>
             </File>
             <File>
               <FileName>MyAirPump.c</FileName>
@@ -861,14 +811,64 @@
               <FilePath>.\Hardware\MyAirPump.h</FilePath>
             </File>
             <File>
-              <FileName>MyESP8266.c</FileName>
+              <FileName>MyAquariumHeater.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyESP8266.c</FilePath>
+              <FilePath>.\Hardware\MyAquariumHeater.c</FilePath>
             </File>
             <File>
-              <FileName>MyESP8266.h</FileName>
+              <FileName>MyAquariumHeater.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyESP8266.h</FilePath>
+              <FilePath>.\Hardware\MyAquariumHeater.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyLightSensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyLightSensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyLightSensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyLightSensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyPlantGrowLamp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyPlantGrowLamp.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyPlantGrowLamp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyPlantGrowLamp.h</FilePath>
+            </File>
+            <File>
+              <FileName>MySoilMoistureSensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MySoilMoistureSensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>MySoilMoistureSensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MySoilMoistureSensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterPump.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyWaterPump.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterPump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyWaterPump.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterQSensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyWaterQSensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterQSensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyWaterQSensor.h</FilePath>
             </File>
           </Files>
         </Group>
