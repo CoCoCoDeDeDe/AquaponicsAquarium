@@ -6,7 +6,7 @@
 #include "Serial.h"
 #include "OLED.h"
 
-#define USARTMyESP8266 USART2
+#define USARTMyESP8266 USART3
 
 void MyESP8266_FirstInit(USART_TypeDef* USARTx);//ª˘¥°≈‰÷√
 

@@ -23,8 +23,10 @@ void MyTIM2_Init(void);
 void MyTIM3_Init(void);
 void MyTIM4_Init(void);
 
+void MyTIMx_ENABLECmd(TIM_TypeDef* TIMx);
+void MyTIMx_DISABLECmd(TIM_TypeDef* TIMx);
+
 void MyTIM3_DIVx(uint16_t x);
-void MyTIM3_DIVy(uint16_t y);
-void MyTIM3_DIVz(uint16_t z);
+void MyTIM3_DIVy(uint16_t z);
 
 #endif

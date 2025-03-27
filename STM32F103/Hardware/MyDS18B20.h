@@ -7,6 +7,8 @@
 
 #include "Serial.h"
 
+#include "Delay.h"
+
 #define GPIO_MyDS18B20DQ			GPIOA
 #define GPIO_Pin_MyDS18B20DQ		GPIO_Pin_5
 
@@ -14,35 +16,13 @@
 #define MyDS18B20DQ_SET			GPIO_WriteBit(GPIO_MyDS18B20DQ, GPIO_Pin_MyDS18B20DQ, Bit_SET)
 #define MyDS18B20DQ_Read		GPIO_ReadInputDataBit(GPIO_MyDS18B20DQ, GPIO_Pin_MyDS18B20DQ)
 
-extern const uint8_t MyDS18B20_TaskStateOrder[];
-extern uint8_t MyDS18B20_TaskStateOrder_Index;
-extern uint32_t MyDS18B20_Count_TaskSM_RunTimes;
-extern uint8_t MyDS18B20_Flag_Task_Succed;
+extern uint16_t MyDS18B20_ReadPacket_16Bit_Temp;
 
-extern const uint8_t MyDS18B20_InitStateOrder[];
-extern uint8_t MyDS18B20_InitStateOrder_Index;
-extern uint8_t MyDS18B20_Target_Init_CkeckDelay;
+extern uint16_t MyDS18B20_Result_12Bit_H7Bit;//12Bit分辨率结果的整数部分
 
-extern const uint8_t MyDS18B20_Write0StateOrder[];
-extern uint8_t MyDS18B20_Write0StateOrder_Index;
+extern uint16_t MyDS18B20_Result_12Bit_L4Bit;//12Bit分辨率结果的小数部分
 
-extern const uint8_t MyDS18B20_Write1StateOrder[];
-extern uint8_t MyDS18B20_Write1StateOrder_Index;
-
-extern const uint8_t MyDS18B20_ReadBitStateOrder[];
-extern uint8_t MyDS18B20_ReadBitStateOrder_Index;
-
-extern uint8_t MyDS18B20_Flag_TaskSuccedCheckTimer_RunStatus;
-
-extern uint8_t MyDS18B20_Count_BitReaded;
-
-extern uint8_t MyDS18B20_ReadPacket[];//8ByteSCRATCHPAD
-
-extern uint16_t MyDS18B20_Result_7BitUint_Temp;
-
-extern uint16_t MyDS18B20_Result_7BitUint;
-
-extern uint16_t MyDS18B20_Count_TaskSuccedCheckTimer_RunTimes;
+void MyDS18B20_Test1(void);
 
 void MyDS18B20_Init(void);
 
@@ -50,12 +30,6 @@ void MyDS18B20_TaskSM_TurnOn(void);
 
 void MyDS18B20_TaskSuccedCheckTimer(void);
 
-void MyDS18B20_TaskSuccedCkeck(void);
-
-void MyDS18B20_Task_Reset(void);
-
 void MyDS18B20_TaskSM(void);
-
-void MyDS18B20_ReadPacketConvert(void);
 
 #endif

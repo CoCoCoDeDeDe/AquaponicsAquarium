@@ -79,6 +79,10 @@ int main(void)
 	MyTIM3_Init();
 	MyTIM4_Init();
 	
+	MyTIMx_ENABLECmd(TIM1);
+	MyTIMx_ENABLECmd(TIM2);
+	MyTIMx_ENABLECmd(TIM3);
+	
 	MyAquariumLight_Init(20000);	//PA8-OC1
 	MySG90_Init(1500);			//PA9-OC2
 	MyWaterPump_Init(0);		//PA10-OC3
@@ -127,10 +131,10 @@ int main(void)
 		
 
 		
-			OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
-			OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
-			OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
-			OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
+//		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
+//		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
+//		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
+//		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
 		
 //		float HCSR04_distanceTemp = HCSR04_distance;
 //		if(HCSR04_distanceTemp != HCSR04_distance) {
@@ -145,9 +149,8 @@ int main(void)
 //		OLED_ShowNum(3, 1, MyTIM_3Count, 16);
 //		OLED_ShowNum(4, 1, MyTIM_4Count, 16);
 
-//		OLED_ShowNum(3, 1, MyDHT11_Count_WriterSM, 16);
-//		OLED_ShowNum(4, 1, MyDHT11_DataArr[0], 8);
-//		OLED_ShowNum(4, 9, MyDHT11_DataArr[2], 8);
+		OLED_ShowNum(4, 1, MyDHT11_DataArr[0], 8);
+		OLED_ShowNum(4, 9, MyDHT11_DataArr[2], 8);
 		
 //		OLED_ShowNum(4, 1, MyDHT11_Count_ReadInterval, 16);
 
@@ -162,68 +165,15 @@ int main(void)
 		
 		
 		
-//		OLED_ShowNum(1, 1, MyDS18B20_Result_7BitUint, 16);
-//		OLED_ShowNum(2, 1, MyDS18B20_TaskStateOrder_Index, 16);
-//		OLED_ShowNum(3, 1, MyDS18B20_InitStateOrder_Index, 16);
+		OLED_ShowNum(1, 1, MyDS18B20_ReadPacket_16Bit_Temp, 16);
+		OLED_ShowNum(2, 1, MyDS18B20_Result_12Bit_H7Bit, 16);
+		OLED_ShowNum(3, 1, MyDS18B20_Result_12Bit_L4Bit, 16);
 
 		Delay_ms(100);//以免循环太快，CPU压力太大
 	}
 }
 
-void TIM1_UP_IRQHandler(void) {		//IT per 20ms=	0.02s
-	if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET) {
-		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
-		
-		MyTIM_1UpCount ++;
-		
-	}
-}
 
-void TIM2_IRQHandler(void) {//TCKCNT=1us,TCNT=5us
-	if(TIM_GetITStatus(TIM2, TIM_IT_Update) == SET) {
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		
-		//MyTIM_2Count++;
-		
-		MyHCSR04_TrigCtrler();
-		
-		MyDHT11_WriterSM();
-		
-//		MyDS18B20_TaskSM();
-		
-//		Serial_SendStringPacketV2(USART2, "TIM2_IRQHandler\r\n");
-	}
-}
-
-
-void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
-	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
-		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
-		
-		//MyTIM_3Count++;
-		
-		MyTIM3_DIVx(100);
-		
-		MyDHT11_Count_TIM3ARer();
-		
-		MyDHT11_ReadCheckTimer();
-		
-		//MyTIM3_DIVy(200);
-		
-//		MyTIM3_DIVz(500);
-		
-//		MyDS18B20_TaskSuccedCheckTimer();
-	}
-}
-
-void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
-	if(TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
-		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
-		
-		//MyTIM_4Count++;
-		
-	}
-}
 
 void EXTI4_IRQHandler(void) {
 	if(EXTI_GetITStatus(EXTI_Line4) == SET) {

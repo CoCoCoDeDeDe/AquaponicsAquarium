@@ -36,7 +36,7 @@ void MyTIM1_Init(void) {	//fCNT=50Hz,TCNT=0.02s=20ms=20,000us
 	NVIC_Init(&NVIC_InitStruct);
 	
 	//Cmd==========
-	TIM_Cmd(TIM1, ENABLE);//【Cmd】
+	TIM_Cmd(TIM1, DISABLE);//【Cmd】
 }
 
 
@@ -65,7 +65,7 @@ void MyTIM2_Init(void) {	//fCNT=200,000Hz,TCNT=0.000005s=20ms=5us
 	
 	NVIC_Init(&NVIC_InitStruct);
 	
-	TIM_Cmd(TIM2, ENABLE);//【Cmd】
+	TIM_Cmd(TIM2, DISABLE);//【Cmd】
 }
 
 
@@ -94,7 +94,7 @@ void MyTIM3_Init(void) {	//fCNT=100Hz,TCNT=0.01s=10ms=10,000us
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
 	NVIC_Init(&NVIC_InitStruct);
 	
-	TIM_Cmd(TIM3, ENABLE);//【Cmd】
+	TIM_Cmd(TIM3, DISABLE);//【Cmd】
 }
 
 void MyTIM4_Init(void) {	//fCNT=【】Hz,TCNT=【】s=【】us
@@ -125,6 +125,14 @@ void MyTIM4_Init(void) {	//fCNT=【】Hz,TCNT=【】s=【】us
 	TIM_Cmd(TIM4, DISABLE);//【Cmd】
 }
 
+void MyTIMx_ENABLECmd(TIM_TypeDef* TIMx) {
+	TIM_Cmd(TIMx, ENABLE);
+}
+
+void MyTIMx_DISABLECmd(TIM_TypeDef* TIMx) {
+	TIM_Cmd(TIMx, DISABLE);
+}
+
 void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
 	//x = 100
 	static uint16_t DIVxCount;
@@ -140,28 +148,66 @@ void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
 	}
 }
 
-void MyTIM3_DIVy(uint16_t y) {//TTIM3IT = 0.01s = 10,000us
-	//y = 200
-	static uint16_t DIVyCount;
+void MyTIM3_DIVy(uint16_t z) {
+	//z = 300
+	static uint16_t DIVyCount;//【错点】用uint8_t计数溢出导致无法满足>=256
 	DIVyCount ++;
-	if(DIVyCount >= y) {
-		DIVyCount=0;
+	if(DIVyCount >= z) {//fRUN=1/5Hz, TRUN=5s
+		DIVyCount  = 0;
 		
-		//MyDS18B20_VariableInit();
-		//MyDS18B20_Flag_TaskList1_RunStatus = 1;
+		MyDS18B20_TaskSM_TurnOn();
 	}
 }
 
-void MyTIM3_DIVz(uint16_t z) {
-	//z = 500
-	static uint16_t DIVzCount;//【错点】用uint8_t计数溢出导致无法满足>=256
-	DIVzCount ++;
-	if(DIVzCount >= z) {//fRUN=1/5Hz, TRUN=5s
-		DIVzCount  = 0;
+void TIM1_UP_IRQHandler(void) {		//IT per 20ms=	0.02s
+	if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET) {
+		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
 		
-		MyDS18B20_TaskSM_TurnOn();
+		//MyTIM_1UpCount ++;
 		
+	}
+}
+
+void TIM2_IRQHandler(void) {//TCKCNT=1us,TCNT=5us
+	if(TIM_GetITStatus(TIM2, TIM_IT_Update) == SET) {
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 		
-		//Serial_SendByte(USART2, 'U');
+		//MyTIM_2Count++;
+		
+		MyHCSR04_TrigCtrler();
+		
+		MyDHT11_WriterSM();
+		
+		MyDS18B20_TaskSM();
+		
+//		Serial_SendStringPacketV2(USART2, "TIM2_IRQHandler\r\n");
+	}
+}
+
+
+void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
+	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
+		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+		
+		//MyTIM_3Count++;
+		
+		MyTIM3_DIVx(100);
+		
+		MyDHT11_Count_TIM3ARer();
+		
+		MyDHT11_ReadCheckTimer();
+		
+		MyTIM3_DIVy(300);
+		
+		MyDS18B20_TaskSuccedCheckTimer();
+	}
+}
+
+void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
+	if(TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
+		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+		
+		MyTIM_4Count++;
+		
 	}
 }

@@ -26,7 +26,7 @@ void MyESP8266_MQTTPUB(USART_TypeDef* USARTx);//上报数据
 void MyESP8266_Forward(USART_TypeDef* USART_Tx, USART_TypeDef* USAR_Rx);//转发收到的ESP8266的消息到TXtoPC,主while中当RxFlag[3]==1时触发
 
 
-
+//在初始化/setup代码中，可适当使用delay、while
 
 
 

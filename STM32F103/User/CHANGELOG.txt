@@ -22,7 +22,7 @@ Things TO DO
 	DONE		配置TIM4
 	DONE		配置PWMLED灯
 	DONE		配置水质传感器
-	DOING		配置DS18B20
+	DONE		配置DS18B20
 	DOING		配置MQTT-MCU-Server
 	TODO		统筹NVIC优先级
 	TODO		组装原型机

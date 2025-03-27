@@ -302,7 +302,7 @@ void MyDHT11_ReaderSM(void) {
 					
 					MyDHT11_Count_ReadInterval_Start();//【错点】误写在if(40<=MyDHT11_Count_ReadBit){}
 					MyDHT11_BitsArr[MyDHT11_Count_ReadBit ++] = 0;
-					Serial_SendByte(USART2, '0');
+					//Serial_SendByte(USART2, '0');
 					
 					if(40 <= MyDHT11_Count_ReadBit) {
 						
@@ -314,7 +314,7 @@ void MyDHT11_ReaderSM(void) {
 					
 					MyDHT11_Count_ReadInterval_Start();//【错点】误写在if(40<=MyDHT11_Count_ReadBit){}
 					MyDHT11_BitsArr[MyDHT11_Count_ReadBit ++] = 1;
-					Serial_SendByte(USART2, '1');
+					//Serial_SendByte(USART2, '1');
 					
 					if(40 <= MyDHT11_Count_ReadBit) {
 						
