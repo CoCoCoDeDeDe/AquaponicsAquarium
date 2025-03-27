@@ -23,7 +23,9 @@ uint32_t MyDHT11_Count_ReadIntervalStart = 0;//存储开始记FALLING和RISING之间TIM3
 uint8_t MyDHT11_Flag_ReadSucced = 0;
 uint8_t MyDHT11_Count_ReadBit = 0;//在成功接收1Bit时++,在接收完40BIT或者开始接收时=0
 
-void MyDHT11_Init(void) {
+void MyDHT11_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority) {
 	
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_OD;
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_4;

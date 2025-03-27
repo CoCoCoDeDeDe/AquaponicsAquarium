@@ -90,18 +90,6 @@ uint16_t MyDS18B20_Result_12Bit_L4Bit = 0;//12Bit分辨率结果的小数部分
 
 static uint16_t MyDS18B20_Count_TaskSuccedCheckTimer_RunTimes = 0;
 
-void MyDS18B20_Test1(void) {
-	
-	Serial_SendInteger(USART2, MyDS18B20_TaskStateOrder[0]);
-	Serial_SendInteger(USART2, MyDS18B20_InitStateOrder[0]);
-	Serial_SendInteger(USART2, MyDS18B20_Write1StateOrder[0]);
-	Serial_SendInteger(USART2, MyDS18B20_Write0StateOrder[0]);
-	Serial_SendInteger(USART2, MyDS18B20_ReadBitStateOrder[0]);
-	
-	Serial_SendByte(USART2, '\r');
-	Serial_SendByte(USART2, '\n');
-}
-
 static void MyDS18B20_Task_Reset(void) {//Reset和TurnOn中若有重复,只让TurnOn执行即可
 	
 	MyDS18B20_TaskStateOrder_Index = 0;//IDLE
@@ -112,43 +100,28 @@ static void MyDS18B20_TaskSuccedCkeck(void) {
 	if((MyDS18B20_Flag_Task_Succed == 1) && 
 		(MyDS18B20_Flag_TaskInit_Succed == 1)) {//成功
 		
-		Serial_SendByte(USART2, 'T');//【Debug】
-		Serial_SendByte(USART2, 'S');//【Debug】
-		
-		Serial_SendByte(USART2, '\r');//【Debug】
-		Serial_SendByte(USART2, '\n');//【Debug】
+//		Serial_SendByte(USART2, 'T');//【Debug】
+//		Serial_SendByte(USART2, 'S');//【Debug】
+//		
+//		Serial_SendByte(USART2, '\r');//【Debug】
+//		Serial_SendByte(USART2, '\n');//【Debug】
 	} else {//失败
 		
 		MyDS18B20_Task_Reset();
 		
-		Serial_SendByte(USART2, 'T');//【Debug】
-		Serial_SendByte(USART2, 'F');//【Debug】
-		
-		Serial_SendByte(USART2, '\r');//【Debug】
-		Serial_SendByte(USART2, '\n');//【Debug】
+//		Serial_SendByte(USART2, 'T');//【Debug】
+//		Serial_SendByte(USART2, 'F');//【Debug】
+//		
+//		Serial_SendByte(USART2, '\r');//【Debug】
+//		Serial_SendByte(USART2, '\n');//【Debug】
 	}
 }
 
 static void MyDS18B20_ReadPacketConvert(void) {
 	
-//	MyDS18B20_Result_7BitUint_Temp = 0;
-//	
-//	for(uint8_t i = 0; i < 7; i ++) {
-//		
-//		MyDS18B20_Result_7BitUint_Temp |= (MyDS18B20_ReadPacket[i + 5] << i);
-//	}
-//	if(MyDS18B20_ReadPacket[0] == 1) {
-//		
-//		MyDS18B20_Result_7BitUint = ~MyDS18B20_Result_7BitUint_Temp + 1;
-//	
-//	} else{
-//		
-//		MyDS18B20_Result_7BitUint = MyDS18B20_Result_7BitUint_Temp;
-//	}
-	
 	MyDS18B20_ReadPacket_16Bit_Temp = 0;//'|'操作前先将每个bit清零
 	
-	for(uint8_t i = 0; i <16 ; i ++) {
+	for(uint8_t i = 0; i <16 ; i ++) {//将16Bit_Temp按高低位顺序填满
 		MyDS18B20_ReadPacket_16Bit_Temp |= MyDS18B20_ReadPacket[i] << i;//16Bit_Temp原本全为0，
 		//Racket[]往里面填什么就是什么
 	}
@@ -256,7 +229,9 @@ void MyDS18B20_TaskSM(void) {
 //						Serial_SendInteger(USART2, MyDS18B20_InitStateOrder_Index);//【Debug】
 						
 						MyDS18B20DQ_SET;
+						
 						MyDS18B20_Count_TaskSM_RunTimes = 0;
+						
 						MyDS18B20_InitStateOrder_Index ++;
 					}
 					break;
@@ -273,6 +248,7 @@ void MyDS18B20_TaskSM(void) {
 							MyDS18B20_Flag_TaskInit_Succed = 1;
 							
 							MyDS18B20_Count_TaskSM_RunTimes = 0;
+							
 							MyDS18B20_InitStateOrder_Index ++;
 						} else {
 							MyDS18B20_Flag_TaskInit_Succed = 0;
@@ -292,7 +268,9 @@ void MyDS18B20_TaskSM(void) {
 //						Serial_SendByte(USART2, '\n');//【Debug】
 						
 						MyDS18B20_Count_TaskSM_RunTimes = 0;
+						
 						MyDS18B20_InitStateOrder_Index = 0;
+						
 						MyDS18B20_TaskStateOrder_Index ++;
 					}
 					break;
@@ -312,7 +290,9 @@ void MyDS18B20_TaskSM(void) {
 //					Serial_SendInteger(USART2, MyDS18B20_Write0StateOrder_Index);//【Debug】
 					
 					MyDS18B20DQ_RESET;
+					
 					MyDS18B20_Count_TaskSM_RunTimes = 0;
+					
 					MyDS18B20_Write0StateOrder_Index ++;
 					break;
 				case W0_Rise:
@@ -328,8 +308,11 @@ void MyDS18B20_TaskSM(void) {
 //						Serial_SendByte(USART2, '\n');//【Debug】
 						
 						MyDS18B20DQ_SET;
+						
 						MyDS18B20_Count_TaskSM_RunTimes = 0;
+						
 						MyDS18B20_Write0StateOrder_Index = 0;
+						
 						MyDS18B20_TaskStateOrder_Index ++;
 					}
 					break;
@@ -349,7 +332,9 @@ void MyDS18B20_TaskSM(void) {
 //					Serial_SendInteger(USART2, MyDS18B20_Write1StateOrder_Index);//【Debug】
 					
 					MyDS18B20DQ_RESET;
+					
 					MyDS18B20_Count_TaskSM_RunTimes = 0;
+					
 					MyDS18B20_Write1StateOrder_Index ++;
 					
 					break;
@@ -364,7 +349,9 @@ void MyDS18B20_TaskSM(void) {
 //						Serial_SendInteger(USART2, MyDS18B20_Write1StateOrder_Index);//【Debug】
 						
 						MyDS18B20DQ_SET;
+						
 						MyDS18B20_Count_TaskSM_RunTimes = 0;
+						
 						MyDS18B20_Write1StateOrder_Index ++;
 					}
 					break;
@@ -382,7 +369,9 @@ void MyDS18B20_TaskSM(void) {
 //						Serial_SendByte(USART2, '\n');//【Debug】
 						
 						MyDS18B20_Count_TaskSM_RunTimes = 0;
+						
 						MyDS18B20_Write1StateOrder_Index = 0;
+						
 						MyDS18B20_TaskStateOrder_Index ++;
 					}
 					break;
@@ -413,17 +402,17 @@ void MyDS18B20_TaskSM(void) {
 				case R_Rise:
 					
 					if(5 <= MyDS18B20_Count_TaskSM_RunTimes * 5) {
-//					Serial_SendByte(USART2, 'R');//【Debug】
-//					Serial_SendByte(USART2, 'r');//【Debug】
-//					Serial_SendInteger(USART2, MyDS18B20_TaskStateOrder_Index);//【Debug】
-//					Serial_SendInteger(USART2, MyDS18B20_ReadBitStateOrder_Index);//【Debug】
-					
-					MyDS18B20DQ_SET;
-					
-					MyDS18B20_Count_TaskSM_RunTimes = 0;
-					
-					MyDS18B20_ReadBitStateOrder_Index ++;
-					
+						
+//						Serial_SendByte(USART2, 'R');//【Debug】
+//						Serial_SendByte(USART2, 'r');//【Debug】
+//						Serial_SendInteger(USART2, MyDS18B20_TaskStateOrder_Index);//【Debug】
+//						Serial_SendInteger(USART2, MyDS18B20_ReadBitStateOrder_Index);//【Debug】
+						
+						MyDS18B20DQ_SET;
+						
+						MyDS18B20_Count_TaskSM_RunTimes = 0;
+						
+						MyDS18B20_ReadBitStateOrder_Index ++;
 					}
 					break;//到这里已经Down/Reset了5us
 				
@@ -498,15 +487,15 @@ void MyDS18B20_TaskSM(void) {
 			
 		case T_Convert:
 			
-			for(int8_t i = 15; i >= 0; i--) {
-				Serial_SendInteger(USART2, MyDS18B20_ReadPacket[i]);//【Debug】
-			}
+//			for(int8_t i = 15; i >= 0; i--) {
+//				Serial_SendInteger(USART2, MyDS18B20_ReadPacket[i]);//【Debug】
+//			}
 				
 //			Serial_SendByte(USART2, 'C');//【Debug】
 //			Serial_SendInteger(USART2, MyDS18B20_TaskStateOrder_Index);//【Debug】
 //			
-			Serial_SendByte(USART2, '\r');//【Debug】
-			Serial_SendByte(USART2, '\n');//【Debug】
+//			Serial_SendByte(USART2, '\r');//【Debug】
+//			Serial_SendByte(USART2, '\n');//【Debug】
 			
 			MyDS18B20_ReadPacketConvert();
 			

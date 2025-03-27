@@ -5,7 +5,9 @@ uint32_t MyTIM_2Count = 0;
 uint32_t MyTIM_3Count = 0;
 uint32_t MyTIM_4Count = 0;
 
-void MyTIM1_Init(void) {	//fCNT=50Hz,TCNT=0.02s=20ms=20,000us
+void MyTIM1_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=50Hz,TCNT=0.02s=20ms=20,000us
 	
 	//Triger==========
 	TIM_InternalClockConfig(TIM1);
@@ -30,8 +32,8 @@ void MyTIM1_Init(void) {	//fCNT=50Hz,TCNT=0.02s=20ms=20,000us
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = TIM1_UP_IRQn;	//NVIC指向的中断请求配置变量存储在stm32f10x.h文件中
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 3;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	
 	NVIC_Init(&NVIC_InitStruct);
 	
@@ -40,7 +42,9 @@ void MyTIM1_Init(void) {	//fCNT=50Hz,TCNT=0.02s=20ms=20,000us
 }
 
 
-void MyTIM2_Init(void) {	//fCNT=200,000Hz,TCNT=0.000005s=20ms=5us
+void MyTIM2_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=200,000Hz,TCNT=0.000005s=20ms=5us
 	
 	TIM_InternalClockConfig(TIM2);
 	
@@ -60,8 +64,8 @@ void MyTIM2_Init(void) {	//fCNT=200,000Hz,TCNT=0.000005s=20ms=5us
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = TIM2_IRQn;
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 1;//0~3
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;//0~3
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	
 	NVIC_Init(&NVIC_InitStruct);
 	
@@ -69,7 +73,9 @@ void MyTIM2_Init(void) {	//fCNT=200,000Hz,TCNT=0.000005s=20ms=5us
 }
 
 
-void MyTIM3_Init(void) {	//fCNT=100Hz,TCNT=0.01s=10ms=10,000us
+void MyTIM3_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=100Hz,TCNT=0.01s=10ms=10,000us
 	
 	TIM_InternalClockConfig(TIM3);
 	
@@ -90,14 +96,16 @@ void MyTIM3_Init(void) {	//fCNT=100Hz,TCNT=0.01s=10ms=10,000us
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = TIM3_IRQn;
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	NVIC_Init(&NVIC_InitStruct);
 	
 	TIM_Cmd(TIM3, DISABLE);//【Cmd】
 }
 
-void MyTIM4_Init(void) {	//fCNT=【】Hz,TCNT=【】s=【】us
+void MyTIM4_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=【】Hz,TCNT=【】s=【】us
 	
 	TIM_InternalClockConfig(TIM4);
 	
@@ -118,8 +126,8 @@ void MyTIM4_Init(void) {	//fCNT=【】Hz,TCNT=【】s=【】us
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = TIM4_IRQn;
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	NVIC_Init(&NVIC_InitStruct);
 	
 	TIM_Cmd(TIM4, DISABLE);//【Cmd】
@@ -133,31 +141,7 @@ void MyTIMx_DISABLECmd(TIM_TypeDef* TIMx) {
 	TIM_Cmd(TIMx, DISABLE);
 }
 
-void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
-	//x = 100
-	static uint16_t DIVxCount;
-	DIVxCount ++;
-	if(DIVxCount >= x) {//每ITx次(1s)执行该if内1次, TIT=TCKCNT/x
-		DIVxCount=0;//使得再经历100个MyTIM3IT才再发送Trig信号
-		
-		MyHCSR04_TrigCtrlerSwitchOn();//批准发送Trig信号，在下一个TIM2中断开始
-		
-		MyDHT11_SwitchOn();
-		
-		//Serial_SendByte(USART2, 'U');
-	}
-}
-
-void MyTIM3_DIVy(uint16_t z) {
-	//z = 300
-	static uint16_t DIVyCount;//【错点】用uint8_t计数溢出导致无法满足>=256
-	DIVyCount ++;
-	if(DIVyCount >= z) {//fRUN=1/5Hz, TRUN=5s
-		DIVyCount  = 0;
-		
-		MyDS18B20_TaskSM_TurnOn();
-	}
-}
+//以下为中断函数=============================================================
 
 void TIM1_UP_IRQHandler(void) {		//IT per 20ms=	0.02s
 	if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET) {
@@ -179,8 +163,6 @@ void TIM2_IRQHandler(void) {//TCKCNT=1us,TCNT=5us
 		MyDHT11_WriterSM();
 		
 		MyDS18B20_TaskSM();
-		
-//		Serial_SendStringPacketV2(USART2, "TIM2_IRQHandler\r\n");
 	}
 }
 
@@ -191,15 +173,52 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		
 		//MyTIM_3Count++;
 		
-		MyTIM3_DIVx(100);
+		MyTIM3_DIVx(1000000/10000);
 		
 		MyDHT11_Count_TIM3ARer();
 		
 		MyDHT11_ReadCheckTimer();
 		
-		MyTIM3_DIVy(300);
+		MyTIM3_DIVy(3000000/10000);
 		
 		MyDS18B20_TaskSuccedCheckTimer();
+		
+		MyTIM3_DIVz(5000000/10000);
+	}
+}
+
+void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
+	//x = 100
+	static uint16_t DIVxCount;
+	DIVxCount ++;
+	if(DIVxCount >= x) {//每ITx次(1s)执行该if内1次, TIT=TCKCNT/x
+		DIVxCount=0;//使得再经历100个MyTIM3IT才再发送Trig信号
+		
+		MyHCSR04_TrigCtrlerSwitchOn();//批准发送Trig信号，在下一个TIM2中断开始
+		
+		MyDHT11_SwitchOn();
+	}
+}
+
+void MyTIM3_DIVy(uint16_t y) {
+	//z = 300
+	static uint16_t DIVyCount;//【错点】用uint8_t计数溢出导致无法满足>=256
+	DIVyCount ++;
+	if(DIVyCount >= y) {//fRUN=1/5Hz, TRUN=5s
+		DIVyCount  = 0;
+		
+		MyDS18B20_TaskSM_TurnOn();
+	}
+}
+
+void MyTIM3_DIVz(uint16_t z) {
+	//z = 300
+	static uint16_t DIVzCount;//【错点】用uint8_t计数溢出导致无法满足>=256
+	DIVzCount ++;
+	if(DIVzCount >= z) {//fRUN=1/5Hz, TRUN=5s
+		DIVzCount  = 0;
+		
+		
 	}
 }
 

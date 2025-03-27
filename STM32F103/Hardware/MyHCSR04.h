@@ -27,7 +27,9 @@ extern uint8_t MyHCSR04_EchoCtrlerSM_State;
 extern uint16_t MyHCSR04_CountEchoSpanFiltered;
 
 void MyHCSR04_Trig_Init(void);
-void MyHCSR04_Echo_Init(void);
+void MyHCSR04_Echo_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority);
 uint16_t MyHCSR04_ResultFilter(uint32_t t);
 void MyHCSR04_TrigCtrlerSwitchOn(void);
 void MyHCSR04_TrigCtrler(void);

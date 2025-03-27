@@ -169,6 +169,7 @@ void USART3_IRQHandler() {
 		//当RDR移位寄存器中的数据被转移到USART_DR寄存器中（等待读取），该位被硬件置位（1即SET）。
 		//如果USART_CR1寄存器中的RXNEIE为1，则产生中断。
 		//对USART_DR的读操作（RxData = USART_ReceiveData(USARTx)）可以将该位清零（0即RESET）。
+		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
 		
 		uint8_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
 		
@@ -177,11 +178,12 @@ void USART3_IRQHandler() {
 	} else{
 		//NOTHING
 	}
-	USART_ClearITPendingBit(USART3, USART_IT_RXNE);
 }
 
 void USART2_IRQHandler() {
 	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
+		
+		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 		
 		uint8_t size = sizeof(Serial_Rx2StringPacket)/sizeof(Serial_Rx2StringPacket[0]);
 		
@@ -190,7 +192,6 @@ void USART2_IRQHandler() {
 	} else{
 		//NOTHING
 	}
-	USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 }
 
 void Serial_SendByte(USART_TypeDef* USARTx, uint8_t Byte) {
@@ -199,6 +200,7 @@ void Serial_SendByte(USART_TypeDef* USARTx, uint8_t Byte) {
 	//下一轮对USART_SendData()运行对USART_DR进行写操作会将TXE自动置0即RESET，即数据未被完全转移至移位寄存器
 	//当TDR寄存器中的数据被硬件完全转移到移位寄存器的时候，该位被硬件置位即1即SET，即上while(...)可跳出
 	//上行代码作用：等待上一轮Tx从USART_DR全部转移到移位寄存器
+	
 	USART_SendData(USARTx, Byte);
 }
 

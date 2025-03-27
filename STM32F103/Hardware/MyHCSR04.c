@@ -32,7 +32,9 @@ void MyHCSR04_Trig_Init(void) {
 }
 
 
-void MyHCSR04_Echo_Init(void) {
+void MyHCSR04_Echo_Init(
+	uint8_t NVIC_IRQChannelPreemptionPriority, 
+	uint8_t NVIC_IRQChannelSubPriority) {
 	//RCC-GPIO, EXTI=====
 	//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	//EXTI虽然连接APB2总线，但是其RCC时钟无需手动开启
@@ -60,8 +62,8 @@ void MyHCSR04_Echo_Init(void) {
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = EXTI15_10_IRQn;
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 3;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	NVIC_Init(&NVIC_InitStruct);
 	
 }

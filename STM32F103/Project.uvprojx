@@ -771,14 +771,14 @@
               <FilePath>.\Hardware\MyDS18B20.h</FilePath>
             </File>
             <File>
-              <FileName>MyDHT11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyDHT11.h</FilePath>
-            </File>
-            <File>
               <FileName>MyDHT11.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\MyDHT11.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyDHT11.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyDHT11.h</FilePath>
             </File>
             <File>
               <FileName>MyAquariumLight.c</FileName>

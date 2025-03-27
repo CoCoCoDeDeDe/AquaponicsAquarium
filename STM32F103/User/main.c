@@ -68,16 +68,16 @@ int main(void)
 	OLED_Init();
 	OLED_Clear();
 	
-	Serial_Init(USART3, 115200, 2, 1);	//Serial1——ESP8266
-	Serial_SendStringPacketV2(USART3, "AT\r\n");
+	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
+	Serial_SendStringPacketV2(USARTMyESP8266, "AT\r\n");//【Debug】
 	
-	Serial_Init(USART2, 115200, 2, 2);	//Serail2——PC
-	Serial_SendStringPacketV2(USART2, "Serial2_On\r\n");
+	Serial_Init(USART2, 115200, 3, 3);	//Serail2——PC
+	Serial_SendStringPacketV2(USART2, "Serial2_On\r\n");//【Debug】
 	
-	MyTIM1_Init();
-	MyTIM2_Init();
-	MyTIM3_Init();
-	MyTIM4_Init();
+	MyTIM1_Init(3, 3);
+	MyTIM2_Init(0, 0);
+	MyTIM3_Init(1, 1);
+	MyTIM4_Init(3, 3);
 	
 	MyTIMx_ENABLECmd(TIM1);
 	MyTIMx_ENABLECmd(TIM2);
@@ -88,9 +88,9 @@ int main(void)
 	MyWaterPump_Init(0);		//PA10-OC3
 	
 	MyHCSR04_Trig_Init();	//PA8-OC1
-	MyHCSR04_Echo_Init();	//PB15-EXTI
+	MyHCSR04_Echo_Init(2, 2);	//PB15-EXTI
 	
-	MyDHT11_Init();//【错点】遗漏main中运行Init
+	MyDHT11_Init(1, 1);//【错点】遗漏main中运行Init
 	MyDS18B20_Init();//【错点】遗漏Init
 	
 	MyWaterQSensor_Init();
@@ -149,8 +149,8 @@ int main(void)
 //		OLED_ShowNum(3, 1, MyTIM_3Count, 16);
 //		OLED_ShowNum(4, 1, MyTIM_4Count, 16);
 
-		OLED_ShowNum(4, 1, MyDHT11_DataArr[0], 8);
-		OLED_ShowNum(4, 9, MyDHT11_DataArr[2], 8);
+//		OLED_ShowNum(4, 1, MyDHT11_DataArr[0], 8);
+//		OLED_ShowNum(4, 9, MyDHT11_DataArr[2], 8);
 		
 //		OLED_ShowNum(4, 1, MyDHT11_Count_ReadInterval, 16);
 
@@ -165,9 +165,9 @@ int main(void)
 		
 		
 		
-		OLED_ShowNum(1, 1, MyDS18B20_ReadPacket_16Bit_Temp, 16);
-		OLED_ShowNum(2, 1, MyDS18B20_Result_12Bit_H7Bit, 16);
-		OLED_ShowNum(3, 1, MyDS18B20_Result_12Bit_L4Bit, 16);
+//		OLED_ShowNum(1, 1, MyDS18B20_ReadPacket_16Bit_Temp, 16);
+//		OLED_ShowNum(2, 1, MyDS18B20_Result_12Bit_H7Bit, 16);
+//		OLED_ShowNum(3, 1, MyDS18B20_Result_12Bit_L4Bit, 16);
 
 		Delay_ms(100);//以免循环太快，CPU压力太大
 	}
@@ -181,28 +181,12 @@ void EXTI4_IRQHandler(void) {
 		
 		MyDHT11_ReaderSM();//【错点】写错在EXTI15_10_IEQHandler
 		
-		//Serial_SendStringPacketV2(USART2, "EXTI4\r\n");
-		//Serial_SendStringPacketV2(USART2, "E");
-	}
-}
-
-void EXTI9_5_IRQHandler(void) {	//EXTI Line 5to9的中断是合并的
-	if(EXTI_GetITStatus(EXTI_Line5) == SET) {
-		EXTI_ClearITPendingBit(EXTI_Line5);
-		
-		
-	}
-	if(EXTI_GetITStatus(EXTI_Line6) == SET) {
-	EXTI_ClearITPendingBit(EXTI_Line6);
-		
-		
 	}
 }
 
 void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15的中断是合并的
 	if(EXTI_GetITStatus(EXTI_Line15) == SET) {
 		EXTI_ClearITPendingBit(EXTI_Line15);
-		//Serial_SendStringPacketV2(USART2, "EXTI15_10_IRQHandler\r\n");
 		
 		MyHCSR04_EchoCtrlerSM();
 		

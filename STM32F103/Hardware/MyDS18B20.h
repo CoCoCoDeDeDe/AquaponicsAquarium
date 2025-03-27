@@ -22,8 +22,6 @@ extern uint16_t MyDS18B20_Result_12Bit_H7Bit;//12Bit分辨率结果的整数部分
 
 extern uint16_t MyDS18B20_Result_12Bit_L4Bit;//12Bit分辨率结果的小数部分
 
-void MyDS18B20_Test1(void);
-
 void MyDS18B20_Init(void);
 
 void MyDS18B20_TaskSM_TurnOn(void);
