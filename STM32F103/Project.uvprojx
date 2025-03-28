@@ -900,6 +900,11 @@
               <FileType>5</FileType>
               <FilePath>.\User\stm32f10x_it.h</FilePath>
             </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\main.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

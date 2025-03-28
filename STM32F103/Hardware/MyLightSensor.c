@@ -13,7 +13,8 @@ void MyLightSensor_Init(void) {
 	GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
 	//ADCRegularChannel=====
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 3, ADC_SampleTime_55Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 4, ADC_SampleTime_55Cycles5);
+	//MyADCAndDMA_Result[3]
 	
 	//Serial_SendStringPacketV2(USART2, "MyLightSensor_Init_End\r\n");
 }

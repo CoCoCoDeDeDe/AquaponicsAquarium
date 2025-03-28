@@ -24,6 +24,7 @@ Things TO DO
 	DONE		配置水质传感器
 	DONE		配置DS18B20
 	DONE		统筹NVIC优先级
+	DOING		封装统一规范属性命令
 	DOING		配置MQTT-MCU-Server
 	TODO		组装原型机
 	TODO		配置AT24C02

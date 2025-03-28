@@ -18,6 +18,8 @@ uint32_t MyHCSR04_CountEchoSpan=0;
 
 uint16_t MyHCSR04_CountEchoSpanFiltered= 0;
 
+uint16_t WaterSD = 0;
+
 void MyHCSR04_Trig_Init(void) {	
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_StructInit(&GPIO_InitStruct);
@@ -157,6 +159,8 @@ void MyHCSR04_CollectEchoSpan(void) {
 	}
 	MyArray_TailAdd_uint16_t(CollectNums, MyHCSR04_CountEchoSpan, 3);
 	MyHCSR04_CountEchoSpanFiltered= MyArray_GetAverage_uint16_t(NumCount, CollectNums);//结果存入extern变量
+
+	WaterSD = MyHCSR04_GetResult_mm();
 }
 
 uint16_t MyHCSR04_GetResult_mm(void) {

@@ -13,7 +13,8 @@ void MyWaterQSensor_Init(void) {
 	GPIO_Init(GPIOMyWaterQSensor, &GPIO_InitStruct);
 	
 	//ADCRegularChannel=====
-	ADC_RegularChannelConfig(ADCMyWaterQSensor, ADC_Channel_MyWaterQSensor, 1, ADC_SampleTime_55Cycles5);	
+	ADC_RegularChannelConfig(ADCMyWaterQSensor, ADC_Channel_MyWaterQSensor, 2, ADC_SampleTime_55Cycles5);	
+	//MyADCAndDMA_Result[1]
 	
 	//Serial_SendStringPacketV2(USART2, "MHA11A_Init_End\r\n");
 }

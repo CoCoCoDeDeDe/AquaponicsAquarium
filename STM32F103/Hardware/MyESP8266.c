@@ -34,6 +34,23 @@ void MyESP8266_MQTTRSP(USART_TypeDef* USARTx);//在执行完命令后发送一条上行响应
 
 //在初始化/setup代码中，可适当使用delay、while
 
+uint8_t MyESP8266_State_ATSenderSM = 0;
 
+uint16_t MyESP8266_Count_ATSenderSM = 0;
+
+void MyESP8266_ATSenderSM(void) {
+	
+	
+	
+	//当遍历到最后一个指令ROUTINE指令，进入循环该指令
+}
+
+uint8_t MyESP8266_State_ATReceiverSM = 0;
+
+uint16_t MyESP8266_Count_ATReceiverSM = 0;
+
+void MyESP8266_ATReceiverSM(void) {
+	
+}
 
 

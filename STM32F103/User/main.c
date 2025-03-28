@@ -1,39 +1,4 @@
-#include "stm32f10x.h"                  // Device header
-
-#include <string.h>
-
-#include "Array.h"
-
-#include "Delay.h"
-
-#include "MyTest.h"
-
-#include "OLED.h"
-
-#include "Serial.h"
-
-#include "MyTIM.h"
-
-#include "MySG90.h"
-#include "MyWaterPump.h"
-
-#include "MyHCSR04.h"
-#include "MyDHT11.h"
-#include "MyDS18B20.h"
-
-#include "MyWaterQSensor.h"
-#include "MySoilMoistureSensor.h"
-#include "MyLightSensor.h"
-
-#include "MyADCAndDMA.h"
-
-#include "MyPlantGrowLamp.h"
-#include "MyAirPump.h"
-#include "MyAquariumHeater.h"
-
-#include "MyAquariumLight.h"
-
-#include "MyESP8266.h"
+#include "main.h"
 
 int main(void)
 {
@@ -69,19 +34,20 @@ int main(void)
 	OLED_Clear();
 	
 	Serial_Init(USART3, 115200, 0, 0);	//Serial1¡ª¡ªESP8266
-	Serial_SendStringPacketV2(USARTMyESP8266, "AT\r\n");//¡¾Debug¡¿
+	Serial_SendStringPacketV2(USART3, "Serial3_On\r\n");//¡¾Debug¡¿
 	
-	Serial_Init(USART2, 115200, 3, 3);	//Serail2¡ª¡ªPC
+	Serial_Init(USART2, 115200, 0, 0);	//Serail2¡ª¡ªPC
 	Serial_SendStringPacketV2(USART2, "Serial2_On\r\n");//¡¾Debug¡¿
 	
 	MyTIM1_Init(3, 3);
-	MyTIM2_Init(0, 0);
+	MyTIM2_Init(1, 1);
 	MyTIM3_Init(1, 1);
-	MyTIM4_Init(3, 3);
+	MyTIM4_Init(0, 0);
 	
 	MyTIMx_ENABLECmd(TIM1);
 	MyTIMx_ENABLECmd(TIM2);
 	MyTIMx_ENABLECmd(TIM3);
+	MyTIMx_ENABLECmd(TIM4);
 	
 	MyAquariumLight_Init(20000);	//PA8-OC1
 	MySG90_Init(1500);			//PA9-OC2
@@ -109,40 +75,37 @@ int main(void)
 	
 //Run=====
 	while(1) {
-//		if(Serial_RxFlag[3] == 1) {
-//			OLED_ShowString(1, 1, "USART3:");
-//			OLED_ShowString(2, 1, "                ");
-//			OLED_ShowString(2, 1, Serial_Rx3StringPacket);
-//			
-//			Serial_SendStringPacketV2(USART2, Serial_Rx3StringPacket);
-//			
-//			Serial_RxFlag[3] = 0;
-//		}
-
+		
 //		if (Serial_RxFlag[2] == 1) {
-//			OLED_ShowString(3, 1, "USART2:");
-//			OLED_ShowString(4, 1, "                ");
-//			OLED_ShowString(4, 1, Serial_Rx2StringPacket);
 //			
-//			Serial_SendStringPacketV2(USART3, Serial_Rx2StringPacket);
+//			OLED_ShowString(1, 1, "USART2:");
+//			OLED_ShowString(2, 1, "                ");
+//			OLED_ShowString(2, 1, Serial_Rx2StringPacket);
+//			
+//			//Serial_SendStringPacketV2(USART3, Serial_Rx2StringPacket);
 //			
 //			Serial_RxFlag[2] = 0;
 //		}
 		
-
-		
-//		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
-//		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
-//		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
-//		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
-		
-//		float HCSR04_distanceTemp = HCSR04_distance;
-//		if(HCSR04_distanceTemp != HCSR04_distance) {
-//			OLED_ShowString(3, 1, "                ");
-//			OLED_ShowNum(3, 1, (uint16_t)HCSR04_distance, 4);
+//		if(Serial_RxFlag[3] == 1) {
 //			
-//			HCSR04_distanceTemp = HCSR04_distance;
+//			//Serial_SendByte(USART3, 'F');//¡¾Debug¡¿
+//			
+//			OLED_ShowString(3, 1, "USART3:");
+//			OLED_ShowString(4, 1, "                ");
+//			OLED_ShowString(4, 1, Serial_Rx3StringPacket);
+//			
+//			//Serial_SendStringPacketV2(USART2, Serial_Rx3StringPacket);
+//			
+//			Serial_RxFlag[3] = 0;
 //		}
+		
+		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
+		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
+		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
+		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
+		
+//		OLED_ShowNum(3, 1, WaterSD, 16);
 		
 //		OLED_ShowNum(1, 1, MyTIM_1UpCount, 16);
 //		OLED_ShowNum(2, 1, MyTIM_2Count, 16);

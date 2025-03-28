@@ -13,7 +13,8 @@ void MySoilMoistureSensor_Init(void) {
 	GPIO_Init(GPIOB, &GPIO_InitStruct);
 	
 	//ADCRegularChannel=====
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 2, ADC_SampleTime_55Cycles5);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 3, ADC_SampleTime_55Cycles5);
+	//MyADCAndDMA_Result[2]
 
 	//Serial_SendStringPacketV2(USART2, "MySoilMoistureSensor_Init_End\r\n");
 }

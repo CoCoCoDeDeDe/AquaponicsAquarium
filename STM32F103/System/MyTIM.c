@@ -105,7 +105,7 @@ void MyTIM3_Init(
 
 void MyTIM4_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 
-	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=¡¾¡¿Hz,TCNT=¡¾¡¿s=¡¾¡¿us
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=¡¾1000¡¿Hz,TCNT=¡¾0.001¡¿s=¡¾1000¡¿us
 	
 	TIM_InternalClockConfig(TIM4);
 	
@@ -114,7 +114,7 @@ void MyTIM4_Init(
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInitStruct.TIM_Prescaler = 7200 - 1;	//0~65535
-	TIM_TimeBaseInitStruct.TIM_Period = 10000 - 1;	//0~65535
+	TIM_TimeBaseInitStruct.TIM_Period = 10 - 1;	//0~65535
 	TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 1-1;
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStruct);
 	
@@ -183,7 +183,7 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		
 		MyDS18B20_TaskSuccedCheckTimer();
 		
-		MyTIM3_DIVz(5000000/10000);
+		//MyTIM3_DIVz(5000000/10000);
 	}
 }
 
@@ -208,6 +208,8 @@ void MyTIM3_DIVy(uint16_t y) {
 		DIVyCount  = 0;
 		
 		MyDS18B20_TaskSM_TurnOn();
+		
+		//MyESP8266_ATSenderSM();
 	}
 }
 

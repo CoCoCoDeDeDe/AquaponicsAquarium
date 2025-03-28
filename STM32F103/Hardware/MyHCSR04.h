@@ -26,6 +26,8 @@ extern uint8_t MyHCSR04_EchoCtrlerSM_State;
 
 extern uint16_t MyHCSR04_CountEchoSpanFiltered;
 
+extern uint16_t WaterSD;
+
 void MyHCSR04_Trig_Init(void);
 void MyHCSR04_Echo_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 
@@ -39,5 +41,6 @@ void MyHCSR04_SetEXITTrig(EXTITrigger_TypeDef mode);
 void MyHCSR04_EchoCtrlerSM(void);
 void MyHCSR04_CollectEchoSpan(void);
 uint16_t MyHCSR04_GetResult_mm(void);
+
 
 #endif

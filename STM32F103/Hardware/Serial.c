@@ -1,56 +1,56 @@
 #include "Serial.h"
 
-USART_InitTypeDef USART_InitStruct;
+static USART_InitTypeDef USART_InitStruct;
 
-uint8_t Serial_RxFlag[4] = {0, 0, 0, 0};	//错点：遗漏Serial_RxFlag[ser]
+uint8_t Serial_RxFlag[4] = {0, 0, 0, 0};	//Serial_RxFlag[ser]
 //用于标记状态机是否把一整个String接收完，否则不输出新接收的String等等
 
-char Serial_Rx3StringPacket[100];
-char Serial_Rx2StringPacket[100];
+char Serial_Rx3StringPacket[220];
+char Serial_Rx2StringPacket[220];
 
-uint8_t StateMachine_s1 = 0;
-uint8_t StateMachine_count1 = 0;
+uint8_t StateMachine_s3 = 0;
+uint8_t StateMachine_count3 = 0;
 uint8_t StateMachine_s2 = 0;
 uint8_t StateMachine_count2 = 0;
 
 void Serial_Init(
-	USART_TypeDef* USARTx, 
-	uint32_t USART_BaudRate, 
-	uint8_t NVIC_IRQChannelPreemptionPriority, 
-	uint8_t NVIC_IRQChannelSubPriority
+	USART_TypeDef*	USARTx, 
+	uint32_t		USART_BaudRate, 
+	uint8_t			NVIC_IRQChannelPreemptionPriority, 
+	uint8_t			NVIC_IRQChannelSubPriority
 	) {
 	
-	GPIO_TypeDef* GPIOTx;
-	uint16_t GPIO_Pin_Tx;
-	GPIO_TypeDef* GPIORx;
-	uint16_t GPIO_Pin_Rx;
+	GPIO_TypeDef*	GPIOTx;
+	uint16_t		GPIO_Pin_Tx;
+	GPIO_TypeDef*	GPIORx;
+	uint16_t		GPIO_Pin_Rx;
 		
 			
-	//NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	//错点：遗漏NVIC
+	//NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	//NVIC
 	
 	NVIC_InitTypeDef NVIC_InitStruct;
 	
 	uint8_t NVIC_IRQChannel;
 
-	if(USARTx == USART3) {
-		GPIOTx = GPIORx = GPIOB;
-		GPIO_Pin_Tx = GPIO_Pin_10;
-		GPIO_Pin_Rx = GPIO_Pin_11;	//错点：将Rx错写为Tx
-		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
+	if(USARTx == USARTMySerialESP8266) {
+		GPIOTx = GPIORx = GPIOMySerialESP8266;
+		GPIO_Pin_Tx = GPIO_Pin_MySerialESP8266Tx;
+		GPIO_Pin_Rx = GPIO_Pin_MySerialESP8266Rx;
+		//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+		//RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 		
-		NVIC_IRQChannel = USART3_IRQn;
-	} else if(USARTx == USART2) {
-		GPIOTx = GPIORx = GPIOA;
-		GPIO_Pin_Tx = GPIO_Pin_2;
-		GPIO_Pin_Rx = GPIO_Pin_3;	//错点：将Rx错写为Tx
-		RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-		RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+		NVIC_IRQChannel = USARTMySerialESP8266_IRQn;
 		
-		NVIC_IRQChannel = USART2_IRQn;
-	} else {
-	//error：USARTx应为USART3（对应STM32-ESP8266）或USART2（对应STM32-PC）
-	}
+	} else if(USARTx == USARTMySerialPC) {
+		GPIOTx = GPIORx =	GPIOMySerialPC;
+		GPIO_Pin_Tx =		GPIO_Pin_MySerialPCTx;
+		GPIO_Pin_Rx =		GPIO_Pin_MySerialPCRx;
+		//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+		//RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+		
+		NVIC_IRQChannel = USARTMySerialPC_IRQn;
+		
+	}//USARTx应为USART3（对应STM32-ESP8266）或USART2（对应STM32-PC）
 	
 	
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -91,6 +91,8 @@ void Serial_Init(
 	
 	
 	USART_Cmd(USARTx, ENABLE);
+	
+	//Serial_SendByte(USART2, 'I');//【Debug】
 }
 
 void Serial_BaudRateConfig(USART_TypeDef* USARTx, uint32_t USART_BaudRate) {
@@ -108,89 +110,100 @@ void Serial_Auto_StateMachine(
 	char Serial_RxStringPacket[], 
 	uint8_t size) {
 		
-	uint16_t RxData = USART_ReceiveData(USARTx);
-	//RXNE在USART_DR被读取后自动RESET（即0，数据没有收到）
-	//下一轮USART_ReceiveData()运行对USART_DR进行写操作会将TXE自动置0即RESET，即数据未被完全转移至移位寄存器
-	//USART_DR是TDR和RDR在软件概念上的合并
-	//while(USART_GetFlagStatus(USARTx, USART_FLAG_RXNE) == SET);
-	//等USART_DR被RxData读取完再继续
-	
-	switch (*s) {
-		case 0:
-//			if(RxData == '@' && Serial_RxFlag[ser] == 0) {	
-//				//错点：遗漏判断Serial_RxFlag[ser]，即判断上一个String是否接收完毕。
-//				
-//				*s = 1; 
-//				*count = 0;
-//			} else {
-//				//NOTHING
-//			}
-			if(Serial_RxFlag[ser] == 0) {
-				*s = 1; 
-				*count = 0;
-				Serial_RxStringPacket[(*count)++] = RxData;
-			}
-			//抛弃'@'包头方案
-			
-			break;
-		case 1:
-			if(RxData == '\r') {
-				*s = 2;
-			} else {
-				if (*count < size - 1) {
-					//错点：将数组传递到函数是以原始的指针的形式在函数内存在的，sizeof(Serial_RxStringPacket)会出warning。
-					//解决方法：在数组传入函数时就将数组size传入函数
-					//当 已经装了的位数(*count+1)<可以装的位数(sizeof(...)) 时才继续装填
+		//Serial_SendByte(USART2, 'S');//【Debug】
+		
+		uint16_t RxData = USART_ReceiveData(USARTx);
+		//RXNE在USART_DR被读取后自动RESET（即0，数据没有收到）
+		//下一轮USART_ReceiveData()运行对USART_DR进行写操作会将TXE自动置0即RESET，即数据未被完全转移至移位寄存器
+		//USART_DR是TDR和RDR在软件概念上的合并
+		//while(USART_GetFlagStatus(USARTx, USART_FLAG_RXNE) == SET);
+		//等USART_DR被RxData读取完再继续
+		
+		switch (*s) {
+			case 0:
+//				if(RxData == '@' && Serial_RxFlag[ser] == 0) {	
+//					//错点：遗漏判断Serial_RxFlag[ser]，即判断上一个String是否接收完毕。
+//					
+//					*s = 1; 
+//					*count = 0;
+//				} else {
+//					//NOTHING
+//				}
+				if(Serial_RxFlag[ser] == 0) {
+					*s = 1; 
+					*count = 0;
 					Serial_RxStringPacket[(*count)++] = RxData;
-					//错点：*count++错误，++优先级高于*，需写为(*count)++
-					}
 				}
-			break;
-		case 2:
-			if(RxData == '\n') {
-				*s = 0;
-				Serial_RxStringPacket[*count] = '\0';
-				*count = 0;
-				Serial_RxFlag[ser] = 1;	//错点：遗漏Serial_RxFlag[ser]。
-				//此处表示一整个String已经接受完，可进行读取变量等操作。
+				//抛弃'@'包头方案
 				
-			} else {
-				//NOTHING
-			}
-			break;
-		default:
-			//ERROR
-			break;	//dafault:内若没有要执行的代码则需要加break;
+				break;
+			case 1:
+				if(RxData == '\r') {
+					Serial_RxStringPacket[(*count)++] = RxData;
+					*s = 2;
+				} else {
+					if (*count < size - 1) {
+						//错点：将数组传递到函数是以原始的指针的形式在函数内存在的，sizeof(Serial_RxStringPacket)会出warning。
+						//解决方法：在数组传入函数时就将数组size传入函数
+						//当 已经装了的位数(*count+1)<可以装的位数(sizeof(...)) 时才继续装填
+						Serial_RxStringPacket[(*count)++] = RxData;
+						//错点：*count++错误，++优先级高于*，需写为(*count)++
+						}
+					}
+				break;
+			case 2:
+				if(RxData == '\n') {
+					
+					//Serial_SendByte(USART3, 'H');//【Debug】
+					Serial_RxStringPacket[(*count)++] = RxData;
+					*s = 0;
+					Serial_RxStringPacket[*count] = '\0';
+					*count = 0;
+					Serial_RxFlag[ser] = 1;	
+					//此处表示一整个String已经接受完，可进行读取变量等操作。
+					
+				} else {
+					//NOTHING
+				}
+				break;
+			default:
+				//ERROR
+				break;	//dafault:内若没有要执行的代码则需要加break;
+		}
+}
+
+void USART2_IRQHandler() {
+	
+	//Serial_SendByte(USART2, 'h');//【Debug】
+	
+	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
+		
+		//Serial_SendByte(USART2, 'H');//【Debug】
+		
+		//USART_ClearITPendingBit(USART2, USART_IT_RXNE);//自动清标志位
+		
+		uint16_t size = sizeof(Serial_Rx2StringPacket)/sizeof(Serial_Rx2StringPacket[0]);
+		
+		//进入状态机程序
+		Serial_Auto_StateMachine(USART2, 2, &StateMachine_s2, &StateMachine_count2, Serial_Rx2StringPacket, size);
 	}
 }
 
 void USART3_IRQHandler() {
+	
 	if(USART_GetITStatus(USART3,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
 		//当RDR移位寄存器中的数据被转移到USART_DR寄存器中（等待读取），该位被硬件置位（1即SET）。
 		//如果USART_CR1寄存器中的RXNEIE为1，则产生中断。
 		//对USART_DR的读操作（RxData = USART_ReceiveData(USARTx)）可以将该位清零（0即RESET）。
-		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
 		
-		uint8_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
+		//USART_ClearITPendingBit(USART3, USART_IT_RXNE);//自动清标志位
 		
-		//进入状态机程序
-		Serial_Auto_StateMachine(USART3, 3, &StateMachine_s1, &StateMachine_count1, Serial_Rx3StringPacket, size);
-	} else{
-		//NOTHING
-	}
-}
-
-void USART2_IRQHandler() {
-	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
+		uint16_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
 		
-		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
-		
-		uint8_t size = sizeof(Serial_Rx2StringPacket)/sizeof(Serial_Rx2StringPacket[0]);
 		
 		//进入状态机程序
-		Serial_Auto_StateMachine(USART2, 2, &StateMachine_s2, &StateMachine_count2, Serial_Rx2StringPacket, size);
-	} else{
-		//NOTHING
+		Serial_Auto_StateMachine(USART3, 3, &StateMachine_s3, &StateMachine_count3, Serial_Rx3StringPacket, size);
+		
 	}
 }
 

@@ -29,4 +29,16 @@ void MyESP8266_MQTTExecute(USART_TypeDef* USARTx);//解析串口消息，执行命令
 
 void MyESP8266_MQTTRSP(USART_TypeDef* USARTx);//在执行完命令后发送一条上行响应
 
+void MyESP8266_ATSenderSM(void);
+
+void MyESP8266_ATReceiverSM(void);
+
+
+
+
+
+
+
+
+
 #endif

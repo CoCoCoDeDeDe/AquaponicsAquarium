@@ -1,1 +1,94 @@
-{"services":[{"service_id":"Light","service_type":"Light","properties":[{"property_name":"IlluminationSV","data_type":"decimal","required":false,"enum_list":null,"min":"0","max":"5","max_length":0,"step":0,"unit":"","method":"RW","description":"是亮度传感器的模拟输出端口(AO)电压经过STM32进行ADC转换后的电压数值。IlluminationSensorPortVoltage","default_value":null}],"commands":[{"command_name":"AquariumLConfig","paras":[{"para_name":"AquariumLVRatio","data_type":"decimal","required":false,"enum_list":null,"min":"0","max":"100","max_length":0,"step":0,"unit":"","description":"是用于控制鱼缸照明灯的PWM等效电压相比最高电压的比率的参数。AquariumLightVoltageRatio"}],"responses":null},{"command_name":"PlantGLCmd","paras":[{"para_name":"PlantGLRStatus","data_type":"int","required":false,"enum_list":null,"min":"0","max":"1","max_length":0,"step":0,"unit":"","description":"是用于控制植物生长灯运行状态的参数。PlantGrowLampCmd"}],"responses":null}],"events":null,"description":"器件：鱼缸灯,植物生长灯,种植光照传感器;","option":"Optional"}]}
+{
+    "services": [
+        {
+            "service_id": "Light",
+            "service_type": "Light",
+            "properties": [
+                {
+                    "comment": "MyADCAndDMA_Result[3]",
+                    "property_name": "IlluminationSV",
+                    "data_type": "decimal",
+                    "required": false,
+                    "enum_list": null,
+                    "min": "0",
+                    "max": "5",
+                    "max_length": 0,
+                    "step": 0,
+                    "unit": "",
+                    "method": "RW",
+                    "description": "是亮度传感器的模拟输出端口(AO)电压经过STM32进行ADC转换后的电压数值。IlluminationSensorPortVoltage",
+                    "default_value": null
+                },
+                {
+                    "property_name": "AquariumLVR",
+                    "data_type": "int",
+                    "required": false,
+                    "enum_list": null,
+                    "min": "0",
+                    "max": "100",
+                    "max_length": 0,
+                    "step": 0,
+                    "unit": "",
+                    "method": "RW",
+                    "description": "AquariumLConfig命令的AquariumLCR参数的本地信息。",
+                    "default_value": null
+                },
+                {
+                    "property_name": "PlantGLRS",
+                    "data_type": "int",
+                    "required": false,
+                    "enum_list": null,
+                    "min": "0",
+                    "max": "10",
+                    "max_length": 0,
+                    "step": 0,
+                    "unit": "",
+                    "method": "RW",
+                    "description": "PlantGLCmd命令的PlantGLRS参数的本地信息。",
+                    "default_value": null
+                }
+            ],
+            "commands": [
+                {
+                    "command_name": "AquariumLConfig",
+                    "paras": [
+                        {
+                            "para_name": "AquariumLVR",
+                            "data_type": "decimal",
+                            "required": false,
+                            "enum_list": null,
+                            "min": "0",
+                            "max": "100",
+                            "max_length": 0,
+                            "step": 0,
+                            "unit": "",
+                            "description": "是用于控制鱼缸照明灯的PWM等效电压相比最高电压的比率的参数。AquariumLightVoltageRatio"
+                        }
+                    ],
+                    "responses": null
+                },
+                {
+                    "command_name": "PlantGLCmd",
+                    "paras": [
+                        {
+                            "para_name": "PlantGLRS",
+                            "data_type": "int",
+                            "required": false,
+                            "enum_list": null,
+                            "min": "0",
+                            "max": "10",
+                            "max_length": 0,
+                            "step": 0,
+                            "unit": "",
+                            "description": "是用于控制植物生长灯运行状态的参数。PlantGrowLampCmd"
+                        }
+                    ],
+                    "responses": null
+                }
+            ],
+            "events": null,
+            "description": "器件：鱼缸灯,植物生长灯,种植光照传感器;",
+            "option": "Optional"
+        }
+    ]
+}
