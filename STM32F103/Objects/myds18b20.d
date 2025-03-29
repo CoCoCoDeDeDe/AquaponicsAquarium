@@ -30,6 +30,8 @@
 .\objects\myds18b20.o: .\Library\stm32f10x_wwdg.h
 .\objects\myds18b20.o: .\Library\misc.h
 .\objects\myds18b20.o: .\System\Array.h
+.\objects\myds18b20.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\myds18b20.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\myds18b20.o: Hardware\Serial.h
 .\objects\myds18b20.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\myds18b20.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

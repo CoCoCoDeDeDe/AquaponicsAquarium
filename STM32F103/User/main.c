@@ -30,14 +30,15 @@ int main(void)
 //Init=====
 	MyTest_PB5_Init();
 	
-	OLED_Init();
-	OLED_Clear();
 	
 	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
 	Serial_SendStringPacketV2(USART3, "Serial3_On\r\n");//【Debug】
 	
 	Serial_Init(USART2, 115200, 0, 0);	//Serail2——PC
 	Serial_SendStringPacketV2(USART2, "Serial2_On\r\n");//【Debug】
+	
+	OLED_Init();
+	OLED_Clear();
 	
 	MyTIM1_Init(3, 3);
 	MyTIM2_Init(1, 1);
@@ -49,29 +50,24 @@ int main(void)
 	MyTIMx_ENABLECmd(TIM3);
 	MyTIMx_ENABLECmd(TIM4);
 	
-	MyAquariumLight_Init(20000);	//PA8-OC1
-	MySG90_Init(1500);			//PA9-OC2
-	MyWaterPump_Init(0);		//PA10-OC3
+	MyWaterTS_Init();			//DS18B20
+	MyAirS_Init(1, 1);			//DHT11
+	MyWaterSS_Trig_Init();		//HC-SR04
+	MyWaterSS_Echo_Init(2, 2);	//HC-SR04
 	
-	MyHCSR04_Trig_Init();	//PA8-OC1
-	MyHCSR04_Echo_Init(2, 2);	//PB15-EXTI
+	MyFeeder_Init(500);					//PA8-OC1
+	MyWaterP_Init(WaterPVR);			//PA9-OC2
+	MyAquariumL_Init(AquariumLVR);		//PA10-OC3
+	MyPlantGL_Init(PlantGLVR);			//PA11-OC4
 	
-	MyDHT11_Init(1, 1);//【错点】遗漏main中运行Init
-	MyDS18B20_Init();//【错点】遗漏Init
-	
-	MyWaterQSensor_Init();
-	MySoilMoistureSensor_Init();
-	MyLightSensor_Init();
+	MyWaterQS_Init();
+	MySoilMS_Init();
+	MyIlluminationS_Init();
 	
 	MyADCAndDMA_Init(4);
 	
-	MyPlantGrowLamp_Init();
-	MyAirPump_Init();
-	MyAquariumHeater_Init();
-	
-	
-	
-	
+	MyAirP_Init();
+	MyWaterH_Init();
 	
 //Run=====
 	while(1) {
@@ -100,10 +96,10 @@ int main(void)
 //			Serial_RxFlag[3] = 0;
 //		}
 		
-		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
-		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
-		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
-		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
+//		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
+//		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
+//		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
+//		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
 		
 //		OLED_ShowNum(3, 1, WaterSD, 16);
 		
@@ -112,27 +108,27 @@ int main(void)
 //		OLED_ShowNum(3, 1, MyTIM_3Count, 16);
 //		OLED_ShowNum(4, 1, MyTIM_4Count, 16);
 
-//		OLED_ShowNum(4, 1, MyDHT11_DataArr[0], 8);
-//		OLED_ShowNum(4, 9, MyDHT11_DataArr[2], 8);
+//		OLED_ShowNum(4, 1, MyAirS_DataArr[0], 8);
+//		OLED_ShowNum(4, 9, MyAirS_DataArr[2], 8);
 		
-//		OLED_ShowNum(4, 1, MyDHT11_Count_ReadInterval, 16);
+//		OLED_ShowNum(4, 1, MyAirS_Count_ReadInterval, 16);
 
-//		OLED_ShowNum(1, 1, MyDHT11_Count_ReadBit, 16);
+//		OLED_ShowNum(1, 1, MyAirS_Count_ReadBit, 16);
 		
 		
-//		MyAirPump_Cmd(Bit_RESET);
+//		MyAirP_Cmd(Bit_RESET);
 		
-//		MyAquariumHeater_Cmd(Bit_RESET);
+//		MyWaterH_Cmd(Bit_RESET);
 		
 //		MyPlantGrowLamp_Cmd(Bit_RESET);
 		
 		
 		
-//		OLED_ShowNum(1, 1, MyDS18B20_ReadPacket_16Bit_Temp, 16);
-//		OLED_ShowNum(2, 1, MyDS18B20_Result_12Bit_H7Bit, 16);
-//		OLED_ShowNum(3, 1, MyDS18B20_Result_12Bit_L4Bit, 16);
+//		OLED_ShowNum(1, 1, MyWaterTS_ReadPacket_16Bit_Temp, 16);
+//		OLED_ShowNum(2, 1, MyWaterTS_Result_12Bit_H7Bit, 16);
+//		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 16);
 
-		Delay_ms(100);//以免循环太快，CPU压力太大
+		//Delay_ms(100);//以免循环太快，CPU压力太大
 	}
 }
 
@@ -142,7 +138,7 @@ void EXTI4_IRQHandler(void) {
 	if(EXTI_GetITStatus(EXTI_Line4) == SET) {
 		EXTI_ClearITPendingBit(EXTI_Line4);
 		
-		MyDHT11_ReaderSM();//【错点】写错在EXTI15_10_IEQHandler
+		MyAirS_ReaderSM();//【错点】写错在EXTI15_10_IEQHandler
 		
 	}
 }
@@ -151,7 +147,7 @@ void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15的中断是合并的
 	if(EXTI_GetITStatus(EXTI_Line15) == SET) {
 		EXTI_ClearITPendingBit(EXTI_Line15);
 		
-		MyHCSR04_EchoCtrlerSM();
+		MyWaterSS_EchoCtrlerSM();
 		
 	}
 }

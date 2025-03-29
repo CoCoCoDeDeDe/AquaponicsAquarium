@@ -5,13 +5,13 @@
 
 #include "MyTest.h"
 #include "OLED.h"
-#include "Serial.h"
+#include "MySerial.h"
 
-#include "MyHCSR04.h"
-#include "MyDHT11.h"
-#include "MyDS18B20.h"
+#include "MyWaterSS.h"
+#include "MyAirS.h"
+#include "MyWaterTS.h"
 
-#include "MyAquariumHeater.h"
+#include "MyESP8266.h"
 
 extern uint32_t MyTIM_1UpCount;
 extern uint32_t MyTIM_2Count;

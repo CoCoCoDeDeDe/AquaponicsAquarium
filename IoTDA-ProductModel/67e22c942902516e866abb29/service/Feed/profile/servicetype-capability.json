@@ -1,1 +1,51 @@
-{"services":[{"service_id":"Feed","service_type":"Feed","properties":[{"property_name":"FeederFRS","data_type":"int","required":false,"enum_list":null,"min":"0","max":"10","max_length":0,"step":0,"unit":"","method":"RW","description":"FeederCtrl命令的FeederFT参数的本地对应信息。FeederFeedingRunStatus","default_value":null}],"commands":[{"command_name":"FeederCtrl","paras":[{"para_name":"FeederFT","data_type":"int","required":false,"enum_list":null,"min":"0","max":"10","max_length":0,"step":0,"unit":"","description":"是用于触发喂食器投放鱼饲料的参数。FeederFeedingTriger"}],"responses":null}],"events":null,"description":"包含：鱼缸喂食器;","option":"Optional"}]}
+{
+    "services": [
+        {
+            "service_id": "Feed",
+            "service_type": "Feed",
+            "properties": [
+                {
+                    "comment_variable": "extern uint8_t FeederFRS;",
+                    "comment_method": "void MyFeederFeed_Triger(void);",
+                    "property_name": "FeederFRS",
+                    "data_type": "int",
+                    "required": false,
+                    "enum_list": null,
+                    "min": "0",
+                    "max": "10",
+                    "max_length": 0,
+                    "step": 0,
+                    "unit": "",
+                    "method": "RW",
+                    "description": "FeederCtrl命令的FeederFT参数的本地对应信息。FeederFeedingRunStatus",
+                    "default_value": null
+                }
+            ],
+            "commands": [
+                {
+                    "command_name": "FeederCtrl",
+                    "paras": [
+                        {
+                            "comment_variable": "extern uint8_t FeederFRS;",
+                            "comment_method": "void MyFeederFeed_Triger(void);",
+                            "para_name": "FeederFT",
+                            "data_type": "int",
+                            "required": false,
+                            "enum_list": null,
+                            "min": "0",
+                            "max": "10",
+                            "max_length": 0,
+                            "step": 0,
+                            "unit": "",
+                            "description": "是用于触发喂食器投放鱼饲料的参数。FeederFeedingTriger"
+                        }
+                    ],
+                    "responses": null
+                }
+            ],
+            "events": null,
+            "description": "包含：鱼缸喂食器;",
+            "option": "Optional"
+        }
+    ]
+}

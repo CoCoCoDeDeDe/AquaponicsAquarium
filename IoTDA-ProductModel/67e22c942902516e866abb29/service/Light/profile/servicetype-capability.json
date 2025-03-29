@@ -20,6 +20,8 @@
                     "default_value": null
                 },
                 {
+                    "comment_variable": "AquariumLVR",
+                    "comment_method": "MyAquariumLight_SetVoltageRatio",
                     "property_name": "AquariumLVR",
                     "data_type": "int",
                     "required": false,
@@ -34,6 +36,8 @@
                     "default_value": null
                 },
                 {
+                    "comment_variable": "extern uint8_t PlantGLRS;",
+                    "comment_method": "void MyPlantGrowLamp_SetRunStatus(uint8_t rs);",
                     "property_name": "PlantGLRS",
                     "data_type": "int",
                     "required": false,
@@ -50,9 +54,13 @@
             ],
             "commands": [
                 {
+                    "comment_variable": "",
+                    "comment_method": "",
                     "command_name": "AquariumLConfig",
                     "paras": [
                         {
+                            "comment_variable": "extern uint8_t AquariumLVR;",
+                            "comment_method": "void MyAquariumLight_SetVoltageRatio(uint8_t r);",
                             "para_name": "AquariumLVR",
                             "data_type": "decimal",
                             "required": false,
@@ -71,6 +79,8 @@
                     "command_name": "PlantGLCmd",
                     "paras": [
                         {
+                            "comment_variable": "extern uint8_t PlantGLRS;",
+                            "comment_method": "void MyPlantGrowLamp_SetRunStatus(uint8_t rs);",
                             "para_name": "PlantGLRS",
                             "data_type": "int",
                             "required": false,

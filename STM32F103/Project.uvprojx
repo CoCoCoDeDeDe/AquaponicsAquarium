@@ -696,24 +696,14 @@
               <FilePath>.\Hardware\MyTest.h</FilePath>
             </File>
             <File>
-              <FileName>MyADCAndDMA.c</FileName>
+              <FileName>MySerial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyADCAndDMA.c</FilePath>
+              <FilePath>.\Hardware\MySerial.c</FilePath>
             </File>
             <File>
-              <FileName>MyADCAndDMA.h</FileName>
+              <FileName>MySerial.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyADCAndDMA.h</FilePath>
-            </File>
-            <File>
-              <FileName>Serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\Serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>Serial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\Serial.h</FilePath>
+              <FilePath>.\Hardware\MySerial.h</FilePath>
             </File>
             <File>
               <FileName>OLED_Font.h</FileName>
@@ -731,66 +721,6 @@
               <FilePath>.\Hardware\OLED.h</FilePath>
             </File>
             <File>
-              <FileName>MyTB6612.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyTB6612.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyTB6612.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyTB6612.h</FilePath>
-            </File>
-            <File>
-              <FileName>MySG90.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MySG90.c</FilePath>
-            </File>
-            <File>
-              <FileName>MySG90.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MySG90.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyHCSR04.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyHCSR04.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyHCSR04.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyHCSR04.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyDS18B20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyDS18B20.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyDS18B20.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyDS18B20.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyDHT11.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyDHT11.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyDHT11.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyDHT11.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyAquariumLight.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAquariumLight.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyAquariumLight.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAquariumLight.h</FilePath>
-            </File>
-            <File>
               <FileName>MyESP8266.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\MyESP8266.c</FilePath>
@@ -801,74 +731,134 @@
               <FilePath>.\Hardware\MyESP8266.h</FilePath>
             </File>
             <File>
-              <FileName>MyAirPump.c</FileName>
+              <FileName>MyWaterTS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAirPump.c</FilePath>
+              <FilePath>.\Hardware\MyWaterTS.c</FilePath>
             </File>
             <File>
-              <FileName>MyAirPump.h</FileName>
+              <FileName>MyWaterTS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAirPump.h</FilePath>
+              <FilePath>.\Hardware\MyWaterTS.h</FilePath>
             </File>
             <File>
-              <FileName>MyAquariumHeater.c</FileName>
+              <FileName>MyAirS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAquariumHeater.c</FilePath>
+              <FilePath>.\Hardware\MyAirS.c</FilePath>
             </File>
             <File>
-              <FileName>MyAquariumHeater.h</FileName>
+              <FileName>MyAirS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAquariumHeater.h</FilePath>
+              <FilePath>.\Hardware\MyAirS.h</FilePath>
             </File>
             <File>
-              <FileName>MyLightSensor.c</FileName>
+              <FileName>MyWaterSS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyLightSensor.c</FilePath>
+              <FilePath>.\Hardware\MyWaterSS.c</FilePath>
             </File>
             <File>
-              <FileName>MyLightSensor.h</FileName>
+              <FileName>MyWaterSS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyLightSensor.h</FilePath>
+              <FilePath>.\Hardware\MyWaterSS.h</FilePath>
             </File>
             <File>
-              <FileName>MyPlantGrowLamp.c</FileName>
+              <FileName>MyFeeder.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyPlantGrowLamp.c</FilePath>
+              <FilePath>.\Hardware\MyFeeder.c</FilePath>
             </File>
             <File>
-              <FileName>MyPlantGrowLamp.h</FileName>
+              <FileName>MyFeeder.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyPlantGrowLamp.h</FilePath>
+              <FilePath>.\Hardware\MyFeeder.h</FilePath>
             </File>
             <File>
-              <FileName>MySoilMoistureSensor.c</FileName>
+              <FileName>MyWaterP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MySoilMoistureSensor.c</FilePath>
+              <FilePath>.\Hardware\MyWaterP.c</FilePath>
             </File>
             <File>
-              <FileName>MySoilMoistureSensor.h</FileName>
+              <FileName>MyWaterP.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MySoilMoistureSensor.h</FilePath>
+              <FilePath>.\Hardware\MyWaterP.h</FilePath>
             </File>
             <File>
-              <FileName>MyWaterPump.c</FileName>
+              <FileName>MyAquariumL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterPump.c</FilePath>
+              <FilePath>.\Hardware\MyAquariumL.c</FilePath>
             </File>
             <File>
-              <FileName>MyWaterPump.h</FileName>
+              <FileName>MyAquariumL.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterPump.h</FilePath>
+              <FilePath>.\Hardware\MyAquariumL.h</FilePath>
             </File>
             <File>
-              <FileName>MyWaterQSensor.c</FileName>
+              <FileName>MyPlantGL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterQSensor.c</FilePath>
+              <FilePath>.\Hardware\MyPlantGL.c</FilePath>
             </File>
             <File>
-              <FileName>MyWaterQSensor.h</FileName>
+              <FileName>MyPlantGL.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterQSensor.h</FilePath>
+              <FilePath>.\Hardware\MyPlantGL.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyADCAndDMA.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyADCAndDMA.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyADCAndDMA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyADCAndDMA.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterQS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyWaterQS.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterQS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyWaterQS.h</FilePath>
+            </File>
+            <File>
+              <FileName>MySoilMS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MySoilMS.c</FilePath>
+            </File>
+            <File>
+              <FileName>MySoilMS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MySoilMS.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyIlluminationS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyIlluminationS.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyIlluminationS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyIlluminationS.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyAirP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyAirP.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyAirP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyAirP.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\MyWaterH.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\MyWaterH.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -886,6 +876,11 @@
               <FilePath>.\User\main.c</FilePath>
             </File>
             <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\User\main.h</FilePath>
+            </File>
+            <File>
               <FileName>stm32f10x_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f10x_conf.h</FilePath>
@@ -899,11 +894,6 @@
               <FileName>stm32f10x_it.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f10x_it.h</FilePath>
-            </File>
-            <File>
-              <FileName>main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\User\main.h</FilePath>
             </File>
           </Files>
         </Group>

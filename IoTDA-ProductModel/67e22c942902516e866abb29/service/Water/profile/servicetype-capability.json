@@ -65,6 +65,7 @@
                     "default_value": null
                 },
                 {
+                    "comment": "WaterPVR",
                     "property_name": "WaterPVR",
                     "data_type": "int",
                     "required": false,
@@ -79,6 +80,7 @@
                     "default_value": null
                 },
                 {
+                    "comment": "AirPRS",
                     "property_name": "AirPRS",
                     "data_type": "int",
                     "required": false,
@@ -93,6 +95,7 @@
                     "default_value": null
                 },
                 {
+                    "comment": "WaterHRS",
                     "property_name": "WaterHRS",
                     "data_type": "int",
                     "required": false,
@@ -109,6 +112,7 @@
             ],
             "commands": [
                 {
+                    "comment": "",
                     "command_name": "WaterPVConfig",
                     "paras": [
                         {

@@ -30,6 +30,8 @@
 .\objects\myhcsr04.o: .\Library\stm32f10x_wwdg.h
 .\objects\myhcsr04.o: .\Library\misc.h
 .\objects\myhcsr04.o: .\System\Array.h
+.\objects\myhcsr04.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\myhcsr04.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\myhcsr04.o: .\System\Delay.h
 .\objects\myhcsr04.o: .\System\MyTIM.h
 .\objects\myhcsr04.o: .\Hardware\MyTest.h
@@ -40,4 +42,4 @@
 .\objects\myhcsr04.o: .\Hardware\MyHCSR04.h
 .\objects\myhcsr04.o: .\Hardware\MyDHT11.h
 .\objects\myhcsr04.o: .\Hardware\MyDS18B20.h
-.\objects\myhcsr04.o: .\Hardware\MyAquariumHeater.h
+.\objects\myhcsr04.o: .\Hardware\MyWaterHeater.h

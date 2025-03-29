@@ -3,42 +3,45 @@
 
 #include "stm32f10x.h"                  // Device header
 
-#include "Serial.h"
+#include "main.h"
+
+#include "MySerial.h"
+
 #include "OLED.h"
 
-#define USARTMyESP8266 USART3
+#define USARTNum_MyESP8266	3
 
-void MyESP8266_ATInit(USART_TypeDef* USARTx);//上电操作
+extern uint16_t MyESP8266_Limit_TIM3DIVz;
 
-void MyESP8266_FirstInitWiFi(USART_TypeDef* USARTx, 
-	char *WiFi_SSID, 
-	char *WiFi_Password);//基础配置
+extern uint32_t MyESP8266_Count_TIM3DIVz;
 
-void MyESP8266_WiFiFirstInit(USART_TypeDef* USARTx, 
-	char *WiFi_SSID, 
-	char *WiFi_Password);//配置WiFi
+void MyESP8266_TIM3DIVz(void);
 
-void MyESP8266_MQTTInit(USART_TypeDef* USARTx);//配置华为云MQTT
+extern char MyMQTT_PUBReport_Str1[];
+extern char MyMQTT_PUBReport_Str2[];	
 
-void MyESP8266_MQTTPUB(USART_TypeDef* USARTx);//上报数据
-	
-void MyESP8266_Forward(USART_TypeDef* USART_Tx, USART_TypeDef* USAR_Rx);
-	//转发收到的ESP8266的消息到TXtoPC,主while中当RxFlag[3]==1时触发
+void MyMQTT_PUBReport_Data_Joint(void);
 
-void MyESP8266_MQTTExecute(USART_TypeDef* USARTx);//解析串口消息，执行命令
+extern uint32_t MyESP8266_Limit_ReaceiverSMInitWairTimeList[];
+extern char *MyESP8266_InitRSPList[];
+extern char *MyESP8266_InitCMDList[];
 
-void MyESP8266_MQTTRSP(USART_TypeDef* USARTx);//在执行完命令后发送一条上行响应
+extern char MyESP8266_Str_PUBResponse[];
+extern int8_t MyESP8266_State_SenderSM;
+extern int8_t MyESP8266_State_ReceiverSM;
+extern int8_t MyESP8266_InitListIndex;
+extern uint32_t Limit_ReceiverSMWaitTime;
+extern char Keyword_OK[];
+extern char Keyword_ERROR[];
+extern char Keyword_MQTTSUBRECV[];
 
-void MyESP8266_ATSenderSM(void);
+void MyESP8266_SenderSM(void);
 
-void MyESP8266_ATReceiverSM(void);
+void MyESP8266_CommandHandler(void);
 
+extern uint32_t MyESP8266_Count_ReceiverSM;
 
-
-
-
-
-
+void MyESP8266_ReceiverSM(void);
 
 
 #endif

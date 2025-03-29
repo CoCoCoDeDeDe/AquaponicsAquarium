@@ -3,7 +3,7 @@
 
 #include "stm32f10x.h"                  // Device header
 
-#include "Serial.h"
+#include "MySerial.h"
 
 extern uint16_t MyADCAndDMA_Result[];
 

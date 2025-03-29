@@ -13,28 +13,28 @@
 
 #include "OLED.h"
 
-#include "Serial.h"
+#include "MySerial.h"
 
 #include "MyTIM.h"
 
-#include "MySG90.h"
-#include "MyWaterPump.h"
+#include "MyFeeder.h"
+#include "MyWaterP.h"
 
-#include "MyHCSR04.h"
-#include "MyDHT11.h"
-#include "MyDS18B20.h"
+#include "MyWaterSS.h"
+#include "MyAirS.h"
+#include "MyWaterTS.h"
 
-#include "MyWaterQSensor.h"
-#include "MySoilMoistureSensor.h"
-#include "MyLightSensor.h"
+#include "MyWaterQS.h"
+#include "MySoilMS.h"
+#include "MyIlluminationS.h"
 
 #include "MyADCAndDMA.h"
 
-#include "MyPlantGrowLamp.h"
-#include "MyAirPump.h"
-#include "MyAquariumHeater.h"
+#include "MyPlantGL.h"
+#include "MyAirP.h"
+#include "MyWaterH.h"
 
-#include "MyAquariumLight.h"
+#include "MyAquariumL.h"
 
 #include "MyESP8266.h"
 

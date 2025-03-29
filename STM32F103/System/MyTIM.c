@@ -113,7 +113,7 @@ void MyTIM4_Init(
 	TIM_TimeBaseStructInit(&TIM_TimeBaseInitStruct);
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInitStruct.TIM_Prescaler = 7200 - 1;	//0~65535
+	TIM_TimeBaseInitStruct.TIM_Prescaler = 720 - 1;	//0~65535
 	TIM_TimeBaseInitStruct.TIM_Period = 10 - 1;	//0~65535
 	TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 1-1;
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStruct);
@@ -158,11 +158,11 @@ void TIM2_IRQHandler(void) {//TCKCNT=1us,TCNT=5us
 		
 		//MyTIM_2Count++;
 		
-		MyHCSR04_TrigCtrler();
+		MyWaterSS_TrigCtrler();
 		
-		MyDHT11_WriterSM();
+		MyAirS_WriterSM();
 		
-		MyDS18B20_TaskSM();
+		MyWaterTS_TaskSM();
 	}
 }
 
@@ -175,15 +175,17 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		
 		MyTIM3_DIVx(1000000/10000);
 		
-		MyDHT11_Count_TIM3ARer();
+		MyAirS_Count_TIM3ARer();
 		
-		MyDHT11_ReadCheckTimer();
+		MyAirS_ReadCheckTimer();
 		
 		MyTIM3_DIVy(3000000/10000);
 		
-		MyDS18B20_TaskSuccedCheckTimer();
+		MyWaterTS_TaskSuccedCheckTimer();
 		
 		//MyTIM3_DIVz(5000000/10000);
+		
+		MyESP8266_TIM3DIVz();
 	}
 }
 
@@ -194,9 +196,9 @@ void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
 	if(DIVxCount >= x) {//每ITx次(1s)执行该if内1次, TIT=TCKCNT/x
 		DIVxCount=0;//使得再经历100个MyTIM3IT才再发送Trig信号
 		
-		MyHCSR04_TrigCtrlerSwitchOn();//批准发送Trig信号，在下一个TIM2中断开始
+		MyWaterSS_TrigCtrlerSwitchOn();//批准发送Trig信号，在下一个TIM2中断开始
 		
-		MyDHT11_SwitchOn();
+		MyAirS_SwitchOn();
 	}
 }
 
@@ -207,7 +209,7 @@ void MyTIM3_DIVy(uint16_t y) {
 	if(DIVyCount >= y) {//fRUN=1/5Hz, TRUN=5s
 		DIVyCount  = 0;
 		
-		MyDS18B20_TaskSM_TurnOn();
+		MyWaterTS_TaskSM_TurnOn();
 		
 		//MyESP8266_ATSenderSM();
 	}
@@ -228,7 +230,9 @@ void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
 	if(TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
 		
-		MyTIM_4Count++;
+		//MyTIM_4Count++;
+		
+		MyESP8266_ReceiverSM();
 		
 	}
 }

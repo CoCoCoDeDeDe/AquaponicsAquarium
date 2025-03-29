@@ -1,4 +1,5 @@
 .\objects\array.o: System\Array.c
+.\objects\array.o: System\Array.h
 .\objects\array.o: .\Start\stm32f10x.h
 .\objects\array.o: .\Start\core_cm3.h
 .\objects\array.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -28,3 +29,5 @@
 .\objects\array.o: .\Library\stm32f10x_usart.h
 .\objects\array.o: .\Library\stm32f10x_wwdg.h
 .\objects\array.o: .\Library\misc.h
+.\objects\array.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\array.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
