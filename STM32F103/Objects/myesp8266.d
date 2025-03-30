@@ -33,6 +33,7 @@
 .\objects\myesp8266.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\myesp8266.o: .\System\Array.h
 .\objects\myesp8266.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\myesp8266.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\myesp8266.o: .\System\Delay.h
 .\objects\myesp8266.o: .\Hardware\MyTest.h
 .\objects\myesp8266.o: .\Hardware\OLED.h

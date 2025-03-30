@@ -20,7 +20,7 @@ void MyFeeder_SetRunStatus(uint8_t rs);
 
 extern uint16_t FeederAngle;
 
-void MyFeeder_Triger(void);
+void MyFeeder_Triger(int8_t ft);
 
 void MyFeeder_ServoTest(void);
 

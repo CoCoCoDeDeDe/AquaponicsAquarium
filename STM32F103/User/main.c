@@ -69,31 +69,28 @@ int main(void)
 	MyAirP_Init();
 	MyWaterH_Init();
 	
-//Run=====
+	Serial_SendStringPacketV2(USARTESP8266, "ATE0\n");
+	
+	while(Serial_RxFlag[3] == 0);
+	Serial_SendStringPacketV2(USARTPC, Serial_Rx3StringPacket);
+	Serial_RxFlag[3] = 0;
+	
+	
+	
+	
+	
+	//Run=====
 	while(1) {
-		
-//		if (Serial_RxFlag[2] == 1) {
-//			
-//			OLED_ShowString(1, 1, "USART2:");
-//			OLED_ShowString(2, 1, "                ");
-//			OLED_ShowString(2, 1, Serial_Rx2StringPacket);
-//			
-//			//Serial_SendStringPacketV2(USART3, Serial_Rx2StringPacket);
-//			
-//			Serial_RxFlag[2] = 0;
-//		}
+		if(Serial_RxFlag[2] == 1) {
+			
+			Serial_SendStringPacketV2(USARTESP8266, Serial_Rx2StringPacket);
+			Serial_RxFlag[2] = 0;
+		}
 		
 //		if(Serial_RxFlag[3] == 1) {
 //			
-//			//Serial_SendByte(USART3, 'F');//【Debug】
-//			
-//			OLED_ShowString(3, 1, "USART3:");
-//			OLED_ShowString(4, 1, "                ");
-//			OLED_ShowString(4, 1, Serial_Rx3StringPacket);
-//			
-//			//Serial_SendStringPacketV2(USART2, Serial_Rx3StringPacket);
-//			
-//			Serial_RxFlag[3] = 0;
+//			Serial_SendStringPacketV2(USARTPC, Serial_Rx3StringPacket);
+//			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
 //		}
 		
 //		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
@@ -128,7 +125,7 @@ int main(void)
 //		OLED_ShowNum(2, 1, MyWaterTS_Result_12Bit_H7Bit, 16);
 //		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 16);
 
-		//Delay_ms(100);//以免循环太快，CPU压力太大
+		Delay_ms(1);//以免循环太快，CPU压力太大
 	}
 }
 

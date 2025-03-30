@@ -36,6 +36,5 @@ void MyTIMx_DISABLECmd(TIM_TypeDef* TIMx);
 
 void MyTIM3_DIVx(uint16_t x);
 void MyTIM3_DIVy(uint16_t z);
-void MyTIM3_DIVz(uint16_t z);
 
 #endif

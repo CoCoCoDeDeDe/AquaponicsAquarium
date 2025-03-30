@@ -7,6 +7,8 @@
 
 #include "Array.h"
 
+#include "stdlib.h"
+
 #include "Delay.h"
 
 #include "MyTest.h"

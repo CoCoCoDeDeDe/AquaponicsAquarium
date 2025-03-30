@@ -47,13 +47,15 @@ uint16_t FeederAngle = 0;//【TODO】改进：上传电机角度或喂食次数信息或该FRS为喂食
 	//应用端在最后一次喂食完后提醒用户没有粮食了，
 	//此时不复位，用户确认已经补充粮仓后并触发一次才复位
 
-void MyFeeder_Triger(void) {	//【TODO】喂食状态机，喂食1次、2次...复位。
-
-	if(FeederRS == 1) {
-		//RUNNING
-	} else if (FeederRS == 0) {
-		
-		MyFeeder_SetPulse(FeederAngle);
+void MyFeeder_Triger(int8_t ft) {	//【TODO】喂食状态机，喂食1次、2次...复位。
+	
+	if(ft == 1) {
+		if(FeederRS == 1) {
+			//RUNNING
+		} else if (FeederRS == 0) {
+			
+			MyFeeder_SetPulse(FeederAngle);
+		}
 	}
 }
 

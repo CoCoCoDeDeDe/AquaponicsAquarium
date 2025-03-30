@@ -183,9 +183,7 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		
 		MyWaterTS_TaskSuccedCheckTimer();
 		
-		//MyTIM3_DIVz(5000000/10000);
-		
-		MyESP8266_TIM3DIVz();
+		//MyESP8266_TIM3DIVz();
 	}
 }
 
@@ -210,19 +208,6 @@ void MyTIM3_DIVy(uint16_t y) {
 		DIVyCount  = 0;
 		
 		MyWaterTS_TaskSM_TurnOn();
-		
-		//MyESP8266_ATSenderSM();
-	}
-}
-
-void MyTIM3_DIVz(uint16_t z) {
-	//z = 300
-	static uint16_t DIVzCount;//【错点】用uint8_t计数溢出导致无法满足>=256
-	DIVzCount ++;
-	if(DIVzCount >= z) {//fRUN=1/5Hz, TRUN=5s
-		DIVzCount  = 0;
-		
-		
 	}
 }
 
@@ -232,7 +217,7 @@ void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
 		
 		//MyTIM_4Count++;
 		
-		MyESP8266_ReceiverSM();
+		//MyESP8266_ReceiverSM();
 		
 	}
 }

@@ -32,6 +32,7 @@
 .\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: .\System\Array.h
 .\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: .\System\Delay.h
 .\objects\main.o: .\Hardware\MyTest.h
 .\objects\main.o: .\Hardware\OLED.h
