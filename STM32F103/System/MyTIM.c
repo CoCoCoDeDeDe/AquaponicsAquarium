@@ -216,5 +216,6 @@ void TIM4_IRQHandler(void) {//TCKCNT=¡¾¡¿us,TCNT=¡¾¡¿s
 		
 		//MyTIM_4Count++;
 		
+		EPS8266_SM();//RunTime_Period = 100us
 	}
 }

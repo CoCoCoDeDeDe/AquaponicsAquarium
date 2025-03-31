@@ -4,7 +4,7 @@
 #include "stm32f10x.h"                  // Device header
 #include "main.h"
 
-
+void EPS8266_SM(void);
 
 #endif
 

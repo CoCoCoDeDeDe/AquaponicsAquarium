@@ -5,8 +5,8 @@ static USART_InitTypeDef USART_InitStruct;
 uint8_t Serial_RxFlag[4] = {0, 0, 0, 0};	//Serial_RxFlag[ser]
 //用于标记状态机是否把一整个String接收完，否则不输出新接收的String等等
 
-char Serial_Rx3StringPacket[250];
-char Serial_Rx2StringPacket[250];
+char Serial_Rx3StringPacket[244];
+char Serial_Rx2StringPacket[244];
 
 uint8_t StateMachine_s3 = 0;
 uint8_t StateMachine_count3 = 0;

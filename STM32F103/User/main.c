@@ -76,24 +76,24 @@ int main(void)
 //	}
 	
 	
+	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
+	
+	
 	//Run=====
 	while(1) {
-		if(Serial_RxFlag[2] == 1) {
-			
-			
-			if(MyArray_IsContain(Serial_Rx2StringPacket, "ready")) {
-				Serial_SendStringV2(USARTPC, "RECV\r\n");
-			}
-			
-			//Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
-			Serial_RxFlag[2] = 0;
-		}
 		
-//		if(Serial_RxFlag[3] == 1) {
+//		if(Serial_RxFlag[2] == 1) {
 //			
-//			Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
-//			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
+//			Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
+//			Serial_RxFlag[2] = 0;
 //		}
+		
+		if(Serial_RxFlag[3] == 1) {
+			Serial_SendStringV2(USARTPC, "86:\r\n");
+			Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
+			
+			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
+		}
 		
 //		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
 //		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
@@ -127,7 +127,7 @@ int main(void)
 //		OLED_ShowNum(2, 1, MyWaterTS_Result_12Bit_H7Bit, 16);
 //		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 16);
 
-		Delay_ms(1);//以免循环太快，CPU压力太大
+		Delay_us(1000);//以免循环太快，CPU压力太大
 	}
 }
 
