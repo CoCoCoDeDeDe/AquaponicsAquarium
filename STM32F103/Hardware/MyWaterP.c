@@ -25,7 +25,7 @@ void MyWaterP_Init(uint16_t TIM_Pulse) {
 	
 	TIM_OC2PreloadConfig(TIM1, TIM_OCPreload_Enable);
 	
-	//Serial_SendStringPacketV2(USART2, "MyWaterP_Init_End\r\n");
+	//Serial_SendStringV2(USART2, "MyWaterP_Init_End\r\n");
 }
 
 void MyWaterP_SetPulse(uint16_t TIM_Pulse) {

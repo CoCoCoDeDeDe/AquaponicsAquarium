@@ -42,7 +42,7 @@
 .\objects\mytim.o: .\System\MyTIM.h
 .\objects\mytim.o: .\Hardware\MyAirS.h
 .\objects\mytim.o: .\Hardware\MyWaterTS.h
-.\objects\mytim.o: .\Hardware\MyESP8266.h
+.\objects\mytim.o: .\Hardware\ESP8266.h
 .\objects\mytim.o: .\User\main.h
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\mytim.o: .\Hardware\MyFeeder.h
@@ -55,4 +55,4 @@
 .\objects\mytim.o: .\Hardware\MyAirP.h
 .\objects\mytim.o: .\Hardware\MyWaterH.h
 .\objects\mytim.o: .\Hardware\MyAquariumL.h
-.\objects\mytim.o: .\Hardware\MyESP8266.h
+.\objects\mytim.o: .\Hardware\ESP8266.h

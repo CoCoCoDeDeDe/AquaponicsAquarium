@@ -42,7 +42,7 @@ void Serial_Auto_StateMachine(
 	char Serial_RxStringPacket[], 
 	uint8_t size);
 void Serial_SendByte(USART_TypeDef* USARTx, uint8_t Byte);
-void Serial_SendStringPacket(USART_TypeDef* USARTx, char *string);
-void Serial_SendStringPacketV2(USART_TypeDef* USARTx, char* str);
+void Serial_SendString(USART_TypeDef* USARTx, char *string);
+void Serial_SendStringV2(USART_TypeDef* USARTx, char* str);
 void Serial_SendInteger(USART_TypeDef* USARTx, int num);
 #endif

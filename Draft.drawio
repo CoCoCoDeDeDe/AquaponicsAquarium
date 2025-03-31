@@ -4814,11 +4814,1300 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="7SYk01jHNnklwmRzd9-s" name="第 13 页">
-    <mxGraphModel dx="1018" dy="815" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+  <diagram id="Rw1Dj_QU7cweUKvsT6Yf" name="MQTTV2">
+    <mxGraphModel dx="644" dy="1019" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="VyIr9TptBz08iPupT9wP-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-76" target="VyIr9TptBz08iPupT9wP-77" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-76" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;开启STM32-ESP8266串口&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="180" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-78" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-77" target="VyIr9TptBz08iPupT9wP-79" edge="1">
+          <mxGeometry x="-0.0069" relative="1" as="geometry">
+            <mxPoint x="1150" y="305.0000000000001" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1130" y="300" />
+              <mxPoint x="1130" y="300" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-82" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-77" target="VyIr9TptBz08iPupT9wP-81" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-77" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否有新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-80" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-79" target="VyIr9TptBz08iPupT9wP-114" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1140" y="370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1330" y="310" />
+              <mxPoint x="1330" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-79" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;开启串口AT后是否过了5s&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-84" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-81" target="VyIr9TptBz08iPupT9wP-83" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-97" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-81" target="ddo5QtUGynY-G0V4nh-r-185" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="1502.3529411764705" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="940" y="410" />
+              <mxPoint x="940" y="2930" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-81" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否是WiFi成功连接消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="380" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-99" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-83" target="VyIr9TptBz08iPupT9wP-101" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-104" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-83" target="VyIr9TptBz08iPupT9wP-91" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-83" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否是WiFi连接失败消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="480" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-91" target="VyIr9TptBz08iPupT9wP-77" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1300" y="520" />
+              <mxPoint x="1300" y="270" />
+              <mxPoint x="1050" y="270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-91" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;报错&lt;/span&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="480" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-98" target="VyIr9TptBz08iPupT9wP-77" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="710" />
+              <mxPoint x="1320" y="250" />
+              <mxPoint x="1050" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-98" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（推测消息为上电通知）&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;Count_ESP8266PowerOnMsg++&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" parent="1" vertex="1">
+          <mxGeometry x="990" y="680" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-102" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-101" target="VyIr9TptBz08iPupT9wP-98" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-105" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-101" target="VyIr9TptBz08iPupT9wP-103" edge="1">
+          <mxGeometry x="0.007" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-101" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;;&quot;&gt;Count_ESP8266PowerOnMsg&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;;&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;;&quot;&gt;1&lt;/span&gt;&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="580" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-106" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="VyIr9TptBz08iPupT9wP-103" target="VyIr9TptBz08iPupT9wP-77" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1310" y="610" />
+              <mxPoint x="1310" y="260" />
+              <mxPoint x="1050" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-103" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;（不知道什么消息）&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;报错&lt;/span&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="580" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VyIr9TptBz08iPupT9wP-114" target="ddo5QtUGynY-G0V4nh-r-64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VyIr9TptBz08iPupT9wP-114" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;（判断为没有WiFi配置）&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;报错&lt;/span&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" parent="1" vertex="1">
+          <mxGeometry x="1380" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-1" target="ddo5QtUGynY-G0V4nh-r-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-1" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;ATE0\r\n&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="590" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-6" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-3" target="ddo5QtUGynY-G0V4nh-r-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-12" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-3" target="ddo5QtUGynY-G0V4nh-r-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-3" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="590" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-9" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-5" target="ddo5QtUGynY-G0V4nh-r-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-5" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="590" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-7" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-5" target="ddo5QtUGynY-G0V4nh-r-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-8" target="ddo5QtUGynY-G0V4nh-r-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1990" y="570" />
+              <mxPoint x="1550" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-8" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="605" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-79" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-11" target="ddo5QtUGynY-G0V4nh-r-97">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1550" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-94" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-11" target="ddo5QtUGynY-G0V4nh-r-92">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-11" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否是命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="690" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-93" target="ddo5QtUGynY-G0V4nh-r-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2089.9999999999995" y="700" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2090" y="570" />
+              <mxPoint x="1550" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-33" target="ddo5QtUGynY-G0V4nh-r-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-33" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;AT+CWMODE=1\r\n&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="949.97" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-35" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-37" target="ddo5QtUGynY-G0V4nh-r-39" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-36" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-37" target="ddo5QtUGynY-G0V4nh-r-43" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-37" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="949.97" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-38" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-39" target="ddo5QtUGynY-G0V4nh-r-41" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="949.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-39" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="949.97" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-40" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-39" target="ddo5QtUGynY-G0V4nh-r-39" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-41" target="ddo5QtUGynY-G0V4nh-r-33">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1990" y="929.97" />
+              <mxPoint x="1550" y="929.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-41" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="964.97" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-103" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-43" target="ddo5QtUGynY-G0V4nh-r-56">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1550" y="1260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-105" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-43" target="ddo5QtUGynY-G0V4nh-r-104">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-43" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="1049.97" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-91" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-44" target="ddo5QtUGynY-G0V4nh-r-33">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2090" y="929.97" />
+              <mxPoint x="1550" y="929.97" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-44" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（ATCWMODE1失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2040" y="1160" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-56" target="ddo5QtUGynY-G0V4nh-r-57" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-49" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-57" target="ddo5QtUGynY-G0V4nh-r-58" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-50" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-57" target="ddo5QtUGynY-G0V4nh-r-60" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-51" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-58" target="ddo5QtUGynY-G0V4nh-r-59" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="1340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-52" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-58" target="ddo5QtUGynY-G0V4nh-r-58" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-59" target="ddo5QtUGynY-G0V4nh-r-56" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1990" y="1287.94" />
+              <mxPoint x="1550" y="1287.94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-113" target="ddo5QtUGynY-G0V4nh-r-56" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2090" y="1447.94" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2090" y="1287.94" />
+              <mxPoint x="1550" y="1287.94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-56" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;AT+CWQAP=1&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="1337.94" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-57" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="1337.94" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-58" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="1337.94" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-59" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="1352.94" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-110" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-60" target="ddo5QtUGynY-G0V4nh-r-125">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1560" y="1567.94" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-112" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-60" target="ddo5QtUGynY-G0V4nh-r-111">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-60" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="1437.94" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-64" target="ddo5QtUGynY-G0V4nh-r-67" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-64" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;+++\r\n&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-65" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-67" target="ddo5QtUGynY-G0V4nh-r-69" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-66" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-67" target="ddo5QtUGynY-G0V4nh-r-74" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-67" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-68" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-69" target="ddo5QtUGynY-G0V4nh-r-72" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-69" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-70" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-69" target="ddo5QtUGynY-G0V4nh-r-69" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-72" target="ddo5QtUGynY-G0V4nh-r-64" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1970" y="260" />
+              <mxPoint x="1550" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-72" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="295" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-80" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-76" target="ddo5QtUGynY-G0V4nh-r-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1550" y="550" />
+              <mxPoint x="1550" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-82" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-74" target="ddo5QtUGynY-G0V4nh-r-81">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-74" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否是命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="380" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-83" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-81" target="ddo5QtUGynY-G0V4nh-r-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-84" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-81" target="ddo5QtUGynY-G0V4nh-r-85">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2150" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-81" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否是命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="480" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-85" target="ddo5QtUGynY-G0V4nh-r-64">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2170" y="260" />
+              <mxPoint x="1550" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-85" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;Log&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2120" y="490" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-95" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-92" target="ddo5QtUGynY-G0V4nh-r-93">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-92" target="ddo5QtUGynY-G0V4nh-r-99">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1690" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-92" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否是命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="790" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-93" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（ATE0失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2040" y="800" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-96" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-74" target="ddo5QtUGynY-G0V4nh-r-76">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1640" y="410" as="sourcePoint" />
+            <mxPoint x="1550" y="730" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1550" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-76" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不是透传模式）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;Log&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="440" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-98" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-97" target="ddo5QtUGynY-G0V4nh-r-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-97" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（ATE0成功）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;记录&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="750" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-101" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-99" target="ddo5QtUGynY-G0V4nh-r-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2190" y="570" />
+              <mxPoint x="1550" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-99" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2140" y="850" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-106" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-104" target="ddo5QtUGynY-G0V4nh-r-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-107" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-104" target="ddo5QtUGynY-G0V4nh-r-108">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1970" y="1260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1690" y="1230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-104" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="1150" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-109" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-108" target="ddo5QtUGynY-G0V4nh-r-33">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2190" y="930" />
+              <mxPoint x="1550" y="930" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-108" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2140" y="1210" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-114" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-111" target="ddo5QtUGynY-G0V4nh-r-113">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-116" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-111" target="ddo5QtUGynY-G0V4nh-r-115">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1690" y="1617.94" />
+              <mxPoint x="2190" y="1617.94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-111" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1640" y="1537.94" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-113" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（&lt;/font&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;;&quot;&gt;AT+CWQAP=1失败&lt;/span&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2040" y="1552.94" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-117" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-115" target="ddo5QtUGynY-G0V4nh-r-56">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2190" y="1287.94" />
+              <mxPoint x="1550" y="1287.94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-115" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2140" y="1597.94" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-118" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-125" target="ddo5QtUGynY-G0V4nh-r-126" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-119" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-126" target="ddo5QtUGynY-G0V4nh-r-127" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-120" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-126" target="ddo5QtUGynY-G0V4nh-r-131" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-121" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.647;exitY=0.132;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-127" target="ddo5QtUGynY-G0V4nh-r-128" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1855" y="1730" />
+              <mxPoint x="1950" y="1730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-122" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-127" target="ddo5QtUGynY-G0V4nh-r-127" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-123" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-128" target="ddo5QtUGynY-G0V4nh-r-125" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="1680" />
+              <mxPoint x="1560" y="1680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-124" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-135" target="ddo5QtUGynY-G0V4nh-r-125" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="1840" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2100" y="1680" />
+              <mxPoint x="1560" y="1680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-125" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;AT+CIPMUX=0&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="1730" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-126" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="1730" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-127" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="1730" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-128" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="1745" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-129" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-131" parent="1" target="ddo5QtUGynY-G0V4nh-r-145">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1560" y="2020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-130" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-131" target="ddo5QtUGynY-G0V4nh-r-134" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-131" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="1830" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-132" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-134" target="ddo5QtUGynY-G0V4nh-r-135" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-133" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-134" target="ddo5QtUGynY-G0V4nh-r-137" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="2010" />
+              <mxPoint x="2200" y="2010" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-134" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="1930" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-135" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="1945" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-136" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-137" target="ddo5QtUGynY-G0V4nh-r-125" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="1680" />
+              <mxPoint x="1560" y="1680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-137" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="1990" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-138" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-145" target="ddo5QtUGynY-G0V4nh-r-146" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-139" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-146" target="ddo5QtUGynY-G0V4nh-r-147" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-140" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-146" target="ddo5QtUGynY-G0V4nh-r-151" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-141" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-147" target="ddo5QtUGynY-G0V4nh-r-148" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1840" y="2120" />
+              <mxPoint x="1950" y="2120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-142" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-147" target="ddo5QtUGynY-G0V4nh-r-147" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-143" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-148" target="ddo5QtUGynY-G0V4nh-r-145" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="2071" />
+              <mxPoint x="1560" y="2071" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-144" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-155" target="ddo5QtUGynY-G0V4nh-r-145" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="2231" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2100" y="2071" />
+              <mxPoint x="1560" y="2071" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-145" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{AT+CWJAP=}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="2121" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-146" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2121" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-147" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="2121" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-148" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="2136" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-149" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-151" parent="1" target="ddo5QtUGynY-G0V4nh-r-165">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1560" y="2411" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-150" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-151" target="ddo5QtUGynY-G0V4nh-r-154" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-151" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2221" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-152" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-154" target="ddo5QtUGynY-G0V4nh-r-155" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-153" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-154" target="ddo5QtUGynY-G0V4nh-r-157" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="2401" />
+              <mxPoint x="2200" y="2401" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-154" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2321" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-155" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="2336" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-156" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-157" target="ddo5QtUGynY-G0V4nh-r-145" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="2071" />
+              <mxPoint x="1560" y="2071" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-157" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="2381" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-158" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-165" target="ddo5QtUGynY-G0V4nh-r-166" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-159" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-166" target="ddo5QtUGynY-G0V4nh-r-167" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-160" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-166" target="ddo5QtUGynY-G0V4nh-r-171" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-161" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-167" target="ddo5QtUGynY-G0V4nh-r-168" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1950" y="2510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-162" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-167" target="ddo5QtUGynY-G0V4nh-r-167" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-163" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-168" target="ddo5QtUGynY-G0V4nh-r-165" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="2460" />
+              <mxPoint x="1560" y="2460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-164" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-175" target="ddo5QtUGynY-G0V4nh-r-145" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="2620" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="1460" y="2151" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-165" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{AT+CWJAP?}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="2510" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-166" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2510" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-167" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="2510" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-168" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="2525" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-169" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-171" parent="1" target="ddo5QtUGynY-G0V4nh-r-185">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1560" y="2800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-170" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-171" target="ddo5QtUGynY-G0V4nh-r-174" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-171" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2610" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-172" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-174" target="ddo5QtUGynY-G0V4nh-r-175" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-173" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-174" target="ddo5QtUGynY-G0V4nh-r-177" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="2790" />
+              <mxPoint x="2200" y="2790" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-174" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2710" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-175" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="2725" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-176" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-177" target="ddo5QtUGynY-G0V4nh-r-165" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="2460" />
+              <mxPoint x="1560" y="2460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-177" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="2770" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-178" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-185" target="ddo5QtUGynY-G0V4nh-r-186" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-179" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-186" target="ddo5QtUGynY-G0V4nh-r-187" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-180" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-186" target="ddo5QtUGynY-G0V4nh-r-190" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-181" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-187" target="ddo5QtUGynY-G0V4nh-r-188" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1950" y="2900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-182" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-187" target="ddo5QtUGynY-G0V4nh-r-187" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-183" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-188" target="ddo5QtUGynY-G0V4nh-r-185" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="2850" />
+              <mxPoint x="1560" y="2850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-184" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-194" target="ddo5QtUGynY-G0V4nh-r-185" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="3010" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2100" y="2850" />
+              <mxPoint x="1560" y="2850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-185" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{MQTTUSERCFG}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="2900" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-186" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="2900" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-187" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="2900" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-188" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="2915" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-189" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-190" target="ddo5QtUGynY-G0V4nh-r-193" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-220" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-190" target="ddo5QtUGynY-G0V4nh-r-207">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-190" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3000" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-191" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-193" target="ddo5QtUGynY-G0V4nh-r-194" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-192" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-193" target="ddo5QtUGynY-G0V4nh-r-196" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="3180" />
+              <mxPoint x="2200" y="3180" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-193" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3100" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-194" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="3115" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-195" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-196" target="ddo5QtUGynY-G0V4nh-r-185" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="2850" />
+              <mxPoint x="1560" y="2850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-196" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="3160" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-198" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-197" target="VyIr9TptBz08iPupT9wP-76">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1030" y="170" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1050" y="150" />
+              <mxPoint x="1050" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-197" value="&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;拼接字符串（运行之后不会变动的字符串）：&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;{MQTTUSERCFG}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;{MQTTCLIENTID}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;{MQTTCONN}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;{MQTTSUB}&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;{上行响应}（非完全）&lt;/span&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="930" y="50" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-199" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.397;entryY=0.904;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.61;exitY=0.924;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="VyIr9TptBz08iPupT9wP-79" target="VyIr9TptBz08iPupT9wP-79">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1221" y="350" />
+              <mxPoint x="1200" y="350" />
+              <mxPoint x="1200" y="334" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-200" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-207" target="ddo5QtUGynY-G0V4nh-r-208" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-201" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-208" target="ddo5QtUGynY-G0V4nh-r-209" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-202" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-208" target="ddo5QtUGynY-G0V4nh-r-212" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-203" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-209" target="ddo5QtUGynY-G0V4nh-r-210" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1950" y="3370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1950" y="3290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-204" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-209" target="ddo5QtUGynY-G0V4nh-r-209" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-205" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-210" target="ddo5QtUGynY-G0V4nh-r-207" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="3240" />
+              <mxPoint x="1560" y="3240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-206" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-216" target="ddo5QtUGynY-G0V4nh-r-207" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="3400" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2100" y="3240" />
+              <mxPoint x="1560" y="3240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-207" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{MQTTCLIENTID}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="3290" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-208" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3290" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-209" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="3290" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-210" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="3305" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-211" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-212" target="ddo5QtUGynY-G0V4nh-r-215" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-241" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-212" target="ddo5QtUGynY-G0V4nh-r-228">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-212" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3390" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-213" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-215" target="ddo5QtUGynY-G0V4nh-r-216" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-214" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-215" target="ddo5QtUGynY-G0V4nh-r-218" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="3570" />
+              <mxPoint x="2200" y="3570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-215" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3490" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-216" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="3505" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-217" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-218" target="ddo5QtUGynY-G0V4nh-r-207" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="3240" />
+              <mxPoint x="1560" y="3240" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-218" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="3550" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-221" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-228" target="ddo5QtUGynY-G0V4nh-r-229" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-222" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-229" target="ddo5QtUGynY-G0V4nh-r-230" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-223" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-229" target="ddo5QtUGynY-G0V4nh-r-233" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-224" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-230" target="ddo5QtUGynY-G0V4nh-r-231" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1950" y="3680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-225" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-230" target="ddo5QtUGynY-G0V4nh-r-230" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-226" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-231" target="ddo5QtUGynY-G0V4nh-r-228" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="3630" />
+              <mxPoint x="1560" y="3630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-227" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-237" target="ddo5QtUGynY-G0V4nh-r-228" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="3790" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2100" y="3630" />
+              <mxPoint x="1560" y="3630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-228" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{MQTTCONN}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="3680" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-229" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3680" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-230" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="3680" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-231" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="3695" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-232" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-233" target="ddo5QtUGynY-G0V4nh-r-236" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-261" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-233" target="ddo5QtUGynY-G0V4nh-r-249">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-233" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3780" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-234" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-236" target="ddo5QtUGynY-G0V4nh-r-237" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-235" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-236" target="ddo5QtUGynY-G0V4nh-r-239" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="3960" />
+              <mxPoint x="2200" y="3960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-236" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="3880" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-237" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="3895" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-238" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-239" target="ddo5QtUGynY-G0V4nh-r-228" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="3630" />
+              <mxPoint x="1560" y="3630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-239" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="3940" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-242" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-249" target="ddo5QtUGynY-G0V4nh-r-250" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-243" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-250" target="ddo5QtUGynY-G0V4nh-r-251" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-244" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-250" target="ddo5QtUGynY-G0V4nh-r-254" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-245" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-251" target="ddo5QtUGynY-G0V4nh-r-252" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1950" y="4070" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-246" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-251" target="ddo5QtUGynY-G0V4nh-r-251" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-247" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-252" target="ddo5QtUGynY-G0V4nh-r-249" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="4020" />
+              <mxPoint x="1560" y="4020" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-248" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-258" target="ddo5QtUGynY-G0V4nh-r-249" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2100" y="4180" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="2100" y="4020" />
+              <mxPoint x="1560" y="4020" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-263" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-249" target="ddo5QtUGynY-G0V4nh-r-262">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-287" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-249" target="ddo5QtUGynY-G0V4nh-r-286">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-249" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{MQTTSUB}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="4070" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-250" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="4070" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-251" value="&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发后送&lt;/font&gt;&lt;/div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;是否过了5s&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="4070" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-252" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令接受超时）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1950" y="4085" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-253" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-254" target="ddo5QtUGynY-G0V4nh-r-257" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-254" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="4170" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-255" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-257" target="ddo5QtUGynY-G0V4nh-r-258" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-256" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="ddo5QtUGynY-G0V4nh-r-257" target="ddo5QtUGynY-G0V4nh-r-260" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1700" y="4350" />
+              <mxPoint x="2200" y="4350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-257" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="4270" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-258" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="4285" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-259" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-260" target="ddo5QtUGynY-G0V4nh-r-249" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2200" y="4020" />
+              <mxPoint x="1560" y="4020" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-260" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道收到什么）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2150" y="4330" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-265" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-262" target="ddo5QtUGynY-G0V4nh-r-264">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-262" value="" style="ellipse;whiteSpace=wrap;html=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="4410" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-285" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-264" target="ddo5QtUGynY-G0V4nh-r-317">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1320" y="4630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-264" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;拼接字符串并发送&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{MQTTPUBreport1}&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{MQTTPUBreport2}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="4530" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-293" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-286" target="ddo5QtUGynY-G0V4nh-r-289">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-286" value="" style="ellipse;whiteSpace=wrap;html=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="4410" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-288" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-289" target="ddo5QtUGynY-G0V4nh-r-320" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-289" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="4530" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-290" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" source="ddo5QtUGynY-G0V4nh-r-291" target="ddo5QtUGynY-G0V4nh-r-292" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-302" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-291" target="ddo5QtUGynY-G0V4nh-r-297">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-291" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为下行命令消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="4760" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-295" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-292" target="ddo5QtUGynY-G0V4nh-r-294">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-311" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-292" target="ddo5QtUGynY-G0V4nh-r-310">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1890" y="4890" />
+              <mxPoint x="1890" y="4890" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-292" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令成功消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="4860" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-309" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-294" target="ddo5QtUGynY-G0V4nh-r-308">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1560" y="5060" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-294" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为命令失败消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="4960" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-306" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-296" target="ddo5QtUGynY-G0V4nh-r-305">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-296" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;拼接上行响应&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（完全）&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="4760" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-303" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-297" target="ddo5QtUGynY-G0V4nh-r-298">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-297" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;提取request_id&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; background-color: initial;&quot;&gt;判断para_name&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;提取para_value&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="4760" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-304" value="默认成功" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-298" target="ddo5QtUGynY-G0V4nh-r-296">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-298" value="&lt;div style=&quot;&quot;&gt;执行命令&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="4760" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-307" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-305" target="ddo5QtUGynY-G0V4nh-r-289">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2120" y="4560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-305" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;发给串口AT&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;{上行响应}&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2070" y="4760" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-316" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-308" target="ddo5QtUGynY-G0V4nh-r-289">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2420" y="4560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-308" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; background-color: initial;&quot;&gt;报错&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; background-color: initial;&quot;&gt;（不知道收到什么）&lt;/span&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2370" y="5020" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-314" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-310" target="ddo5QtUGynY-G0V4nh-r-289">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2220" y="4560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-310" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;记录日志&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令成功）&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（属性上报成功或者上行响应成功）&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2170" y="4860" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-312" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" target="ddo5QtUGynY-G0V4nh-r-313" parent="1" source="ddo5QtUGynY-G0V4nh-r-294">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1710" y="4975" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-315" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-313" target="ddo5QtUGynY-G0V4nh-r-289">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2320" y="4560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-313" value="&lt;div style=&quot;&quot;&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;记录日志&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（命令失败）&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（属性上报失败或者上行响应失败）&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="2270" y="4960" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-318" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-317" target="ddo5QtUGynY-G0V4nh-r-264">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1410" y="4660" />
+              <mxPoint x="1410" y="4560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-317" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;命令发送后是否过了3s&lt;/font&gt;&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="4630" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-319" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.401;entryY=0.929;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.599;exitY=0.915;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-317" target="ddo5QtUGynY-G0V4nh-r-317">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1330" y="4710" />
+              <mxPoint x="1310" y="4710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-321" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-320" target="ddo5QtUGynY-G0V4nh-r-291">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1640" y="4830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-322" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-320" target="ddo5QtUGynY-G0V4nh-r-323">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1680" y="4680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-320" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为WiFi断开消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="4650" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-329" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-323" target="ddo5QtUGynY-G0V4nh-r-326">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-323" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（WiFi断联）&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1650" y="4650" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-328" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-326" target="ddo5QtUGynY-G0V4nh-r-327">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-326" value="&lt;div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;串口AT&lt;/span&gt;&lt;/div&gt;&lt;span style=&quot;font-family: &amp;quot;幼圆 常规&amp;quot;; text-align: left;&quot;&gt;是否来新消息&lt;/span&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1790" y="4650" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-332" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-327" target="ddo5QtUGynY-G0V4nh-r-331">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-334" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-327" target="ddo5QtUGynY-G0V4nh-r-289">
+          <mxGeometry x="-0.871" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2070" y="4680" />
+              <mxPoint x="2070" y="4560" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-327" value="&lt;font face=&quot;幼圆 常规&quot;&gt;是否为WiFi成功连接消息&lt;/font&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="4650" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-330" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.349;entryY=0.865;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.653;exitY=0.819;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-326" target="ddo5QtUGynY-G0V4nh-r-326">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1855" y="4720" />
+              <mxPoint x="1825" y="4720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-333" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ddo5QtUGynY-G0V4nh-r-331" target="ddo5QtUGynY-G0V4nh-r-326">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddo5QtUGynY-G0V4nh-r-331" value="&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;报错&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;幼圆 常规&quot;&gt;（不知道什么消息）&lt;/font&gt;&lt;/div&gt;" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;size=0.23;arcSize=10;flipV=1;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="4570" width="120" height="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

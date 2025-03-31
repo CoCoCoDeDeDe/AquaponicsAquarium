@@ -16,5 +16,5 @@ void MySoilMS_Init(void) {
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 3, ADC_SampleTime_55Cycles5);
 	//MyADCAndDMA_Result[2]
 
-	//Serial_SendStringPacketV2(USART2, "MySoilMS_Init_End\r\n");
+	//Serial_SendStringV2(USART2, "MySoilMS_Init_End\r\n");
 }

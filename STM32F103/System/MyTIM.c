@@ -183,7 +183,6 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		
 		MyWaterTS_TaskSuccedCheckTimer();
 		
-		//MyESP8266_TIM3DIVz();
 	}
 }
 
@@ -216,8 +215,6 @@ void TIM4_IRQHandler(void) {//TCKCNT=¡¾¡¿us,TCNT=¡¾¡¿s
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
 		
 		//MyTIM_4Count++;
-		
-		//MyESP8266_ReceiverSM();
 		
 	}
 }

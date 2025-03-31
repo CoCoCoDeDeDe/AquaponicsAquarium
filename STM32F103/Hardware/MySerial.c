@@ -217,13 +217,13 @@ void Serial_SendByte(USART_TypeDef* USARTx, uint8_t Byte) {
 	USART_SendData(USARTx, Byte);
 }
 
-void Serial_SendStringPacket(USART_TypeDef* USARTx, char *string) {
+void Serial_SendString(USART_TypeDef* USARTx, char *string) {
 	for(uint8_t i = 0; string[i] != '\0'; i++) {	//´íµã£º½«string[i]´íÐ´Îªi != '\0'
 		Serial_SendByte(USARTx, string[i]);
 	}
 }
 
-void Serial_SendStringPacketV2(USART_TypeDef* USARTx, char* str) {
+void Serial_SendStringV2(USART_TypeDef* USARTx, char* str) {
     while (*str) {
         Serial_SendByte(USARTx, *str++);
     }
@@ -232,6 +232,6 @@ void Serial_SendStringPacketV2(USART_TypeDef* USARTx, char* str) {
 void Serial_SendInteger(USART_TypeDef* USARTx, int num) {
     char buffer[20];
     sprintf(buffer, "%d", num);	//#include <stdio.h>
-    Serial_SendStringPacketV2(USART2, buffer);
+    Serial_SendStringV2(USART2, buffer);
 }
 

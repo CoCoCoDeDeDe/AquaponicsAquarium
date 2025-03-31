@@ -42,7 +42,7 @@
 .\objects\mywaterss.o: .\Hardware\MyWaterSS.h
 .\objects\mywaterss.o: .\Hardware\MyAirS.h
 .\objects\mywaterss.o: .\Hardware\MyWaterTS.h
-.\objects\mywaterss.o: .\Hardware\MyESP8266.h
+.\objects\mywaterss.o: .\Hardware\ESP8266.h
 .\objects\mywaterss.o: .\User\main.h
 .\objects\mywaterss.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\mywaterss.o: .\System\MyTIM.h
@@ -56,4 +56,4 @@
 .\objects\mywaterss.o: .\Hardware\MyAirP.h
 .\objects\mywaterss.o: .\Hardware\MyWaterH.h
 .\objects\mywaterss.o: .\Hardware\MyAquariumL.h
-.\objects\mywaterss.o: .\Hardware\MyESP8266.h
+.\objects\mywaterss.o: .\Hardware\ESP8266.h

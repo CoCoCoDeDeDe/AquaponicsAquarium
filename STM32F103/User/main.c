@@ -30,12 +30,8 @@ int main(void)
 //Init=====
 	MyTest_PB5_Init();
 	
-	
-	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
-	Serial_SendStringPacketV2(USART3, "Serial3_On\r\n");//【Debug】
-	
 	Serial_Init(USART2, 115200, 0, 0);	//Serail2——PC
-	Serial_SendStringPacketV2(USART2, "Serial2_On\r\n");//【Debug】
+	Serial_SendStringV2(USART2, "Serial2_On\r\n");//【Debug】
 	
 	OLED_Init();
 	OLED_Clear();
@@ -69,27 +65,33 @@ int main(void)
 	MyAirP_Init();
 	MyWaterH_Init();
 	
-	Serial_SendStringPacketV2(USARTESP8266, "ATE0\n");
-	
-	while(Serial_RxFlag[3] == 0);
-	Serial_SendStringPacketV2(USARTPC, Serial_Rx3StringPacket);
-	Serial_RxFlag[3] = 0;
-	
-	
-	
+//	while(1) {
+//		Serial_SendStringV2(USARTESP8266, "AT\r\n");
+//		
+//		while(Serial_RxFlag[3] == 0);
+//		Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
+//		Serial_RxFlag[3] = 0;
+//		
+//		Delay_ms(2000);
+//	}
 	
 	
 	//Run=====
 	while(1) {
 		if(Serial_RxFlag[2] == 1) {
 			
-			Serial_SendStringPacketV2(USARTESP8266, Serial_Rx2StringPacket);
+			
+			if(MyArray_IsContain(Serial_Rx2StringPacket, "ready")) {
+				Serial_SendStringV2(USARTPC, "RECV\r\n");
+			}
+			
+			//Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
 			Serial_RxFlag[2] = 0;
 		}
 		
 //		if(Serial_RxFlag[3] == 1) {
 //			
-//			Serial_SendStringPacketV2(USARTPC, Serial_Rx3StringPacket);
+//			Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
 //			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
 //		}
 		

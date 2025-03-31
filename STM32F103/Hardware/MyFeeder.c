@@ -26,7 +26,7 @@ void MyFeeder_Init(uint16_t TIM_Pulse) {
 	
 	TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
 	
-	//Serial_SendStringPacketV2(USART2, "MyFeeder_Init_End\r\n");
+	//Serial_SendStringV2(USART2, "MyFeeder_Init_End\r\n");
 }
 
 void MyFeeder_SetPulse(uint16_t TIM_Pulse) {

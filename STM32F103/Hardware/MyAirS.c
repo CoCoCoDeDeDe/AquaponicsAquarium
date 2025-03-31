@@ -147,7 +147,7 @@ void MyAirS_ReadCheckTimer(void) {
 			
 			MyAirS_Flag_ReadCheckTimer_On  = 0;
 			
-			//Serial_SendStringPacketV2(USART2, "RCC\r\n");
+			//Serial_SendStringV2(USART2, "RCC\r\n");
 		}
 	}
 }
@@ -161,14 +161,14 @@ void MyAirSReadCheck(void) {
 		
 		MyAirS_ReadSucced();//成功
 		
-		//Serial_SendStringPacketV2(USART2, "RCS\r\n");
+		//Serial_SendStringV2(USART2, "RCS\r\n");
 		
 	} else if(MyAirS_Flag_ReadSucced == 0) {
 		
 		MyAirS_ReadFailed();//失败
 		
-		//Serial_SendStringPacketV2(USART2, "RCF\r\n");
-		//Serial_SendStringPacketV2(USART2, "\r\nFailed\r\n");
+		//Serial_SendStringV2(USART2, "RCF\r\n");
+		//Serial_SendStringV2(USART2, "\r\nFailed\r\n");
 	}
 }
 
@@ -183,7 +183,7 @@ void MyAirS_ReadFailed(void) {
 	
 	MyAirS_Reset();
 	
-	//Serial_SendStringPacketV2(USART2, "RF\r\n");
+	//Serial_SendStringV2(USART2, "RF\r\n");
 }
 
 //失败后的处理;定时重置以迎接新周期
@@ -224,7 +224,7 @@ void MyAirS_WriterSM(void) {
 			
 				MyAirS_Count_WriterSM = 0;//进入S1前重新计时,记录低电平持续时间
 				
-				//Serial_SendStringPacketV2(USART2, "0");
+				//Serial_SendStringV2(USART2, "0");
 				//Serial_SendByte(USART2, '0');
 				
 				break;
@@ -241,9 +241,9 @@ void MyAirS_WriterSM(void) {
 					
 					MyAirS_Flag_WriterSM_On= 0;//关闭Writer
 					
-					//Serial_SendStringPacketV2(USART2, "WriterSM_State: 1 in\r\n");
+					//Serial_SendStringV2(USART2, "WriterSM_State: 1 in\r\n");
 				}
-				//Serial_SendStringPacketV2(USART2, "WriterSM_State: 1 out\r\n");
+				//Serial_SendStringV2(USART2, "WriterSM_State: 1 out\r\n");
 				break;
 		}
 	}
@@ -251,7 +251,7 @@ void MyAirS_WriterSM(void) {
 
 void MyAirS_ReaderSM(void) {
 	
-	//Serial_SendStringPacketV2(USART2, "S");
+	//Serial_SendStringV2(USART2, "S");
 	
 	switch (MyAirS_State_ReaderSM) {
 		
@@ -259,7 +259,7 @@ void MyAirS_ReaderSM(void) {
 			//空闲,未经允许不响应EXTI触发
 			//该状态转出由其他函数控制
 		
-			//Serial_SendStringPacketV2(USART2, "I");
+			//Serial_SendStringV2(USART2, "I");
 			//Serial_SendByte(USART2, 'I');
 			break;
 		
@@ -271,7 +271,7 @@ void MyAirS_ReaderSM(void) {
 			
 			MyAirS_State_ReaderSM = RSP_END;
 			
-			//Serial_SendStringPacketV2(USART2, "F1);
+			//Serial_SendStringV2(USART2, "F1);
 			//Serial_SendByte(USART2, 'R');
 			break;
 			
@@ -291,7 +291,7 @@ void MyAirS_ReaderSM(void) {
 				MyAirS_ReadFailed();
 				//Serial_SendByte(USART2, 'f');
 			}
-			//Serial_SendStringPacketV2(USART2, "F2");
+			//Serial_SendStringV2(USART2, "F2");
 			break;
 			
 		case BIT_END:
@@ -339,7 +339,7 @@ void MyAirS_ReaderSM(void) {
 		
 			if (40 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval <= 60) {//【错点】表示属于[40, 60],中间用&&(//且)
 				
-				//Serial_SendStringPacketV2(USART2, "s");
+				//Serial_SendStringV2(USART2, "s");
 				
 				MyAirS_Flag_ReadSucced = 1;//置Read成功标志位,reset由ReadCheck执行
 				
@@ -349,13 +349,13 @@ void MyAirS_ReaderSM(void) {
 				
 				MyAirS_ReadFailed();//Read失败程序
 			}
-			//Serial_SendStringPacketV2(USART2, "ER");
+			//Serial_SendStringV2(USART2, "ER");
 			break;
 			
 		default:
 			//如果使用某枚举类型变量作为switch表达式,则switch要么为该枚举类型所有的枚举变量都写一个case,要么就要加上default.default:后若没有要执行的语句则要加上break;
 			
-			//Serial_SendStringPacketV2(USART2, "d");
+			//Serial_SendStringV2(USART2, "d");
 			break;
 	}
 }

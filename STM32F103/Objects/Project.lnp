@@ -31,7 +31,7 @@
 ".\objects\mytest.o"
 ".\objects\myserial.o"
 ".\objects\oled.o"
-".\objects\myesp8266.o"
+".\objects\esp8266.o"
 ".\objects\mywaterts.o"
 ".\objects\myairs.o"
 ".\objects\mywaterss.o"

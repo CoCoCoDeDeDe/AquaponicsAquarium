@@ -16,5 +16,5 @@ void MyIlluminationS_Init(void) {
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 4, ADC_SampleTime_55Cycles5);
 	//MyADCAndDMA_Result[3]
 	
-	//Serial_SendStringPacketV2(USART2, "MyIlluminationS_Init_End\r\n");
+	//Serial_SendStringV2(USART2, "MyIlluminationS_Init_End\r\n");
 }

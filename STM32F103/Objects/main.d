@@ -44,7 +44,7 @@
 .\objects\main.o: .\System\MyTIM.h
 .\objects\main.o: .\Hardware\MyAirS.h
 .\objects\main.o: .\Hardware\MyWaterTS.h
-.\objects\main.o: .\Hardware\MyESP8266.h
+.\objects\main.o: .\Hardware\ESP8266.h
 .\objects\main.o: .\User\main.h
 .\objects\main.o: .\Hardware\MyFeeder.h
 .\objects\main.o: .\Hardware\MyWaterP.h

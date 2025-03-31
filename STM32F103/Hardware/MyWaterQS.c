@@ -16,5 +16,5 @@ void MyWaterQS_Init(void) {
 	ADC_RegularChannelConfig(ADCMyWaterQS, ADC_Channel_MyWaterQS, 2, ADC_SampleTime_55Cycles5);	
 	//MyADCAndDMA_Result[1]
 	
-	//Serial_SendStringPacketV2(USART2, "MHA11A_Init_End\r\n");
+	//Serial_SendStringV2(USART2, "MHA11A_Init_End\r\n");
 }

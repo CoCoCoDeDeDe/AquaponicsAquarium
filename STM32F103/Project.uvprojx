@@ -431,14 +431,14 @@
               <FilePath>.\Library\stm32f10x_adc.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_adc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Library\stm32f10x_adc.h</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_bkp.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Library\stm32f10x_bkp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Library\stm32f10x_adc.h</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_bkp.h</FileName>
@@ -721,14 +721,14 @@
               <FilePath>.\Hardware\OLED.h</FilePath>
             </File>
             <File>
-              <FileName>MyESP8266.c</FileName>
+              <FileName>ESP8266.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyESP8266.c</FilePath>
+              <FilePath>.\Hardware\ESP8266.c</FilePath>
             </File>
             <File>
-              <FileName>MyESP8266.h</FileName>
+              <FileName>ESP8266.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyESP8266.h</FilePath>
+              <FilePath>.\Hardware\ESP8266.h</FilePath>
             </File>
             <File>
               <FileName>MyWaterTS.c</FileName>

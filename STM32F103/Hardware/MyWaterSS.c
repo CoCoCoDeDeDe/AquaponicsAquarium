@@ -30,7 +30,7 @@ void MyWaterSS_Trig_Init(void) {
 	
 	GPIO_WriteBit(GPIOTrig, PinTrig, Bit_RESET);
 	
-	//Serial_SendStringPacketV2(USART2, "MyWaterSS_Trig_Init_End\r\n");
+	//Serial_SendStringV2(USART2, "MyWaterSS_Trig_Init_End\r\n");
 }
 
 
@@ -131,16 +131,16 @@ void MyWaterSS_EchoCtrlerSM(void){//计算Echo信号相当的CNT值
 	
 	if(MyWaterSS_EchoCtrlerSM_Ctrl == 1){
 		
-		//Serial_SendStringPacketV2(USART2, "EchoCtrlerSM_Ctrl_In\r\n");
+		//Serial_SendStringV2(USART2, "EchoCtrlerSM_Ctrl_In\r\n");
 		
 		if(MyWaterSS_EchoCtrlerSM_State == 0) {//状态0时
-			//Serial_SendStringPacketV2(USART2, "EchoCtrlerSM_State0_In\r\n");
+			//Serial_SendStringV2(USART2, "EchoCtrlerSM_State0_In\r\n");
 			
 			CountEchoStart=TIM_GetCounter(TIM3);//记录Echo信号开始时CNT的数值,总周期短,不考虑TIM3重装
 			MyWaterSS_SetEXITTrig(EXTI_Trigger_Falling);//设置下降沿触发EXIT
 			MyWaterSS_EchoCtrlerSM_State = 1;//设置状态为1
 		} else if(MyWaterSS_EchoCtrlerSM_State == 1) {//状态1时
-			//Serial_SendStringPacketV2(USART2, "EchoCtrlerSM_State1_In\r\n");
+			//Serial_SendStringV2(USART2, "EchoCtrlerSM_State1_In\r\n");
 			
 			MyWaterSS_CountEchoSpan = TIM_GetCounter(TIM3) - CountEchoStart;//计算Echo信号相当的CNT值
 			MyWaterSS_CollectEchoSpan();
