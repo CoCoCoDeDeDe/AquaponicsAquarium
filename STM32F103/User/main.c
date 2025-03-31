@@ -65,28 +65,30 @@ int main(void)
 	MyAirP_Init();
 	MyWaterH_Init();
 	
-//	while(1) {
-//		Serial_SendStringV2(USARTESP8266, "AT\r\n");
-//		
-//		while(Serial_RxFlag[3] == 0);
-//		Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
-//		Serial_RxFlag[3] = 0;
-//		
-//		Delay_ms(2000);
-//	}
+//	MsgQueue_t q;
+//	InitQueue(&q);
 	
-	
+//	ESP8266_Init_Str();
+			
 	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
-	
+	Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//【Debug】
 	
 	//Run=====
 	while(1) {
 		
-//		if(Serial_RxFlag[2] == 1) {
+//		if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {
 //			
-//			Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
-//			Serial_RxFlag[2] = 0;
+//			enqueue(&q, Serial_Rx3StringPacket);
+//			
+//			Serial_RxFlag[Serial_Ch_ESP8266] = 0;
 //		}
+		
+		if(Serial_RxFlag[2] == 1) {
+			
+			Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
+			
+			Serial_RxFlag[2] = 0;
+		}
 		
 		if(Serial_RxFlag[3] == 1) {
 			Serial_SendStringV2(USARTPC, "86:\r\n");
@@ -127,7 +129,7 @@ int main(void)
 //		OLED_ShowNum(2, 1, MyWaterTS_Result_12Bit_H7Bit, 16);
 //		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 16);
 
-		Delay_us(1000);//以免循环太快，CPU压力太大
+//		Delay_us(1);//以免循环太快，CPU压力太大
 	}
 }
 
@@ -152,3 +154,38 @@ void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15的中断是合并的
 }
 
 
+//void InitQueue(MsgQueue_t *q) {
+//	q->idx_front = 0;
+//	q->idx_rear = 0;
+//	q->count = 0;
+//	for(uint8_t i = 0; i < QUEUE_SIZE; i++) {
+//		q->data[i] = NULL;
+//	}
+//}
+
+//static int8_t enqueue(MsgQueue_t* q, const char *str) {
+//	if (q->count >= QUEUE_SIZE) {
+//		Serial_SendStringV2(USARTPC, "MsgQueueFull\r\n");
+//		return -1;	//队列已满
+//	}
+//	//分配内存并复制字符串
+//	char *newStr = (char*)malloc(strlen(str) + 1);
+//	if(!newStr) return -2;	//输入的参数字符串为空
+//	strcpy(newStr, str);
+//	
+//	q->data[q->idx_rear] = newStr;
+//	q->idx_rear = (q->idx_rear + 1) % QUEUE_SIZE;
+//	q->count ++;
+//	return 1;	//成功
+//}
+
+//char *dequeue(MsgQueue_t *q) {
+//	if(q->count <= 0) {
+//		return NULL;	//队列为空
+//	}
+//	char *str = q->data[q->idx_front];
+//	q->data[q->idx_front] = NULL;
+//	q->idx_front = (q->idx_front + 1) % QUEUE_SIZE;
+//	q->count --;
+//	return str;
+//}

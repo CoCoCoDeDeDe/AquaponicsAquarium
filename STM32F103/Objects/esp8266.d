@@ -40,12 +40,12 @@
 .\objects\esp8266.o: .\Hardware\MySerial.h
 .\objects\esp8266.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\esp8266.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\esp8266.o: .\Hardware\ESP8266.h
 .\objects\esp8266.o: .\System\MyTIM.h
 .\objects\esp8266.o: .\Hardware\MyWaterSS.h
 .\objects\esp8266.o: .\System\MyTIM.h
 .\objects\esp8266.o: .\Hardware\MyAirS.h
 .\objects\esp8266.o: .\Hardware\MyWaterTS.h
-.\objects\esp8266.o: .\Hardware\ESP8266.h
 .\objects\esp8266.o: .\Hardware\MyFeeder.h
 .\objects\esp8266.o: .\Hardware\MyWaterP.h
 .\objects\esp8266.o: .\Hardware\MyWaterQS.h

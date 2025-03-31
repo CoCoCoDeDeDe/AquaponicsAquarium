@@ -78,29 +78,37 @@ char ATCMD_PART_CRLF[] = "\r\n";
 
 /*定义状态机变量*/
 typedef enum {
-	State_SerialOn,
-	State_SerialOn_RECV,
-	State_QuitTT_Send,
-	State_QuitTT_RECV,
-	State_MQTTUSERCFG_Send,
-	State_MQTTUSERCFG_RECV,
-	State_MQTTCLIENTID_Send,
-	State_MQTTCLIENTID_RECV,
-	State_MQTTCONN_Send,
-	State_MQTTCONN_RECV,
-	State_ROUTINE_1,
-	State_ROUTINE_2,
-	State_ROUTINE_3,
-	State_ROUTINE_4,
-	State_ROUTINE_5,
-	WiFiIssue
-	
+	S_SerialOn,
+	S_SerialOn_RECV,
+	S_QuitTT_Send,
+	S_QuitTT_RECV,
+	S_ATE0_Send,
+	S_ATE0_RECV,
+	S_CWMODE_Send,
+	S_CWMODE_RECV,
+	S_CWQAP_Send,
+	S_CWQAP_RECV,
+	S_CWJAPC_Send,
+	S_CWJAPC_RECV,
+	S_CWJAPQ_Send,
+	S_CWJAPQ_RECV,
+	S_MQTTUSERCFG_Send,
+	S_MQTTUSERCFG_RECV,
+	S_MQTTCLIENTID_Send,
+	S_MQTTCLIENTID_RECV,
+	S_MQTTCONN_Send,
+	S_MQTTCONN_RECV,
+	S_ROUTINE_1,
+	S_ROUTINE_2,
+	S_ROUTINE_3,
+	S_ROUTINE_4,
+	S_ROUTINE_5,
+	S_WiFiIssue
 } ESP8266_SM_State_t;
 
-int8_t ESP8266_SM_State = State_SerialOn;
+int8_t ESP8266_SM_State = S_SerialOn;
 
-
-static void ESP8266_Init_Str(void) {
+void ESP8266_Init_Str(void) {
 	
 	/*拼接初始化后不会变动的字符串及字符串片段*/
 	//拼接AT+MQTTUSERCFG=...
@@ -137,28 +145,29 @@ void EPS8266_SM(void) {
 	Count_RunTimes ++;
 		
 	switch(ESP8266_SM_State) {
-		case State_SerialOn:
+		case S_SerialOn:
 			
 			ESP8266_Init_Str();
 			
 			Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
 			Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//【Debug】
 		
-			ESP8266_SM_State = State_SerialOn_RECV;
+			ESP8266_SM_State = S_SerialOn_RECV;
 			break;
 		
-		case State_SerialOn_RECV://初始化后开始检查有没有上电后通知或者WiFi连接成功消息
-			if(5000000 <= Count_RunTimes*Count_RunTimes_Period) {//如果很久没有收到消息，判断为没有连接上WiFi或没有WiFi配置
+		case S_SerialOn_RECV://初始化后开始检查有没有上电后通知或者WiFi连接成功消息
+			if(10000000 <= Count_RunTimes*Count_RunTimes_Period) {//如果很久没有收到消息，判断为没有连接上WiFi或没有WiFi配置
 				Serial_SendStringV2(USARTPC, "State_Serial_NoRSP\r\n");//【Debug】报错
-				ESP8266_SM_State = State_QuitTT_Send;//一律按照没有WiFi配置处理
+				IsWiFiConnected = 0;
+				ESP8266_SM_State = S_QuitTT_Send;//一律按照没有WiFi配置处理
 			
 			} else{
-				if(Serial_RxFlag[3] == 1) {
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {
 					Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);//【Debug】记录
 					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_NECTED) == 1) {//WiFi成功连接
 						Serial_SendStringV2(USARTPC, "WIFI CONNECTED\r\n");//【Debug】记录
 						IsWiFiConnected = 1;
-						ESP8266_SM_State = State_MQTTUSERCFG_Send;
+						ESP8266_SM_State = S_MQTTUSERCFG_Send;
 						
 					} else if(1 <= PowerOnMsg_Count) {//判断是否已经接受过上电通知
 						Serial_SendStringV2(USARTPC, "State_PowerOnCheck_MsgUnknow\r\n");//【Debug】报错
@@ -166,116 +175,175 @@ void EPS8266_SM(void) {
 					} else {//推测收到消息为上电通知
 						PowerOnMsg_Count ++;
 					}
-					Serial_RxFlag[3] = 0;
+					Serial_RxFlag[Serial_Ch_ESP8266] = 0;
 				}//未收到消息则进入下一Count_RunTimes_Period
 			}
 			break;
 			
-		case State_QuitTT_Send:
+		case S_QuitTT_Send:
 			Serial_SendStringV2(USARTESP8266, ATCMD_QuitTT);	//发命令
-			ESP8266_SM_State = State_QuitTT_RECV;				//下回开始接收
+			ESP8266_SM_State = S_QuitTT_RECV;				//下回开始接收
 			Count_RunTimes = 0;
 			break;
 		
-		case State_QuitTT_RECV:
+		case S_QuitTT_RECV:
+			if(5000000 <= Count_RunTimes*Count_RunTimes_Period) {
+				ESP8266_SM_State = S_QuitTT_Send;
+				Serial_SendStringV2(USARTPC, "QuitTT_NoRSP\r\n");	//【Debug】报错
+				
+				Count_RunTimes = 0;
+			} else{
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {
+					if(MyArray_IsContain(Serial_Rx3StringPacket, "ERROR") == 1) {	//成功
+						ESP8266_SM_State = S_ATE0_Send;
+						Serial_SendStringV2(USARTPC, "QuitTTSucced\r\n");	//【Debug】
+						
+					} else if(MyArray_IsContain(Serial_Rx3StringPacket, "OK") == 1) {
+						ESP8266_SM_State = S_ATE0_Send;	//没有处于透传模式
+						Serial_SendStringV2(USARTPC, "NotInTT\r\n");	//【Debug】
+						
+					} else {
+						ESP8266_SM_State = S_QuitTT_Send;	//重发
+						Serial_SendStringV2(USARTPC, "QuitTT_RspUnknow\r\n");	//【Debug】报错
+					}
+				}
+			}
+			break;
 			
+		case S_ATE0_Send:
+			Serial_SendStringV2(USARTESP8266, ATCMD_ATE0);	//发命令
+			ESP8266_SM_State = S_ATE0_RECV;				//下回开始接收
+			Count_RunTimes = 0;
 			
 			break;
 		
-		case State_MQTTUSERCFG_Send:
-			Serial_SendStringV2(USARTPC, ATCMD_MQTTUSERCFG_main);	//发命令【test】
-			ESP8266_SM_State = State_MQTTUSERCFG_RECV;	//下一步开始接收
+		case S_ATE0_RECV:
+			if(5000000 <= Count_RunTimes*Count_RunTimes_Period) {
+				ESP8266_SM_State = S_QuitTT_Send;
+				Serial_SendStringV2(USARTPC, "ATE0_NoRSP\r\n");	//【Debug】报错
+				
+				Count_RunTimes = 0;
+			} else{
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {
+					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_OK) == 1) {	//成功
+						if(IsWiFiConnected == 1) {
+							ESP8266_SM_State = S_MQTTUSERCFG_Send;
+							
+						} else if(IsWiFiConnected == 0) {
+							ESP8266_SM_State = S_CWMODE_Send;
+							
+						} else{
+							Serial_SendStringV2(USARTPC, "ParaError_IsWiFiConnected\r\n");	//【Debug】报错
+						}
+						ESP8266_SM_State = S_ATE0_Send;
+						Serial_SendStringV2(USARTPC, "ATE0_RspOK\r\n");	//【Debug】
+						
+					} else if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_ERROR) == 1) {
+						ESP8266_SM_State = S_ATE0_Send;	//没有处于透传模式
+						Serial_SendStringV2(USARTPC, "ATE0_RspError\r\n");	//【Debug】
+						
+					} else {
+						ESP8266_SM_State = S_QuitTT_Send;	//重发
+						Serial_SendStringV2(USARTPC, "ATE0_RspUnknow\r\n");	//【Debug】报错
+					}
+				}
+			}
+			break;
+		
+		case S_MQTTUSERCFG_Send:
+			Serial_SendStringV2(USARTESP8266, ATCMD_MQTTUSERCFG_main);	//发命令
+			ESP8266_SM_State = S_MQTTUSERCFG_RECV;	//下一步开始接收
 			Count_RunTimes = 0;
 			break;
 		
-		case State_MQTTUSERCFG_RECV:
+		case S_MQTTUSERCFG_RECV:
 			if(5000000 <= Count_RunTimes*Count_RunTimes_Period) {	//长时间未接收
-				ESP8266_SM_State = State_MQTTUSERCFG_Send;	//重发
+				ESP8266_SM_State = S_MQTTUSERCFG_Send;	//重发
 				Serial_SendStringV2(USARTPC, "MQTTUSERCFG_NoRSP\r\n");	//【Debug】报错
 				
 				Count_RunTimes = 0;
 			} else{	//时间未达到上限
-				if(Serial_RxFlag[2] == 1) {	//收到消息
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {	//收到消息
 					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_OK) == 1) {	//成功
-						ESP8266_SM_State = State_MQTTCLIENTID_Send;
+						ESP8266_SM_State = S_MQTTCLIENTID_Send;
 						
 					} else if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_ERROR) == 1) {
-						ESP8266_SM_State = State_MQTTUSERCFG_Send;	//重发
-						Serial_SendStringV2(USARTPC, "MQTTUSERCFG_ERROR\r\n");	//【Debug】报错
+						ESP8266_SM_State = S_MQTTUSERCFG_Send;	//重发
+						Serial_SendStringV2(USARTPC, "MQTTUSERCFG_Error\r\n");	//【Debug】报错
 						
 					} else {
-						ESP8266_SM_State = State_MQTTUSERCFG_Send;	//重发
-						Serial_SendStringV2(USARTPC, "MQTTUSERCFG_RSPUnKnow\r\n");	//【Debug】报错
+						ESP8266_SM_State = S_MQTTUSERCFG_Send;	//重发
+						Serial_SendStringV2(USARTPC, "MQTTUSERCFG_RspUnknow\r\n");	//【Debug】报错
 					}
 				}//本回合无消息，进入下回合
 			}
 			break;
 		
-		case State_MQTTCLIENTID_Send:
-			Serial_SendStringV2(USARTPC, ATCMD_MQTTCLIENTID_main);	//发命令【test】
-			ESP8266_SM_State = State_MQTTCLIENTID_RECV;	//下一步开始接收
+		case S_MQTTCLIENTID_Send:
+			Serial_SendStringV2(USARTESP8266, ATCMD_MQTTCLIENTID_main);	//发命令
+			ESP8266_SM_State = S_MQTTCLIENTID_RECV;	//下一步开始接收
 			Count_RunTimes = 0;
 			break;
 		
-		case State_MQTTCLIENTID_RECV:
+		case S_MQTTCLIENTID_RECV:
 			if(5000000 <= Count_RunTimes*Count_RunTimes_Period) {	//长时间未接收
-				ESP8266_SM_State = State_MQTTCLIENTID_Send;	//重发
+				ESP8266_SM_State = S_MQTTCLIENTID_Send;	//重发
 				Serial_SendStringV2(USARTPC, "MQTTCLIENTID_NoRSP\r\n");	//【Debug】报错
 				
 				Count_RunTimes = 0;
 			} else{	//时间未达到上限
-				if(Serial_RxFlag[3] == 1) {	//收到消息
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {	//收到消息
 					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_OK) == 1) {	//成功
-						ESP8266_SM_State = State_MQTTCONN_Send;
+						ESP8266_SM_State = S_MQTTCONN_Send;
 						
 					} else if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_ERROR) == 1) {
-						ESP8266_SM_State = State_MQTTCLIENTID_Send;	//重发
+						ESP8266_SM_State = S_MQTTCLIENTID_Send;	//重发
 						Serial_SendStringV2(USARTPC, "MQTTCLIENTID_ERROR\r\n");	//【Debug】报错
 						
 					} else {
-						ESP8266_SM_State = State_MQTTCLIENTID_Send;	//重发
+						ESP8266_SM_State = S_MQTTCLIENTID_Send;	//重发
 						Serial_SendStringV2(USARTPC, "MQTTCLIENTID_RSPUnKnow\r\n");	//【Debug】报错
 					}
 				}//本回合无消息，进入下回合
 			}
 			break;
 			
-		case State_MQTTCONN_Send:
-			Serial_SendStringV2(USARTPC, ATCMD_MQTTCONN_main);	//发命令【test】
-			ESP8266_SM_State = State_MQTTCONN_RECV;	//下一步开始接收
+		case S_MQTTCONN_Send:
+			Serial_SendStringV2(USARTESP8266, ATCMD_MQTTCONN_main);	//发命令
+			ESP8266_SM_State = S_MQTTCONN_RECV;	//下一步开始接收
 			Count_RunTimes = 0;
 			break;
 		
-		case State_MQTTCONN_RECV:
+		case S_MQTTCONN_RECV:
 			if(5000000 <= Count_RunTimes*Count_RunTimes_Period) {	//长时间未接收
-				ESP8266_SM_State = State_MQTTCONN_Send;	//重发
+				ESP8266_SM_State = S_MQTTCONN_Send;	//重发
 				Serial_SendStringV2(USARTPC, "MQTTCONN_NoRSP\r\n");	//【Debug】报错
 				
 				Count_RunTimes = 0;
 			} else{	//时间未达到上限
-				if(Serial_RxFlag[3] == 1) {	//收到消息
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {	//收到消息
 					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_OK) == 1) {	//成功
-						ESP8266_SM_State = State_ROUTINE_1;
+						ESP8266_SM_State = S_ROUTINE_1;
 						
 					} else if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_ERROR) == 1) {
-						ESP8266_SM_State = State_MQTTCONN_Send;	//重发
+						ESP8266_SM_State = S_MQTTCONN_Send;	//重发
 						Serial_SendStringV2(USARTPC, "MQTTCONN_ERROR\r\n");	//【Debug】报错
 						
 					} else {
-						ESP8266_SM_State = State_MQTTCONN_Send;	//重发
+						ESP8266_SM_State = S_MQTTCONN_Send;	//重发
 						Serial_SendStringV2(USARTPC, "MQTTCONN_RSPUnKnow\r\n");	//【Debug】报错
 					}
 				}//本回合无消息，进入下回合
 			}
 			break;
 			
-		case State_ROUTINE_1:
+		case S_ROUTINE_1:
 			if(IsWiFiConnected == 1) {
-				ESP8266_SM_State = State_ROUTINE_2;
+				ESP8266_SM_State = S_ROUTINE_2;
 				Count_RunTimes = 0;
 				
 			} else if(IsWiFiConnected == 0) {
-				ESP8266_SM_State = WiFiIssue;
+				ESP8266_SM_State = S_WiFiIssue;
 				Count_RunTimes = 0;
 				
 			} else {
@@ -284,7 +352,7 @@ void EPS8266_SM(void) {
 			//下一回合
 			break;
 			
-		case State_ROUTINE_2:
+		case S_ROUTINE_2:
 			if(3000000 <= Count_RunTimes*Count_RunTimes_Period) {//属性周期性上报
 				//【TODO】检查Count_RunTimes的变化
 				switch(WitchReportToSend) {
@@ -295,7 +363,7 @@ void EPS8266_SM(void) {
 						
 						WitchReportToSend = 2;
 						
-						//ESP8266_SM_State = State_ROUTINE_2;//不变
+						//ESP8266_SM_State = S_ROUTINE_2;//不变
 						//Count_RunTimes = 0;
 						break;
 					
@@ -306,7 +374,7 @@ void EPS8266_SM(void) {
 						
 						WitchReportToSend = 1;
 						
-						//ESP8266_SM_State = State_ROUTINE_2;//不变
+						//ESP8266_SM_State = S_ROUTINE_2;//不变
 						//Count_RunTimes = 0;
 						break;
 					
@@ -316,12 +384,12 @@ void EPS8266_SM(void) {
 				Count_RunTimes = 0;
 				
 			} else {
-				if(Serial_RxFlag[3] == 1) {
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {
 					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_DISCON) == 1) {
 						Serial_SendStringV2(USARTPC, "WiFi_Disconnect\r\n");	//【Debug】报错
 						IsWiFiConnected = 0;
-						ESP8266_SM_State = WiFiIssue;
-						Count_RunTimes = 0;//转WiFiIssue必备
+						ESP8266_SM_State = S_WiFiIssue;
+						Count_RunTimes = 0;//转S_WiFiIssue必备
 						
 					} else if(MyArray_IsContain(Serial_Rx3StringPacket, ATDownCmd_RECV) == 1){
 						//提取request_id
@@ -345,23 +413,23 @@ void EPS8266_SM(void) {
 			}
 			break;
 			
-		case WiFiIssue:
+		case S_WiFiIssue:
 			if(3000000 <= Count_RunTimes*Count_RunTimes_Period) {//每3s报错1次
-				Serial_SendStringV2(USARTPC, "WiFiIssue_WaitingRx\r\n");	//【Debug】报错
+				Serial_SendStringV2(USARTPC, "S_WiFiIssue_WaitingRx\r\n");	//【Debug】报错
 				Count_RunTimes = 0;
 				
 			} else{
-				if(Serial_RxFlag[3] == 1){
+				if(Serial_RxFlag[Serial_Ch_ESP8266] == 1){
 					if(MyArray_IsContain(Serial_Rx3StringPacket, ATRSP_NECTED) == 1) {//WiFi连接
 						IsWiFiConnected = 1;
 						Serial_SendStringV2(USARTPC, "WiFiConnected\r\n");	//【Debug】记录
-						ESP8266_SM_State = State_ROUTINE_2;//恢复正常ROUTINE
-						Count_RunTimes = 0;//转State_ROUTINE_2必备
+						ESP8266_SM_State = S_ROUTINE_2;//恢复正常ROUTINE
+						Count_RunTimes = 0;//转S_ROUTINE_2必备
 						
 					} else{
-						Serial_SendStringV2(USARTPC, "WiFiIssue_RxUnknow\r\n");	//【Debug】报错
+						Serial_SendStringV2(USARTPC, "S_WiFiIssue_RxUnknow\r\n");	//【Debug】报错
 					}
-					Serial_RxFlag[3] = 0;
+					Serial_RxFlag[Serial_Ch_ESP8266] = 0;
 				}//本回合无消息则进下回合
 			}
 			

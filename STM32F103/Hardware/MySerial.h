@@ -6,6 +6,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "ESP8266.h"
+
 #define USARTESP8266		USART3
 #define USARTESP8266_IRQn	USART3_IRQn
 #define GPIOESP8266			GPIOB
