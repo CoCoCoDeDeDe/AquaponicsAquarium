@@ -189,23 +189,23 @@ void USART2_IRQHandler() {
 	}
 }
 
-void USART3_IRQHandler() {
-	
-	if(USART_GetITStatus(USART3,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
-		//当RDR移位寄存器中的数据被转移到USART_DR寄存器中（等待读取），该位被硬件置位（1即SET）。
-		//如果USART_CR1寄存器中的RXNEIE为1，则产生中断。
-		//对USART_DR的读操作（RxData = USART_ReceiveData(USARTx)）可以将该位清零（0即RESET）。
-		
-		//USART_ClearITPendingBit(USART3, USART_IT_RXNE);//自动清标志位
-		
-		uint16_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
-		
-		
-		//进入状态机程序
-		Serial_Auto_StateMachine(USART3, 3, &StateMachine_s3, &StateMachine_count3, Serial_Rx3StringPacket, size);
-		
-	}
-}
+//void USART3_IRQHandler() {
+//	
+//	if(USART_GetITStatus(USART3,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
+//		//当RDR移位寄存器中的数据被转移到USART_DR寄存器中（等待读取），该位被硬件置位（1即SET）。
+//		//如果USART_CR1寄存器中的RXNEIE为1，则产生中断。
+//		//对USART_DR的读操作（RxData = USART_ReceiveData(USARTx)）可以将该位清零（0即RESET）。
+//		
+//		//USART_ClearITPendingBit(USART3, USART_IT_RXNE);//自动清标志位
+//		
+//		uint16_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
+//		
+//		
+//		//进入状态机程序
+//		Serial_Auto_StateMachine(USART3, 3, &StateMachine_s3, &StateMachine_count3, Serial_Rx3StringPacket, size);
+//		
+//	}
+//}
 
 void Serial_SendByte(USART_TypeDef* USARTx, uint8_t Byte) {
 	while(USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);	

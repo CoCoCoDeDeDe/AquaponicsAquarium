@@ -1,5 +1,63 @@
 #include "ESP8266.h"
 
+int8_t 
+
+char ESP8266_Serial_RxStr[250];
+
+GPIO_InitTypeDef GPIO_InitStruct;
+USART_InitTypeDef USART_InitStruct;
+NVIC_InitTypeDef NVIC_InitStruct;
+
+void ESP8266_Serial_Init(
+	uint32_t		USART_BaudRate, 	//115200
+	uint8_t			NVIC_IRQChannelPreemptionPriority, 	//0
+	uint8_t			NVIC_IRQChannelSubPriority,			//0
+	FunctionalState	USART_Cmd_NewState)
+{
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF_PP;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &GPIO_InitStruct);
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_11;
+	GPIO_Init(GPIOB, &GPIO_InitStruct);
+	
+	USART_InitStruct.USART_BaudRate = USART_BaudRate;
+	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStruct.USART_Mode = USART_Mode_Tx | USART_Mode_Rx;
+	USART_InitStruct.USART_Parity = USART_Parity_No;
+	USART_InitStruct.USART_StopBits = USART_StopBits_1;
+	USART_InitStruct.USART_WordLength = USART_WordLength_8b;
+	USART_Init(USART3, &USART_InitStruct);
+	
+	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+	
+	NVIC_InitStruct.NVIC_IRQChannel = USART3_IRQn;
+	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;
+	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
+	NVIC_Init(&NVIC_InitStruct);
+	
+	USART_Cmd(USART3, USART_Cmd_NewState);
+}
+
+void ESP8266_Serial_BuadRateCFG(uint32_t USART_BaudRate) {
+	USART_InitStruct.USART_BaudRate = USART_BaudRate;
+	USART_Init(USART3, &USART_InitStruct);
+}
+
+void USART3_IRQHandler(void) {
+	if(USART_GetITStatus(USART3,USART_IT_RXNE) == SET) {
+		
+		uint16_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
+		
+		
+		//进入状态机程序
+		Serial_Auto_StateMachine(USART3, 3, &StateMachine_s3, &StateMachine_count3, Serial_Rx3StringPacket, size);
+		
+	}
+}
+
 /*定义 WiFi AT 宏定义*/
 #define WIFI_SSID_LEN	10
 #define WIFI_SSID		"321"

@@ -70,8 +70,8 @@ int main(void)
 	
 //	ESP8266_Init_Str();
 			
-	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
-	Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//【Debug】
+//	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
+//	Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//【Debug】
 	
 	//Run=====
 	while(1) {
@@ -83,19 +83,19 @@ int main(void)
 //			Serial_RxFlag[Serial_Ch_ESP8266] = 0;
 //		}
 		
-		if(Serial_RxFlag[2] == 1) {
-			
-			Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
-			
-			Serial_RxFlag[2] = 0;
-		}
-		
-		if(Serial_RxFlag[3] == 1) {
-			Serial_SendStringV2(USARTPC, "86:\r\n");
-			Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
-			
-			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
-		}
+//		if(Serial_RxFlag[2] == 1) {
+//			
+//			Serial_SendStringV2(USARTESP8266, Serial_Rx2StringPacket);
+//			
+//			Serial_RxFlag[2] = 0;
+//		}
+//		
+//		if(Serial_RxFlag[3] == 1) {
+//			Serial_SendStringV2(USARTPC, "86:\r\n");
+//			Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
+//			
+//			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
+//		}
 		
 //		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
 //		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
