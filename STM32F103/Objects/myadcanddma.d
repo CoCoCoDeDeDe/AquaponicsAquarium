@@ -42,12 +42,14 @@
 .\objects\myadcanddma.o: .\Hardware\MyTest.h
 .\objects\myadcanddma.o: .\Hardware\OLED.h
 .\objects\myadcanddma.o: .\Hardware\MySerial.h
+.\objects\myadcanddma.o: .\System\math.h
 .\objects\myadcanddma.o: .\System\MyTIM.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterSS.h
 .\objects\myadcanddma.o: .\System\MyTIM.h
 .\objects\myadcanddma.o: .\Hardware\MyAirS.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterTS.h
 .\objects\myadcanddma.o: .\Hardware\Serial3.h
+.\objects\myadcanddma.o: .\Hardware\AT.h
 .\objects\myadcanddma.o: .\Hardware\MyFeeder.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterP.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterQS.h

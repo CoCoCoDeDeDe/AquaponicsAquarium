@@ -12,6 +12,7 @@
 #include "MyWaterTS.h"
 
 #include "Serial3.h"
+#include "AT.h"
 
 extern uint32_t MyTIM_1UpCount;
 extern uint32_t MyTIM_2Count;
@@ -34,6 +35,7 @@ void MyTIM4_Init(
 void MyTIMx_ENABLECmd(TIM_TypeDef* TIMx);
 void MyTIMx_DISABLECmd(TIM_TypeDef* TIMx);
 
+void MyTIM3_DIV10(void);
 void MyTIM3_DIVx(uint16_t x);
 void MyTIM3_DIVy(uint16_t z);
 

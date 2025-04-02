@@ -17,6 +17,8 @@
 
 #include "MySerial.h"
 
+#include "math.h"
+
 #include "MyTIM.h"
 
 #include "MyFeeder.h"
@@ -39,8 +41,9 @@
 #include "MyAquariumL.h"
 
 #include "Serial3.h"
+#include "AT.h"
 
-/*¶¨Òå×Ö·û´®¶ÓÁÐ*/
+/*å®šä¹‰å­—ç¬¦ä¸²é˜Ÿåˆ—*/
 //#define QUEUE_SIZE 3
 
 //typedef struct {

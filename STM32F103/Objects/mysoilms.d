@@ -42,12 +42,14 @@
 .\objects\mysoilms.o: .\Hardware\MyTest.h
 .\objects\mysoilms.o: .\Hardware\OLED.h
 .\objects\mysoilms.o: .\Hardware\MySerial.h
+.\objects\mysoilms.o: .\System\math.h
 .\objects\mysoilms.o: .\System\MyTIM.h
 .\objects\mysoilms.o: .\Hardware\MyWaterSS.h
 .\objects\mysoilms.o: .\System\MyTIM.h
 .\objects\mysoilms.o: .\Hardware\MyAirS.h
 .\objects\mysoilms.o: .\Hardware\MyWaterTS.h
 .\objects\mysoilms.o: .\Hardware\Serial3.h
+.\objects\mysoilms.o: .\Hardware\AT.h
 .\objects\mysoilms.o: .\Hardware\MyFeeder.h
 .\objects\mysoilms.o: .\Hardware\MyWaterP.h
 .\objects\mysoilms.o: .\Hardware\MyWaterQS.h

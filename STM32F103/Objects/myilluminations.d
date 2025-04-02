@@ -42,12 +42,14 @@
 .\objects\myilluminations.o: .\Hardware\MyTest.h
 .\objects\myilluminations.o: .\Hardware\OLED.h
 .\objects\myilluminations.o: .\Hardware\MySerial.h
+.\objects\myilluminations.o: .\System\math.h
 .\objects\myilluminations.o: .\System\MyTIM.h
 .\objects\myilluminations.o: .\Hardware\MyWaterSS.h
 .\objects\myilluminations.o: .\System\MyTIM.h
 .\objects\myilluminations.o: .\Hardware\MyAirS.h
 .\objects\myilluminations.o: .\Hardware\MyWaterTS.h
 .\objects\myilluminations.o: .\Hardware\Serial3.h
+.\objects\myilluminations.o: .\Hardware\AT.h
 .\objects\myilluminations.o: .\Hardware\MyFeeder.h
 .\objects\myilluminations.o: .\Hardware\MyWaterP.h
 .\objects\myilluminations.o: .\Hardware\MyWaterQS.h

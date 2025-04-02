@@ -8,7 +8,7 @@
 #define GPIO_MyWaterP		GPIOA
 #define GPIO_Pin_MyWaterP	GPIO_Pin_9
 
-extern float WaterPVR;
+extern uint16_t WaterPVR;
 
 void MyWaterP_Init(uint16_t TIM_Pulse);
 

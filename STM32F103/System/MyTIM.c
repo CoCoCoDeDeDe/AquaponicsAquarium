@@ -16,9 +16,9 @@ void MyTIM1_Init(
 	TIM_TimeBaseInitTypeDef TIME_TimeBaseInitStruct;
 	TIM_TimeBaseStructInit(&TIME_TimeBaseInitStruct);
 	TIME_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
-	TIME_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;	//CNT√ø∏ˆ÷‹∆⁄ƒ⁄¥”0µΩTIM_Periodµ›‘ˆ
+	TIME_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;	//CNTÊØè‰∏™Âë®ÊúüÂÜÖ‰ªé0Âà∞TIM_PeriodÈÄíÂ¢û
 	TIME_TimeBaseInitStruct.TIM_Prescaler = 72 - 1;
-	TIME_TimeBaseInitStruct.TIM_Period = 20000 - 1;	//fCNT = 50Hz£¨TCNT = 20ms
+	TIME_TimeBaseInitStruct.TIM_Period = 20000 - 1;	//fCNT = 50HzÔºåTCNT = 20ms
 	TIME_TimeBaseInitStruct.TIM_RepetitionCounter = (uint8_t)(1 - 1);
 	
 	TIM_TimeBaseInit(TIM1, &TIME_TimeBaseInitStruct);
@@ -30,7 +30,7 @@ void MyTIM1_Init(
 	
 	//NVIC==========
 	NVIC_InitTypeDef NVIC_InitStruct;
-	NVIC_InitStruct.NVIC_IRQChannel = TIM1_UP_IRQn;	//NVIC÷∏œÚµƒ÷–∂œ«Î«Û≈‰÷√±‰¡ø¥Ê¥¢‘⁄stm32f10x.hŒƒº˛÷–
+	NVIC_InitStruct.NVIC_IRQChannel = TIM1_UP_IRQn;	//NVICÊåáÂêëÁöÑ‰∏≠Êñ≠ËØ∑Ê±ÇÈÖçÁΩÆÂèòÈáèÂ≠òÂÇ®Âú®stm32f10x.hÊñá‰ª∂‰∏≠
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = NVIC_IRQChannelPreemptionPriority;
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
@@ -38,7 +38,7 @@ void MyTIM1_Init(
 	NVIC_Init(&NVIC_InitStruct);
 	
 	//Cmd==========
-	TIM_Cmd(TIM1, DISABLE);//°æCmd°ø
+	TIM_Cmd(TIM1, DISABLE);//„ÄêCmd„Äë
 }
 
 
@@ -69,7 +69,7 @@ void MyTIM2_Init(
 	
 	NVIC_Init(&NVIC_InitStruct);
 	
-	TIM_Cmd(TIM2, DISABLE);//°æCmd°ø
+	TIM_Cmd(TIM2, DISABLE);//„ÄêCmd„Äë
 }
 
 
@@ -100,12 +100,12 @@ void MyTIM3_Init(
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	NVIC_Init(&NVIC_InitStruct);
 	
-	TIM_Cmd(TIM3, DISABLE);//°æCmd°ø
+	TIM_Cmd(TIM3, DISABLE);//„ÄêCmd„Äë
 }
 
 void MyTIM4_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 
-	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=°æ1000°øHz,TCNT=°æ0.001°øs=°æ1000°øus
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=„Äê1000„ÄëHz,TCNT=„Äê0.001„Äës=„Äê1000„Äëus
 	
 	TIM_InternalClockConfig(TIM4);
 	
@@ -130,7 +130,7 @@ void MyTIM4_Init(
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = NVIC_IRQChannelSubPriority;
 	NVIC_Init(&NVIC_InitStruct);
 	
-	TIM_Cmd(TIM4, DISABLE);//°æCmd°ø
+	TIM_Cmd(TIM4, DISABLE);//„ÄêCmd„Äë
 }
 
 void MyTIMx_ENABLECmd(TIM_TypeDef* TIMx) {
@@ -141,7 +141,7 @@ void MyTIMx_DISABLECmd(TIM_TypeDef* TIMx) {
 	TIM_Cmd(TIMx, DISABLE);
 }
 
-//“‘œ¬Œ™÷–∂œ∫Ø ˝=============================================================
+//‰ª•‰∏ã‰∏∫‰∏≠Êñ≠ÂáΩÊï∞=============================================================
 
 void TIM1_UP_IRQHandler(void) {		//IT per 20ms=	0.02s
 	if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET) {
@@ -173,6 +173,8 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		
 		//MyTIM_3Count++;
 		
+		MyTIM3_DIV10();
+		
 		MyTIM3_DIVx(1000000/10000);
 		
 		MyAirS_Count_TIM3ARer();
@@ -186,31 +188,57 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 	}
 }
 
+void MyTIM3_DIV10(void)
+{
+	static uint16_t cnt;
+	cnt++;
+	if(cnt >= 10)
+	{
+		cnt = 0;
+		
+		MyWaterSS_TrigCtrlerSwitchOn();//ÊâπÂáÜÂèëÈÄÅTrig‰ø°Âè∑ÔºåÂú®‰∏ã‰∏Ä‰∏™TIM2‰∏≠Êñ≠ÂºÄÂßã
+	}
+}
+
 void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
 	//x = 100
 	static uint16_t DIVxCount;
 	DIVxCount ++;
-	if(DIVxCount >= x) {//√øITx¥Œ(1s)÷¥––∏√ifƒ⁄1¥Œ, TIT=TCKCNT/x
-		DIVxCount=0;// πµ√‘Ÿæ≠¿˙100∏ˆMyTIM3IT≤≈‘Ÿ∑¢ÀÕTrig–≈∫≈
+	if(DIVxCount >= x) {//ÊØèITxÊ¨°(1s)ÊâßË°åËØ•ifÂÜÖ1Ê¨°, TIT=TCKCNT/x
+		DIVxCount=0;//‰ΩøÂæóÂÜçÁªèÂéÜ100‰∏™MyTIM3ITÊâçÂÜçÂèëÈÄÅTrig‰ø°Âè∑
 		
-		MyWaterSS_TrigCtrlerSwitchOn();//≈˙◊º∑¢ÀÕTrig–≈∫≈£¨‘⁄œ¬“ª∏ˆTIM2÷–∂œø™ º
 		
 		MyAirS_SwitchOn();
 	}
 }
 
-void MyTIM3_DIVy(uint16_t y) {
+void MyTIM3_DIVy(uint16_t y)
+{
 	//z = 300
-	static uint16_t DIVyCount;//°æ¥Ìµ„°ø”√uint8_tº∆ ˝“Á≥ˆµº÷¬Œﬁ∑®¬˙◊„>=256
+	static uint16_t DIVyCount;//„ÄêÈîôÁÇπ„ÄëÁî®uint8_tËÆ°Êï∞Ê∫¢Âá∫ÂØºËá¥Êó†Ê≥ïÊª°Ë∂≥>=256
 	DIVyCount ++;
 	if(DIVyCount >= y) {//fRUN=1/5Hz, TRUN=5s
 		DIVyCount  = 0;
 		
+		
 		MyWaterTS_TaskSM_TurnOn();
+		
+		//AT_Test();
+		
+		AT_Report();
+	
+//		Serial3_SendString(
+//			"AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"WSD\\\":%d\\,\\\"WQSV\\\":%.2f\\,\\\"SMSV\\\":%.2f\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}}]}\",0,1\r\n",
+//			strlen("AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"WSD\\\":%d\\,\\\"WQSV\\\":%.2f\\,\\\"SMSV\\\":%.2f\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}}]}\",0,1\r\n"));
+//		
+//		Serial3_SendString(
+//			"AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"ISV\\\":10\\,\\\"ALVR\\\":9\\,\\\"PGLVR\\\":9\\,\\\"FRS\\\":9\\,\\\"AT\\\":9\\,\\\"AH\\\":9}}]}\",0,1\r\n",
+//			strlen("AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"ISV\\\":10\\,\\\"ALVR\\\":9\\,\\\"PGLVR\\\":9\\,\\\"FRS\\\":9\\,\\\"AT\\\":9\\,\\\"AH\\\":9}}]}\",0,1\r\n"));
+		
 	}
 }
 
-void TIM4_IRQHandler(void) {//TCKCNT=°æ°øus,TCNT=°æ°øs
+void TIM4_IRQHandler(void) {//TCKCNT=„Äê„Äëus,TCNT=„Äê„Äës
 	if(TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
 		

@@ -42,12 +42,14 @@
 .\objects\myfeeder.o: .\Hardware\MyTest.h
 .\objects\myfeeder.o: .\Hardware\OLED.h
 .\objects\myfeeder.o: .\Hardware\MySerial.h
+.\objects\myfeeder.o: .\System\math.h
 .\objects\myfeeder.o: .\System\MyTIM.h
 .\objects\myfeeder.o: .\Hardware\MyWaterSS.h
 .\objects\myfeeder.o: .\System\MyTIM.h
 .\objects\myfeeder.o: .\Hardware\MyAirS.h
 .\objects\myfeeder.o: .\Hardware\MyWaterTS.h
 .\objects\myfeeder.o: .\Hardware\Serial3.h
+.\objects\myfeeder.o: .\Hardware\AT.h
 .\objects\myfeeder.o: .\Hardware\MyFeeder.h
 .\objects\myfeeder.o: .\Hardware\MyWaterP.h
 .\objects\myfeeder.o: .\Hardware\MyWaterQS.h

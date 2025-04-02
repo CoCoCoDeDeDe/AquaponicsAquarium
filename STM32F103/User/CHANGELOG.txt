@@ -1,66 +1,43 @@
 Things TO DO
-	DONE		�޸�Tx
-	DONE		�޸�Rx
-	DONE		����USART3�Ľ����ַ���
-	DONE		����USART3�ķ����ַ���
-	HALF		����PA0,PA1,PB0,PB1��DAC��DMA(//����ȷ������ʲô�豸ҪDAC)
-	DONE		����TIM1
-	DONE		���ö������PWM
-	DONE		����TB6612����PWM && GPIO
-	DONE		�淶��ģ�����
-	DONE		����AllInit.c\AllInit.h
-	DONE		�Ļ�main��Init
-	DONE		��OLED Bug���ü�ʱ����
-	DONE		���ó�����ģ�顪��PWM && GPIO
-	DONE		��HCSR04Bug
-	DONE		����DHT11
-	DONE		���������Ƽ̵���
-	DONE		�������ü̵���
-	DONE		���ü������̵���
-	DONE		��DHT11����ΪODģʽ
-	DONE		��TIM3DIV100Ϊ�в���
-	DONE		����TIM4
-	DONE		����PWMLED��
-	DONE		����ˮ�ʴ�����
-	DONE		����DS18B20
-	DONE		ͳ��NVIC���ȼ�
-	DONE		��PGLΪPWM���淶ȫ��PWM
-	DONE		��װͳһ�淶��������
+	DONE		修复Tx
+	DONE		修复Rx
+	DONE		配置USART3的接收字符串
+	DONE		配置USART3的发送字符串
+	HALF		配置PA0,PA1,PB0,PB1的DAC和DMA(//还不确定还有什么设备要DAC)
+	DONE		配置TIM1
+	DONE		配置舵机——PWM
+	DONE		配置TB6612——PWM && GPIO
+	DONE		规范各模块代码
+	DONE		完善AllInit.c\AllInit.h
+	DONE		改回main中Init
+	DONE		修OLED Bug，该计时方法
+	DONE		配置超声波模块——PWM && GPIO
+	DONE		修HCSR04Bug
+	DONE		配置DHT11
+	DONE		配置生长灯继电器
+	DONE		配置气泵继电器
+	DONE		配置加热器继电器
+	DONE		改DHT11引脚为OD模式
+	DONE		改TIM3DIV100为有参数
+	DONE		配置TIM4
+	DONE		配置PWMLED灯
+	DONE		配置水质传感器
+	DONE		配置DS18B20
+	DONE		统筹NVIC优先级
+	DONE		改PGL为PWM并规范全部PWM
+	DONE		封装统一规范属性命令
 	DONE		USART DMA Tx3
 	DONE		USART DMA Rx3
-	DOING		����MQTT-MCU-ServerV2
-	TODO		��װԭ�ͻ�
-	TODO		���Feeder�����ƴ���.
-	TODO		����AT24C02
-	TODO		����ʱ��ϵͳ
-	TODO		�����ס�PCB��ιʳ��
-	TODO		����PWM�仯����
-	GIVEUP		����WS2812
-	Things TO DO:OnlineVersion
-	DONE	修复Tx
-	DONE	修复Rx
-	DONE	配置USART3的接收字符串
-	DONE	配置USART3的发送字符串
-	HALF	配置PA0,PA1,PB0,PB1的DAC和DMA
-	DONE	配置TIM1
-	DONE	配置舵机——PWM
-	DONE	配置TB6612——PWM && GPIO
-	DONE	规范各模块代�?	DONE	完善AllInit.c\AllInit.h
-	DONE	改回main中Init
-	DONE	修OLED Bug，该计时方法
-	DONE	配置超声波模块——PWM && GPIO
-	DONE	修HCSR04Bug
-	DONE	配置DHT11
-	TODO	配置DS18B12
-	TODO	配置WS2812
-	TODO	配置生长灯继电器
-	TODO	配置气泵继电�?	TODO	配置加热器继电器
-	TODO	配置ESP8266 01S
-	TODO	统筹NVIC优先�?	TODO	配置MQTT:MCU——Server
-	TODO	配置时间系统�?	TODO	设计鱼缸、PCB、喂食器
-OLD TASK
-	HALF调查各个外设的现有代码和�?	DONE调查土壤湿度传感器原�?	DONE调查水温传感器原�?	重新配置DAC+DMA
-	重新规划引脚
-	DONE调查DHT11原理
-	调查超声波模块原�?	调查水泵模块原理
-	DONE研究继电�?	配置与USART3通信内容显示的方�?
+	DONE		添加属性数值范围限制功能
+	DONE		测试数据嵌入字符串发给PC
+	DONE		测试report上报
+	TODO		测试接受下行命令
+	TODO		测试对所有要用到的ESP8266发给STM32的信息的识别
+	DOING	配置MQTT-MCU-ServerV2
+	TODO		组装原型机
+	TODO		设计Feeder并完善代码.
+	TODO		配置AT24C02
+	TODO		配置时间系统
+	TODO		设计鱼缸、PCB、喂食器
+	TODO		配置PWM变化缓冲
+	GIVEUP		配置WS2812

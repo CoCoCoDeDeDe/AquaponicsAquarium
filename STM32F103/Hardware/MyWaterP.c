@@ -12,13 +12,13 @@ void MyWaterP_Init(uint16_t TIM_Pulse) {
 	GPIO_Init(GPIO_MyWaterP, &GPIO_InitStruct);
 	
 	TIM_OCStructInit(&TIM_OCInitStruct);
-	TIM_OCInitStruct.TIM_OCIdleState = TIM_OCIdleState_Reset;	//ÉèÖÃ¶¨Ê±Æ÷¿ÕÏĞÊ±¸ÃOCµÄ¸ßµÍµçÆ½
+	TIM_OCInitStruct.TIM_OCIdleState = TIM_OCIdleState_Reset;	//è®¾ç½®å®šæ—¶å™¨ç©ºé—²æ—¶è¯¥OCçš„é«˜ä½ç”µå¹³
 	TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStruct.TIM_OCNIdleState = TIM_OCNIdleState_Reset;
 	TIM_OCInitStruct.TIM_OCNPolarity = TIM_OCNPolarity_High;
 	TIM_OCInitStruct.TIM_OutputNState = TIM_OutputNState_Disable;	//Cmd
 	TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;	//Cmd
-	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//ÉèÖÃ¶àÉÙ´ÎCNT×ÔÔö/×Ô¼õºó½«CNT´ÎÊı´æÈëCCR£¬×¢ÒâÊµ¼ÊÖµ=¼Ä´æÆ÷Öµ
+	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//è®¾ç½®å¤šå°‘æ¬¡CNTè‡ªå¢/è‡ªå‡åå°†CNTæ¬¡æ•°å­˜å…¥CCRï¼Œæ³¨æ„å®é™…å€¼=å¯„å­˜å™¨å€¼
 	TIM_OC2Init(TIM1, &TIM_OCInitStruct);
 	
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
@@ -29,14 +29,14 @@ void MyWaterP_Init(uint16_t TIM_Pulse) {
 }
 
 void MyWaterP_SetPulse(uint16_t TIM_Pulse) {
-	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//ÉèÖÃ¶àÉÙ´ÎCNT×ÔÔö/×Ô¼õºó½«CNT´ÎÊı´æÈëCCR£¬×¢ÒâÊµ¼ÊÖµ=¼Ä´æÆ÷Öµ
+	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//è®¾ç½®å¤šå°‘æ¬¡CNTè‡ªå¢/è‡ªå‡åå°†CNTæ¬¡æ•°å­˜å…¥CCRï¼Œæ³¨æ„å®é™…å€¼=å¯„å­˜å™¨å€¼
 	TIM_OC2Init(TIM1, &TIM_OCInitStruct);
 }
 
-float WaterPVR = 0;
+uint16_t WaterPVR = 0;
 
 //0~20000,rate=20000/100=TIMPulse/VoltageRatio=200
 void MyWaterP_SetVoltageRatio(uint8_t r) {
-	WaterPVR = r;//WaterPVRÄ¬ÈÏÎª0£¬µ±À´ÃüÁîÉèÖÃÆäÊ±²Å»á¸Ä±ä
+	WaterPVR = r;//WaterPVRé»˜è®¤ä¸º0ï¼Œå½“æ¥å‘½ä»¤è®¾ç½®å…¶æ—¶æ‰ä¼šæ”¹å˜
 	MyWaterP_SetPulse(r*200);
 }

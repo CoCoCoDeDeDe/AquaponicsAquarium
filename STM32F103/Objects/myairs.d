@@ -42,12 +42,14 @@
 .\objects\myairs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\myairs.o: .\System\Delay.h
 .\objects\myairs.o: .\Hardware\MySerial.h
+.\objects\myairs.o: .\System\math.h
 .\objects\myairs.o: .\System\MyTIM.h
 .\objects\myairs.o: .\Hardware\MyWaterSS.h
 .\objects\myairs.o: .\System\MyTIM.h
 .\objects\myairs.o: .\Hardware\MyAirS.h
 .\objects\myairs.o: .\Hardware\MyWaterTS.h
 .\objects\myairs.o: .\Hardware\Serial3.h
+.\objects\myairs.o: .\Hardware\AT.h
 .\objects\myairs.o: .\Hardware\MyFeeder.h
 .\objects\myairs.o: .\Hardware\MyWaterP.h
 .\objects\myairs.o: .\Hardware\MyWaterQS.h

@@ -7,19 +7,19 @@
 
 #include <stddef.h>
 
-int Array_char_isEqual(char *a, char *b);//Ëã'\0'
+int Array_char_isEqual(char *a, char *b);//ç®—'\0'
 
-float MyArray_GetAverage_uint16_t(uint8_t n, uint16_t *arr);//È¡Êı×éÇ°n¸öÔªËØÆ½¾ùÊı()
+float MyArray_GetAverage_uint16_t(uint8_t n, uint16_t *arr);//å–æ•°ç»„å‰nä¸ªå…ƒç´ å¹³å‡æ•°()
 
-void MyArray_TailAdd_uint16_t(uint16_t *arr, uint16_t ele, uint8_t n);//Êı×éÎ²²¿¼ÓÈëĞÂÔªËØ²¢ÉáÈ¥µÚÒ»¸öÔªËØ()
+void MyArray_TailAdd_uint16_t(uint16_t *arr, uint16_t ele, uint8_t n);//æ•°ç»„å°¾éƒ¨åŠ å…¥æ–°å…ƒç´ å¹¶èˆå»ç¬¬ä¸€ä¸ªå…ƒç´ ()
 
-void MyArray_Copy_Uint16_t(uint16_t *arr1, uint16_t *arr2, uint8_t n);//¸´ÖÆÊı×é1µ½Êı×é2
-void MyArray_Copy_Uint8_t(uint8_t *arr1, uint8_t *arr2, uint8_t n);//¸´ÖÆÊı×é1µ½Êı×é2
+void MyArray_Copy_Uint16_t(uint16_t *arr1, uint16_t *arr2, uint8_t n);//å¤åˆ¶æ•°ç»„1åˆ°æ•°ç»„2
+void MyArray_Copy_Uint8_t(uint8_t *arr1, uint8_t *arr2, uint8_t n);//å¤åˆ¶æ•°ç»„1åˆ°æ•°ç»„2
 
-int8_t MyArray_IsContain(const char *str, const char *tgt_str);//ÅĞ¶ÏÊı×éstrÖĞÊÇ·ñÓĞ×Ö·û´®tgt_str
+int8_t MyArray_IsContain(const char *str, const char *tgt_str);//åˆ¤æ–­æ•°ç»„strä¸­æ˜¯å¦æœ‰å­—ç¬¦ä¸²tgt_str
 
-int8_t MyArray_memcpy_char(char *src, char *dest);//¸´ÖÆÊı×ésrcµ½Êı×édest£¬´Ó0µ½strlen(src)
+int8_t MyArray_memcpy_char(char *src, char *dest);//å¤åˆ¶æ•°ç»„srcåˆ°æ•°ç»„destï¼Œä»0åˆ°strlen(src)
 
-int8_t MyArray_Char_CopyBToATail(char *a, char *b, uint16_t a_capacity);//ÕÒµ½×Ö·û´®aÖĞ'\0'µÄÎ»ÖÃidx_0£¬½«×Ö·û´®bÌî³äµ½idx_0µÄÎ»ÖÃ
+int8_t MyArray_Char_CopyBToATail(char *a, char *b, uint16_t a_capacity);//æ‰¾åˆ°å­—ç¬¦ä¸²aä¸­'\0'çš„ä½ç½®idx_0ï¼Œå°†å­—ç¬¦ä¸²bå¡«å……åˆ°idx_0çš„ä½ç½®
 
 #endif

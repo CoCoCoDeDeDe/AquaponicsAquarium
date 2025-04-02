@@ -41,12 +41,14 @@
 .\objects\myserial.o: .\Hardware\MyTest.h
 .\objects\myserial.o: .\Hardware\OLED.h
 .\objects\myserial.o: .\Hardware\MySerial.h
+.\objects\myserial.o: .\System\math.h
 .\objects\myserial.o: .\System\MyTIM.h
 .\objects\myserial.o: .\Hardware\MyWaterSS.h
 .\objects\myserial.o: .\System\MyTIM.h
 .\objects\myserial.o: .\Hardware\MyAirS.h
 .\objects\myserial.o: .\Hardware\MyWaterTS.h
 .\objects\myserial.o: .\Hardware\Serial3.h
+.\objects\myserial.o: .\Hardware\AT.h
 .\objects\myserial.o: .\Hardware\MyFeeder.h
 .\objects\myserial.o: .\Hardware\MyWaterP.h
 .\objects\myserial.o: .\Hardware\MyWaterQS.h

@@ -3,7 +3,7 @@
 static USART_InitTypeDef USART_InitStruct;
 
 uint8_t Serial_RxFlag[4] = {0, 0, 0, 0};	//Serial_RxFlag[ser]
-//ÓÃÓÚ±ê¼Ç×´Ì¬»úÊÇ·ñ°ÑÒ»Õû¸öString½ÓÊÕÍê£¬·ñÔò²»Êä³öĞÂ½ÓÊÕµÄStringµÈµÈ
+//ç”¨äºæ ‡è®°çŠ¶æ€æœºæ˜¯å¦æŠŠä¸€æ•´ä¸ªStringæ¥æ”¶å®Œï¼Œå¦åˆ™ä¸è¾“å‡ºæ–°æ¥æ”¶çš„Stringç­‰ç­‰
 
 char Serial_Rx3StringPacket[244];
 char Serial_Rx2StringPacket[244];
@@ -50,7 +50,7 @@ void Serial_Init(
 		
 		NVIC_IRQChannel = USARTPC_IRQn;
 		
-	}//USARTxÓ¦ÎªUSART3£¨¶ÔÓ¦STM32-ESP8266£©»òUSART2£¨¶ÔÓ¦STM32-PC£©
+	}//USARTxåº”ä¸ºUSART3ï¼ˆå¯¹åº”STM32-ESP8266ï¼‰æˆ–USART2ï¼ˆå¯¹åº”STM32-PCï¼‰
 	
 	
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -92,11 +92,11 @@ void Serial_Init(
 	
 	USART_Cmd(USARTx, ENABLE);
 	
-	//Serial_SendByte(USART2, 'I');//¡¾Debug¡¿
+	//Serial_SendByte(USART2, 'I');//ã€Debugã€‘
 }
 
 void Serial_BaudRateConfig(USART_TypeDef* USARTx, uint32_t USART_BaudRate) {
-	//¶ÔÓ¦µÄSerialÔÚInitºó²Å¿ÉÊ¹ÓÃ¸Ãº¯Êı
+	//å¯¹åº”çš„Serialåœ¨Initåæ‰å¯ä½¿ç”¨è¯¥å‡½æ•°
 	USART_InitStruct.USART_BaudRate = USART_BaudRate;
 	
 	USART_Init(USARTx, &USART_InitStruct);
@@ -110,19 +110,19 @@ void Serial_Auto_StateMachine(
 	char Serial_RxStringPacket[], 
 	uint8_t size) {
 		
-		//Serial_SendByte(USART2, 'S');//¡¾Debug¡¿
+		//Serial_SendByte(USART2, 'S');//ã€Debugã€‘
 		
 		uint16_t RxData = USART_ReceiveData(USARTx);
-		//RXNEÔÚUSART_DR±»¶ÁÈ¡ºó×Ô¶¯RESET£¨¼´0£¬Êı¾İÃ»ÓĞÊÕµ½£©
-		//ÏÂÒ»ÂÖUSART_ReceiveData()ÔËĞĞ¶ÔUSART_DR½øĞĞĞ´²Ù×÷»á½«TXE×Ô¶¯ÖÃ0¼´RESET£¬¼´Êı¾İÎ´±»ÍêÈ«×ªÒÆÖÁÒÆÎ»¼Ä´æÆ÷
-		//USART_DRÊÇTDRºÍRDRÔÚÈí¼ş¸ÅÄîÉÏµÄºÏ²¢
+		//RXNEåœ¨USART_DRè¢«è¯»å–åè‡ªåŠ¨RESETï¼ˆå³0ï¼Œæ•°æ®æ²¡æœ‰æ”¶åˆ°ï¼‰
+		//ä¸‹ä¸€è½®USART_ReceiveData()è¿è¡Œå¯¹USART_DRè¿›è¡Œå†™æ“ä½œä¼šå°†TXEè‡ªåŠ¨ç½®0å³RESETï¼Œå³æ•°æ®æœªè¢«å®Œå…¨è½¬ç§»è‡³ç§»ä½å¯„å­˜å™¨
+		//USART_DRæ˜¯TDRå’ŒRDRåœ¨è½¯ä»¶æ¦‚å¿µä¸Šçš„åˆå¹¶
 		//while(USART_GetFlagStatus(USARTx, USART_FLAG_RXNE) == SET);
-		//µÈUSART_DR±»RxData¶ÁÈ¡ÍêÔÙ¼ÌĞø
+		//ç­‰USART_DRè¢«RxDataè¯»å–å®Œå†ç»§ç»­
 		
 		switch (*s) {
 			case 0:
 //				if(RxData == '@' && Serial_RxFlag[ser] == 0) {	
-//					//´íµã£ºÒÅÂ©ÅĞ¶ÏSerial_RxFlag[ser]£¬¼´ÅĞ¶ÏÉÏÒ»¸öStringÊÇ·ñ½ÓÊÕÍê±Ï¡£
+//					//é”™ç‚¹ï¼šé—æ¼åˆ¤æ–­Serial_RxFlag[ser]ï¼Œå³åˆ¤æ–­ä¸Šä¸€ä¸ªStringæ˜¯å¦æ¥æ”¶å®Œæ¯•ã€‚
 //					
 //					*s = 1; 
 //					*count = 0;
@@ -134,7 +134,7 @@ void Serial_Auto_StateMachine(
 					*count = 0;
 					Serial_RxStringPacket[(*count)++] = RxData;
 				}
-				//Å×Æú'@'°üÍ··½°¸
+				//æŠ›å¼ƒ'@'åŒ…å¤´æ–¹æ¡ˆ
 				
 				break;
 			case 1:
@@ -143,24 +143,24 @@ void Serial_Auto_StateMachine(
 					*s = 2;
 				} else {
 					if (*count < size - 1) {
-						//´íµã£º½«Êı×é´«µİµ½º¯ÊıÊÇÒÔÔ­Ê¼µÄÖ¸ÕëµÄĞÎÊ½ÔÚº¯ÊıÄÚ´æÔÚµÄ£¬sizeof(Serial_RxStringPacket)»á³öwarning¡£
-						//½â¾ö·½·¨£ºÔÚÊı×é´«Èëº¯ÊıÊ±¾Í½«Êı×ésize´«Èëº¯Êı
-						//µ± ÒÑ¾­×°ÁËµÄÎ»Êı(*count+1)<¿ÉÒÔ×°µÄÎ»Êı(sizeof(...)) Ê±²Å¼ÌĞø×°Ìî
+						//é”™ç‚¹ï¼šå°†æ•°ç»„ä¼ é€’åˆ°å‡½æ•°æ˜¯ä»¥åŸå§‹çš„æŒ‡é’ˆçš„å½¢å¼åœ¨å‡½æ•°å†…å­˜åœ¨çš„ï¼Œsizeof(Serial_RxStringPacket)ä¼šå‡ºwarningã€‚
+						//è§£å†³æ–¹æ³•ï¼šåœ¨æ•°ç»„ä¼ å…¥å‡½æ•°æ—¶å°±å°†æ•°ç»„sizeä¼ å…¥å‡½æ•°
+						//å½“ å·²ç»è£…äº†çš„ä½æ•°(*count+1)<å¯ä»¥è£…çš„ä½æ•°(sizeof(...)) æ—¶æ‰ç»§ç»­è£…å¡«
 						Serial_RxStringPacket[(*count)++] = RxData;
-						//´íµã£º*count++´íÎó£¬++ÓÅÏÈ¼¶¸ßÓÚ*£¬ĞèĞ´Îª(*count)++
+						//é”™ç‚¹ï¼š*count++é”™è¯¯ï¼Œ++ä¼˜å…ˆçº§é«˜äº*ï¼Œéœ€å†™ä¸º(*count)++
 						}
 					}
 				break;
 			case 2:
 				if(RxData == '\n') {
 					
-					//Serial_SendByte(USART3, 'H');//¡¾Debug¡¿
+					//Serial_SendByte(USART3, 'H');//ã€Debugã€‘
 					Serial_RxStringPacket[(*count)++] = RxData;
 					*s = 0;
 					Serial_RxStringPacket[*count] = '\0';
 					*count = 0;
 					Serial_RxFlag[ser] = 1;	
-					//´Ë´¦±íÊ¾Ò»Õû¸öStringÒÑ¾­½ÓÊÜÍê£¬¿É½øĞĞ¶ÁÈ¡±äÁ¿µÈ²Ù×÷¡£
+					//æ­¤å¤„è¡¨ç¤ºä¸€æ•´ä¸ªStringå·²ç»æ¥å—å®Œï¼Œå¯è¿›è¡Œè¯»å–å˜é‡ç­‰æ“ä½œã€‚
 					
 				} else {
 					//NOTHING
@@ -168,40 +168,40 @@ void Serial_Auto_StateMachine(
 				break;
 			default:
 				//ERROR
-				break;	//dafault:ÄÚÈôÃ»ÓĞÒªÖ´ĞĞµÄ´úÂëÔòĞèÒª¼Óbreak;
+				break;	//dafault:å†…è‹¥æ²¡æœ‰è¦æ‰§è¡Œçš„ä»£ç åˆ™éœ€è¦åŠ break;
 		}
 }
 
 void USART2_IRQHandler() {
 	
-	//Serial_SendByte(USART2, 'h');//¡¾Debug¡¿
+	//Serial_SendByte(USART2, 'h');//ã€Debugã€‘
 	
-	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//´íµã£º½«GetITStatus´íĞ´ÎªGetFlagStatus
+	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//é”™ç‚¹ï¼šå°†GetITStatusé”™å†™ä¸ºGetFlagStatus
 		
-		//Serial_SendByte(USART2, 'H');//¡¾Debug¡¿
+		//Serial_SendByte(USART2, 'H');//ã€Debugã€‘
 		
-		//USART_ClearITPendingBit(USART2, USART_IT_RXNE);//×Ô¶¯Çå±êÖ¾Î»
+		//USART_ClearITPendingBit(USART2, USART_IT_RXNE);//è‡ªåŠ¨æ¸…æ ‡å¿—ä½
 		
 		uint16_t size = sizeof(Serial_Rx2StringPacket)/sizeof(Serial_Rx2StringPacket[0]);
 		
-		//½øÈë×´Ì¬»ú³ÌĞò
+		//è¿›å…¥çŠ¶æ€æœºç¨‹åº
 		Serial_Auto_StateMachine(USART2, 2, &StateMachine_s2, &StateMachine_count2, Serial_Rx2StringPacket, size);
 	}
 }
 
 //void USART3_IRQHandler() {
 //	
-//	if(USART_GetITStatus(USART3,USART_IT_RXNE) == SET) {	//´íµã£º½«GetITStatus´íĞ´ÎªGetFlagStatus
-//		//µ±RDRÒÆÎ»¼Ä´æÆ÷ÖĞµÄÊı¾İ±»×ªÒÆµ½USART_DR¼Ä´æÆ÷ÖĞ£¨µÈ´ı¶ÁÈ¡£©£¬¸ÃÎ»±»Ó²¼şÖÃÎ»£¨1¼´SET£©¡£
-//		//Èç¹ûUSART_CR1¼Ä´æÆ÷ÖĞµÄRXNEIEÎª1£¬Ôò²úÉúÖĞ¶Ï¡£
-//		//¶ÔUSART_DRµÄ¶Á²Ù×÷£¨RxData = USART_ReceiveData(USARTx)£©¿ÉÒÔ½«¸ÃÎ»ÇåÁã£¨0¼´RESET£©¡£
+//	if(USART_GetITStatus(USART3,USART_IT_RXNE) == SET) {	//é”™ç‚¹ï¼šå°†GetITStatusé”™å†™ä¸ºGetFlagStatus
+//		//å½“RDRç§»ä½å¯„å­˜å™¨ä¸­çš„æ•°æ®è¢«è½¬ç§»åˆ°USART_DRå¯„å­˜å™¨ä¸­ï¼ˆç­‰å¾…è¯»å–ï¼‰ï¼Œè¯¥ä½è¢«ç¡¬ä»¶ç½®ä½ï¼ˆ1å³SETï¼‰ã€‚
+//		//å¦‚æœUSART_CR1å¯„å­˜å™¨ä¸­çš„RXNEIEä¸º1ï¼Œåˆ™äº§ç”Ÿä¸­æ–­ã€‚
+//		//å¯¹USART_DRçš„è¯»æ“ä½œï¼ˆRxData = USART_ReceiveData(USARTx)ï¼‰å¯ä»¥å°†è¯¥ä½æ¸…é›¶ï¼ˆ0å³RESETï¼‰ã€‚
 //		
-//		//USART_ClearITPendingBit(USART3, USART_IT_RXNE);//×Ô¶¯Çå±êÖ¾Î»
+//		//USART_ClearITPendingBit(USART3, USART_IT_RXNE);//è‡ªåŠ¨æ¸…æ ‡å¿—ä½
 //		
 //		uint16_t size = sizeof(Serial_Rx3StringPacket)/sizeof(Serial_Rx3StringPacket[0]);
 //		
 //		
-//		//½øÈë×´Ì¬»ú³ÌĞò
+//		//è¿›å…¥çŠ¶æ€æœºç¨‹åº
 //		Serial_Auto_StateMachine(USART3, 3, &StateMachine_s3, &StateMachine_count3, Serial_Rx3StringPacket, size);
 //		
 //	}
@@ -209,16 +209,16 @@ void USART2_IRQHandler() {
 
 void Serial_SendByte(USART_TypeDef* USARTx, uint8_t Byte) {
 	while(USART_GetFlagStatus(USARTx, USART_FLAG_TXE) == RESET);	
-	//TXEÖÃ0£ºÊı¾İ»¹Î´±»ÍêÈ«×ªÒÆÖÁÒÆÎ»¼Ä´æÆ÷£»TXEÖÃ1£ºÊı¾İÒÑ±»ÍêÈ«×ªÒÆÖÁÒÆÎ»¼Ä´æÆ÷¡£
-	//ÏÂÒ»ÂÖ¶ÔUSART_SendData()ÔËĞĞ¶ÔUSART_DR½øĞĞĞ´²Ù×÷»á½«TXE×Ô¶¯ÖÃ0¼´RESET£¬¼´Êı¾İÎ´±»ÍêÈ«×ªÒÆÖÁÒÆÎ»¼Ä´æÆ÷
-	//µ±TDR¼Ä´æÆ÷ÖĞµÄÊı¾İ±»Ó²¼şÍêÈ«×ªÒÆµ½ÒÆÎ»¼Ä´æÆ÷µÄÊ±ºò£¬¸ÃÎ»±»Ó²¼şÖÃÎ»¼´1¼´SET£¬¼´ÉÏwhile(...)¿ÉÌø³ö
-	//ÉÏĞĞ´úÂë×÷ÓÃ£ºµÈ´ıÉÏÒ»ÂÖTx´ÓUSART_DRÈ«²¿×ªÒÆµ½ÒÆÎ»¼Ä´æÆ÷
+	//TXEç½®0ï¼šæ•°æ®è¿˜æœªè¢«å®Œå…¨è½¬ç§»è‡³ç§»ä½å¯„å­˜å™¨ï¼›TXEç½®1ï¼šæ•°æ®å·²è¢«å®Œå…¨è½¬ç§»è‡³ç§»ä½å¯„å­˜å™¨ã€‚
+	//ä¸‹ä¸€è½®å¯¹USART_SendData()è¿è¡Œå¯¹USART_DRè¿›è¡Œå†™æ“ä½œä¼šå°†TXEè‡ªåŠ¨ç½®0å³RESETï¼Œå³æ•°æ®æœªè¢«å®Œå…¨è½¬ç§»è‡³ç§»ä½å¯„å­˜å™¨
+	//å½“TDRå¯„å­˜å™¨ä¸­çš„æ•°æ®è¢«ç¡¬ä»¶å®Œå…¨è½¬ç§»åˆ°ç§»ä½å¯„å­˜å™¨çš„æ—¶å€™ï¼Œè¯¥ä½è¢«ç¡¬ä»¶ç½®ä½å³1å³SETï¼Œå³ä¸Šwhile(...)å¯è·³å‡º
+	//ä¸Šè¡Œä»£ç ä½œç”¨ï¼šç­‰å¾…ä¸Šä¸€è½®Txä»USART_DRå…¨éƒ¨è½¬ç§»åˆ°ç§»ä½å¯„å­˜å™¨
 	
 	USART_SendData(USARTx, Byte);
 }
 
 void Serial_SendString(USART_TypeDef* USARTx, char *string) {
-	for(uint8_t i = 0; string[i] != '\0'; i++) {	//´íµã£º½«string[i]´íĞ´Îªi != '\0'
+	for(uint8_t i = 0; string[i] != '\0'; i++) {	//é”™ç‚¹ï¼šå°†string[i]é”™å†™ä¸ºi != '\0'
 		Serial_SendByte(USARTx, string[i]);
 	}
 }
@@ -226,7 +226,7 @@ void Serial_SendString(USART_TypeDef* USARTx, char *string) {
 void Serial_SendStringV2(USART_TypeDef* USARTx, char* str) {
     while (*str) {
         Serial_SendByte(USARTx, *str++);
-    }
+    }//å½“*str == '\0'æ—¶ä¼šé€€å‡ºå¾ªç¯
 }
 
 void Serial_SendInteger(USART_TypeDef* USARTx, int num) {

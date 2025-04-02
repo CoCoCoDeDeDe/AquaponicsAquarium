@@ -11,13 +11,13 @@
 #define PA4RESET		GPIO_WriteBit(GPIOA, GPIO_Pin_4, Bit_RESET);
 
 typedef enum {
-	IDLE,//¿ÕÏĞ×´Ì¬(Î´Æô¶¯½ÓÊÕ)
+	IDLE,//ç©ºé—²çŠ¶æ€(æœªå¯åŠ¨æ¥æ”¶)
 	RSP_START,
 	RESPONSE_RISING,
 	RSP_END,
 	BIT_END,
 	END_END,
-	FAILED//½ÓÊÕ´íÎó(³¬Ê±»òĞ£ÑéÊ§°Ü)
+	FAILED//æ¥æ”¶é”™è¯¯(è¶…æ—¶æˆ–æ ¡éªŒå¤±è´¥)
 } MyAirS_States_ReaderSM;
 
 extern uint8_t MyAirS_Flag_TIM3ARCounter_On;
@@ -29,15 +29,15 @@ extern uint8_t MyAirS_Flag_WriterSM_On;
 extern uint8_t MyAirS_State_WriterSM;
 extern uint32_t MyAirS_Count_WriterSM;
 
-extern uint8_t MyAirS_Count_ReadBit;//ÔÚ³É¹¦½ÓÊÕ1BitÊ±++,ÔÚ½ÓÊÕÍê40BIT»òÕß¿ªÊ¼½ÓÊÕÊ±=0
+extern uint8_t MyAirS_Count_ReadBit;//åœ¨æˆåŠŸæ¥æ”¶1Bitæ—¶++,åœ¨æ¥æ”¶å®Œ40BITæˆ–è€…å¼€å§‹æ¥æ”¶æ—¶=0
 
-extern uint8_t MyAirS_BitsArr[];//Ã¿1¸öÔªËØ¶ÔÓ¦Òª¶ÁÈ¡µÄÊı¾İµÄÃ¿Ò»¸öbit
-extern uint8_t MyAirS_DataArr[];//Ã¿1¸öÔªËØ¶ÔÓÚ×ª»»ÍêµÄÒ»¸ö×Ö½Ú,²»°üÀ¨Ğ£ÑéÎ»
-extern MyAirS_States_ReaderSM MyAirS_State_ReaderSM;//Ä¬ÈÏÎ´¿ªÊ¼½ÓÊÕ
-extern uint32_t MyAirS_Count_ReadInterval;//´æ´¢FALLINGºÍRISINGÖ®¼äTIM3CNT¼ÆÊı´ÎÊı
-extern uint32_t MyAirS_Count_ReadIntervalStart;//´æ´¢¿ªÊ¼¼ÇFALLINGºÍRISINGÖ®¼äTIM3CNT¼ÆÊı´ÎÊıÊ±µÄTIM3CNTÖµ
+extern uint8_t MyAirS_BitsArr[];//æ¯1ä¸ªå…ƒç´ å¯¹åº”è¦è¯»å–çš„æ•°æ®çš„æ¯ä¸€ä¸ªbit
+extern uint8_t MyAirS_DataArr[];//æ¯1ä¸ªå…ƒç´ å¯¹äºè½¬æ¢å®Œçš„ä¸€ä¸ªå­—èŠ‚,ä¸åŒ…æ‹¬æ ¡éªŒä½
+extern MyAirS_States_ReaderSM MyAirS_State_ReaderSM;//é»˜è®¤æœªå¼€å§‹æ¥æ”¶
+extern uint32_t MyAirS_Count_ReadInterval;//å­˜å‚¨FALLINGå’ŒRISINGä¹‹é—´TIM3CNTè®¡æ•°æ¬¡æ•°
+extern uint32_t MyAirS_Count_ReadIntervalStart;//å­˜å‚¨å¼€å§‹è®°FALLINGå’ŒRISINGä¹‹é—´TIM3CNTè®¡æ•°æ¬¡æ•°æ—¶çš„TIM3CNTå€¼
 extern uint8_t MyAirS_Flag_ReadSucced;
-extern uint8_t MyAirS_Count_ReadBit;//ÔÚ³É¹¦½ÓÊÕ1BitÊ±++,ÔÚ½ÓÊÕÍê40BIT»òÕß¿ªÊ¼½ÓÊÕÊ±=0
+extern uint8_t MyAirS_Count_ReadBit;//åœ¨æˆåŠŸæ¥æ”¶1Bitæ—¶++,åœ¨æ¥æ”¶å®Œ40BITæˆ–è€…å¼€å§‹æ¥æ”¶æ—¶=0
 
 void MyAirS_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 

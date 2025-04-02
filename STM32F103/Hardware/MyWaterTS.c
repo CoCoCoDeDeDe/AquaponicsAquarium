@@ -37,7 +37,7 @@ typedef enum {
 
 static GPIO_InitTypeDef GPIO_InitStruct;
 
-static const MyWaterTS_TaskState_TypeDef MyWaterTS_TaskStateOrder[125] = {//¡¾´íµã¡¿·¢ËÍÊı¾İÊ±£¬Ò»¸ö×Ö½ÚÄÚµÄ±ÈÌØÃ»ÓĞµÍÎ»ÏÈĞĞ
+static const MyWaterTS_TaskState_TypeDef MyWaterTS_TaskStateOrder[125] = {//ã€é”™ç‚¹ã€‘å‘é€æ•°æ®æ—¶ï¼Œä¸€ä¸ªå­—èŠ‚å†…çš„æ¯”ç‰¹æ²¡æœ‰ä½ä½å…ˆè¡Œ
 	T_IDLE,
 	T_Init, 
 	T_Write0, T_Write0, T_Write1, T_Write1, T_Write0, T_Write0, T_Write1, T_Write1, 
@@ -49,22 +49,22 @@ static const MyWaterTS_TaskState_TypeDef MyWaterTS_TaskStateOrder[125] = {//¡¾´í
 	T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, 
 	T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, T_ReadBit, 
 	T_Convert
-};//TaskSMµÄ×´Ì¬×ª»»Ë³Ğò
-static uint8_t MyWaterTS_TaskStateOrder_Index = 0;//TaskSMµÄ×´Ì¬×ª»»Ö¸Òı
-static uint32_t MyWaterTS_Count_TaskSM_RunTimes = 0;//ÆäÏÂËùÓĞ×´Ì¬»úºÍ×Ó×´Ì¬»ú¹²ÓÃ
-static uint8_t MyWaterTS_Flag_Task_Succed = 0;//TaskSMµÄ³É¹¦×´Ì¬±êÖ¾Î»
+};//TaskSMçš„çŠ¶æ€è½¬æ¢é¡ºåº
+static uint8_t MyWaterTS_TaskStateOrder_Index = 0;//TaskSMçš„çŠ¶æ€è½¬æ¢æŒ‡å¼•
+static uint32_t MyWaterTS_Count_TaskSM_RunTimes = 0;//å…¶ä¸‹æ‰€æœ‰çŠ¶æ€æœºå’Œå­çŠ¶æ€æœºå…±ç”¨
+static uint8_t MyWaterTS_Flag_Task_Succed = 0;//TaskSMçš„æˆåŠŸçŠ¶æ€æ ‡å¿—ä½
 
 static const MyWaterTS_InitState_TypeDef MyWaterTS_InitStateOrder[4] = {
 	I_Down, I_Rise, I_Check, I_Wait
-};//InitµÄ×´Ì¬×ª»»Ë³Ğò
-static uint8_t MyWaterTS_InitStateOrder_Index = 0;//InitµÄ×´Ì¬×ª»»Ö¸Òı
-static uint8_t MyWaterTS_Target_Init_CkeckDelay = 70;//InitÖĞ¼ì²éRSPµÄÊ±»ú
+};//Initçš„çŠ¶æ€è½¬æ¢é¡ºåº
+static uint8_t MyWaterTS_InitStateOrder_Index = 0;//Initçš„çŠ¶æ€è½¬æ¢æŒ‡å¼•
+static uint8_t MyWaterTS_Target_Init_CkeckDelay = 70;//Initä¸­æ£€æŸ¥RSPçš„æ—¶æœº
 static uint8_t MyWaterTS_Flag_TaskInit_Succed = 0;
 
 static const MyWaterTS_Write0State_TypeDef MyWaterTS_Write0StateOrder[2] = {
 	W0_Down, W0_Rise
-};//Write0µÄ×´Ì¬×ª»»Ë³Ğò
-static uint8_t MyWaterTS_Write0StateOrder_Index = 0;//Write0µÄ×´Ì¬×ª»»Ö¸Òı
+};//Write0çš„çŠ¶æ€è½¬æ¢é¡ºåº
+static uint8_t MyWaterTS_Write0StateOrder_Index = 0;//Write0çš„çŠ¶æ€è½¬æ¢æŒ‡å¼•
 
 static const MyWaterTS_Write1State_TypeDef MyWaterTS_Write1StateOrder[3] = {
 	W1_Down, W1_Rise, W1_Wait
@@ -76,21 +76,21 @@ static const MyWaterTS_ReadBitState_TypeDef MyWaterTS_ReadBitStateOrder[4] = {
 };
 static uint8_t MyWaterTS_ReadBitStateOrder_Index = 0;
 
-static uint8_t MyWaterTS_Flag_TaskSuccedCheckTimer_RunStatus = 0;//TaskµÄ³É¹¦¼ì²éº¯ÊıµÄ¶¨Ê±Æô¶¯
+static uint8_t MyWaterTS_Flag_TaskSuccedCheckTimer_RunStatus = 0;//Taskçš„æˆåŠŸæ£€æŸ¥å‡½æ•°çš„å®šæ—¶å¯åŠ¨
 
-static uint8_t MyWaterTS_Count_BitReaded = 0;//¼ÇÂ¼±¾Task»ØºÏÖĞÒÑ¾­¶ÁÈ¡µÄBitÊı
+static uint8_t MyWaterTS_Count_BitReaded = 0;//è®°å½•æœ¬Taskå›åˆä¸­å·²ç»è¯»å–çš„Bitæ•°
 
-static uint8_t MyWaterTS_ReadPacket[72];//¿ÉÒÔ×°ÏÂSCRATCHPADÈ«²¿8ByteÊı¾İµÄÊı×é
+static uint8_t MyWaterTS_ReadPacket[72];//å¯ä»¥è£…ä¸‹SCRATCHPADå…¨éƒ¨8Byteæ•°æ®çš„æ•°ç»„
 
-uint16_t MyWaterTS_ReadPacket_16Bit_Temp = 0;//Ôİ´æ½á¹û,ÓÃÔÚReadPacketConvert()ÖĞ
+uint16_t MyWaterTS_ReadPacket_16Bit_Temp = 0;//æš‚å­˜ç»“æœ,ç”¨åœ¨ReadPacketConvert()ä¸­
 
-uint16_t MyWaterTS_Result_12Bit_H7Bit = 0;//12Bit·Ö±æÂÊ½á¹ûµÄÕûÊı²¿·Ö
+uint16_t MyWaterTS_Result_12Bit_H7Bit = 0;//12Bitåˆ†è¾¨ç‡ç»“æœçš„æ•´æ•°éƒ¨åˆ†
 
-uint16_t MyWaterTS_Result_12Bit_L4Bit = 0;//12Bit·Ö±æÂÊ½á¹ûµÄĞ¡Êı²¿·Ö
+uint16_t MyWaterTS_Result_12Bit_L4Bit = 0;//12Bitåˆ†è¾¨ç‡ç»“æœçš„å°æ•°éƒ¨åˆ†
 
 static uint16_t MyWaterTS_Count_TaskSuccedCheckTimer_RunTimes = 0;
 
-static void MyWaterTS_Task_Reset(void) {//ResetºÍTurnOnÖĞÈôÓĞÖØ¸´,Ö»ÈÃTurnOnÖ´ĞĞ¼´¿É
+static void MyWaterTS_Task_Reset(void) {//Resetå’ŒTurnOnä¸­è‹¥æœ‰é‡å¤,åªè®©TurnOnæ‰§è¡Œå³å¯
 	
 	MyWaterTS_TaskStateOrder_Index = 0;//IDLE
 }
@@ -98,49 +98,49 @@ static void MyWaterTS_Task_Reset(void) {//ResetºÍTurnOnÖĞÈôÓĞÖØ¸´,Ö»ÈÃTurnOnÖ´ĞĞ
 static void MyWaterTS_TaskSuccedCkeck(void) {
 	
 	if((MyWaterTS_Flag_Task_Succed == 1) && 
-		(MyWaterTS_Flag_TaskInit_Succed == 1)) {//³É¹¦
+		(MyWaterTS_Flag_TaskInit_Succed == 1)) {//æˆåŠŸ
 		
-//		Serial_SendByte(USART2, 'T');//¡¾Debug¡¿
-//		Serial_SendByte(USART2, 'S');//¡¾Debug¡¿
+//		Serial_SendByte(USART2, 'T');//ã€Debugã€‘
+//		Serial_SendByte(USART2, 'S');//ã€Debugã€‘
 //		
-//		Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//		Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
-	} else {//Ê§°Ü
+//		Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//		Serial_SendByte(USART2, '\n');//ã€Debugã€‘
+	} else {//å¤±è´¥
 		
 		MyWaterTS_Task_Reset();
 		
-//		Serial_SendByte(USART2, 'T');//¡¾Debug¡¿
-//		Serial_SendByte(USART2, 'F');//¡¾Debug¡¿
+//		Serial_SendByte(USART2, 'T');//ã€Debugã€‘
+//		Serial_SendByte(USART2, 'F');//ã€Debugã€‘
 //		
-//		Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//		Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//		Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//		Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 	}
 }
 
 static void MyWaterTS_ReadPacketConvert(void) {
 	
-	MyWaterTS_ReadPacket_16Bit_Temp = 0;//'|'²Ù×÷Ç°ÏÈ½«Ã¿¸öbitÇåÁã
+	MyWaterTS_ReadPacket_16Bit_Temp = 0;//'|'æ“ä½œå‰å…ˆå°†æ¯ä¸ªbitæ¸…é›¶
 	
-	for(uint8_t i = 0; i <16 ; i ++) {//½«16Bit_Temp°´¸ßµÍÎ»Ë³ĞòÌîÂú
-		MyWaterTS_ReadPacket_16Bit_Temp |= MyWaterTS_ReadPacket[i] << i;//16Bit_TempÔ­±¾È«Îª0£¬
-		//Racket[]ÍùÀïÃæÌîÊ²Ã´¾ÍÊÇÊ²Ã´
+	for(uint8_t i = 0; i <16 ; i ++) {//å°†16Bit_TempæŒ‰é«˜ä½ä½é¡ºåºå¡«æ»¡
+		MyWaterTS_ReadPacket_16Bit_Temp |= MyWaterTS_ReadPacket[i] << i;//16Bit_TempåŸæœ¬å…¨ä¸º0ï¼Œ
+		//Racket[]å¾€é‡Œé¢å¡«ä»€ä¹ˆå°±æ˜¯ä»€ä¹ˆ
 	}
 	
-	if(MyWaterTS_ReadPacket_16Bit_Temp>>15 == 1) {//Èç¹ûÎª¸ºÔòÈ¡·´²¢ÇÒ+1
+	if(MyWaterTS_ReadPacket_16Bit_Temp>>15 == 1) {//å¦‚æœä¸ºè´Ÿåˆ™å–åå¹¶ä¸”+1
 		MyWaterTS_ReadPacket_16Bit_Temp = ~MyWaterTS_ReadPacket_16Bit_Temp + 1;
 	}
 	
 	MyWaterTS_Result_12Bit_H7Bit = MyWaterTS_ReadPacket_16Bit_Temp>>4;
 	
-	uint8_t mask = (1 << 4) - 1;//8BitÑÚÂë:0000 1111b
+	uint8_t mask = (1 << 4) - 1;//8Bitæ©ç :0000 1111b
 	
 	MyWaterTS_Result_12Bit_L4Bit = MyWaterTS_ReadPacket_16Bit_Temp & mask;
-	//¡¾ÖØµã¡¿°´Î»Óë'&'µÄÔËËãÔ­Àí£ºÁ½¸öBit¶¼ÊÇ'1'²ÅµÃ'1'£¬Òò´ËÓë'0'×ö'&'ÔËËãÓÀÔ¶µÃ'0'£¬Óë'1'×ö'&'ÔËËãÓÀÔ¶²»±ä
-	//¡¾ÖØµã¡¿°´»òÓë'|'µÄÔËËãÔ­Àí£ºÓë'0'×ö'|'ÔËËãÓÀÔ¶²»±ä£¬Óë'1'×ö'|'ÔËËãÓÀÔ¶µÃ'1'
+	//ã€é‡ç‚¹ã€‘æŒ‰ä½ä¸'&'çš„è¿ç®—åŸç†ï¼šä¸¤ä¸ªBitéƒ½æ˜¯'1'æ‰å¾—'1'ï¼Œå› æ­¤ä¸'0'åš'&'è¿ç®—æ°¸è¿œå¾—'0'ï¼Œä¸'1'åš'&'è¿ç®—æ°¸è¿œä¸å˜
+	//ã€é‡ç‚¹ã€‘æŒ‰æˆ–ä¸'|'çš„è¿ç®—åŸç†ï¼šä¸'0'åš'|'è¿ç®—æ°¸è¿œä¸å˜ï¼Œä¸'1'åš'|'è¿ç®—æ°¸è¿œå¾—'1'
 	
 }
 
-void MyWaterTS_Init(void) {//¡¾´íµã¡¿ÒÅÂ©Init
+void MyWaterTS_Init(void) {//ã€é”™ç‚¹ã€‘é—æ¼Init
 	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	
@@ -150,16 +150,16 @@ void MyWaterTS_Init(void) {//¡¾´íµã¡¿ÒÅÂ©Init
 	GPIO_Init(GPIO_MyWaterTSDQ, &GPIO_InitStruct);
 }
 
-void MyWaterTS_TaskSM_TurnOn(void) {//¼æReset
+void MyWaterTS_TaskSM_TurnOn(void) {//å…¼Reset
 	
-//	Serial_SendByte(USART2, 'T');//¡¾Debug¡¿
-//	Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//	Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//	Serial_SendByte(USART2, 'T');//ã€Debugã€‘
+//	Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//	Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 	
-	MyWaterTS_TaskStateOrder_Index = 1;//TaskSM½øÈëInit¿ªÊ¼ÔËĞĞ
-	MyWaterTS_Flag_TaskSuccedCheckTimer_RunStatus = 1;//Æô¶¯TaskSuccedCheck
+	MyWaterTS_TaskStateOrder_Index = 1;//TaskSMè¿›å…¥Initå¼€å§‹è¿è¡Œ
+	MyWaterTS_Flag_TaskSuccedCheckTimer_RunStatus = 1;//å¯åŠ¨TaskSuccedCheck
 	MyWaterTS_Count_TaskSuccedCheckTimer_RunTimes = 0;
-	MyWaterTS_Target_Init_CkeckDelay = 130;//InitµÄCheckÊ±»ú
+	MyWaterTS_Target_Init_CkeckDelay = 130;//Initçš„Checkæ—¶æœº
 	MyWaterTS_Flag_Task_Succed = 0;
 	MyWaterTS_InitStateOrder_Index = 0;
 	MyWaterTS_Write0StateOrder_Index = 0;
@@ -181,7 +181,7 @@ void MyWaterTS_TaskSuccedCheckTimer(void) {
 			MyWaterTS_Count_TaskSuccedCheckTimer_RunTimes = 0;
 			
 			MyWaterTS_Flag_TaskSuccedCheckTimer_RunStatus = 0;
-			//Serial_SendByte(USART2, 'C');//¡¾Debug¡¿
+			//Serial_SendByte(USART2, 'C');//ã€Debugã€‘
 		}
 	}
 }
@@ -190,14 +190,14 @@ void MyWaterTS_TaskSM(void) {
 	switch(MyWaterTS_TaskStateOrder[MyWaterTS_TaskStateOrder_Index]) {
 		case T_IDLE:
 			
-//			Serial_SendByte(USART2, 'I');//¡¾Debug¡¿
-//			Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
+//			Serial_SendByte(USART2, 'I');//ã€Debugã€‘
+//			Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
 //			
-//			Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//			Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//			Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//			Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 			
 			break;
-		case T_Init://ÆÚÄÚcaseË³Ğò¹Ì¶¨,¾¡Á¿²»ÒªÔÙ¿É±àÅÅ
+		case T_Init://æœŸå†…caseé¡ºåºå›ºå®š,å°½é‡ä¸è¦å†å¯ç¼–æ’
 			
 			MyWaterTS_Count_TaskSM_RunTimes ++;
 		
@@ -205,10 +205,10 @@ void MyWaterTS_TaskSM(void) {
 				
 				case I_Down:
 					
-//					Serial_SendByte(USART2, 'I');//¡¾Debug¡¿
-//					Serial_SendByte(USART2, 'd');//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//¡¾Debug¡¿
+//					Serial_SendByte(USART2, 'I');//ã€Debugã€‘
+//					Serial_SendByte(USART2, 'd');//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//ã€Debugã€‘
 				
 					MyWaterTSDQ_SET;
 				
@@ -223,10 +223,10 @@ void MyWaterTS_TaskSM(void) {
 					
 					if(500 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						
-//						Serial_SendByte(USART2, 'I');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'r');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, 'I');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'r');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//ã€Debugã€‘
 						
 						MyWaterTSDQ_SET;
 						
@@ -240,10 +240,10 @@ void MyWaterTS_TaskSM(void) {
 					if(MyWaterTS_Target_Init_CkeckDelay <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						if(!(MyWaterTSDQ_Read)) {
 							
-//							Serial_SendByte(USART2, 'I');//¡¾Debug¡¿
-//							Serial_SendByte(USART2, 'c');//¡¾Debug¡¿
-//							Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//							Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//¡¾Debug¡¿
+//							Serial_SendByte(USART2, 'I');//ã€Debugã€‘
+//							Serial_SendByte(USART2, 'c');//ã€Debugã€‘
+//							Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//							Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//ã€Debugã€‘
 							
 							MyWaterTS_Flag_TaskInit_Succed = 1;
 							
@@ -259,13 +259,13 @@ void MyWaterTS_TaskSM(void) {
 					
 					if(570 - MyWaterTS_Target_Init_CkeckDelay <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						
-//						Serial_SendByte(USART2, 'I');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'w');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, 'I');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'w');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_InitStateOrder_Index);//ã€Debugã€‘
 //						
-//						Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//						Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 						
 						MyWaterTS_Count_TaskSM_RunTimes = 0;
 						
@@ -284,10 +284,10 @@ void MyWaterTS_TaskSM(void) {
 				
 				case W0_Down:
 					
-//					Serial_SendByte(USART2, '0');//¡¾Debug¡¿
-//					Serial_SendByte(USART2, 'd');//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_Write0StateOrder_Index);//¡¾Debug¡¿
+//					Serial_SendByte(USART2, '0');//ã€Debugã€‘
+//					Serial_SendByte(USART2, 'd');//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_Write0StateOrder_Index);//ã€Debugã€‘
 					
 					MyWaterTSDQ_RESET;
 					
@@ -299,13 +299,13 @@ void MyWaterTS_TaskSM(void) {
 					
 					if(60 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						
-//						Serial_SendByte(USART2, '0');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'r');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_Write0StateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '0');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'r');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_Write0StateOrder_Index);//ã€Debugã€‘
 //												
-//						Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//						Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 						
 						MyWaterTSDQ_SET;
 						
@@ -326,10 +326,10 @@ void MyWaterTS_TaskSM(void) {
 				
 				case W1_Down:
 					
-//					Serial_SendByte(USART2, '1');//¡¾Debug¡¿
-//					Serial_SendByte(USART2, 'd');//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_Write1StateOrder_Index);//¡¾Debug¡¿
+//					Serial_SendByte(USART2, '1');//ã€Debugã€‘
+//					Serial_SendByte(USART2, 'd');//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_Write1StateOrder_Index);//ã€Debugã€‘
 					
 					MyWaterTSDQ_RESET;
 					
@@ -343,10 +343,10 @@ void MyWaterTS_TaskSM(void) {
 					
 					if(10 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						
-//						Serial_SendByte(USART2, '1');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'r');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_Write1StateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '1');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'r');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_Write1StateOrder_Index);//ã€Debugã€‘
 						
 						MyWaterTSDQ_SET;
 						
@@ -360,13 +360,13 @@ void MyWaterTS_TaskSM(void) {
 					
 					if(50 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						
-//						Serial_SendByte(USART2, '1');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'w');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_Write1StateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '1');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'w');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_Write1StateOrder_Index);//ã€Debugã€‘
 //												
-//						Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//						Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 						
 						MyWaterTS_Count_TaskSM_RunTimes = 0;
 						
@@ -386,10 +386,10 @@ void MyWaterTS_TaskSM(void) {
 				
 				case R_Down:
 					
-//					Serial_SendByte(USART2, 'R');//¡¾Debug¡¿
-//					Serial_SendByte(USART2, 'd');//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//					Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//¡¾Debug¡¿
+//					Serial_SendByte(USART2, 'R');//ã€Debugã€‘
+//					Serial_SendByte(USART2, 'd');//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//					Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//ã€Debugã€‘
 					
 					MyWaterTSDQ_RESET;
 					
@@ -403,10 +403,10 @@ void MyWaterTS_TaskSM(void) {
 					
 					if(5 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {
 						
-//						Serial_SendByte(USART2, 'R');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'r');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, 'R');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'r');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//ã€Debugã€‘
 						
 						MyWaterTSDQ_SET;
 						
@@ -414,26 +414,26 @@ void MyWaterTS_TaskSM(void) {
 						
 						MyWaterTS_ReadBitStateOrder_Index ++;
 					}
-					break;//µ½ÕâÀïÒÑ¾­Down/ResetÁË5us
+					break;//åˆ°è¿™é‡Œå·²ç»Down/Resetäº†5us
 				
-				case R_Check://¡¾WARN:Ğ¡ĞÄBug¡¿
+				case R_Check://ã€WARN:å°å¿ƒBugã€‘
 					
-					if(5 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {//µÚ1´ÎÀ´ÕâÀïÊÇDown¿ªÊ¼ºóµÚ10us,2´ÎÊÇ15us
+					if(5 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {//ç¬¬1æ¬¡æ¥è¿™é‡Œæ˜¯Downå¼€å§‹åç¬¬10us,2æ¬¡æ˜¯15us
 						
-//						Serial_SendByte(USART2, 'R');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'c');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, 'R');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'c');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//ã€Debugã€‘
 						
 						if(MyWaterTSDQ_Read) {
 							
-							//Serial_SendByte(USART2, '1');//¡¾Debug¡¿
+							//Serial_SendByte(USART2, '1');//ã€Debugã€‘
 							
 							MyWaterTS_ReadPacket[MyWaterTS_Count_BitReaded ++] = 1;
 							
 						} else{
 							
-							//Serial_SendByte(USART2, '0');//¡¾Debug¡¿
+							//Serial_SendByte(USART2, '0');//ã€Debugã€‘
 							
 							MyWaterTS_ReadPacket[MyWaterTS_Count_BitReaded ++] = 0;
 						}
@@ -446,15 +446,15 @@ void MyWaterTS_TaskSM(void) {
 					
 				case R_Wait:
 
-					if(45 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {//¡¾»ò45¡¿
+					if(45 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {//ã€æˆ–45ã€‘
 						
-//						Serial_SendByte(USART2, 'R');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, 'w');//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
-//						Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//¡¾Debug¡¿
+//						Serial_SendByte(USART2, 'R');//ã€Debugã€‘
+//						Serial_SendByte(USART2, 'w');//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
+//						Serial_SendInteger(USART2, MyWaterTS_ReadBitStateOrder_Index);//ã€Debugã€‘
 //						
-//						Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//						Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//						Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//						Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 					
 						
 						MyWaterTS_Count_TaskSM_RunTimes = 0;
@@ -471,13 +471,13 @@ void MyWaterTS_TaskSM(void) {
 			
 			MyWaterTS_Count_TaskSM_RunTimes ++;
 			
-			if(750000 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {//¡¾µ÷ÊÔµã¡¿
+			if(750000 <= MyWaterTS_Count_TaskSM_RunTimes * 5) {//ã€è°ƒè¯•ç‚¹ã€‘
 
-//				Serial_SendByte(USART2, 'W');//¡¾Debug¡¿
-//				Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
+//				Serial_SendByte(USART2, 'W');//ã€Debugã€‘
+//				Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
 //								
-//				Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//				Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//				Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//				Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 				
 				MyWaterTS_Count_TaskSM_RunTimes = 0;
 				
@@ -488,14 +488,14 @@ void MyWaterTS_TaskSM(void) {
 		case T_Convert:
 			
 //			for(int8_t i = 15; i >= 0; i--) {
-//				Serial_SendInteger(USART2, MyWaterTS_ReadPacket[i]);//¡¾Debug¡¿
+//				Serial_SendInteger(USART2, MyWaterTS_ReadPacket[i]);//ã€Debugã€‘
 //			}
 				
-//			Serial_SendByte(USART2, 'C');//¡¾Debug¡¿
-//			Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//¡¾Debug¡¿
+//			Serial_SendByte(USART2, 'C');//ã€Debugã€‘
+//			Serial_SendInteger(USART2, MyWaterTS_TaskStateOrder_Index);//ã€Debugã€‘
 //			
-//			Serial_SendByte(USART2, '\r');//¡¾Debug¡¿
-//			Serial_SendByte(USART2, '\n');//¡¾Debug¡¿
+//			Serial_SendByte(USART2, '\r');//ã€Debugã€‘
+//			Serial_SendByte(USART2, '\n');//ã€Debugã€‘
 			
 			MyWaterTS_ReadPacketConvert();
 			

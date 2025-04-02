@@ -41,11 +41,13 @@
 .\objects\serial3.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\serial3.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\serial3.o: .\Hardware\Serial3.h
+.\objects\serial3.o: .\System\math.h
 .\objects\serial3.o: .\System\MyTIM.h
 .\objects\serial3.o: .\Hardware\MyWaterSS.h
 .\objects\serial3.o: .\System\MyTIM.h
 .\objects\serial3.o: .\Hardware\MyAirS.h
 .\objects\serial3.o: .\Hardware\MyWaterTS.h
+.\objects\serial3.o: .\Hardware\AT.h
 .\objects\serial3.o: .\Hardware\MyFeeder.h
 .\objects\serial3.o: .\Hardware\MyWaterP.h
 .\objects\serial3.o: .\Hardware\MyWaterQS.h

@@ -43,6 +43,7 @@
 .\objects\mywaterss.o: .\User\main.h
 .\objects\mywaterss.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\mywaterss.o: .\Hardware\MySerial.h
+.\objects\mywaterss.o: .\System\math.h
 .\objects\mywaterss.o: .\System\MyTIM.h
 .\objects\mywaterss.o: .\Hardware\MyFeeder.h
 .\objects\mywaterss.o: .\Hardware\MyWaterP.h
@@ -58,3 +59,4 @@
 .\objects\mywaterss.o: .\Hardware\MyWaterH.h
 .\objects\mywaterss.o: .\Hardware\MyAquariumL.h
 .\objects\mywaterss.o: .\Hardware\Serial3.h
+.\objects\mywaterss.o: .\Hardware\AT.h

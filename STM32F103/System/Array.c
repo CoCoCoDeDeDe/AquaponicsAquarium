@@ -2,7 +2,7 @@
 
 
 int Array_char_isEqual(char *a, char *b) {
-	if(sizeof(a) != sizeof(b)) {//sizeof(arr)Ëã'\0'
+	if(sizeof(a) != sizeof(b)) {//sizeof(arr)ç®—'\0'
 		return 0;
 	} else {
 		for(uint8_t i = 0 ; i < sizeof(a) ; i ++ ) {
@@ -11,7 +11,7 @@ int Array_char_isEqual(char *a, char *b) {
 			} else {
 				//nothing
 			}
-		}	//±éÀúÍê£¬·¢ÏÖÃ¿¸öÔªËØ¶¼ÏàÍ¬
+		}	//éå†å®Œï¼Œå‘ç°æ¯ä¸ªå…ƒç´ éƒ½ç›¸åŒ
 		return 1;
 	}
 }
@@ -21,14 +21,14 @@ float MyArray_GetAverage_uint16_t(uint8_t n, uint16_t *arr) {
 	for(int i = 0; i < n; i++) {
 		sum += arr[i];
 	}
-	return sum / (float)n;	//´íµã£º×ªnÎªfloat£¬·ñÔò½á¹ûÎªÕûÊı
+	return sum / (float)n;	//é”™ç‚¹ï¼šè½¬nä¸ºfloatï¼Œå¦åˆ™ç»“æœä¸ºæ•´æ•°
 }
 
 void MyArray_TailAdd_uint16_t(uint16_t *arr, uint16_t ele, uint8_t n) {
 	for(int i = 0; i < n - 1; i ++) {
 		arr[i] = arr[i + 1];
 	}
-	arr[n - 1] = ele;	//´íµã£ºarr×îºóÒ»Î»ÊÇarr[n - 1]
+	arr[n - 1] = ele;	//é”™ç‚¹ï¼šarræœ€åä¸€ä½æ˜¯arr[n - 1]
 }
 
 void MyArray_Copy_Uint16_t(uint16_t *arr1, uint16_t *arr2, uint8_t n) {
@@ -40,24 +40,24 @@ void MyArray_Copy_Uint8_t(uint8_t *arr1, uint8_t *arr2, uint8_t n) {
 }
 
 /**
- * @brief	¼ì²é×Ö·û´® str ÊÇ·ñº¬×Ó×Ö·û´® tgt_str £¨Çø·Ö´óĞ¡Ğ´£©
- * @param	str Ö÷×Ö·û´®
- * @param	tgt_str Ä¿±ê×Ó×Ö·û´®£¨·Ç¿Õ£©
- * @return	-1£º²ÎÊı´íÎó£¬0£º²»°üº¬£¬1£º°üº¬
- * @note	1. ¿Õ×Ö·û´® tgt_str ÊÓÎª´æÔÚ£¨·µ»Ø1£©
- * 			2. Ç¶ÈëÊ½³¡¾°½¨Òé¹Ì¶¨ str/tgt ×î´ó³¤¶È·ÀÖ¹Òç³ö
+ * @brief	æ£€æŸ¥å­—ç¬¦ä¸² str æ˜¯å¦å«å­å­—ç¬¦ä¸² tgt_str ï¼ˆåŒºåˆ†å¤§å°å†™ï¼‰
+ * @param	str ä¸»å­—ç¬¦ä¸²
+ * @param	tgt_str ç›®æ ‡å­å­—ç¬¦ä¸²ï¼ˆéç©ºï¼‰
+ * @return	-1ï¼šå‚æ•°é”™è¯¯ï¼Œ0ï¼šä¸åŒ…å«ï¼Œ1ï¼šåŒ…å«
+ * @note	1. ç©ºå­—ç¬¦ä¸² tgt_str è§†ä¸ºå­˜åœ¨ï¼ˆè¿”å›1ï¼‰
+ * 			2. åµŒå…¥å¼åœºæ™¯å»ºè®®å›ºå®š str/tgt æœ€å¤§é•¿åº¦é˜²æ­¢æº¢å‡º
  */
 int8_t MyArray_IsContain(const char *str, const char *tgt_str) {
 	
 	if (str == NULL || tgt_str == NULL) return -1;
 	
-	if (*tgt_str == '\0') return 1;	//°üº¬
+	if (*tgt_str == '\0') return 1;	//åŒ…å«
 	
-	const size_t MAX_ACCEPT_LEN = 256;	//¸ù¾İÓ²¼şÏŞÖÆÉè¶¨
+	const size_t MAX_ACCEPT_LEN = 256;	//æ ¹æ®ç¡¬ä»¶é™åˆ¶è®¾å®š
 	size_t len_str		= strlen(str);		//size_t #include <stddef.h>
-	size_t len_tgt_str	= strlen(tgt_str);	//²»°üÀ¨'\0'
+	size_t len_tgt_str	= strlen(tgt_str);	//ä¸åŒ…æ‹¬'\0'
 	
-	if (len_str > MAX_ACCEPT_LEN || len_tgt_str > MAX_ACCEPT_LEN) return -1;//³¤¶È³¬ÏŞ
+	if (len_str > MAX_ACCEPT_LEN || len_tgt_str > MAX_ACCEPT_LEN) return -1;//é•¿åº¦è¶…é™
 	
 	if (len_str < len_tgt_str) return 0;
 	
@@ -70,23 +70,23 @@ int8_t MyArray_IsContain(const char *str, const char *tgt_str) {
 			}
 		}
 		if (ismatch) {
-			return 1;	//°üº¬
+			return 1;	//åŒ…å«
 		}
 	}
-	return 0;	//²»°üº¬£¬Ã»ÓĞÕÒµ½
+	return 0;	//ä¸åŒ…å«ï¼Œæ²¡æœ‰æ‰¾åˆ°
 }
 
 int8_t MyArray_memcpy_char(char *src, char *dest) {
 	if (sizeof(dest) < sizeof(src)) {
 		return 0;//ERROR
-	}//Ä¿µÄÊı×éÒª>=Ô´Êı×é
+	}//ç›®çš„æ•°ç»„è¦>=æºæ•°ç»„
 	memcpy(dest, src, strlen(src));
 	return 1;
 }
 
-//ÕÒµ½×Ö·û´®aÖĞ'\0'µÄÎ»ÖÃidx_0£¬½«×Ö·û´®bÌî³äµ½idx_0µÄÎ»ÖÃ
+//æ‰¾åˆ°å­—ç¬¦ä¸²aä¸­'\0'çš„ä½ç½®idx_0ï¼Œå°†å­—ç¬¦ä¸²bå¡«å……åˆ°idx_0çš„ä½ç½®
 int8_t MyArray_Char_CopyBToATail(char *a, char *b, uint16_t a_capacity) {
-	//µ±Êı×é×÷Îªº¯ÊıµÄ²ÎÊı´«µİ»áÍË»¯ÎªÖ¸Õë£¬sizeof(Êı×éÃû)µÃµ½µÄÊÇÖ¸Õë±äÁ¿´óĞ¡£¬ÔÚ32Î»ÏµÍ³ÖĞ¹Ì¶¨Î»4×Ö½Ú
+	//å½“æ•°ç»„ä½œä¸ºå‡½æ•°çš„å‚æ•°ä¼ é€’ä¼šé€€åŒ–ä¸ºæŒ‡é’ˆï¼Œsizeof(æ•°ç»„å)å¾—åˆ°çš„æ˜¯æŒ‡é’ˆå˜é‡å¤§å°ï¼Œåœ¨32ä½ç³»ç»Ÿä¸­å›ºå®šä½4å­—èŠ‚
 	uint16_t idx_a_0 = strlen(a);
 	uint16_t len_b = strlen(b);
 	if(a_capacity - idx_a_0 < len_b) {

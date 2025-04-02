@@ -42,12 +42,14 @@
 .\objects\mywaterp.o: .\Hardware\MyTest.h
 .\objects\mywaterp.o: .\Hardware\OLED.h
 .\objects\mywaterp.o: .\Hardware\MySerial.h
+.\objects\mywaterp.o: .\System\math.h
 .\objects\mywaterp.o: .\System\MyTIM.h
 .\objects\mywaterp.o: .\Hardware\MyWaterSS.h
 .\objects\mywaterp.o: .\System\MyTIM.h
 .\objects\mywaterp.o: .\Hardware\MyAirS.h
 .\objects\mywaterp.o: .\Hardware\MyWaterTS.h
 .\objects\mywaterp.o: .\Hardware\Serial3.h
+.\objects\mywaterp.o: .\Hardware\AT.h
 .\objects\mywaterp.o: .\Hardware\MyFeeder.h
 .\objects\mywaterp.o: .\Hardware\MyWaterP.h
 .\objects\mywaterp.o: .\Hardware\MyWaterQS.h

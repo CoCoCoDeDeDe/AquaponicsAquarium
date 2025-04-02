@@ -680,6 +680,16 @@
               <FileType>5</FileType>
               <FilePath>.\System\MyTIM.h</FilePath>
             </File>
+            <File>
+              <FileName>math.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\math.c</FilePath>
+            </File>
+            <File>
+              <FileName>math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\math.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -706,6 +716,26 @@
               <FilePath>.\Hardware\MySerial.h</FilePath>
             </File>
             <File>
+              <FileName>Serial3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Serial3.c</FilePath>
+            </File>
+            <File>
+              <FileName>Serial3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\Serial3.h</FilePath>
+            </File>
+            <File>
+              <FileName>AT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\AT.c</FilePath>
+            </File>
+            <File>
+              <FileName>AT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\AT.h</FilePath>
+            </File>
+            <File>
               <FileName>OLED_Font.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\OLED_Font.h</FilePath>
@@ -719,16 +749,6 @@
               <FileName>OLED.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\OLED.h</FilePath>
-            </File>
-            <File>
-              <FileName>Serial3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\Serial3.c</FilePath>
-            </File>
-            <File>
-              <FileName>Serial3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\Serial3.h</FilePath>
             </File>
             <File>
               <FileName>MyWaterTS.c</FileName>

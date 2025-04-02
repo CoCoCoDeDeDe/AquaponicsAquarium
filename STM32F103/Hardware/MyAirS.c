@@ -2,8 +2,8 @@
 
 
 
-static GPIO_InitTypeDef GPIO_InitStruct;//½ö±¾ÎÄ¼şÄÚ¿É·ÃÎÊ
-static EXTI_InitTypeDef EXTI_InitStruct;//½ö±¾ÎÄ¼şÄÚ¿É·ÃÎÊ
+static GPIO_InitTypeDef GPIO_InitStruct;//ä»…æœ¬æ–‡ä»¶å†…å¯è®¿é—®
+static EXTI_InitTypeDef EXTI_InitStruct;//ä»…æœ¬æ–‡ä»¶å†…å¯è®¿é—®
 
 
 uint8_t MyAirS_Flag_TIM3ARCounter_On = 0;
@@ -13,15 +13,19 @@ uint8_t MyAirS_Flag_ReadCheckTimer_On  = 0;
 
 uint8_t MyAirS_Flag_WriterSM_On = 0;
 uint8_t MyAirS_State_WriterSM = 0;
-uint32_t MyAirS_Count_WriterSM = 0;	//¡¾¡¾´íµã¡¿CouterÎªuint8_t¡¿
+uint32_t MyAirS_Count_WriterSM = 0;	//ã€ã€é”™ç‚¹ã€‘Couterä¸ºuint8_tã€‘
 
-uint8_t MyAirS_BitsArr[40];//Ã¿1¸öÔªËØ¶ÔÓ¦Òª¶ÁÈ¡µÄÊı¾İµÄÃ¿Ò»¸öbit
-uint8_t MyAirS_DataArr[3];//Ã¿1¸öÔªËØ¶ÔÓÚ×ª»»ÍêµÄÒ»¸ö×Ö½Ú,²»°üÀ¨Ğ£ÑéÎ»
-MyAirS_States_ReaderSM MyAirS_State_ReaderSM = IDLE;//Ä¬ÈÏÎ´¿ªÊ¼½ÓÊÕ
-uint32_t MyAirS_Count_ReadInterval = 0;//´æ´¢FALLINGºÍRISINGÖ®¼äTIM3CNT¼ÆÊı´ÎÊı
-uint32_t MyAirS_Count_ReadIntervalStart = 0;//´æ´¢¿ªÊ¼¼ÇFALLINGºÍRISINGÖ®¼äTIM3CNT¼ÆÊı´ÎÊıÊ±µÄTIM3CNTÖµ
+uint8_t MyAirS_BitsArr[40];//æ¯1ä¸ªå…ƒç´ å¯¹åº”è¦è¯»å–çš„æ•°æ®çš„æ¯ä¸€ä¸ªbit
+uint8_t MyAirS_DataArr[3];//æ¯1ä¸ªå…ƒç´ å¯¹äºè½¬æ¢å®Œçš„ä¸€ä¸ªå­—èŠ‚,ä¸åŒ…æ‹¬æ ¡éªŒä½
+MyAirS_States_ReaderSM MyAirS_State_ReaderSM = IDLE;//é»˜è®¤æœªå¼€å§‹æ¥æ”¶
+uint32_t MyAirS_Count_ReadInterval = 0;//å­˜å‚¨FALLINGå’ŒRISINGä¹‹é—´TIM3CNTè®¡æ•°æ¬¡æ•°
+uint32_t MyAirS_Count_ReadIntervalStart = 0;//å­˜å‚¨å¼€å§‹è®°FALLINGå’ŒRISINGä¹‹é—´TIM3CNTè®¡æ•°æ¬¡æ•°æ—¶çš„TIM3CNTå€¼
 uint8_t MyAirS_Flag_ReadSucced = 0;
-uint8_t MyAirS_Count_ReadBit = 0;//ÔÚ³É¹¦½ÓÊÕ1BitÊ±++,ÔÚ½ÓÊÕÍê40BIT»òÕß¿ªÊ¼½ÓÊÕÊ±=0
+uint8_t MyAirS_Count_ReadBit = 0;//åœ¨æˆåŠŸæ¥æ”¶1Bitæ—¶++,åœ¨æ¥æ”¶å®Œ40BITæˆ–è€…å¼€å§‹æ¥æ”¶æ—¶=0
+
+uint8_t AirT = 0;
+
+uint8_t AirH = 0;
 
 void MyAirS_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 
@@ -34,12 +38,12 @@ void MyAirS_Init(
 	
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, GPIO_PinSource4);
 	
-	PA4SET//DHT11µÄDATA×ÜÏßÄ¬ÈÏ¸ßµçÆ½
+	PA4SET//DHT11çš„DATAæ€»çº¿é»˜è®¤é«˜ç”µå¹³
 	
 	EXTI_InitStruct.EXTI_Line = EXTI_Line4;
 	EXTI_InitStruct.EXTI_Mode =EXTI_Mode_Interrupt;
 	EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising;
-	EXTI_InitStruct.EXTI_LineCmd = DISABLE;//¿ª»úÏÈ·¢¸´Î»ĞÅºÅ,¹Ø±ÕEXTI
+	EXTI_InitStruct.EXTI_LineCmd = DISABLE;//å¼€æœºå…ˆå‘å¤ä½ä¿¡å·,å…³é—­EXTI
 	EXTI_Init(&EXTI_InitStruct);
 	
 	NVIC_InitTypeDef NVIC_InitStruct;
@@ -47,42 +51,42 @@ void MyAirS_Init(
 	NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStruct.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStruct);//¡¾´íµã¡¿ÒÅÂ©Init.
+	NVIC_Init(&NVIC_InitStruct);//ã€é”™ç‚¹ã€‘é—æ¼Init.
 
 	MyAirS_SetMode_Write();
 }
 
-void MyAirS_EXTICmd(FunctionalState EXTI_LineCmd) {//¿ª¹ØPA4µÄEXTI
+void MyAirS_EXTICmd(FunctionalState EXTI_LineCmd) {//å¼€å…³PA4çš„EXTI
 	EXTI_InitStruct.EXTI_LineCmd = EXTI_LineCmd;
 	EXTI_Init(&EXTI_InitStruct);
 }
 
-void MyAirS_PA4GPIOModeConfig(GPIOMode_TypeDef GPIO_Mode) {//ÅäÖÃPA4µÄGPIOÄ£Ê½
+void MyAirS_PA4GPIOModeConfig(GPIOMode_TypeDef GPIO_Mode) {//é…ç½®PA4çš„GPIOæ¨¡å¼
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
 
-void MyAirS_SetPA4GPIOMode_Out_PP(void) {//ÅäÖÃPA4µÄGPIOÄ£Ê½ÎªÇ¿ÍÆÊä³ö
+void MyAirS_SetPA4GPIOMode_Out_PP(void) {//é…ç½®PA4çš„GPIOæ¨¡å¼ä¸ºå¼ºæ¨è¾“å‡º
 	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
 
-void MyAirS_SetPA4GPIOMode_IPU(void) {//ÅäÖÃPA4µÄGPIOÄ£Ê½ÎªÇ¿ÍÆÊä³ö
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;//½ÓÊÕĞÅºÅÑ¡IPU,ÒòDATAÏßÄ¬ÈÏ¸ßµçÆ½
+void MyAirS_SetPA4GPIOMode_IPU(void) {//é…ç½®PA4çš„GPIOæ¨¡å¼ä¸ºå¼ºæ¨è¾“å‡º
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;//æ¥æ”¶ä¿¡å·é€‰IPU,å› DATAçº¿é»˜è®¤é«˜ç”µå¹³
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
 
-void MyAirS_SetMode_Write(void) {//ÉèÖÃÎªÊä³öÄ£Ê½
-	EXTI_InitStruct.EXTI_LineCmd = DISABLE;//¹ØEXTI
+void MyAirS_SetMode_Write(void) {//è®¾ç½®ä¸ºè¾“å‡ºæ¨¡å¼
+	EXTI_InitStruct.EXTI_LineCmd = DISABLE;//å…³EXTI
 	EXTI_Init(&EXTI_InitStruct);
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;//ÉèÖÃÇ¿ÍÆÊä³ö
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;//è®¾ç½®å¼ºæ¨è¾“å‡º
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
 }
 
-void MyAirS_SetMode_Read(void) {//ÉèÖÃÎªÊäÈëÄ£Ê½
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;//ÉèÖÃÉÏÀ­ÊäÈë,ÏÈ¹ØÊä³ö·ÀÖ¹EXTIÌø±ä
+void MyAirS_SetMode_Read(void) {//è®¾ç½®ä¸ºè¾“å…¥æ¨¡å¼
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;//è®¾ç½®ä¸Šæ‹‰è¾“å…¥,å…ˆå…³è¾“å‡ºé˜²æ­¢EXTIè·³å˜
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
-	EXTI_InitStruct.EXTI_LineCmd = ENABLE;//¿ªEXTI
+	EXTI_InitStruct.EXTI_LineCmd = ENABLE;//å¼€EXTI
 	EXTI_Init(&EXTI_InitStruct);
 }
 
@@ -96,38 +100,38 @@ void MyAirS_SetEXTITrigFalling(void) {
 	EXTI_Init(&EXTI_InitStruct);
 }
 
-// ¼ÇÂ¼TIM3µÄCNTÖØ×°´ÎÊı,¿ªÊ¼¶ÁÈ¡Êı¾İÇ°Ä¬ÈÏ²»¼ÇÂ¼
+// è®°å½•TIM3çš„CNTé‡è£…æ¬¡æ•°,å¼€å§‹è¯»å–æ•°æ®å‰é»˜è®¤ä¸è®°å½•
 void MyAirS_Count_TIM3ARer(void) {
 	if(MyAirS_Flag_TIM3ARCounter_On == 1) {
 		MyAirS_Count_TIM3AR ++;
-		//ÎªÃ¿´Î¼ÆËã¼ä¸ôÌá¹©´Ó0¿ªÊ¼µÄ¼ÆTIM1AR´ÎÊı
+		//ä¸ºæ¯æ¬¡è®¡ç®—é—´éš”æä¾›ä»0å¼€å§‹çš„è®¡TIM1ARæ¬¡æ•°
 	}
 }
 
 void MyAirS_SwitchOn(void) {
 	MyAirS_Flag_WriterSM_On  = SET;
 	MyAirS_State_WriterSM = 0;
-	MyAirS_SetMode_Write();//ÉèPA4ÎªÊä³öÄ£Ê½
-	MyAirS_State_ReaderSM = IDLE;//·ÀÖ¹µçÆ½²»ÎÈ¶¨ÎóÈëReaderSM
+	MyAirS_SetMode_Write();//è®¾PA4ä¸ºè¾“å‡ºæ¨¡å¼
+	MyAirS_State_ReaderSM = IDLE;//é˜²æ­¢ç”µå¹³ä¸ç¨³å®šè¯¯å…¥ReaderSM
 	
 	MyAirS_ReaderSM_PrePrepare();
 	
-	MyAirS_Flag_ReadCheckTimer_On = SET;//¶¨Ê±3000usºóÔËĞĞ1´ÎReadCheck
+	MyAirS_Flag_ReadCheckTimer_On = SET;//å®šæ—¶3000usåè¿è¡Œ1æ¬¡ReadCheck
 }
-//µ±´¥·¢ÁË¸´Î»ĞÅºÅ·¢Éäºó¾Í²»ÓÃ¶¨Ê±´¦ÀíÁË£¬¶øÊÇÓÃEXTI¼ì²âµçÆ½±ä»¯²¢ÓÃTIM3_GetCounter¼ÇÂ¼Ê±¼ä.
-//ÓÃTIM3_GetCounterÎªDHT11¶ÁÈ¡Êı¾İ¼ÇÂ¼Ê±¼äĞè¿¼ÂÇÖØ×°,ÒòTCKCNT<1Õû´ÎÊÕ·¢×î³¤Ê±¼ä
+//å½“è§¦å‘äº†å¤ä½ä¿¡å·å‘å°„åå°±ä¸ç”¨å®šæ—¶å¤„ç†äº†ï¼Œè€Œæ˜¯ç”¨EXTIæ£€æµ‹ç”µå¹³å˜åŒ–å¹¶ç”¨TIM3_GetCounterè®°å½•æ—¶é—´.
+//ç”¨TIM3_GetCounterä¸ºDHT11è¯»å–æ•°æ®è®°å½•æ—¶é—´éœ€è€ƒè™‘é‡è£…,å› TCKCNT<1æ•´æ¬¡æ”¶å‘æœ€é•¿æ—¶é—´
 
-//ÓÉMyAirS_State_WriterSM:2ÔÚ¾ö¶¨Æô¶¯ReadÊ±
-//ÔÊĞíÆô¶¯¸Ãº¯Êı.¸Ãº¯ÊıÖ÷ÒªÄÚÈİĞèÒªÔÚÒ»¸ö¼ì²â
-//ÖÜÆÚÄÚ,MyTIM3_DIV100Ö÷ÒªÄÚÈİÔËĞĞºó
-//>=(25,050us+1¸öTIM2TAR)Ê±ÔËĞĞÒ»´Î,
-//È»ºóreset,È»ºó´ıÔÚÏÂÒ»ÂÖ±»Æô¶¯.
-//¸Ãº¯ÊıµÚÒ»´ÎÔËĞĞÖ÷ÒªÄÚÈİÊ±ÊÇÒ»¸ö¼ì²âÖÜÆÚÄÚÔ¼
-//10,000us,Òò10,000usÇ°MyTIM3_DIV()ÔËĞĞÁË1´Î,
-//Æô¶¯ÁËWriter,WriterÆô¶¯ÁË¸Ãº¯ÊıÖ÷ÒªÄÚÈİÈÔÔÚ¸Ã
-//10,000usÄÚ.ÏÖµÚ1´ÎÔËĞĞÖ÷ÒªÄÚÈİ,ÒªÔÚµÚ3´ÎÔËĞĞ¸Ã
-//Ö÷ÒªÄÚÈİÊ±(30,000us)Æô¶¯ReadCheck,²¢ÔÚ¼ì²éÍê
-//ºó¸´Î»¸Ãº¯Êı×´Ì¬ÒÔµÈ´ıĞÂÖÜÆÚ
+//ç”±MyAirS_State_WriterSM:2åœ¨å†³å®šå¯åŠ¨Readæ—¶
+//å…è®¸å¯åŠ¨è¯¥å‡½æ•°.è¯¥å‡½æ•°ä¸»è¦å†…å®¹éœ€è¦åœ¨ä¸€ä¸ªæ£€æµ‹
+//å‘¨æœŸå†…,MyTIM3_DIV100ä¸»è¦å†…å®¹è¿è¡Œå
+//>=(25,050us+1ä¸ªTIM2TAR)æ—¶è¿è¡Œä¸€æ¬¡,
+//ç„¶åreset,ç„¶åå¾…åœ¨ä¸‹ä¸€è½®è¢«å¯åŠ¨.
+//è¯¥å‡½æ•°ç¬¬ä¸€æ¬¡è¿è¡Œä¸»è¦å†…å®¹æ—¶æ˜¯ä¸€ä¸ªæ£€æµ‹å‘¨æœŸå†…çº¦
+//10,000us,å› 10,000uså‰MyTIM3_DIV()è¿è¡Œäº†1æ¬¡,
+//å¯åŠ¨äº†Writer,Writerå¯åŠ¨äº†è¯¥å‡½æ•°ä¸»è¦å†…å®¹ä»åœ¨è¯¥
+//10,000uså†….ç°ç¬¬1æ¬¡è¿è¡Œä¸»è¦å†…å®¹,è¦åœ¨ç¬¬3æ¬¡è¿è¡Œè¯¥
+//ä¸»è¦å†…å®¹æ—¶(30,000us)å¯åŠ¨ReadCheck,å¹¶åœ¨æ£€æŸ¥å®Œ
+//åå¤ä½è¯¥å‡½æ•°çŠ¶æ€ä»¥ç­‰å¾…æ–°å‘¨æœŸ
 void MyAirS_ReadCheckTimer(void) {
 	
 	static uint8_t Count;
@@ -135,9 +139,9 @@ void MyAirS_ReadCheckTimer(void) {
 	if(MyAirS_Flag_ReadCheckTimer_On  == 1) {
 		
 		Count ++;
-		//µÚ1´Î: 10,000us;
-		//µÚ2´Î: 20,000us;
-		//µÚ3´Î: 30,000us.
+		//ç¬¬1æ¬¡: 10,000us;
+		//ç¬¬2æ¬¡: 20,000us;
+		//ç¬¬3æ¬¡: 30,000us.
 		
 		if(Count >= 4) {
 			
@@ -152,33 +156,33 @@ void MyAirS_ReadCheckTimer(void) {
 	}
 }
 
-//¼ì²éRead½áÊøĞÅºÅ³É¹¦ÖÃµÄ±êÖ¾Î»
-//À´ÅĞ¶ÏÕû¸öÊÕ·¢ÖÜÆÚÊÇ·ñ³É¹¦½áÊø.
-//Ä¿Ç°¹¦ÄÜ½Ï¼òµ¥,Ïàµ±ÓÚ¶¨Ê±ÖØÖÃÓ­½ÓĞÂ¼ì²âÖÜÆÚ
+//æ£€æŸ¥Readç»“æŸä¿¡å·æˆåŠŸç½®çš„æ ‡å¿—ä½
+//æ¥åˆ¤æ–­æ•´ä¸ªæ”¶å‘å‘¨æœŸæ˜¯å¦æˆåŠŸç»“æŸ.
+//ç›®å‰åŠŸèƒ½è¾ƒç®€å•,ç›¸å½“äºå®šæ—¶é‡ç½®è¿æ¥æ–°æ£€æµ‹å‘¨æœŸ
 void MyAirSReadCheck(void) {
 	
 	if(MyAirS_Flag_ReadSucced == 1) {
 		
-		MyAirS_ReadSucced();//³É¹¦
+		MyAirS_ReadSucced();//æˆåŠŸ
 		
 		//Serial_SendStringV2(USART2, "RCS\r\n");
 		
 	} else if(MyAirS_Flag_ReadSucced == 0) {
 		
-		MyAirS_ReadFailed();//Ê§°Ü
+		MyAirS_ReadFailed();//å¤±è´¥
 		
 		//Serial_SendStringV2(USART2, "RCF\r\n");
 		//Serial_SendStringV2(USART2, "\r\nFailed\r\n");
 	}
 }
 
-//³É¹¦ºóµÄ´¦Àí;¶¨Ê±ÖØÖÃÒÔÓ­½ÓĞÂÖÜÆÚ
+//æˆåŠŸåçš„å¤„ç†;å®šæ—¶é‡ç½®ä»¥è¿æ¥æ–°å‘¨æœŸ
 void MyAirS_ReadSucced(void) {
 	
 	MyAirS_Reset();
 }
 
-//Ê§°ÜºóµÄ´¦Àí;¶¨Ê±ÖØÖÃÒÔÓ­½ÓĞÂÖÜÆÚ
+//å¤±è´¥åçš„å¤„ç†;å®šæ—¶é‡ç½®ä»¥è¿æ¥æ–°å‘¨æœŸ
 void MyAirS_ReadFailed(void) {
 	
 	MyAirS_Reset();
@@ -186,29 +190,29 @@ void MyAirS_ReadFailed(void) {
 	//Serial_SendStringV2(USART2, "RF\r\n");
 }
 
-//Ê§°ÜºóµÄ´¦Àí;¶¨Ê±ÖØÖÃÒÔÓ­½ÓĞÂÖÜÆÚ
+//å¤±è´¥åçš„å¤„ç†;å®šæ—¶é‡ç½®ä»¥è¿æ¥æ–°å‘¨æœŸ
 void MyAirS_Reset(void) {
 	
-	MyAirS_SetMode_Read();//ÉèÖÃPA4ÎªÊä³öÄ£Ê½,×¼±¸ĞÂÖÜÆÚ·¢¸´Î»ĞÅºÅ,ºÍ·ÀÖ¹EXTIÎó´¥·¢
+	MyAirS_SetMode_Read();//è®¾ç½®PA4ä¸ºè¾“å‡ºæ¨¡å¼,å‡†å¤‡æ–°å‘¨æœŸå‘å¤ä½ä¿¡å·,å’Œé˜²æ­¢EXTIè¯¯è§¦å‘
 	
-	MyAirS_State_ReaderSM = IDLE;//ÉèÖÃ½ÓÊÕ×´Ì¬
+	MyAirS_State_ReaderSM = IDLE;//è®¾ç½®æ¥æ”¶çŠ¶æ€
 	
-	MyAirS_Flag_TIM3ARCounter_On = RESET;//¹Ø±ÕReadAR¼Æ´Î
+	MyAirS_Flag_TIM3ARCounter_On = RESET;//å…³é—­ReadARè®¡æ¬¡
 	
-	MyAirS_Flag_ReadSucced = RESET;//ÖÃReadÊ§°Ü±êÖ¾Î»
+	MyAirS_Flag_ReadSucced = RESET;//ç½®Readå¤±è´¥æ ‡å¿—ä½
 }
 
-void MyAirS_ReaderSM_PrePrepare(void) {//ÔÚÖÜÆÚ×î¿ªÊ¼¶ÔReadµÄPre×¼±¸
+void MyAirS_ReaderSM_PrePrepare(void) {//åœ¨å‘¨æœŸæœ€å¼€å§‹å¯¹Readçš„Preå‡†å¤‡
 	
-	MyAirS_Count_ReadBit = 0;//´Ó0¿ªÊ¼ÊıÊÕµ½µÄBits
+	MyAirS_Count_ReadBit = 0;//ä»0å¼€å§‹æ•°æ”¶åˆ°çš„Bits
 	
-	MyAirS_SetEXTITrigFalling();//Ö»²âÏÂ½µÑØ,³ıÁËEND_ENDÉÏÉıÑØ
+	MyAirS_SetEXTITrigFalling();//åªæµ‹ä¸‹é™æ²¿,é™¤äº†END_ENDä¸Šå‡æ²¿
 }
-//ÓÅ»¯·½°¸:½«Read×´Ì¬ÏÂµÄ³õÊ¼»¯´úÂë×ªÒÆµ½Write×´Ì¬Ê±»òWrite×´Ì¬Ç°¶ÔÊ±ĞòÒªÇóµÍµÄµØ·½
+//ä¼˜åŒ–æ–¹æ¡ˆ:å°†ReadçŠ¶æ€ä¸‹çš„åˆå§‹åŒ–ä»£ç è½¬ç§»åˆ°WriteçŠ¶æ€æ—¶æˆ–WriteçŠ¶æ€å‰å¯¹æ—¶åºè¦æ±‚ä½çš„åœ°æ–¹
 
 void MyAirS_WriterSM(void) {
 	
-	if(MyAirS_Flag_WriterSM_On  == 1) {//µ±¿ªÆôĞ´Èë¸´Î»ĞÅºÅÊ±²ÅÔËĞĞº¯ÊıÖ÷ÒªÄÚÈİ
+	if(MyAirS_Flag_WriterSM_On  == 1) {//å½“å¼€å¯å†™å…¥å¤ä½ä¿¡å·æ—¶æ‰è¿è¡Œå‡½æ•°ä¸»è¦å†…å®¹
 		
 		MyAirS_Count_WriterSM ++;
 		
@@ -216,20 +220,20 @@ void MyAirS_WriterSM(void) {
 			
 			case 0:
 				
-				MyAirS_SetMode_Write();//ÉèPA4ÎªÊä³öÄ£Ê½,×¼±¸ĞÂÖÜÆÚ·¢¸´Î»ĞÅºÅ,ºÍ·ÀÖ¹EXTIÎó´¥·¢
+				MyAirS_SetMode_Write();//è®¾PA4ä¸ºè¾“å‡ºæ¨¡å¼,å‡†å¤‡æ–°å‘¨æœŸå‘å¤ä½ä¿¡å·,å’Œé˜²æ­¢EXTIè¯¯è§¦å‘
 			
-				PA4RESET//À­µÍµçÆ½
+				PA4RESET//æ‹‰ä½ç”µå¹³
 			
-				MyAirS_State_WriterSM = 1;//ÏÂ´ÎÀ´±¾º¯Êı½ø×´Ì¬1
+				MyAirS_State_WriterSM = 1;//ä¸‹æ¬¡æ¥æœ¬å‡½æ•°è¿›çŠ¶æ€1
 			
-				MyAirS_Count_WriterSM = 0;//½øÈëS1Ç°ÖØĞÂ¼ÆÊ±,¼ÇÂ¼µÍµçÆ½³ÖĞøÊ±¼ä
+				MyAirS_Count_WriterSM = 0;//è¿›å…¥S1å‰é‡æ–°è®¡æ—¶,è®°å½•ä½ç”µå¹³æŒç»­æ—¶é—´
 				
 				//Serial_SendStringV2(USART2, "0");
 				//Serial_SendByte(USART2, '0');
 				
 				break;
-			case 1://³ÖĞø20msµÍµçÆ½,ºóÀ­¸ßµçÆ½30us
-				if(MyAirS_Count_WriterSM * 5 >= 20000) {//µÈ³ÖĞø20msµÍµçÆ½ºó
+			case 1://æŒç»­20msä½ç”µå¹³,åæ‹‰é«˜ç”µå¹³30us
+				if(MyAirS_Count_WriterSM * 5 >= 20000) {//ç­‰æŒç»­20msä½ç”µå¹³å
 					
 					MyAirS_SetMode_Read();
 					
@@ -237,9 +241,9 @@ void MyAirS_WriterSM(void) {
 					
 					MyAirS_SetEXTITrigFalling();
 					
-					MyAirS_State_WriterSM = 0;//ÏÂ´ÎÀ´±¾º¯Êı½ø×´Ì¬2
+					MyAirS_State_WriterSM = 0;//ä¸‹æ¬¡æ¥æœ¬å‡½æ•°è¿›çŠ¶æ€2
 					
-					MyAirS_Flag_WriterSM_On= 0;//¹Ø±ÕWriter
+					MyAirS_Flag_WriterSM_On= 0;//å…³é—­Writer
 					
 					//Serial_SendStringV2(USART2, "WriterSM_State: 1 in\r\n");
 				}
@@ -256,8 +260,8 @@ void MyAirS_ReaderSM(void) {
 	switch (MyAirS_State_ReaderSM) {
 		
 		case IDLE:
-			//¿ÕÏĞ,Î´¾­ÔÊĞí²»ÏìÓ¦EXTI´¥·¢
-			//¸Ã×´Ì¬×ª³öÓÉÆäËûº¯Êı¿ØÖÆ
+			//ç©ºé—²,æœªç»å…è®¸ä¸å“åº”EXTIè§¦å‘
+			//è¯¥çŠ¶æ€è½¬å‡ºç”±å…¶ä»–å‡½æ•°æ§åˆ¶
 		
 			//Serial_SendStringV2(USART2, "I");
 			//Serial_SendByte(USART2, 'I');
@@ -281,7 +285,7 @@ void MyAirS_ReaderSM(void) {
 		
 			if (100 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval <= 180) {
 				
-				MyAirS_State_ReaderSM = BIT_END;//Éè×´Ì¬
+				MyAirS_State_ReaderSM = BIT_END;//è®¾çŠ¶æ€
 				
 				MyAirS_Count_ReadInterval_Start();
 				
@@ -296,35 +300,35 @@ void MyAirS_ReaderSM(void) {
 			
 		case BIT_END:
 			
-			MyAirS_Count_ReadInterval_Save();//»ñÈ¡²¢´æ´¢IntervalCount
+			MyAirS_Count_ReadInterval_Save();//è·å–å¹¶å­˜å‚¨IntervalCount
 			
 			//Serial_SendByte(USART2, 'B');
 		
 			if(60 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval <= 90) {
 					
-					MyAirS_Count_ReadInterval_Start();//¡¾´íµã¡¿ÎóĞ´ÔÚif(40<=MyAirS_Count_ReadBit){}
+					MyAirS_Count_ReadInterval_Start();//ã€é”™ç‚¹ã€‘è¯¯å†™åœ¨if(40<=MyAirS_Count_ReadBit){}
 					MyAirS_BitsArr[MyAirS_Count_ReadBit ++] = 0;
 					//Serial_SendByte(USART2, '0');
 					
 					if(40 <= MyAirS_Count_ReadBit) {
 						
-						MyAirS_State_ReaderSM = END_END;//×ª×´Ì¬
+						MyAirS_State_ReaderSM = END_END;//è½¬çŠ¶æ€
 						
 						MyAirS_SetEXTITrigRising();
 					}
-				} else if(110 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval  <= 130) {//Ğ´µÄ´úÂë¶àÁË,µ«ÔËĞĞÖĞÒªÖ´ĞĞµÄ´úÂëÉÙÁË
+				} else if(110 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval  <= 130) {//å†™çš„ä»£ç å¤šäº†,ä½†è¿è¡Œä¸­è¦æ‰§è¡Œçš„ä»£ç å°‘äº†
 					
-					MyAirS_Count_ReadInterval_Start();//¡¾´íµã¡¿ÎóĞ´ÔÚif(40<=MyAirS_Count_ReadBit){}
+					MyAirS_Count_ReadInterval_Start();//ã€é”™ç‚¹ã€‘è¯¯å†™åœ¨if(40<=MyAirS_Count_ReadBit){}
 					MyAirS_BitsArr[MyAirS_Count_ReadBit ++] = 1;
 					//Serial_SendByte(USART2, '1');
 					
 					if(40 <= MyAirS_Count_ReadBit) {
 						
-						MyAirS_State_ReaderSM = END_END;//×ª×´Ì¬
+						MyAirS_State_ReaderSM = END_END;//è½¬çŠ¶æ€
 						
 						MyAirS_SetEXTITrigRising();
 					}
-				} else {//²»ÔÚÓĞĞ§·¶Î§ÄÚ
+				} else {//ä¸åœ¨æœ‰æ•ˆèŒƒå›´å†…
 					//Serial_SendByte(USART2, '2');
 					
 					MyAirS_ReadFailed();
@@ -335,25 +339,25 @@ void MyAirS_ReaderSM(void) {
 			
 		case END_END:
 			
-			MyAirS_Count_ReadInterval_Save();//»ñÈ¡²¢´æ´¢IntervalCount
+			MyAirS_Count_ReadInterval_Save();//è·å–å¹¶å­˜å‚¨IntervalCount
 		
-			if (40 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval <= 60) {//¡¾´íµã¡¿±íÊ¾ÊôÓÚ[40, 60],ÖĞ¼äÓÃ&&(//ÇÒ)
+			if (40 <= MyAirS_Count_ReadInterval && MyAirS_Count_ReadInterval <= 60) {//ã€é”™ç‚¹ã€‘è¡¨ç¤ºå±äº[40, 60],ä¸­é—´ç”¨&&(//ä¸”)
 				
 				//Serial_SendStringV2(USART2, "s");
 				
-				MyAirS_Flag_ReadSucced = 1;//ÖÃRead³É¹¦±êÖ¾Î»,resetÓÉReadCheckÖ´ĞĞ
+				MyAirS_Flag_ReadSucced = 1;//ç½®ReadæˆåŠŸæ ‡å¿—ä½,resetç”±ReadCheckæ‰§è¡Œ
 				
-				MyAirS_DataTranslate();//·­ÒëÊı¾İ
+				MyAirS_DataTranslate();//ç¿»è¯‘æ•°æ®
 				
 			} else {
 				
-				MyAirS_ReadFailed();//ReadÊ§°Ü³ÌĞò
+				MyAirS_ReadFailed();//Readå¤±è´¥ç¨‹åº
 			}
 			//Serial_SendStringV2(USART2, "ER");
 			break;
 			
 		default:
-			//Èç¹ûÊ¹ÓÃÄ³Ã¶¾ÙÀàĞÍ±äÁ¿×÷Îªswitch±í´ïÊ½,ÔòswitchÒªÃ´Îª¸ÃÃ¶¾ÙÀàĞÍËùÓĞµÄÃ¶¾Ù±äÁ¿¶¼Ğ´Ò»¸öcase,ÒªÃ´¾ÍÒª¼ÓÉÏdefault.default:ºóÈôÃ»ÓĞÒªÖ´ĞĞµÄÓï¾äÔòÒª¼ÓÉÏbreak;
+			//å¦‚æœä½¿ç”¨æŸæšä¸¾ç±»å‹å˜é‡ä½œä¸ºswitchè¡¨è¾¾å¼,åˆ™switchè¦ä¹ˆä¸ºè¯¥æšä¸¾ç±»å‹æ‰€æœ‰çš„æšä¸¾å˜é‡éƒ½å†™ä¸€ä¸ªcase,è¦ä¹ˆå°±è¦åŠ ä¸Šdefault.default:åè‹¥æ²¡æœ‰è¦æ‰§è¡Œçš„è¯­å¥åˆ™è¦åŠ ä¸Šbreak;
 			
 			//Serial_SendStringV2(USART2, "d");
 			break;
@@ -362,9 +366,9 @@ void MyAirS_ReaderSM(void) {
 
 void MyAirS_Count_ReadInterval_Start(void) {
 	
-	MyAirS_Count_ReadIntervalStart= TIM_GetCounter(TIM3);//´æµ±ÏÂCNTÓÃÓÚ¼ÆËãCNT±ä»¯
+	MyAirS_Count_ReadIntervalStart= TIM_GetCounter(TIM3);//å­˜å½“ä¸‹CNTç”¨äºè®¡ç®—CNTå˜åŒ–
 	
-	MyAirS_Count_TIM3AR = 0; //ÖØÖÃTIM3µÄAR´ÎÊı,Ö»¼Ç±¾IntervalÄÚµÄAR´ÎÊı
+	MyAirS_Count_TIM3AR = 0; //é‡ç½®TIM3çš„ARæ¬¡æ•°,åªè®°æœ¬Intervalå†…çš„ARæ¬¡æ•°
 }
 
 void MyAirS_Count_ReadInterval_Save(void) {
@@ -372,7 +376,7 @@ void MyAirS_Count_ReadInterval_Save(void) {
 	//MyAirS_Count_ReadInterval = 10000 - MyAirS_Count_ReadIntervalStart+ TIM_GetCounter(TIM3) + 10000 * (MyAirS_Count_TIM3AR - 1);
 	if(MyAirS_Count_TIM3AR == 0) {
 		MyAirS_Count_ReadInterval = TIM_GetCounter(TIM3) - MyAirS_Count_ReadIntervalStart;
-	} else {//MyAirS_Count_TIM3AR×î¶àÎª1
+	} else {//MyAirS_Count_TIM3ARæœ€å¤šä¸º1
 		MyAirS_Count_ReadInterval = TIM_GetCounter(TIM3) + 10000 - MyAirS_Count_ReadIntervalStart;
 	}
 	
@@ -381,30 +385,30 @@ void MyAirS_Count_ReadInterval_Save(void) {
 	
 }
 
-//¶ÁÈ¡Êı¾İµ½MyAirS_BitsArr[40]Ê±,Ã¿¸öByteÊÇ´Ó¸ßµ½µÍ¶ÔÓ¦[i]µ½[i + 7]
+//è¯»å–æ•°æ®åˆ°MyAirS_BitsArr[40]æ—¶,æ¯ä¸ªByteæ˜¯ä»é«˜åˆ°ä½å¯¹åº”[i]åˆ°[i + 7]
 void MyAirS_DataTranslate(void) {
 	
-	uint8_t DataArrUncheck[5] ={0, 0, 0, 0, 0};//ºóĞøÍ¨¹ı'|='»ñÈ¡bitÒªÇó±»'|='µÄÊıÃ¿¸öÎ»È«Îª0
+	uint8_t DataArrUncheck[5] ={0, 0, 0, 0, 0};//åç»­é€šè¿‡'|='è·å–bitè¦æ±‚è¢«'|='çš„æ•°æ¯ä¸ªä½å…¨ä¸º0
 	
-	uint8_t BitCount = 0;//Ã¿´Î½ø¸Ãº¯Êı¶¼Ë¢ĞÂ,ÓÃÓÚ±éÀú40¸öbit
+	uint8_t BitCount = 0;//æ¯æ¬¡è¿›è¯¥å‡½æ•°éƒ½åˆ·æ–°,ç”¨äºéå†40ä¸ªbit
 	
-	uint8_t Bit = 0;//ÓÃÓÚÔİ´æbit
+	uint8_t Bit = 0;//ç”¨äºæš‚å­˜bit
 	
-	uint8_t Sum = 0;//ÓÃÓÚÔİ´æDataArrUncheck[]Ç°4¸öÔªËØµÄºÍ,ÓÃÓÚĞ£Ñé
+	uint8_t Sum = 0;//ç”¨äºæš‚å­˜DataArrUncheck[]å‰4ä¸ªå…ƒç´ çš„å’Œ,ç”¨äºæ ¡éªŒ
 	
-	for(uint8_t i = 0; i <= 4; i++) {//Ñ­»·5´Î,±éÀúDataArrUnckeck[]Ã¿¸öÔªËØ
+	for(uint8_t i = 0; i <= 4; i++) {//å¾ªç¯5æ¬¡,éå†DataArrUnckeck[]æ¯ä¸ªå…ƒç´ 
 		
-		for(uint8_t j = 0; j <=7; j++) {//Ñ­»·8´Î,±éÀúDataArrUncheck[i]Ã¿¸öÎ»
+		for(uint8_t j = 0; j <=7; j++) {//å¾ªç¯8æ¬¡,éå†DataArrUncheck[i]æ¯ä¸ªä½
 			
 			Bit = MyAirS_BitsArr[BitCount];
 			
-			DataArrUncheck[i] |= (Bit << (7 - j));//½«Bit(//0»ò1)ÓëDataArrUncheck[i]µÄµÚjÎ»½øĞĞ'|',ÒòDAUÒÔ¼°ÌáÇ°È«¸³Öµ0,¶øÇÒÃ¿´Î¶¼ÊÇ'|='²»Í¬µÄÎ»,ËùÒÔBitÃ¿´ÎÊÇÓë0½øĞĞ'|',½á¹ûÈ¡¾öÓÚBitµÄÖµ
+			DataArrUncheck[i] |= (Bit << (7 - j));//å°†Bit(//0æˆ–1)ä¸DataArrUncheck[i]çš„ç¬¬jä½è¿›è¡Œ'|',å› DAUä»¥åŠæå‰å…¨èµ‹å€¼0,è€Œä¸”æ¯æ¬¡éƒ½æ˜¯'|='ä¸åŒçš„ä½,æ‰€ä»¥Bitæ¯æ¬¡æ˜¯ä¸0è¿›è¡Œ'|',ç»“æœå–å†³äºBitçš„å€¼
 			
-			BitCount ++;//Ã¿´Î»ñÈ¡Íê MyAirS_BitsArr[]µÄÒ»¸öÔªËØºóÒª»ñÈ¡ÏÂÒ»¸ö
+			BitCount ++;//æ¯æ¬¡è·å–å®Œ MyAirS_BitsArr[]çš„ä¸€ä¸ªå…ƒç´ åè¦è·å–ä¸‹ä¸€ä¸ª
 		}
 	}
-	//Ğ£Ñé,ÅĞ¶Ï{¸´ÖÆ;Ê§°Ü} 
-	for(uint8_t i = 0; i <= 3; i ++) {//Ñ­»·4´Î,±éÀúDataArrUnckeck[]Ç°4¸öÔªËØ
+	//æ ¡éªŒ,åˆ¤æ–­{å¤åˆ¶;å¤±è´¥} 
+	for(uint8_t i = 0; i <= 3; i ++) {//å¾ªç¯4æ¬¡,éå†DataArrUnckeck[]å‰4ä¸ªå…ƒç´ 
 		
 		Sum += DataArrUncheck[i];
 	}
@@ -420,13 +424,10 @@ void MyAirS_DataTranslate(void) {
 		
 	} else{
 		
-		MyAirS_ReadFailed();//ReadÊ§°Ü³ÌĞò
+		MyAirS_ReadFailed();//Readå¤±è´¥ç¨‹åº
 	}
 }
 
-uint8_t AirT = 0;
-
-uint8_t AirH = 0;
 
 
 

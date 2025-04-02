@@ -16,14 +16,12 @@ uint8_t MyWaterSS_EchoCtrlerSM_State=0;
 
 uint32_t MyWaterSS_CountEchoSpan=0;
 
-uint16_t MyWaterSS_CountEchoSpanFiltered= 0;
-
-uint16_t WaterSD = 0;
+uint16_t WaterSD= 0;
 
 void MyWaterSS_Trig_Init(void) {	
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_StructInit(&GPIO_InitStruct);
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;	//´íµã£º¸Ä»Ø·ÇPWMºóÒª¸ÄAFÎªOut
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;	//é”™ç‚¹ï¼šæ”¹å›éPWMåè¦æ”¹AFä¸ºOut
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_12;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -39,7 +37,7 @@ void MyWaterSS_Echo_Init(
 	uint8_t NVIC_IRQChannelSubPriority) {
 	//RCC-GPIO, EXTI=====
 	//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	//EXTIËäÈ»Á¬½ÓAPB2×ÜÏß£¬µ«ÊÇÆäRCCÊ±ÖÓÎŞĞèÊÖ¶¯¿ªÆô
+	//EXTIè™½ç„¶è¿æ¥APB2æ€»çº¿ï¼Œä½†æ˜¯å…¶RCCæ—¶é’Ÿæ— éœ€æ‰‹åŠ¨å¼€å¯
 	
 	//Init-GPIO, EXTI=====
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -56,10 +54,10 @@ void MyWaterSS_Echo_Init(
 	EXTI_InitStruct.EXTI_Line = EXTI_Line15;
 	EXTI_InitStruct.EXTI_LineCmd = ENABLE;
 	EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising;//×¢Òâ£ºĞ¡ĞÄ»ìÏıRisingºÍFalling
+	EXTI_InitStruct.EXTI_Trigger = EXTI_Trigger_Rising;//æ³¨æ„ï¼šå°å¿ƒæ··æ·†Risingå’ŒFalling
 	EXTI_Init(&EXTI_InitStruct);
 	
-	//´íµã£ºÒÅÂ©NVIC
+	//é”™ç‚¹ï¼šé—æ¼NVIC
 	//NVIC=====
 	NVIC_InitTypeDef NVIC_InitStruct;
 	NVIC_InitStruct.NVIC_IRQChannel = EXTI15_10_IRQn;
@@ -87,66 +85,66 @@ uint16_t MyWaterSS_ResultFilter(uint32_t t) {
 }
 
 void MyWaterSS_TrigCtrlerSwitchOn(void) {
-	MyWaterSS_TrigCtrler_Ctrl = 1;//Åú×¼MyWaterSS_TrigCtrler()
-	MyWaterSS_TrigSETer_Ctrl = 1;//Åú×¼MyWaterSS_TrigSETer()
+	MyWaterSS_TrigCtrler_Ctrl = 1;//æ‰¹å‡†MyWaterSS_TrigCtrler()
+	MyWaterSS_TrigSETer_Ctrl = 1;//æ‰¹å‡†MyWaterSS_TrigSETer()
 }
-//TrigCtrlerµÄĞÅºÅÖÜÆÚ»á±ÈTIM3_DIV100µÄÍí1¸öTIM2ÖĞ¶ÏÖÜÆÚ
+//TrigCtrlerçš„ä¿¡å·å‘¨æœŸä¼šæ¯”TIM3_DIV100çš„æ™š1ä¸ªTIM2ä¸­æ–­å‘¨æœŸ
 
-void MyWaterSS_TrigCtrler(void){//¹ÜÀíTrigĞÅºÅµÄ·¢ËÍÒÔ¼°Îª½ÓÊÕEchoĞÅºÅ×ö×¼±¸
-	static uint8_t TrigCtrlerCount2;//ÓÃÓÚ¼ÇÂ¼¸Äº¯ÊıÖ´ĞĞ´ÎÊı
-	if(MyWaterSS_TrigCtrler_Ctrl == 1){//ĞèÒª»ñµÃMyTIM3_DIV100()ÏÂMyWaterSS_TrigCtrlerSwitchOn()Åú×¼
-		MyWaterSS_TrigSETer();//À­¸ßTrig,¿ªÊ¼·¢ËÍTrigĞÅºÅ
-		TrigCtrlerCount2 ++;//À´ÕâÀï2¸öIT(10us)ºó¿É½âËøÏÂÃæif
-		if(TrigCtrlerCount2 >= 2){//ÒªÔÚÀ­¸ßTrigºó¹ı15us(15¸öTIM1ITÖÜÆÚ)ºóÀ­µÍTrig
-			MyWaterSS_TrigRESETer();//À­µÍTrig,½áÊø·¢ËÍTrigĞÅºÅ,ÅäÖÃ½ÓÊÕEchoĞÅºÅµÄ×¼±¸¹¤×÷
-			MyWaterSS_TrigCtrler_Ctrl = 0;//¸´Î»ĞÅºÅ·¢ËÍÍêºó²»ÔÙÖØ¸´
-			TrigCtrlerCount2 = 0;//ÏÂ¸öÖÜÆÚÒ²Òª±£Ö¤SETºÍRESETÖ®¼äµÄ¼ä¸ô
+void MyWaterSS_TrigCtrler(void){//ç®¡ç†Trigä¿¡å·çš„å‘é€ä»¥åŠä¸ºæ¥æ”¶Echoä¿¡å·åšå‡†å¤‡
+	static uint8_t TrigCtrlerCount2;//ç”¨äºè®°å½•æ”¹å‡½æ•°æ‰§è¡Œæ¬¡æ•°
+	if(MyWaterSS_TrigCtrler_Ctrl == 1){//éœ€è¦è·å¾—MyTIM3_DIV100()ä¸‹MyWaterSS_TrigCtrlerSwitchOn()æ‰¹å‡†
+		MyWaterSS_TrigSETer();//æ‹‰é«˜Trig,å¼€å§‹å‘é€Trigä¿¡å·
+		TrigCtrlerCount2 ++;//æ¥è¿™é‡Œ2ä¸ªIT(10us)åå¯è§£é”ä¸‹é¢if
+		if(TrigCtrlerCount2 >= 2){//è¦åœ¨æ‹‰é«˜Trigåè¿‡15us(15ä¸ªTIM1ITå‘¨æœŸ)åæ‹‰ä½Trig
+			MyWaterSS_TrigRESETer();//æ‹‰ä½Trig,ç»“æŸå‘é€Trigä¿¡å·,é…ç½®æ¥æ”¶Echoä¿¡å·çš„å‡†å¤‡å·¥ä½œ
+			MyWaterSS_TrigCtrler_Ctrl = 0;//å¤ä½ä¿¡å·å‘é€å®Œåä¸å†é‡å¤
+			TrigCtrlerCount2 = 0;//ä¸‹ä¸ªå‘¨æœŸä¹Ÿè¦ä¿è¯SETå’ŒRESETä¹‹é—´çš„é—´éš”
 		}
 	}
 }
 
-void MyWaterSS_TrigSETer(void){//À­¸ßTrig,¿ªÊ¼·¢ËÍTrigĞÅºÅ
-	if(MyWaterSS_TrigSETer_Ctrl == 1){//Èç¹ûÔÊĞí·¢ËÍ1´Î¸´Î»ĞÅºÅ
-		GPIO_WriteBit(GPIOTrig,PinTrig,Bit_SET);//½«TrigÏßÖÃ¸ßµçÆ½
-		MyWaterSS_TrigSETer_Ctrl = 0;//½«TrigÏßÖÃ¸ßµçÆ½1´Îºó²»ÔÙÖØ¸´
+void MyWaterSS_TrigSETer(void){//æ‹‰é«˜Trig,å¼€å§‹å‘é€Trigä¿¡å·
+	if(MyWaterSS_TrigSETer_Ctrl == 1){//å¦‚æœå…è®¸å‘é€1æ¬¡å¤ä½ä¿¡å·
+		GPIO_WriteBit(GPIOTrig,PinTrig,Bit_SET);//å°†Trigçº¿ç½®é«˜ç”µå¹³
+		MyWaterSS_TrigSETer_Ctrl = 0;//å°†Trigçº¿ç½®é«˜ç”µå¹³1æ¬¡åä¸å†é‡å¤
 	}
 }
 
-void MyWaterSS_TrigRESETer(void){//À­µÍTrig,½áÊø·¢ËÍTrigĞÅºÅ,ÅäÖÃ½ÓÊÕEchoĞÅºÅµÄ×¼±¸¹¤×÷
-	GPIO_WriteBit(GPIOTrig,PinTrig,Bit_RESET);//Íê³ÉTrigĞÅºÅ·¢ËÍºó»Ö¸´TrigÏßÎªµÍµçÆ½
-	MyWaterSS_EchoCtrlerSM_Ctrl = 1;//ÔÊĞíEchoCtrlSM_CtrlÔËĞĞ¶ÔÓ¦ifµÄÄÚÈİ
-	MyWaterSS_EchoCtrlerSM_State = 0;//·ÀÖ¹bug,±£Ö¤ÊÕEchoĞÅºÅÊ±EchoCtrl×´Ì¬»ú×´Ì¬Îª0
-	MyWaterSS_SetEXITTrig(EXTI_Trigger_Rising);//±£Ö¤½ÓÊÕEchoĞÅºÅÉÏÉıÑØÊ±EXTImodeÎªRising
+void MyWaterSS_TrigRESETer(void){//æ‹‰ä½Trig,ç»“æŸå‘é€Trigä¿¡å·,é…ç½®æ¥æ”¶Echoä¿¡å·çš„å‡†å¤‡å·¥ä½œ
+	GPIO_WriteBit(GPIOTrig,PinTrig,Bit_RESET);//å®ŒæˆTrigä¿¡å·å‘é€åæ¢å¤Trigçº¿ä¸ºä½ç”µå¹³
+	MyWaterSS_EchoCtrlerSM_Ctrl = 1;//å…è®¸EchoCtrlSM_Ctrlè¿è¡Œå¯¹åº”ifçš„å†…å®¹
+	MyWaterSS_EchoCtrlerSM_State = 0;//é˜²æ­¢bug,ä¿è¯æ”¶Echoä¿¡å·æ—¶EchoCtrlçŠ¶æ€æœºçŠ¶æ€ä¸º0
+	MyWaterSS_SetEXITTrig(EXTI_Trigger_Rising);//ä¿è¯æ¥æ”¶Echoä¿¡å·ä¸Šå‡æ²¿æ—¶EXTImodeä¸ºRising
 }
 
 void MyWaterSS_SetEXITTrig(EXTITrigger_TypeDef mode){
-	EXTI_InitStruct.EXTI_Trigger=mode;//ÉèÖÃEXTI´¥·¢Ä£Ê½Îªmode
-	EXTI_Init(&EXTI_InitStruct);//´íµã£ºÒÅÂ©£º½«modeÅäÖÃÍ¨¹ıInitÓ¦ÓÃ
+	EXTI_InitStruct.EXTI_Trigger=mode;//è®¾ç½®EXTIè§¦å‘æ¨¡å¼ä¸ºmode
+	EXTI_Init(&EXTI_InitStruct);//é”™ç‚¹ï¼šé—æ¼ï¼šå°†modeé…ç½®é€šè¿‡Initåº”ç”¨
 }
 
-void MyWaterSS_EchoCtrlerSM(void){//¼ÆËãEchoĞÅºÅÏàµ±µÄCNTÖµ
-	static uint8_t MyWaterSS_EchoCtrlerSM_State;//×´Ì¬»ú×´Ì¬
+void MyWaterSS_EchoCtrlerSM(void){//è®¡ç®—Echoä¿¡å·ç›¸å½“çš„CNTå€¼
+	static uint8_t MyWaterSS_EchoCtrlerSM_State;//çŠ¶æ€æœºçŠ¶æ€
 	
-	static uint32_t CountEchoStart;//´æ´¢EchoĞÅºÅ¿ªÊ¼Ê±CNTµÄÊıÖµ
+	static uint32_t CountEchoStart;//å­˜å‚¨Echoä¿¡å·å¼€å§‹æ—¶CNTçš„æ•°å€¼
 	
 	if(MyWaterSS_EchoCtrlerSM_Ctrl == 1){
 		
 		//Serial_SendStringV2(USART2, "EchoCtrlerSM_Ctrl_In\r\n");
 		
-		if(MyWaterSS_EchoCtrlerSM_State == 0) {//×´Ì¬0Ê±
+		if(MyWaterSS_EchoCtrlerSM_State == 0) {//çŠ¶æ€0æ—¶
 			//Serial_SendStringV2(USART2, "EchoCtrlerSM_State0_In\r\n");
 			
-			CountEchoStart=TIM_GetCounter(TIM3);//¼ÇÂ¼EchoĞÅºÅ¿ªÊ¼Ê±CNTµÄÊıÖµ,×ÜÖÜÆÚ¶Ì,²»¿¼ÂÇTIM3ÖØ×°
-			MyWaterSS_SetEXITTrig(EXTI_Trigger_Falling);//ÉèÖÃÏÂ½µÑØ´¥·¢EXIT
-			MyWaterSS_EchoCtrlerSM_State = 1;//ÉèÖÃ×´Ì¬Îª1
-		} else if(MyWaterSS_EchoCtrlerSM_State == 1) {//×´Ì¬1Ê±
+			CountEchoStart=TIM_GetCounter(TIM3);//è®°å½•Echoä¿¡å·å¼€å§‹æ—¶CNTçš„æ•°å€¼,æ€»å‘¨æœŸçŸ­,ä¸è€ƒè™‘TIM3é‡è£…
+			MyWaterSS_SetEXITTrig(EXTI_Trigger_Falling);//è®¾ç½®ä¸‹é™æ²¿è§¦å‘EXIT
+			MyWaterSS_EchoCtrlerSM_State = 1;//è®¾ç½®çŠ¶æ€ä¸º1
+		} else if(MyWaterSS_EchoCtrlerSM_State == 1) {//çŠ¶æ€1æ—¶
 			//Serial_SendStringV2(USART2, "EchoCtrlerSM_State1_In\r\n");
 			
-			MyWaterSS_CountEchoSpan = TIM_GetCounter(TIM3) - CountEchoStart;//¼ÆËãEchoĞÅºÅÏàµ±µÄCNTÖµ
+			MyWaterSS_CountEchoSpan = TIM_GetCounter(TIM3) - CountEchoStart;//è®¡ç®—Echoä¿¡å·ç›¸å½“çš„CNTå€¼
 			MyWaterSS_CollectEchoSpan();
-			MyWaterSS_SetEXITTrig(EXTI_Trigger_Rising);//ÉèÖÃÉÏÉıÑØ´¥·¢EXIT
-			MyWaterSS_EchoCtrlerSM_State = 0;//ÉèÖÃ×´Ì¬Îª0
-			MyWaterSS_EchoCtrlerSM_Ctrl = 0;//¹Ø±ÕEchoCtrler×´Ì¬»ú
+			MyWaterSS_SetEXITTrig(EXTI_Trigger_Rising);//è®¾ç½®ä¸Šå‡æ²¿è§¦å‘EXIT
+			MyWaterSS_EchoCtrlerSM_State = 0;//è®¾ç½®çŠ¶æ€ä¸º0
+			MyWaterSS_EchoCtrlerSM_Ctrl = 0;//å…³é—­EchoCtrlerçŠ¶æ€æœº
 		}
 	}
 }
@@ -154,15 +152,13 @@ void MyWaterSS_EchoCtrlerSM(void){//¼ÆËãEchoĞÅºÅÏàµ±µÄCNTÖµ
 void MyWaterSS_CollectEchoSpan(void) {
 	static uint8_t NumCount;
 	static uint16_t CollectNums[3];
-	if(NumCount < 3) {	//ÈÃNumCount¼Óµ½3ÔòÍùºó²»ÔÙ¼Ó
+	if(NumCount < 3) {	//è®©NumCountåŠ åˆ°3åˆ™å¾€åä¸å†åŠ 
 		NumCount ++;
 	}
 	MyArray_TailAdd_uint16_t(CollectNums, MyWaterSS_CountEchoSpan, 3);
-	MyWaterSS_CountEchoSpanFiltered= MyArray_GetAverage_uint16_t(NumCount, CollectNums);//½á¹û´æÈëextern±äÁ¿
-
-	WaterSD = MyWaterSS_GetResult_mm();
+	WaterSD= MyArray_GetAverage_uint16_t(NumCount, CollectNums);//ç»“æœå­˜å…¥externå˜é‡
 }
 
 uint16_t MyWaterSS_GetResult_mm(void) {
-	return (float)MyWaterSS_CountEchoSpanFiltered  * 0.1715;
+	return (float)WaterSD  * 0.1715;
 }

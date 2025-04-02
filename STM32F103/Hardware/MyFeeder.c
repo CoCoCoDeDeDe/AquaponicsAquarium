@@ -2,7 +2,7 @@
 
 static TIM_OCInitTypeDef TIM_OCInitStruct;
 
-//ÏÂ£ºSG90->Signal¡ª¡ªPA9¡ª¡ªOC1¡ª¡ªTIM1
+//ä¸‹ï¼šSG90->Signalâ€”â€”PA9â€”â€”OC1â€”â€”TIM1
 void MyFeeder_Init(uint16_t TIM_Pulse) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_StructInit(&GPIO_InitStruct);
@@ -13,13 +13,13 @@ void MyFeeder_Init(uint16_t TIM_Pulse) {
 	
 	
 	TIM_OCStructInit(&TIM_OCInitStruct);
-	TIM_OCInitStruct.TIM_OCIdleState = TIM_OCIdleState_Reset;	//ÉèÖÃ¶¨Ê±Æ÷¿ÕÏĞÊ±¸ÃOCµÄ¸ßµÍµçÆ½
+	TIM_OCInitStruct.TIM_OCIdleState = TIM_OCIdleState_Reset;	//è®¾ç½®å®šæ—¶å™¨ç©ºé—²æ—¶è¯¥OCçš„é«˜ä½ç”µå¹³
 	TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStruct.TIM_OCNIdleState = TIM_OCNIdleState_Reset;
 	TIM_OCInitStruct.TIM_OCNPolarity = TIM_OCNPolarity_High;
 	TIM_OCInitStruct.TIM_OutputNState = TIM_OutputNState_Disable;	//Cmd
 	TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;	//Cmd
-	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//ÉèÖÃ¶àÉÙ´ÎCNT×ÔÔö/×Ô¼õºó½«CNT´ÎÊı´æÈëCCR£¬×¢ÒâÊµ¼ÊÖµ=¼Ä´æÆ÷Öµ+1
+	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//è®¾ç½®å¤šå°‘æ¬¡CNTè‡ªå¢/è‡ªå‡åå°†CNTæ¬¡æ•°å­˜å…¥CCRï¼Œæ³¨æ„å®é™…å€¼=å¯„å­˜å™¨å€¼+1
 	TIM_OC1Init(TIM1, &TIM_OCInitStruct);
 	
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
@@ -30,24 +30,24 @@ void MyFeeder_Init(uint16_t TIM_Pulse) {
 }
 
 void MyFeeder_SetPulse(uint16_t TIM_Pulse) {
-	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//ÉèÖÃ¶àÉÙ´ÎCNT×ÔÔö/×Ô¼õºó½«CNT´ÎÊı´æÈëCCR
+	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//è®¾ç½®å¤šå°‘æ¬¡CNTè‡ªå¢/è‡ªå‡åå°†CNTæ¬¡æ•°å­˜å…¥CCR
 	TIM_OC1Init(TIM1, &TIM_OCInitStruct);
 }
 
-uint8_t FeederRS = 0;//0£º´ı¸´Î»£¬ÎŞ´¢Á¸£»1£º»¹¿ÉÎ¹Ê³1´Î£»2£º»¹¿ÉÎ¹Ê³2´Î...10£º»¹¿ÉÎ¹Ê³10´Î¡£
+uint8_t FeederRS = 0;//0ï¼šå¾…å¤ä½ï¼Œæ— å‚¨ç²®ï¼›1ï¼šè¿˜å¯å–‚é£Ÿ1æ¬¡ï¼›2ï¼šè¿˜å¯å–‚é£Ÿ2æ¬¡...10ï¼šè¿˜å¯å–‚é£Ÿ10æ¬¡ã€‚
 
 void MyFeeder_SetRunStatus(uint8_t rs) {
 	
 	FeederRS = rs;
 	
-	//¡¾TODO¡¿ÍêÉÆÎ¹Ê³¿ØÖÆ???
+	//ã€TODOã€‘å®Œå–„å–‚é£Ÿæ§åˆ¶???
 }
 
-uint16_t FeederAngle = 0;//¡¾TODO¡¿¸Ä½ø£ºÉÏ´«µç»ú½Ç¶È»òÎ¹Ê³´ÎÊıĞÅÏ¢»ò¸ÃFRSÎªÎ¹Ê³´ÎÊı£¬
-	//Ó¦ÓÃ¶ËÔÚ×îºóÒ»´ÎÎ¹Ê³ÍêºóÌáĞÑÓÃ»§Ã»ÓĞÁ¸Ê³ÁË£¬
-	//´ËÊ±²»¸´Î»£¬ÓÃ»§È·ÈÏÒÑ¾­²¹³äÁ¸²Öºó²¢´¥·¢Ò»´Î²Å¸´Î»
+uint16_t FeederAngle = 0;//ã€TODOã€‘æ”¹è¿›ï¼šä¸Šä¼ ç”µæœºè§’åº¦æˆ–å–‚é£Ÿæ¬¡æ•°ä¿¡æ¯æˆ–è¯¥FRSä¸ºå–‚é£Ÿæ¬¡æ•°ï¼Œ
+	//åº”ç”¨ç«¯åœ¨æœ€åä¸€æ¬¡å–‚é£Ÿå®Œåæé†’ç”¨æˆ·æ²¡æœ‰ç²®é£Ÿäº†ï¼Œ
+	//æ­¤æ—¶ä¸å¤ä½ï¼Œç”¨æˆ·ç¡®è®¤å·²ç»è¡¥å……ç²®ä»“åå¹¶è§¦å‘ä¸€æ¬¡æ‰å¤ä½
 
-void MyFeeder_Triger(int8_t ft) {	//¡¾TODO¡¿Î¹Ê³×´Ì¬»ú£¬Î¹Ê³1´Î¡¢2´Î...¸´Î»¡£
+void MyFeeder_Triger(int8_t ft) {	//ã€TODOã€‘å–‚é£ŸçŠ¶æ€æœºï¼Œå–‚é£Ÿ1æ¬¡ã€2æ¬¡...å¤ä½ã€‚
 	
 	if(ft == 1) {
 		if(FeederRS == 1) {
@@ -59,7 +59,7 @@ void MyFeeder_Triger(int8_t ft) {	//¡¾TODO¡¿Î¹Ê³×´Ì¬»ú£¬Î¹Ê³1´Î¡¢2´Î...¸´Î»¡£
 	}
 }
 
-void MyFeeder_ServoTest(void) {//·ÅÈëÑ­»·
+void MyFeeder_ServoTest(void) {//æ”¾å…¥å¾ªç¯
 	
 	static uint8_t j = 0;
 		

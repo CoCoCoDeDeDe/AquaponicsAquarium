@@ -2,7 +2,7 @@
 
 static TIM_OCInitTypeDef TIM_OCInitStruct;
 
-//ÏÂ£ºLED¡ª¡ªPA8¡ª¡ªOC3¡ª¡ªTIM1
+//ä¸‹ï¼šLEDâ€”â€”PA8â€”â€”OC3â€”â€”TIM1
 void MyAquariumL_Init(uint16_t TIM_Pulse) {
 	//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	
@@ -14,13 +14,13 @@ void MyAquariumL_Init(uint16_t TIM_Pulse) {
 	
 	
 	TIM_OCStructInit(&TIM_OCInitStruct);
-	TIM_OCInitStruct.TIM_OCIdleState = TIM_OCIdleState_Reset;	//ÉèÖÃ¶¨Ê±Æ÷¿ÕÏĞÊ±¸ÃOCµÄ¸ßµÍµçÆ½
+	TIM_OCInitStruct.TIM_OCIdleState = TIM_OCIdleState_Reset;	//è®¾ç½®å®šæ—¶å™¨ç©ºé—²æ—¶è¯¥OCçš„é«˜ä½ç”µå¹³
 	TIM_OCInitStruct.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStruct.TIM_OCNIdleState = TIM_OCNIdleState_Reset;
 	TIM_OCInitStruct.TIM_OCNPolarity = TIM_OCNPolarity_High;
 	TIM_OCInitStruct.TIM_OutputNState = TIM_OutputNState_Disable;	//Cmd
 	TIM_OCInitStruct.TIM_OutputState = TIM_OutputState_Enable;	//Cmd
-	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//ÉèÖÃ¶àÉÙ´ÎCNT×ÔÔö/×Ô¼õºó½«CNT´ÎÊı´æÈëCCR£¬×¢ÒâÊµ¼ÊÖµ=¼Ä´æÆ÷Öµ+1
+	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//è®¾ç½®å¤šå°‘æ¬¡CNTè‡ªå¢/è‡ªå‡åå°†CNTæ¬¡æ•°å­˜å…¥CCRï¼Œæ³¨æ„å®é™…å€¼=å¯„å­˜å™¨å€¼+1
 	TIM_OC3Init(TIM1, &TIM_OCInitStruct);
 	
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
@@ -30,7 +30,7 @@ void MyAquariumL_Init(uint16_t TIM_Pulse) {
 }
 
 void MyAquariumL_SetPulse(uint16_t TIM_Pulse) {
-	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//ÉèÖÃ¶àÉÙ´ÎCNT×ÔÔö/×Ô¼õºó½«CNT´ÎÊı´æÈëCCR
+	TIM_OCInitStruct.TIM_Pulse = TIM_Pulse - 1;	//è®¾ç½®å¤šå°‘æ¬¡CNTè‡ªå¢/è‡ªå‡åå°†CNTæ¬¡æ•°å­˜å…¥CCR
 	TIM_OC3Init(TIM1, &TIM_OCInitStruct);
 }
 

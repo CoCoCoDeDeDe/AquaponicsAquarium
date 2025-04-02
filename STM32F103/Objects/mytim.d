@@ -42,6 +42,7 @@
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\mytim.o: .\System\Delay.h
 .\objects\mytim.o: .\Hardware\MySerial.h
+.\objects\mytim.o: .\System\math.h
 .\objects\mytim.o: .\System\MyTIM.h
 .\objects\mytim.o: .\Hardware\MyFeeder.h
 .\objects\mytim.o: .\Hardware\MyWaterP.h
@@ -57,3 +58,4 @@
 .\objects\mytim.o: .\Hardware\MyWaterH.h
 .\objects\mytim.o: .\Hardware\MyAquariumL.h
 .\objects\mytim.o: .\Hardware\Serial3.h
+.\objects\mytim.o: .\Hardware\AT.h

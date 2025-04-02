@@ -4,7 +4,7 @@ int16_t num_test1 = 0;
 
 int main(void)
 {
-	Delay_ms(1000);	//µÈ´ýÉè±¸µçÑ¹ÎÈ¶¨
+	Delay_ms(1000);	//ç­‰å¾…è®¾å¤‡ç”µåŽ‹ç¨³å®š
 	
 //RCC=====
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
@@ -13,13 +13,13 @@ int main(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);//¡¾´íµã£ºÒÅÂ©¡¿
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);//ã€é”™ç‚¹ï¼šé—æ¼ã€‘
 	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
 	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);//´íµã£ºÓÃEXTIÒª¿ªÆôAFIO
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);//é”™ç‚¹ï¼šç”¨EXTIè¦å¼€å¯AFIO
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
@@ -27,13 +27,13 @@ int main(void)
 	
 //NVIC_Group=====
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
-	//ÉÏ£ºNVICÓÅÏÈ¼¶·Ö×éµÄÅäÖÃ¶ÔËùÓÐÖÐ¶ÏÇëÇóÊÇÍ³Ò»µÄ
+	//ä¸Šï¼šNVICä¼˜å…ˆçº§åˆ†ç»„çš„é…ç½®å¯¹æ‰€æœ‰ä¸­æ–­è¯·æ±‚æ˜¯ç»Ÿä¸€çš„
 	
 //Init=====
 	MyTest_PB5_Init();
 	
-	Serial_Init(USART2, 115200, 0, 0);	//Serail2¡ª¡ªPC
-	Serial_SendStringV2(USART2, "Serial2_On\r\n");//¡¾Debug¡¿
+	Serial_Init(USART2, 115200, 0, 0);	//Serail2â€”â€”PC
+	Serial_SendStringV2(USART2, "Serial2_On\r\n");//ã€Debugã€‘
 	
 	OLED_Init();
 	OLED_Clear();
@@ -51,7 +51,7 @@ int main(void)
 	MyWaterTS_Init();			//DS18B20
 	MyAirS_Init(1, 1);			//DHT11
 	MyWaterSS_Trig_Init();		//HC-SR04
-	MyWaterSS_Echo_Init(2, 2);	//HC-SR04
+	MyWaterSS_Echo_Init(0, 0);	//HC-SR04
 	
 	MyFeeder_Init(500);					//PA8-OC1
 	MyWaterP_Init(WaterPVR);			//PA9-OC2
@@ -66,12 +66,10 @@ int main(void)
 	
 	MyAirP_Init();
 	MyWaterH_Init();
-			
-//	Serial_Init(USART3, 115200, 0, 0);	//Serial1¡ª¡ªESP8266
-//	Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//¡¾Debug¡¿
+	
+	AT_Init_Str();
 
 	Serial3_Init_All();
-
 //	char tst1[] = "tst1";
 //	
 //	uint16_t tstNum2 = 0;
@@ -90,36 +88,48 @@ int main(void)
 //	DMA_InitTypeDef DMA_IS_TEST;
 //	
 //	DMA_DeInit(DMA1_Channel2);
-//	DMA_IS_TEST.DMA_BufferSize			= 4;//0´ú±í¹Ø±ÕDMA×ªÒÆ
-//	DMA_IS_TEST.DMA_DIR					= DMA_DIR_PeripheralDST;//ÍâÉèÎªÄ¿µÄµØ
-//	DMA_IS_TEST.DMA_M2M					= DMA_M2M_Enable;//·ÇÄÚ´æµ½ÄÚ´æ
+//	DMA_IS_TEST.DMA_BufferSize			= 4;//0ä»£è¡¨å…³é—­DMAè½¬ç§»
+//	DMA_IS_TEST.DMA_DIR					= DMA_DIR_PeripheralDST;//å¤–è®¾ä¸ºç›®çš„åœ°
+//	DMA_IS_TEST.DMA_M2M					= DMA_M2M_Enable;//éžå†…å­˜åˆ°å†…å­˜
 //	DMA_IS_TEST.DMA_MemoryBaseAddr		= (u32)arr_src;
 //	DMA_IS_TEST.DMA_MemoryDataSize		= DMA_MemoryDataSize_Byte;
 //	DMA_IS_TEST.DMA_MemoryInc			= DMA_MemoryInc_Enable;
 //	DMA_IS_TEST.DMA_Mode				= DMA_Mode_Normal;
 //	DMA_IS_TEST.DMA_PeripheralBaseAddr	= (u32)&num_dst;
 //	DMA_IS_TEST.DMA_PeripheralDataSize	= DMA_PeripheralDataSize_Byte;
-//	DMA_IS_TEST.DMA_PeripheralInc		= DMA_PeripheralInc_Disable;//¡¾WARNING¡¿Ã¿·¢1ByteºÍDMAµÄÄÚ´æÖ¸ÏòµØÖ·×ÔÔö1µ¥Î»Í¬²½
+//	DMA_IS_TEST.DMA_PeripheralInc		= DMA_PeripheralInc_Disable;//ã€WARNINGã€‘æ¯å‘1Byteå’ŒDMAçš„å†…å­˜æŒ‡å‘åœ°å€è‡ªå¢ž1å•ä½åŒæ­¥
 //	DMA_IS_TEST.DMA_Priority			= DMA_Priority_High;
 //	DMA_Init(DMA1_Channel2, &DMA_IS_TEST);
 //	
-//	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, ENABLE);//TC:Ò»´ÎDMA BufferÑ­»·½áÊø£¬¼È¼ÆÊý¹éÁãÊ±ÖÐ¶Ï
+//	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, ENABLE);//TC:ä¸€æ¬¡DMA Bufferå¾ªçŽ¯ç»“æŸï¼Œæ—¢è®¡æ•°å½’é›¶æ—¶ä¸­æ–­
 //	
-//	DMA_Cmd(DMA1_Channel2, ENABLE);//DMAÏÖÔÚ¾Í¿ªÊ¼×ªÒÆÊý¾Ý
+//	DMA_Cmd(DMA1_Channel2, ENABLE);//DMAçŽ°åœ¨å°±å¼€å§‹è½¬ç§»æ•°æ®
 	
-	/*¡¾Debug¡¿*/
-	Serial3_SendString("While\r\n", strlen("While\r\n"));
+	/*ã€Debugã€‘*/
+	//Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));
 	
-	while(1) {
+	while(1)
+	{
 		
-		if(rx3_idle_flag == 1){
-			/*¡¾Debug¡¿*/
+		if(rx3_idle_flag == 1)
+		{
+			/*ã€Debugã€‘*/
 			//Serial3_SendString("InIf\r\n", strlen("InIf\r\n"));
 			
-			Serial3_SendString(rx3_buf, strlen(rx3_buf));
+			Serial_SendStringV2(USARTPC, rx3_buf);
 		
 			rx3_idle_flag = 0;
 		}
+		
+		if(Serial_RxFlag[2] == 1)
+		{
+			Serial3_SendString(Serial_Rx2StringPacket, strlen(Serial_Rx2StringPacket));
+			
+			Serial_RxFlag[2] = 0;
+		}
+		
+		
+		//AT_Test();
 		
 //		Delay_s(1);
 		
@@ -137,17 +147,17 @@ int main(void)
 //		arr_src[2] = arr_src[1] + 1;
 //		arr_src[3] = arr_src[2] + 1;
 		
-		/*ÔÚÖØÖÃDMAÊ±£¬ÒÔÏÂ3º¯ÊýÈ±Ò»²»¿É*/
+		/*åœ¨é‡ç½®DMAæ—¶ï¼Œä»¥ä¸‹3å‡½æ•°ç¼ºä¸€ä¸å¯*/
 //		DMA_Cmd(DMA1_Channel2, DISABLE);
 //		DMA_Init(DMA1_Channel2, &DMA_IS_TEST);
 //		DMA_Cmd(DMA1_Channel2, ENABLE);
 		
-		/*ÔÚÖØÖÃDMAÊ±£¬ÒÔÏÂ3º¯ÊýÈ±Ò»²»¿É*/
+		/*åœ¨é‡ç½®DMAæ—¶ï¼Œä»¥ä¸‹3å‡½æ•°ç¼ºä¸€ä¸å¯*/
 		//DMA_Cmd(DMA1_Channel2, DISABLE);
 		//DMA_SetCurrDataCounter(DMA1_Channel2, sizeof(arr_src));
 		//DMA_Cmd(DMA1_Channel2, ENABLE);
 		
-		//DMA¿ªÊ¼´«Êä£¬´«ÊäÍê¼ÈBufferÎª0ºóºó¹Ø±Õ
+		//DMAå¼€å§‹ä¼ è¾“ï¼Œä¼ è¾“å®Œæ—¢Bufferä¸º0åŽåŽå…³é—­
 		
 //		tstNum2 ++;
 //		
@@ -179,23 +189,22 @@ int main(void)
 //			Serial_SendStringV2(USARTPC, "86:\r\n");
 //			Serial_SendStringV2(USARTPC, Serial_Rx3StringPacket);
 //			
-//			Serial_RxFlag[3] = 0;//È·¶¨ÓÃÍêÁËÔÙÇå³ýRxFlag±êÖ¾Î»
+//			Serial_RxFlag[3] = 0;//ç¡®å®šç”¨å®Œäº†å†æ¸…é™¤RxFlagæ ‡å¿—ä½
 //		}
 		
-//		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
-//		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
-//		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
-//		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
+		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
+		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
+		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
+		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
 		
-//		OLED_ShowNum(3, 1, WaterSD, 16);
-		
-//		OLED_ShowNum(1, 1, MyTIM_1UpCount, 16);
-//		OLED_ShowNum(2, 1, MyTIM_2Count, 16);
-//		OLED_ShowNum(3, 1, MyTIM_3Count, 16);
-//		OLED_ShowNum(4, 1, MyTIM_4Count, 16);
 
-//		OLED_ShowNum(4, 1, MyAirS_DataArr[0], 8);
-//		OLED_ShowNum(4, 9, MyAirS_DataArr[2], 8);
+//		OLED_ShowNum(1, 1, MyWaterTS_ReadPacket_16Bit_Temp, 16);
+		OLED_ShowNum(1, 9, MyWaterTS_Result_12Bit_H7Bit, 2);
+//		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 2);
+
+		OLED_ShowNum(2, 9, MyAirS_DataArr[0], 2);
+		OLED_ShowNum(3, 9, MyAirS_DataArr[2], 2);
+		OLED_ShowNum(4, 9, WaterSD, 4);
 		
 //		OLED_ShowNum(4, 1, MyAirS_Count_ReadInterval, 16);
 
@@ -210,11 +219,8 @@ int main(void)
 		
 		
 		
-//		OLED_ShowNum(1, 1, MyWaterTS_ReadPacket_16Bit_Temp, 16);
-//		OLED_ShowNum(2, 1, MyWaterTS_Result_12Bit_H7Bit, 16);
-//		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 16);
 
-//		Delay_us(1);//ÒÔÃâÑ­»·Ì«¿ì£¬CPUÑ¹Á¦Ì«´ó
+//		Delay_us(1);//ä»¥å…å¾ªçŽ¯å¤ªå¿«ï¼ŒCPUåŽ‹åŠ›å¤ªå¤§
 	}//while(1) END
 }//main() END
 
@@ -223,12 +229,12 @@ void EXTI4_IRQHandler(void) {
 	if(EXTI_GetITStatus(EXTI_Line4) == SET) {
 		EXTI_ClearITPendingBit(EXTI_Line4);
 		
-		MyAirS_ReaderSM();//¡¾´íµã¡¿Ð´´íÔÚEXTI15_10_IEQHandler
+		MyAirS_ReaderSM();//ã€é”™ç‚¹ã€‘å†™é”™åœ¨EXTI15_10_IEQHandler
 		
 	}
 }
 
-void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15µÄÖÐ¶ÏÊÇºÏ²¢µÄ
+void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15çš„ä¸­æ–­æ˜¯åˆå¹¶çš„
 	if(EXTI_GetITStatus(EXTI_Line15) == SET) {
 		EXTI_ClearITPendingBit(EXTI_Line15);
 		
@@ -250,22 +256,22 @@ void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15µÄÖÐ¶ÏÊÇºÏ²¢µÄ
 //static int8_t enqueue(MsgQueue_t* q, const char *str) {
 //	if (q->count >= QUEUE_SIZE) {
 //		Serial_SendStringV2(USARTPC, "MsgQueueFull\r\n");
-//		return -1;	//¶ÓÁÐÒÑÂú
+//		return -1;	//é˜Ÿåˆ—å·²æ»¡
 //	}
-//	//·ÖÅäÄÚ´æ²¢¸´ÖÆ×Ö·û´®
+//	//åˆ†é…å†…å­˜å¹¶å¤åˆ¶å­—ç¬¦ä¸²
 //	char *newStr = (char*)malloc(strlen(str) + 1);
-//	if(!newStr) return -2;	//ÊäÈëµÄ²ÎÊý×Ö·û´®Îª¿Õ
+//	if(!newStr) return -2;	//è¾“å…¥çš„å‚æ•°å­—ç¬¦ä¸²ä¸ºç©º
 //	strcpy(newStr, str);
 //	
 //	q->data[q->idx_rear] = newStr;
 //	q->idx_rear = (q->idx_rear + 1) % QUEUE_SIZE;
 //	q->count ++;
-//	return 1;	//³É¹¦
+//	return 1;	//æˆåŠŸ
 //}
 
 //char *dequeue(MsgQueue_t *q) {
 //	if(q->count <= 0) {
-//		return NULL;	//¶ÓÁÐÎª¿Õ
+//		return NULL;	//é˜Ÿåˆ—ä¸ºç©º
 //	}
 //	char *str = q->data[q->idx_front];
 //	q->data[q->idx_front] = NULL;

@@ -18,9 +18,9 @@
 
 extern uint16_t MyWaterTS_ReadPacket_16Bit_Temp;
 
-extern uint16_t MyWaterTS_Result_12Bit_H7Bit;//12Bit分辨率结果的整数部分
+extern uint16_t MyWaterTS_Result_12Bit_H7Bit;//12Bit鍒嗚鲸鐜囩粨鏋滅殑鏁存暟閮ㄥ垎
 
-extern uint16_t MyWaterTS_Result_12Bit_L4Bit;//12Bit分辨率结果的小数部分
+extern uint16_t MyWaterTS_Result_12Bit_L4Bit;//12Bit鍒嗚鲸鐜囩粨鏋滅殑灏忔暟閮ㄥ垎
 
 void MyWaterTS_Init(void);
 

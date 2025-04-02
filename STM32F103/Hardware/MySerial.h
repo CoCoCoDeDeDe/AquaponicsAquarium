@@ -21,15 +21,15 @@
 #define GPIO_Pin_PCRx		GPIO_Pin_3
 
 extern USART_InitTypeDef USART_InitStruct;
-extern uint8_t Serial_RxFlag[];	//´íµã£ºSerial.cÖĞSerial_RxFlag[4]¸³Öµºó´Ë´¦²»ÄÜÔÙ´Î¸³Öµ¡£
+extern uint8_t Serial_RxFlag[];	//é”™ç‚¹ï¼šSerial.cä¸­Serial_RxFlag[4]èµ‹å€¼åæ­¤å¤„ä¸èƒ½å†æ¬¡èµ‹å€¼ã€‚
 
 extern char Serial_Rx3StringPacket[];
 extern char Serial_Rx2StringPacket[];
 
-extern uint8_t StateMachine_s3;	//´íµã£ºSerial.cÖĞ¸³Öµºó´Ë´¦²»ÄÜÔÙ´Î¸³Öµ¡£
-extern uint8_t StateMachine_count3;	//´íµã£ºSerial.cÖĞ¸³Öµºó´Ë´¦²»ÄÜÔÙ´Î¸³Öµ¡£
-extern uint8_t StateMachine_s2;	//´íµã£ºSerial.cÖĞ¸³Öµºó´Ë´¦²»ÄÜÔÙ´Î¸³Öµ¡£
-extern uint8_t StateMachine_count2;	//´íµã£ºSerial.cÖĞ¸³Öµºó´Ë´¦²»ÄÜÔÙ´Î¸³Öµ¡£
+extern uint8_t StateMachine_s3;	//é”™ç‚¹ï¼šSerial.cä¸­èµ‹å€¼åæ­¤å¤„ä¸èƒ½å†æ¬¡èµ‹å€¼ã€‚
+extern uint8_t StateMachine_count3;	//é”™ç‚¹ï¼šSerial.cä¸­èµ‹å€¼åæ­¤å¤„ä¸èƒ½å†æ¬¡èµ‹å€¼ã€‚
+extern uint8_t StateMachine_s2;	//é”™ç‚¹ï¼šSerial.cä¸­èµ‹å€¼åæ­¤å¤„ä¸èƒ½å†æ¬¡èµ‹å€¼ã€‚
+extern uint8_t StateMachine_count2;	//é”™ç‚¹ï¼šSerial.cä¸­èµ‹å€¼åæ­¤å¤„ä¸èƒ½å†æ¬¡èµ‹å€¼ã€‚
 
 void Serial_Init(
 	USART_TypeDef* USARTx, uint32_t USART_BaudRate, 

@@ -1,8 +1,8 @@
 #ifndef __MYWATERSS_H
 #define __MYWATERSS_H
-//ÉÏ£º´íµã£ºÔÚ C ºÍ C++ Àï£¬±êÊ¶·û£¨ÏñºêÃû¡¢±äÁ¿Ãû¡¢º¯ÊýÃûµÈ£©½öÄÜÓÉ×ÖÄ¸£¨´óÐ´»òÐ¡Ð´£©¡¢
-//	Êý×ÖÒÔ¼°ÏÂ»®Ïß _ ¹¹³É£¬ÇÒ²»ÄÜÒÔÊý×Ö¿ªÍ·¡£
-//	Äã´úÂëÖÐµÄ __MYHC-SR04_H °üº¬ÁË - ×Ö·û£¬Õâ¾ÍÎ¥±³ÁË±êÊ¶·ûµÄÃüÃû¹æÔò£¬ËùÒÔ±àÒëÆ÷»á¸ø³ö¾¯¸æ¡£
+//ä¸Šï¼šé”™ç‚¹ï¼šåœ¨ C å’Œ C++ é‡Œï¼Œæ ‡è¯†ç¬¦ï¼ˆåƒå®åã€å˜é‡åã€å‡½æ•°åç­‰ï¼‰ä»…èƒ½ç”±å­—æ¯ï¼ˆå¤§å†™æˆ–å°å†™ï¼‰ã€
+//	æ•°å­—ä»¥åŠä¸‹åˆ’çº¿ _ æž„æˆï¼Œä¸”ä¸èƒ½ä»¥æ•°å­—å¼€å¤´ã€‚
+//	ä½ ä»£ç ä¸­çš„ __MYHC-SR04_H åŒ…å«äº† - å­—ç¬¦ï¼Œè¿™å°±è¿èƒŒäº†æ ‡è¯†ç¬¦çš„å‘½åè§„åˆ™ï¼Œæ‰€ä»¥ç¼–è¯‘å™¨ä¼šç»™å‡ºè­¦å‘Šã€‚
 
 #include "stm32f10x.h"                  // Device header
 
@@ -23,8 +23,6 @@ extern uint8_t MyWaterSS_EchoCtrlerSM_Ctrl;
 extern uint32_t MyWaterSS_CountEchoSpan;
 
 extern uint8_t MyWaterSS_EchoCtrlerSM_State;
-
-extern uint16_t MyWaterSS_CountEchoSpanFiltered;
 
 extern uint16_t WaterSD;
 

@@ -9,10 +9,10 @@ void MyAirP_Init(void) {
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIO_APump, &GPIO_InitStruct);
 	
-	MyAirP_SET();//Ĭ�Ϲر�
+	MyAirP_SET();//默认关闭
 }
 void MyAirP_SET(void) {
-	GPIO_SetBits(GPIO_APump, PIN_APump);	//�ߵ�ƽ
+	GPIO_SetBits(GPIO_APump, PIN_APump);	//高电平
 }
 void MyAirP_RESET(void) {
 	GPIO_ResetBits(GPIO_APump, PIN_APump);
@@ -30,9 +30,9 @@ uint8_t AirPRS = 0;
 void MyAirP_SetRunStatus(uint8_t rs) {
 	AirPRS = rs;
 	if(rs == 0) {
-		GPIO_ResetBits(GPIO_APump, PIN_APump);//�͵�ƽ��
+		GPIO_ResetBits(GPIO_APump, PIN_APump);//低电平关
 	} else if (rs == 1) {
-		GPIO_SetBits(GPIO_APump, PIN_APump);//�ߵ�ƽ��
+		GPIO_SetBits(GPIO_APump, PIN_APump);//高电平开
 	} else {
 		//ERROR
 	}
