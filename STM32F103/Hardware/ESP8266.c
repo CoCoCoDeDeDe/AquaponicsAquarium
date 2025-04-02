@@ -71,15 +71,15 @@ void Serial3_Init_Tx_DMA(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs) {
 	DMA_IS_Tx.DMA_MemoryDataSize		= DMA_MemoryDataSize_Byte;
 	DMA_IS_Tx.DMA_MemoryInc				= DMA_MemoryInc_Enable;
 	DMA_IS_Tx.DMA_Mode					= DMA_Mode_Normal;
-	DMA_IS_Tx.DMA_PeripheralBaseAddr	= (u32)USART3->DR;
+	DMA_IS_Tx.DMA_PeripheralBaseAddr	= (u32)&USART3->DR;
 	DMA_IS_Tx.DMA_PeripheralDataSize	= DMA_PeripheralDataSize_Byte;
 	DMA_IS_Tx.DMA_PeripheralInc			= DMA_PeripheralInc_Disable;//【WARNING】每发1Byte和DMA的内存指向地址自增1单位同步
 	DMA_IS_Tx.DMA_Priority				= DMA_Priority_High;
 	DMA_Init(DMA1_Channel2, &DMA_IS_Tx);
 	
-	USART_DMACmd(USART3, USART_DMAReq_Tx, fs);
+	USART_DMACmd(USART3, USART_DMAReq_Tx, ENABLE);
 	
-	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, fs);//TC:一次DMA Buffer循环结束，既计数归零时中断
+	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, ENABLE);//TC:一次DMA Buffer循环结束，既计数归零时中断
 	
 	DMA_Cmd(DMA1_Channel2, fs);
 	
@@ -88,7 +88,6 @@ void Serial3_Init_Tx_DMA(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs) {
 
 void Serial3_Tx_Cmd(FunctionalState fs)
 {
-	
 	USART_DMACmd(USART3, USART_DMAReq_Tx, fs);
 	
 	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, fs);//TC:一次DMA Buffer循环结束，既计数归零时中断
@@ -100,7 +99,8 @@ void Serial3_Init_All(void)
 {
 	Serial3_Init_Com(115200, ENABLE);
 	Serial3_Init_Tx_USART(ENABLE);
-	Serial3_Init_Tx_DMA(1, 1, DISABLE);
+	Serial3_Init_Tx_DMA(1, 1, DISABLE);//刚刚初始化，没有要转移的数据
+	//tx3_tc_flag = 1;//还没有转移数据
 }
 
 /*note:每当要发新的string时，DMA_MemoryBaseAddr要指向string的首地址，
@@ -121,6 +121,8 @@ int8_t Serial3_SendByte(char b)
 {
 	while(USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
 	USART_SendData(USART3, b);
+	
+	return 1;	//SUCCESS
 }
 
 int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
@@ -130,22 +132,33 @@ int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
 		return -1;	//传入参数有误
 	}
 	
-	while(tx3_tc_flag == 0);//不为0时向下执行。
+	while(tx3_tc_flag == 0);
 	
 	Serial3_Tx_Cmd(DISABLE);//确保关闭DMA
 	
-	DMA_IS_Tx.DMA_MemoryBaseAddr	= (u32)&str[0];
+	DMA_IS_Tx.DMA_MemoryBaseAddr	= (u32)str;
 	DMA_IS_Tx.DMA_BufferSize 		= str_len;
-	DMA_Init(DMA1_Channel2, &DMA_IS_Tx);
 	
+	DMA_Init(DMA1_Channel2, &DMA_IS_Tx);
 	Serial3_Tx_Cmd(ENABLE);//启动DMA
 	Serial3_USART3_Cmd(ENABLE);//防止USART3被误关
 	
-	tx3_tc_flag = 1;//告诉其他函数有在传输的字符串
+	//tx3_tc_flag = 0;//告诉其他函数有在传输的字符串
 	
-	tst_num1 ++;
 	
 	return 1;	//成功开启
+}
+
+void DMA1_Channel2_IRQHandler(void)
+{
+	if(DMA_GetITStatus(DMA1_IT_TC2) != RESET)
+	{
+		Serial3_Tx_Cmd(DISABLE);
+		
+		tx3_tc_flag = 1;
+		
+		DMA_ClearITPendingBit(DMA1_IT_TC2);
+	}
 }
 
 void Serial3_Init_Rx()
