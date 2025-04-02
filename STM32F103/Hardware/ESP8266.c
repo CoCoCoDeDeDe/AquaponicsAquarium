@@ -43,7 +43,7 @@ void Serial3_USART3_Cmd(FunctionalState fs)
 	USART_Cmd(USART3, fs);
 }
 
-void Serial3_Init_Tx(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
+void Serial3_Init_Tx_USART(FunctionalState fs)
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	
@@ -51,6 +51,11 @@ void Serial3_Init_Tx(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
 	GPIO_IS_Tx.GPIO_Pin = GPIO_Pin_10;
 	GPIO_IS_Tx.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_IS_Tx);
+	
+	//DMAITCFG,USARTITCFG,NVICINIT
+}
+
+void Serial3_Init_Tx_DMA(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs) {
 	
 	NVIC_IS_Tx.NVIC_IRQChannel = DMA1_Channel2_IRQn;
 	NVIC_IS_Tx.NVIC_IRQChannelCmd = ENABLE;
@@ -79,11 +84,10 @@ void Serial3_Init_Tx(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
 	DMA_Cmd(DMA1_Channel2, fs);
 	
 	tx3_tc_flag = 1;//初始化时确定没有未发送的字符串
-	
-	//DMAITCFG,USARTITCFG,NVICINIT
 }
 
-void Serial3_Tx_Cmd(FunctionalState fs) {
+void Serial3_Tx_Cmd(FunctionalState fs)
+{
 	
 	USART_DMACmd(USART3, USART_DMAReq_Tx, fs);
 	
@@ -95,7 +99,8 @@ void Serial3_Tx_Cmd(FunctionalState fs) {
 void Serial3_Init_All(void)
 {
 	Serial3_Init_Com(115200, ENABLE);
-	Serial3_Init_Tx(1, 1, DISABLE);
+	Serial3_Init_Tx_USART(ENABLE);
+	Serial3_Init_Tx_DMA(1, 1, DISABLE);
 }
 
 /*note:每当要发新的string时，DMA_MemoryBaseAddr要指向string的首地址，
@@ -112,7 +117,11 @@ DMA开启在配置完新的要发送的数组时用于启动发送。*/
 /*Tx DMA 启动要配置的：
 	tx3_tc_flag = 1;*/
 
-
+int8_t Serial3_SendByte(char b)
+{
+	while(USART_GetFlagStatus(USART3, USART_FLAG_TXE) == RESET);
+	USART_SendData(USART3, b);
+}
 
 int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
 {

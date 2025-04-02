@@ -70,38 +70,60 @@ int main(void)
 //	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
 //	Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//【Debug】
 
-//	Serial3_Init_All();
+	Serial3_Init_All();
 
 //	char tst1[] = "tst1";
 //	
 //	uint16_t tstNum2 = 0;
 	
+	int8_t num_dst = 2;
 	int8_t arr_src[] = {1, 2, 3, 4};
-	int8_t arr_dst[] = {0, 0, 0, 0};
+	
+	OLED_ShowNum(1, 1, num_dst , 2);
+	OLED_ShowNum(2, 1, arr_src[0] , 2);
+	OLED_ShowNum(2, 3, arr_src[1] , 2);
+	OLED_ShowNum(2, 5, arr_src[2] , 2);
+	OLED_ShowNum(2, 7, arr_src[3] , 2);
 
-
+	Delay_s(1);
+	
 	DMA_InitTypeDef DMA_IS_TEST;
 	
 	DMA_DeInit(DMA1_Channel2);
-	DMA_IS_TEST.DMA_BufferSize			= sizeof(arr_dst);//0代表关闭DMA转移
+	DMA_IS_TEST.DMA_BufferSize			= 4;//0代表关闭DMA转移
 	DMA_IS_TEST.DMA_DIR					= DMA_DIR_PeripheralDST;//外设为目的地
 	DMA_IS_TEST.DMA_M2M					= DMA_M2M_Enable;//非内存到内存
 	DMA_IS_TEST.DMA_MemoryBaseAddr		= (u32)arr_src;
 	DMA_IS_TEST.DMA_MemoryDataSize		= DMA_MemoryDataSize_Byte;
 	DMA_IS_TEST.DMA_MemoryInc			= DMA_MemoryInc_Enable;
 	DMA_IS_TEST.DMA_Mode				= DMA_Mode_Normal;
-	DMA_IS_TEST.DMA_PeripheralBaseAddr	= (u32)arr_dst;
+	DMA_IS_TEST.DMA_PeripheralBaseAddr	= (u32)&num_dst;
 	DMA_IS_TEST.DMA_PeripheralDataSize	= DMA_PeripheralDataSize_Byte;
-	DMA_IS_TEST.DMA_PeripheralInc		= DMA_PeripheralInc_Enable;//【WARNING】每发1Byte和DMA的内存指向地址自增1单位同步
+	DMA_IS_TEST.DMA_PeripheralInc		= DMA_PeripheralInc_Disable;//【WARNING】每发1Byte和DMA的内存指向地址自增1单位同步
 	DMA_IS_TEST.DMA_Priority			= DMA_Priority_High;
 	DMA_Init(DMA1_Channel2, &DMA_IS_TEST);
 	
 	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, ENABLE);//TC:一次DMA Buffer循环结束，既计数归零时中断
 	
-	DMA_Cmd(DMA1_Channel2, ENABLE);
+	DMA_Cmd(DMA1_Channel2, ENABLE);//DMA现在就开始转移数据
 	
 	//Run=====
 	while(1) {
+		Serial3_SendByte('W');
+		
+		OLED_ShowNum(1, 1, num_dst , 2);
+		OLED_ShowNum(2, 1, arr_src[0] , 2);
+		OLED_ShowNum(2, 3, arr_src[1] , 2);
+		OLED_ShowNum(2, 5, arr_src[2] , 2);
+		OLED_ShowNum(2, 7, arr_src[3] , 2);
+		
+		
+		Delay_s(3);
+		
+		arr_src[0] = arr_src[0] + arr_src[3];
+		arr_src[1] = arr_src[0] + 1;
+		arr_src[2] = arr_src[1] + 1;
+		arr_src[3] = arr_src[2] + 1;
 		
 		/*在重置DMA时，以下3函数缺一不可*/
 		DMA_Cmd(DMA1_Channel2, DISABLE);
@@ -110,25 +132,10 @@ int main(void)
 		
 		/*在重置DMA时，以下3函数缺一不可*/
 		//DMA_Cmd(DMA1_Channel2, DISABLE);
-		//DMA_SetCurrDataCounter(DMA1_Channel2, sizeof(arr_dst));
+		//DMA_SetCurrDataCounter(DMA1_Channel2, sizeof(arr_src));
 		//DMA_Cmd(DMA1_Channel2, ENABLE);
 		
-		OLED_ShowNum(1, 1, arr_src[0] , 2);
-		OLED_ShowNum(1, 3, arr_src[1] , 2);
-		OLED_ShowNum(1, 5, arr_src[2] , 2);
-		OLED_ShowNum(1, 7, arr_src[3] , 2);
-		
-		OLED_ShowNum(2, 1, arr_dst[0] , 2);
-		OLED_ShowNum(2, 3, arr_dst[1] , 2);
-		OLED_ShowNum(2, 5, arr_dst[2] , 2);
-		OLED_ShowNum(2, 7, arr_dst[3] , 2);
-		
-		arr_src[0]++;
-		arr_src[1]++;
-		arr_src[2]++;
-		arr_src[3]++;
-		
-		Delay_s(2);
+		//DMA开始传输，传输完既Buffer为0后后关闭
 		
 //		tstNum2 ++;
 //		
@@ -207,7 +214,7 @@ void DMA1_Channel2_IRQHandler(void)
 //		
 //		tx3_tc_flag = 1;//其他函数检测并触发后应当将其清零。
 		
-		num_test1++;
+		Serial3_SendByte('T');
 		
 		DMA_ClearITPendingBit(DMA1_IT_TC2);
 	}
