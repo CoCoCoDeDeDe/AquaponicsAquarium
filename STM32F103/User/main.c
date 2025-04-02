@@ -1,5 +1,7 @@
 #include "main.h"
 
+int16_t num_test1 = 0;
+
 int main(void)
 {
 	Delay_ms(1000);	//等待设备电压稳定
@@ -64,17 +66,81 @@ int main(void)
 	
 	MyAirP_Init();
 	MyWaterH_Init();
-	
-//	MsgQueue_t q;
-//	InitQueue(&q);
-	
-//	ESP8266_Init_Str();
 			
 //	Serial_Init(USART3, 115200, 0, 0);	//Serial1——ESP8266
 //	Serial_SendStringV2(USARTPC, "Serial3_On\r\n");//【Debug】
+
+//	Serial3_Init_All();
+
+//	char tst1[] = "tst1";
+//	
+//	uint16_t tstNum2 = 0;
+	
+	int8_t arr_src[] = {1, 2, 3, 4};
+	int8_t arr_dst[] = {0, 0, 0, 0};
+
+
+	DMA_InitTypeDef DMA_IS_TEST;
+	
+	DMA_DeInit(DMA1_Channel2);
+	DMA_IS_TEST.DMA_BufferSize			= sizeof(arr_dst);//0代表关闭DMA转移
+	DMA_IS_TEST.DMA_DIR					= DMA_DIR_PeripheralDST;//外设为目的地
+	DMA_IS_TEST.DMA_M2M					= DMA_M2M_Enable;//非内存到内存
+	DMA_IS_TEST.DMA_MemoryBaseAddr		= (u32)arr_src;
+	DMA_IS_TEST.DMA_MemoryDataSize		= DMA_MemoryDataSize_Byte;
+	DMA_IS_TEST.DMA_MemoryInc			= DMA_MemoryInc_Enable;
+	DMA_IS_TEST.DMA_Mode				= DMA_Mode_Normal;
+	DMA_IS_TEST.DMA_PeripheralBaseAddr	= (u32)arr_dst;
+	DMA_IS_TEST.DMA_PeripheralDataSize	= DMA_PeripheralDataSize_Byte;
+	DMA_IS_TEST.DMA_PeripheralInc		= DMA_PeripheralInc_Enable;//【WARNING】每发1Byte和DMA的内存指向地址自增1单位同步
+	DMA_IS_TEST.DMA_Priority			= DMA_Priority_High;
+	DMA_Init(DMA1_Channel2, &DMA_IS_TEST);
+	
+	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, ENABLE);//TC:一次DMA Buffer循环结束，既计数归零时中断
+	
+	DMA_Cmd(DMA1_Channel2, ENABLE);
 	
 	//Run=====
 	while(1) {
+		
+		/*在重置DMA时，以下3函数缺一不可*/
+		DMA_Cmd(DMA1_Channel2, DISABLE);
+		DMA_Init(DMA1_Channel2, &DMA_IS_TEST);
+		DMA_Cmd(DMA1_Channel2, ENABLE);
+		
+		/*在重置DMA时，以下3函数缺一不可*/
+		//DMA_Cmd(DMA1_Channel2, DISABLE);
+		//DMA_SetCurrDataCounter(DMA1_Channel2, sizeof(arr_dst));
+		//DMA_Cmd(DMA1_Channel2, ENABLE);
+		
+		OLED_ShowNum(1, 1, arr_src[0] , 2);
+		OLED_ShowNum(1, 3, arr_src[1] , 2);
+		OLED_ShowNum(1, 5, arr_src[2] , 2);
+		OLED_ShowNum(1, 7, arr_src[3] , 2);
+		
+		OLED_ShowNum(2, 1, arr_dst[0] , 2);
+		OLED_ShowNum(2, 3, arr_dst[1] , 2);
+		OLED_ShowNum(2, 5, arr_dst[2] , 2);
+		OLED_ShowNum(2, 7, arr_dst[3] , 2);
+		
+		arr_src[0]++;
+		arr_src[1]++;
+		arr_src[2]++;
+		arr_src[3]++;
+		
+		Delay_s(2);
+		
+//		tstNum2 ++;
+//		
+//		OLED_ShowNum(3, 1, tstNum2, 4);
+//		
+//		Serial3_SendString(tst1, strlen(tst1));
+//		
+//		OLED_ShowNum(2, 1, tc_count, 4);
+//		
+//		OLED_ShowNum(1, 1, tst_num1, 4);
+//		
+//		Delay_us(10000000);
 		
 //		if(Serial_RxFlag[Serial_Ch_ESP8266] == 1) {
 //			
@@ -130,10 +196,22 @@ int main(void)
 //		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 16);
 
 //		Delay_us(1);//以免循环太快，CPU压力太大
+	}//while(1) END
+}//main() END
+
+void DMA1_Channel2_IRQHandler(void)
+{
+	if(DMA_GetITStatus(DMA1_IT_TC2) != RESET)
+	{
+//		Serial3_Tx_Cmd(DISABLE);
+//		
+//		tx3_tc_flag = 1;//其他函数检测并触发后应当将其清零。
+		
+		num_test1++;
+		
+		DMA_ClearITPendingBit(DMA1_IT_TC2);
 	}
 }
-
-
 
 void EXTI4_IRQHandler(void) {
 	if(EXTI_GetITStatus(EXTI_Line4) == SET) {
