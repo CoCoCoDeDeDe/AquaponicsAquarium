@@ -32,7 +32,7 @@
 .\objects\myilluminations.o: Hardware\MySerial.h
 .\objects\myilluminations.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\myilluminations.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myilluminations.o: Hardware\ESP8266.h
+.\objects\myilluminations.o: Hardware\Serial3.h
 .\objects\myilluminations.o: .\User\main.h
 .\objects\myilluminations.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\myilluminations.o: .\System\Array.h
@@ -47,7 +47,7 @@
 .\objects\myilluminations.o: .\System\MyTIM.h
 .\objects\myilluminations.o: .\Hardware\MyAirS.h
 .\objects\myilluminations.o: .\Hardware\MyWaterTS.h
-.\objects\myilluminations.o: .\Hardware\ESP8266.h
+.\objects\myilluminations.o: .\Hardware\Serial3.h
 .\objects\myilluminations.o: .\Hardware\MyFeeder.h
 .\objects\myilluminations.o: .\Hardware\MyWaterP.h
 .\objects\myilluminations.o: .\Hardware\MyWaterQS.h

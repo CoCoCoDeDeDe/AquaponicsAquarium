@@ -32,7 +32,7 @@
 .\objects\mysoilms.o: Hardware\MySerial.h
 .\objects\mysoilms.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\mysoilms.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mysoilms.o: Hardware\ESP8266.h
+.\objects\mysoilms.o: Hardware\Serial3.h
 .\objects\mysoilms.o: .\User\main.h
 .\objects\mysoilms.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\mysoilms.o: .\System\Array.h
@@ -47,7 +47,7 @@
 .\objects\mysoilms.o: .\System\MyTIM.h
 .\objects\mysoilms.o: .\Hardware\MyAirS.h
 .\objects\mysoilms.o: .\Hardware\MyWaterTS.h
-.\objects\mysoilms.o: .\Hardware\ESP8266.h
+.\objects\mysoilms.o: .\Hardware\Serial3.h
 .\objects\mysoilms.o: .\Hardware\MyFeeder.h
 .\objects\mysoilms.o: .\Hardware\MyWaterP.h
 .\objects\mysoilms.o: .\Hardware\MyWaterQS.h

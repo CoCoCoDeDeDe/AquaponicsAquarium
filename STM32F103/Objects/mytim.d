@@ -34,7 +34,7 @@
 .\objects\mytim.o: .\Hardware\MySerial.h
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mytim.o: .\Hardware\ESP8266.h
+.\objects\mytim.o: .\Hardware\Serial3.h
 .\objects\mytim.o: .\User\main.h
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\mytim.o: .\System\Array.h
@@ -56,4 +56,4 @@
 .\objects\mytim.o: .\Hardware\MyAirP.h
 .\objects\mytim.o: .\Hardware\MyWaterH.h
 .\objects\mytim.o: .\Hardware\MyAquariumL.h
-.\objects\mytim.o: .\Hardware\ESP8266.h
+.\objects\mytim.o: .\Hardware\Serial3.h

@@ -6,7 +6,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "ESP8266.h"
+#include "Serial3.h"
 
 #define USARTESP8266		USART3
 #define USARTESP8266_IRQn	USART3_IRQn

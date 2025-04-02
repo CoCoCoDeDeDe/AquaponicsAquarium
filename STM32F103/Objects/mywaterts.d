@@ -35,7 +35,7 @@
 .\objects\mywaterts.o: Hardware\MySerial.h
 .\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mywaterts.o: Hardware\ESP8266.h
+.\objects\mywaterts.o: Hardware\Serial3.h
 .\objects\mywaterts.o: .\User\main.h
 .\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\mywaterts.o: .\System\Delay.h
@@ -47,7 +47,7 @@
 .\objects\mywaterts.o: .\System\MyTIM.h
 .\objects\mywaterts.o: .\Hardware\MyAirS.h
 .\objects\mywaterts.o: .\Hardware\MyWaterTS.h
-.\objects\mywaterts.o: .\Hardware\ESP8266.h
+.\objects\mywaterts.o: .\Hardware\Serial3.h
 .\objects\mywaterts.o: .\Hardware\MyFeeder.h
 .\objects\mywaterts.o: .\Hardware\MyWaterP.h
 .\objects\mywaterts.o: .\Hardware\MyWaterQS.h

@@ -38,7 +38,7 @@
 
 #include "MyAquariumL.h"
 
-#include "ESP8266.h"
+#include "Serial3.h"
 
 /*定义字符串队列*/
 //#define QUEUE_SIZE 3

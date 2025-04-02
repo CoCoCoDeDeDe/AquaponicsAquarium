@@ -11,7 +11,7 @@
 #include "MyAirS.h"
 #include "MyWaterTS.h"
 
-#include "ESP8266.h"
+#include "Serial3.h"
 
 extern uint32_t MyTIM_1UpCount;
 extern uint32_t MyTIM_2Count;

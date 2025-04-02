@@ -32,7 +32,7 @@
 .\objects\myadcanddma.o: Hardware\MySerial.h
 .\objects\myadcanddma.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\myadcanddma.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myadcanddma.o: Hardware\ESP8266.h
+.\objects\myadcanddma.o: Hardware\Serial3.h
 .\objects\myadcanddma.o: .\User\main.h
 .\objects\myadcanddma.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\myadcanddma.o: .\System\Array.h
@@ -47,7 +47,7 @@
 .\objects\myadcanddma.o: .\System\MyTIM.h
 .\objects\myadcanddma.o: .\Hardware\MyAirS.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterTS.h
-.\objects\myadcanddma.o: .\Hardware\ESP8266.h
+.\objects\myadcanddma.o: .\Hardware\Serial3.h
 .\objects\myadcanddma.o: .\Hardware\MyFeeder.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterP.h
 .\objects\myadcanddma.o: .\Hardware\MyWaterQS.h

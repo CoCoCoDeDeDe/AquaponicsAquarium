@@ -34,7 +34,7 @@
 .\objects\myairs.o: Hardware\MySerial.h
 .\objects\myairs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\myairs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myairs.o: Hardware\ESP8266.h
+.\objects\myairs.o: Hardware\Serial3.h
 .\objects\myairs.o: .\User\main.h
 .\objects\myairs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\myairs.o: .\System\Array.h
@@ -47,7 +47,7 @@
 .\objects\myairs.o: .\System\MyTIM.h
 .\objects\myairs.o: .\Hardware\MyAirS.h
 .\objects\myairs.o: .\Hardware\MyWaterTS.h
-.\objects\myairs.o: .\Hardware\ESP8266.h
+.\objects\myairs.o: .\Hardware\Serial3.h
 .\objects\myairs.o: .\Hardware\MyFeeder.h
 .\objects\myairs.o: .\Hardware\MyWaterP.h
 .\objects\myairs.o: .\Hardware\MyWaterQS.h

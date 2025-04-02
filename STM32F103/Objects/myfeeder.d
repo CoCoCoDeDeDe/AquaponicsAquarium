@@ -32,7 +32,7 @@
 .\objects\myfeeder.o: Hardware\MySerial.h
 .\objects\myfeeder.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\myfeeder.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myfeeder.o: Hardware\ESP8266.h
+.\objects\myfeeder.o: Hardware\Serial3.h
 .\objects\myfeeder.o: .\User\main.h
 .\objects\myfeeder.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\myfeeder.o: .\System\Array.h
@@ -47,7 +47,7 @@
 .\objects\myfeeder.o: .\System\MyTIM.h
 .\objects\myfeeder.o: .\Hardware\MyAirS.h
 .\objects\myfeeder.o: .\Hardware\MyWaterTS.h
-.\objects\myfeeder.o: .\Hardware\ESP8266.h
+.\objects\myfeeder.o: .\Hardware\Serial3.h
 .\objects\myfeeder.o: .\Hardware\MyFeeder.h
 .\objects\myfeeder.o: .\Hardware\MyWaterP.h
 .\objects\myfeeder.o: .\Hardware\MyWaterQS.h

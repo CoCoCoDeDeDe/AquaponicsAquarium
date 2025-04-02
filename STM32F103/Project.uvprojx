@@ -721,14 +721,14 @@
               <FilePath>.\Hardware\OLED.h</FilePath>
             </File>
             <File>
-              <FileName>ESP8266.c</FileName>
+              <FileName>Serial3.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\ESP8266.c</FilePath>
+              <FilePath>.\Hardware\Serial3.c</FilePath>
             </File>
             <File>
-              <FileName>ESP8266.h</FileName>
+              <FileName>Serial3.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\ESP8266.h</FilePath>
+              <FilePath>.\Hardware\Serial3.h</FilePath>
             </File>
             <File>
               <FileName>MyWaterTS.c</FileName>

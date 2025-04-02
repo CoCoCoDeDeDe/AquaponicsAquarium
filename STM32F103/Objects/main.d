@@ -39,7 +39,7 @@
 .\objects\main.o: .\Hardware\MySerial.h
 .\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: .\Hardware\ESP8266.h
+.\objects\main.o: .\Hardware\Serial3.h
 .\objects\main.o: .\User\main.h
 .\objects\main.o: .\System\MyTIM.h
 .\objects\main.o: .\Hardware\MyWaterSS.h

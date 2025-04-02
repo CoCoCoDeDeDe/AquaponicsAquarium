@@ -995,8 +995,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Hardware\ESP8266.c</PathWithFileName>
-      <FilenameWithoutPath>ESP8266.c</FilenameWithoutPath>
+      <PathWithFileName>.\Hardware\Serial3.c</PathWithFileName>
+      <FilenameWithoutPath>Serial3.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1007,8 +1007,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Hardware\ESP8266.h</PathWithFileName>
-      <FilenameWithoutPath>ESP8266.h</FilenameWithoutPath>
+      <PathWithFileName>.\Hardware\Serial3.h</PathWithFileName>
+      <FilenameWithoutPath>Serial3.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

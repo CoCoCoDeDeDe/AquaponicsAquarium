@@ -107,12 +107,21 @@ int main(void)
 //	
 //	DMA_Cmd(DMA1_Channel2, ENABLE);//DMA现在就开始转移数据
 	
-	//Run=====
+	/*【Debug】*/
+	Serial3_SendString("While\r\n", strlen("While\r\n"));
+	
 	while(1) {
 		
-		Serial3_SendString("String1\r\n", strlen("String1\r\n"));
+		if(rx3_idle_flag == 1){
+			/*【Debug】*/
+			//Serial3_SendString("InIf\r\n", strlen("InIf\r\n"));
+			
+			Serial3_SendString(rx3_buf, strlen(rx3_buf));
 		
-		Delay_s(2);
+			rx3_idle_flag = 0;
+		}
+		
+//		Delay_s(1);
 		
 //		OLED_ShowNum(1, 1, num_dst , 2);
 //		OLED_ShowNum(2, 1, arr_src[0] , 2);

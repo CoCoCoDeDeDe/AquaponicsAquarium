@@ -32,7 +32,7 @@
 .\objects\mywaterp.o: Hardware\MySerial.h
 .\objects\mywaterp.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\mywaterp.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mywaterp.o: Hardware\ESP8266.h
+.\objects\mywaterp.o: Hardware\Serial3.h
 .\objects\mywaterp.o: .\User\main.h
 .\objects\mywaterp.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\mywaterp.o: .\System\Array.h
@@ -47,7 +47,7 @@
 .\objects\mywaterp.o: .\System\MyTIM.h
 .\objects\mywaterp.o: .\Hardware\MyAirS.h
 .\objects\mywaterp.o: .\Hardware\MyWaterTS.h
-.\objects\mywaterp.o: .\Hardware\ESP8266.h
+.\objects\mywaterp.o: .\Hardware\Serial3.h
 .\objects\mywaterp.o: .\Hardware\MyFeeder.h
 .\objects\mywaterp.o: .\Hardware\MyWaterP.h
 .\objects\mywaterp.o: .\Hardware\MyWaterQS.h
