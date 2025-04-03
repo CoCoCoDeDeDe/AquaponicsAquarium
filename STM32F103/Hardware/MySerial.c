@@ -162,6 +162,8 @@ void Serial_Auto_StateMachine(
 					Serial_RxFlag[ser] = 1;	
 					//此处表示一整个String已经接受完，可进行读取变量等操作。
 					
+
+					
 				} else {
 					//NOTHING
 				}

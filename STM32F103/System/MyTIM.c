@@ -225,7 +225,7 @@ void MyTIM3_DIVy(uint16_t y)
 		
 		//AT_Test();
 		
-		AT_Report();
+		//AT_Report();
 	
 //		Serial3_SendString(
 //			"AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"WSD\\\":%d\\,\\\"WQSV\\\":%.2f\\,\\\"SMSV\\\":%.2f\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}}]}\",0,1\r\n",

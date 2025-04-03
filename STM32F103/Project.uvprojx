@@ -690,6 +690,16 @@
               <FileType>5</FileType>
               <FilePath>.\System\math.h</FilePath>
             </File>
+            <File>
+              <FileName>common_types.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\common_types.c</FilePath>
+            </File>
+            <File>
+              <FileName>common_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\common_types.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

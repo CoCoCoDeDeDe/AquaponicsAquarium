@@ -1,24 +1,5 @@
 #include "AT.h"
 
-/*定义 WiFi AT 宏定义*/
-#define WIFI_SSID_LEN	10
-#define WIFI_SSID		"321"
-#define WIFI_PWD_LEN	10
-#define WIFI_PWD		"111000111"
-
-/*定义 MQTT AT 宏定义*/
-#define MQTT_CLIENT_ID	"AQAQ25032901_0_0_2025032907"
-#define MQTT_USERNAME	"AQAQ25032901"
-#define MQTT_PWD		"5eecee18613e8930c19fb93469c89b153fd48a3bb2fb606e1ce6b27fd35af531"
-#define MQTT_HOSTNAME	"ad0ce5c71f.st1.iotda-device.cn-north-4.myhuaweicloud.com"
-#define MQTT_PORT		"1883"
-#define MQTT_DEVICE_ID	"AQAQ25032901"
-#define AT_MQTTUSERCFG_LEN		127
-#define AT_MQTTCLIENTID_LEN		127
-#define AT_MQTTCONN_LEN			127
-#define AT_MQTTSUB_LEN			127
-#define AT_MQTTPUB_RPT_LEN		255
-#define AT_MQTTPUB_UpRSP_LEN	127
 
 /*定义 常规 AT 命令*/
 char ATCMD_QuitTT[] = "+++\r\n";	//退出透传模式
@@ -69,14 +50,50 @@ char ATCMD_MQTTPUB_UPRSP_main[AT_MQTTPUB_UpRSP_LEN];
 char ATCMD_MQTTPUB_UPRSP_part1and2[AT_MQTTPUB_UpRSP_LEN] = ATCMD_MQTTPUB_UPRSP_part1;
 #define ATCMD_MQTTPUB_UPRSP_part3 "\",\"{}\",0,1\r\n"//末尾
 
-/*定义 AT 常见响应 检测字段*/
-char ATRSP_ERROR[]	= "ERROR";	//ERROR
-char ATRSP_OK[]		= "OK";		//OK
-char ATRSP_NECTED[]	= "NECTED";	//WIFI CONNECTED
-char ATRSP_DISCON[]	= "DISCON";	//WIFI DISCONNECTED
+///*定义 AT 常见响应 检测字段*/
+//char ATRSP_ERROR[]	= "ERROR";	//ERROR
+//char ATRSP_OK[]		= "OK";		//OK
+//char ATRSP_NECTED[]	= "NECTED";	//WIFI CONNECTED
+//char ATRSP_DISCON[]	= "DISCON";	//WIFI DISCONNECTED
 
-/*定义 下行命令 检测字段*/
-char ATDownCmd_RECV[] = "RECV";	//+MQTTSUBRECV:0,"{topic}",81,{"data"}
+///*定义 下行命令 检测字段*/
+//char ATDownCmd_RECV[] = "RECV";	//+MQTTSUBRECV:0,"{topic}",81,{"data"}
+
+//【TODO】定义对应enum
+//【WARN】关键词在检测时不考虑关键词的'\0'
+/*定义检测关键词*/
+char KEYW_POWERON[] = "ESP";
+char KEYW_OK[] = "OK";
+char KEYW_ERROR[] = "ERRO";
+char KEYW_WIFI_CONN[] = "FI CO";
+char KEYW_WIFI_DISCONN[] = "FI DI";
+char KEYW_MQTT_DISCONN[] = "TTDI";
+char KEYW_MQTT_CONN_SUCCESS[] = MQTT_HOSTNAME;//用于:1.MQTT连上;2.MQTTCONN?检查
+char KEYW_WIFI_CONN_SUCCESS[] = WIFI_SSID;//用于:CWJAP?检查
+char KEYW_DOWNCMD[] = "SUBRE";
+char KEYW_WIFI_GOTIP[] = "FI GO";
+
+Msg_t_e rx3_msg_type = MSG_NONE;
+
+const KeyWord_t keywords[] =
+{
+	/*高优先级*/
+	/*计算长度不包括'\0'*/
+	{KEYW_WIFI_DISCONN, sizeof(KEYW_WIFI_DISCONN) - 1, MSG_WIFI_DISCONN},
+	{KEYW_WIFI_CONN, sizeof(KEYW_WIFI_CONN) - 1, MSG_WIFI_CONN},
+	{KEYW_MQTT_DISCONN, sizeof(KEYW_MQTT_DISCONN) - 1, MSG_MQTT_DISCONN},
+	/*中优先级*/
+	{KEYW_POWERON, sizeof (KEYW_POWERON) - 1, MSG_POWERON},
+	{KEYW_OK, sizeof(KEYW_OK) - 1, MSG_OK},
+	{KEYW_ERROR, sizeof(KEYW_ERROR) - 1, MSG_ERROR},
+	/*低优先级*/
+	{KEYW_MQTT_CONN_SUCCESS, sizeof(MQTT_HOSTNAME) - 1, MSG_MQTT_CONN_SUCCESS},
+	{KEYW_WIFI_CONN_SUCCESS, sizeof(WIFI_SSID) - 1, MSG_WIFI_CONN_SUCCESS},
+	{KEYW_DOWNCMD, sizeof(KEYW_DOWNCMD) - 1, MSG_DOWNCMD},
+	{KEYW_WIFI_GOTIP, sizeof(KEYW_WIFI_GOTIP) - 1, MSG_WIFI_GOTIP}
+};
+
+uint8_t KeyWord_t_count = (sizeof(keywords) / sizeof(KeyWord_t));
 
 /*定义常用字段*/
 char ATCMD_PART_CRLF[] = "\r\n";
@@ -291,6 +308,23 @@ int8_t AT_Report(void)
 	
 	return 1;//成功
 }
+
+
+Msg_t_e ParseMessage(const char *msg, uint16_t msg_len)
+{
+	for(uint8_t i = 0; i < KeyWord_t_count; i++)//按优先级顺序分析
+	{
+		const KeyWord_t *kw = &keywords[i];	//指针指向全局变量关键字结构体数组内的关键词结构体类型元素
+		
+		if(strstr((char*)msg, kw->keyword) != NULL)
+		{
+			return kw->type;		//当前指针指向的关键词结构体变量的存储关键词类型的成员/项
+		}
+	}
+	return MSG_NONE;		//如果匹配到msg的类型则在上面for中就已经return，运行到这里说明没有匹配到msg的类型
+}
+
+
 
 //int8_t AT_UpResponse(char *request_id)
 //{

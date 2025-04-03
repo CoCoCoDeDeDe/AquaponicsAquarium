@@ -116,6 +116,10 @@ int main(void)
 			/*【Debug】*/
 			//Serial3_SendString("InIf\r\n", strlen("InIf\r\n"));
 			
+			Serial_SendByte(USARTPC, 'R');
+			Serial_SendByte(USARTPC, '\r');
+			Serial_SendByte(USARTPC, '\n');
+			
 			Serial_SendStringV2(USARTPC, rx3_buf);
 		
 			rx3_idle_flag = 0;

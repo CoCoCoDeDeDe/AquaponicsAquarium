@@ -31,9 +31,11 @@ Things TO DO
 	DONE		添加属性数值范围限制功能
 	DONE		测试数据嵌入字符串发给PC
 	DONE		测试report上报
-	TODO		测试接受下行命令
-	TODO		测试对所有要用到的ESP8266发给STM32的信息的识别
-	DOING	配置MQTT-MCU-ServerV2
+	DOING		测试对所有要用到的ESP8266发给STM32的信息的识别
+	TODO		解决AT与Serial3循环包含的问题
+	TODO		测试识别、解析、执行、响应下行命令
+	TODO		测试STM32-ESP8266沟通逻辑
+	DOING		配置MQTT-MCU-ServerV2
 	TODO		组装原型机
 	TODO		设计Feeder并完善代码.
 	TODO		配置AT24C02
