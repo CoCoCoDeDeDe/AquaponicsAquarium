@@ -148,7 +148,8 @@ int main(void)
 //	DMA_Cmd(DMA1_Channel2, ENABLE);//DMA现在就开始转移数据
 	
 	/*【Debug】*/
-	//Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));
+//	Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));
+	
 	
 	while(1)
 	{
@@ -238,19 +239,25 @@ int main(void)
 //			Serial_RxFlag[3] = 0;//确定用完了再清除RxFlag标志位
 //		}
 		
-		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
-		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
-		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
-		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
+//		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
+//		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);
+//		OLED_ShowNum(3, 1, MyADCAndDMA_Result[2], 4);
+//		OLED_ShowNum(4, 1, MyADCAndDMA_Result[3], 4);
 		
 
 //		OLED_ShowNum(1, 1, MyWaterTS_ReadPacket_16Bit_Temp, 16);
-		OLED_ShowNum(1, 9, MyWaterTS_Result_12Bit_H7Bit, 2);
+//		OLED_ShowNum(1, 9, MyWaterTS_Result_12Bit_H7Bit, 2);
 //		OLED_ShowNum(3, 1, MyWaterTS_Result_12Bit_L4Bit, 2);
 
-		OLED_ShowNum(2, 9, MyAirS_DataArr[0], 2);
-		OLED_ShowNum(3, 9, MyAirS_DataArr[2], 2);
-		OLED_ShowNum(4, 9, WaterSD, 4);
+//		OLED_ShowNum(2, 9, MyAirS_DataArr[0], 2);
+//		OLED_ShowNum(3, 9, MyAirS_DataArr[2], 2);
+//		OLED_ShowNum(4, 9, WaterSD, 4);
+		
+		OLED_ShowNum(1, 9, int_tst1, 2);
+		OLED_ShowNum(2, 9, int_tst2, 2);
+		OLED_ShowNum(3, 9, int_tst3, 2);
+		OLED_ShowNum(4, 9, tx3_tc_flag, 4);
+		
 		
 //		OLED_ShowNum(4, 1, MyAirS_Count_ReadInterval, 16);
 

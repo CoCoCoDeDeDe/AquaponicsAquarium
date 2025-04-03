@@ -156,8 +156,11 @@ void Serial3_Init_All(void)
 {
 	Serial3_Init_Com(115200, ENABLE);
 	Serial3_Init_Tx_USART(ENABLE);
-	Serial3_Init_Tx_DMA(1, 1, DISABLE);//刚刚初始化，没有要转移的数据
-	Serial3_Init_Rx_USART(0, 0, ENABLE);
+	
+	/*note:保证DMA中断优先级高于USART的优先级，
+	否则当在USART中断中用USARTDMA发送连续发送一个以上字符串就会卡死*/
+	Serial3_Init_Tx_DMA(0, 0, DISABLE);//刚刚初始化，没有要转移的数据
+	Serial3_Init_Rx_USART(1, 1, ENABLE);
 	Serial3_Init_Rx_DMA(ENABLE);//接收常开
 }
 
@@ -185,14 +188,25 @@ int8_t Serial3_SendByte(char b)
 	return 1;	//SUCCESS
 }
 
+int8_t int_tst1 = 0;
+int8_t int_tst2 = 0;
+int8_t int_tst3 = 0;
+
 int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
 {
-	if(str_len == 0 || str == NULL || str_len >= 1000)
+	
+	int_tst1++;
+	
+	if(str_len <= 0 || str == NULL || str_len >= 1000)
 	{	
 		return -1;	//传入参数有误
 	}
 	
+	int_tst1++;
+	
 	while(tx3_tc_flag == 0);
+	
+	int_tst2++;
 	
 	/*确保关闭DMA*/
 	Serial3_Tx_Cmd(DISABLE);
@@ -202,9 +216,12 @@ int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
 	DMA_IS_Tx.DMA_BufferSize 		= str_len;
 	
 	/*重启DMA*/
+	/*启用DMA_IS_Tx的配置：MemoryBaseAddr,BufferSize*/
 	DMA_Init(DMA1_Channel2, &DMA_IS_Tx);
 	Serial3_Tx_Cmd(ENABLE);//启动DMA
 	Serial3_USART3_Cmd(ENABLE);//防止USART3被误关
+	
+	int_tst3++;
 	
 	tx3_tc_flag = 0;//告诉其他函数有在传输的字符串
 	
@@ -226,6 +243,7 @@ void DMA1_Channel2_IRQHandler(void)
 
 void USART3_IRQHandler(void)
 {
+	
 	if(USART_GetITStatus(USART3, USART_IT_IDLE) == SET)
 	{
 		__IO uint32_t tmp = USART3->SR;
@@ -320,13 +338,16 @@ void USART3_IRQHandler(void)
 //					Serial_SendStringV2(USARTPC, "MQTT_CONN_SUCCESS\r\n");
 					break;
 				case MSG_WIFI_CONN_SUCCESS:
+//					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));
 					Serial3_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));
 //					Serial_SendStringV2(USARTPC, "WIFI_CONN_SUCCESS\r\n");
 					break;
 				case MSG_DOWNCMD:
+					int_tst1 = 10;//【Debug】
 					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));
 //					Serial_SendStringV2(USARTPC, "DOWNCMD\r\n");
-				//【TODO】在此处调用下行命令相关函数
+					
+//					【TODO】在此处调用下行命令相关函数
 					AT_ParseCmdMsg(rx3_buf, read_len, cmd_keywords, &cmd);
 					switch(cmd.type)
 					{

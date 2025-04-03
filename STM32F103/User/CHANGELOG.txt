@@ -34,8 +34,12 @@ Things TO DO
 	DONE		解决AT与Serial3循环包含的问题
 	DONE		测试对所有要用到的ESP8266发给STM32的信息的识别
 	DONE		修缮对MQTTCONN?以及CWJAP?的返回信息的识别
-	DOING		测试下行命令的识别、request_id的提取、参数的提取、命令的执行、上行响应的拼接、上行响应的及时发送
+	DONE		修缮一旦在USART3_IRQHandler中调用一次以上Serial3_SendString()程序就会卡死。解决：让DMA中断优先级高于USART中断优先级
+	DONE		修缮如果曾经收到过下行命令并成功接受处理，当再收到的+MQTTSUBRECV:0,...字段中即使没有命令相关关键词，也会返回上一次的命令，而不是UNKNOWN
+	DONE		测试下行命令的识别、request_id的提取、参数的提取
+	DOING		测试下行命令的执行、上行响应的拼接、上行响应的及时发送
 	TODO		修缮下行命令处理的卡死，发出下行命令后发给PC"DOWNCMD"，然后卡死，OLED测的数据也卡死
+	TODO		测试所有会涉及的发送信息的发送
 	TODO		测试STM32-ESP8266沟通逻辑
 	DOING		配置MQTT-MCU-ServerV2
 	TODO		组装原型机

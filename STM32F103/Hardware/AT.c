@@ -36,7 +36,6 @@
 #include "math.h"
 
 #include "common_types.h"
-#include "common_types.h"
 
 /*定义 常规 AT 命令*/
 char ATCMD_QuitTT[] = "+++\r\n";	//退出透传模式
@@ -386,13 +385,24 @@ Cmd_t_e AT_ParseCmdMsg(
 	const Cmd_KeyWord_t *_cmd_keywords,
 	Cmd_t *_cmd)	//传入Cmd_t *_cmd参数时要传入地址
 {
+	/*先将_cmd指向的cmd中的数据特别是字符串清零*/
+	memset(_cmd, 0, sizeof(Cmd_t));
+	
 	//【TODO】提取request_id
 	/*这里获取的是"t_id="的首地址*/
 	char *request_id_addr_head = strstr((char*)_msg, "t_id=");	
+	if(request_id_addr_head == NULL)
+	{
+		return CMD_UNKNOWN;
+	}
 	/*处理后才指向request_id的首地址*/
 	request_id_addr_head += 4;
 	/*这里获取的是从request_id首开始的第一个','的地址*/
 	char *request_id_addr_tail = strstr((char*)request_id_addr_head, ",");
+	if(request_id_addr_tail == NULL)
+	{
+		return CMD_UNKNOWN;
+	}
 	/*处理后才指向request_id的尾地址，无'\0'*/
 	request_id_addr_tail -= 1;
 	/*计算request_id的长度*/
@@ -406,18 +416,16 @@ Cmd_t_e AT_ParseCmdMsg(
 	
 	for(uint8_t i = 0; i < Cmd_KeyWord_t_count; i++)
 	{
-		const Cmd_KeyWord_t *kw = &_cmd_keywords[i];
-		
 		/*note:strstr()的主串搜索范围是传入的地址1直到遇到'\0'*/
-		para_name_addr_head = strstr((char*)_msg, &kw->keyword[i]);
+		para_name_addr_head = strstr((char*)_msg, _cmd_keywords[i].keyword);
 		
 		if(para_name_addr_head != NULL)
 		{//匹配到命令
 			/*note:访问结构体指针的数据项用"->"，
 			访问结构体变量本体的数据项用'.'*/
-			_cmd->type = kw->type;
+			_cmd->type = _cmd_keywords[i].type;
 			/*到此，_cmd的request_id、type已经获得*/
-			para_name_len = kw->len;
+			para_name_len = _cmd_keywords[i].len;
 		}
 	}
 	
@@ -434,6 +442,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	/*利用para_value的首地址和para_value的长度（无'\0'）通过memcpy()复制给_cmd->para_value*/
 	memcpy(_cmd->para_value, para_value_addr_head, para_value_len);
 	/*到此，_cmd的request_id、type、para_value已经获得*/
+	
 	
 	return CMD_UNKNOWN;	//命令消息中未找到匹配的参数名
 }
