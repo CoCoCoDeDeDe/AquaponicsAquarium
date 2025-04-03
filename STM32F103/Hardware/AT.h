@@ -3,6 +3,9 @@
 
 #include "common_types.h"
 
+extern char ATCMD_MQTTPUB_UPRSP_main[];
+extern char ATCMD_MQTTPUB_UPRSP_part1and2[] ;
+
 extern const Msg_KeyWord_t msg_keywords[];
 extern const Cmd_KeyWord_t cmd_keywords[];
 extern Cmd_t cmd;

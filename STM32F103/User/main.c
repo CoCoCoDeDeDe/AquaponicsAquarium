@@ -42,6 +42,8 @@
 #include "Serial3.h"
 #include "AT.h"
 
+#include "Serial2.h"
+
 int16_t num_test1 = 0;
 
 int main(void)
@@ -72,10 +74,10 @@ int main(void)
 	//上：NVIC优先级分组的配置对所有中断请求是统一的
 	
 //Init=====
-	MyTest_PB5_Init();
+//	MyTest_PB5_Init();
 	
-	Serial_Init(USART2, 115200, 0, 0);	//Serail2——PC
-	Serial_SendStringV2(USART2, "Serial2_On\r\n");//【Debug】
+//	Serial_Init(USART2, 115200, 0, 0);	//Serail2——PC
+//	Serial_SendStringV2(USART2, "Serial2_On\r\n");//【Debug】
 	
 	OLED_Init();
 	OLED_Clear();
@@ -112,6 +114,9 @@ int main(void)
 	AT_Init_Str();
 
 	Serial3_Init_All();
+	Serial2_Init_All();
+	
+	
 //	char tst1[] = "tst1";
 //	
 //	uint16_t tstNum2 = 0;
@@ -153,20 +158,26 @@ int main(void)
 	
 	while(1)
 	{
-		
-		if(rx3_idle_flag == 1)
-		{
-			/*【Debug】*/
-			//Serial3_SendString("InIf\r\n", strlen("InIf\r\n"));
-			
-			Serial_SendByte(USARTPC, 'R');
-			Serial_SendByte(USARTPC, '\r');
-			Serial_SendByte(USARTPC, '\n');
-			
-			Serial_SendStringV2(USARTPC, rx3_buf);
-		
-			rx3_idle_flag = 0;
-		}
+		Serial2_SendString("Serial2_SendString\r\n", strlen("Serial2_SendString\r\n"));
+		Delay_ms(100);
+	}
+	
+	while(1)
+	{
+	//Serial2_SendString("Serial2_SendString\r\n", strlen("Serial2_SendString\r\n"));
+//		if(rx3_idle_flag == 1)
+//		{
+//			/*【Debug】*/
+//			//Serial3_SendString("InIf\r\n", strlen("InIf\r\n"));
+//			
+//			Serial_SendByte(USARTPC, 'R');
+//			Serial_SendByte(USARTPC, '\r');
+//			Serial_SendByte(USARTPC, '\n');
+//			
+//			Serial_SendStringV2(USARTPC, rx3_buf);
+//		
+//			rx3_idle_flag = 0;
+//		}
 		
 		if(Serial_RxFlag[2] == 1)
 		{
@@ -175,8 +186,16 @@ int main(void)
 			Serial_RxFlag[2] = 0;
 		}
 		
+//		WaterPVR		
+		OLED_ShowNum(1, 1, WaterPVR, 4);
+		OLED_ShowNum(2, 1, AirPRS, 4);
+		OLED_ShowNum(3, 1, WaterHRS, 4);
+		OLED_ShowNum(4, 1, AquariumLVR, 4);
+		OLED_ShowNum(1, 9, PlantGLVR, 4);
+		OLED_ShowNum(2, 9, FeederRS, 4);
 		
-		//AT_Test();
+		
+//		AT_Test();
 		
 //		Delay_s(1);
 		

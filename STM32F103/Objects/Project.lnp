@@ -48,6 +48,7 @@
 ".\objects\myilluminations.o"
 ".\objects\myairp.o"
 ".\objects\mywaterh.o"
+".\objects\serial2.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 --strict --scatter ".\Objects\Project.sct"

@@ -3,7 +3,7 @@ Things TO DO
 	DONE		修复Rx
 	DONE		配置USART3的接收字符串
 	DONE		配置USART3的发送字符串
-	HALF		配置PA0,PA1,PB0,PB1的DAC和DMA(//还不确定还有什么设备要DAC)
+	DONE		配置PA0,PA1,PB0,PB1的DAC和DMA(//还不确定还有什么设备要DAC)
 	DONE		配置TIM1
 	DONE		配置舵机——PWM
 	DONE		配置TB6612——PWM && GPIO
@@ -39,7 +39,11 @@ Things TO DO
 	DONE		修缮如果曾经收到过下行命令并成功接受处理，当再收到的+MQTTSUBRECV:0,...字段中即使没有命令相关关键词，也会返回上一次的命令，而不是UNKNOWN
 	DONE		测试下行命令的识别、request_id的提取、参数的提取
 	DONE		cmd存储request_id、para_value时尾接'\0'
-	DOING		测试下行命令的执行、上行响应的拼接、上行响应的及时发送
+	DONE		测试下行命令的执行
+	DONE		上行响应的拼接、上行响应的及时发送
+	DONE		测试属性上报、命令处理
+	DOING		改Serial2为USART-DMA
+	DOING		修缮Serial2的Tx
 	TODO		测试所有会涉及的发送信息的发送
 	TODO		测试STM32-ESP8266沟通逻辑
 	DOING		配置MQTT-MCU-ServerV2

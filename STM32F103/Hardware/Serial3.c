@@ -60,14 +60,15 @@ int8_t tx3_tc_flag = 0;
 uint16_t tc_count = 0;
 uint16_t tst_num1 = 0;
 
-GPIO_InitTypeDef GPIO_IS_Tx;
-GPIO_InitTypeDef GPIO_IS_Rx;
-USART_InitTypeDef USART_IS;
-DMA_InitTypeDef DMA_IS_Tx;
-DMA_InitTypeDef DMA_IS_Rx;
-NVIC_InitTypeDef NVIC_IS_Tx_DMA;
-NVIC_InitTypeDef NVIC_IS_Rx_USART;
-NVIC_InitTypeDef NVIC_IS_Rx_DMA;
+static GPIO_InitTypeDef GPIO_IS_Tx;
+static GPIO_InitTypeDef GPIO_IS_Rx;
+static USART_InitTypeDef USART_IS;
+static DMA_InitTypeDef DMA_IS_Tx;
+static DMA_InitTypeDef DMA_IS_Rx;
+static NVIC_InitTypeDef NVIC_IS_Tx_DMA;
+static NVIC_InitTypeDef NVIC_IS_Rx_USART;
+/*目前Serial3_Rx使用USART_IDLE中断检测一个字符串发送完成*/
+//static NVIC_InitTypeDef NVIC_IS_Rx_DMA;
 
 void Serial3_Init_Com(uint32_t br, FunctionalState fs)
 {
@@ -103,7 +104,7 @@ void Serial3_Init_Tx_USART(FunctionalState fs)
 	//DMAITCFG,USARTITCFG,NVICINIT
 }
 
-void Serial3_Init_Tx_DMA(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
+void Serial3_Init_Tx_DMA(uint32_t dma_p, uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
 {
 	USART_DMACmd(USART3, USART_DMAReq_Tx, ENABLE);
 	
@@ -118,7 +119,7 @@ void Serial3_Init_Tx_DMA(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
 	DMA_IS_Tx.DMA_PeripheralBaseAddr	= (u32)&USART3->DR;
 	DMA_IS_Tx.DMA_PeripheralDataSize	= DMA_PeripheralDataSize_Byte;
 	DMA_IS_Tx.DMA_PeripheralInc			= DMA_PeripheralInc_Disable;//【WARNING】每发1Byte和DMA的内存指向地址自增1单位同步
-	DMA_IS_Tx.DMA_Priority				= DMA_Priority_High;
+	DMA_IS_Tx.DMA_Priority				= dma_p;
 	DMA_Init(DMA1_Channel2, &DMA_IS_Tx);
 	
 	DMA_ITConfig(DMA1_Channel2, DMA_IT_TC, ENABLE);
@@ -158,7 +159,7 @@ void Serial3_Init_Rx_USART(uint8_t nvic_pp, uint8_t nvic_sp, FunctionalState fs)
 	NVIC_Init(&NVIC_IS_Rx_USART);
 }
 
-void Serial3_Init_Rx_DMA(FunctionalState fs)
+void Serial3_Init_Rx_DMA(uint32_t dma_p,FunctionalState fs)
 {
 	USART_DMACmd(USART3, USART_DMAReq_Rx, ENABLE);
 	
@@ -173,7 +174,7 @@ void Serial3_Init_Rx_DMA(FunctionalState fs)
 	DMA_IS_Rx.DMA_PeripheralBaseAddr = (u32)&USART3->DR;//USART3->DR转移到rx3_buf[x]
 	DMA_IS_Rx.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;//1Char~1Byte
 	DMA_IS_Rx.DMA_PeripheralInc = DMA_PeripheralInc_Disable;//新接收的Byte永远在USART3->DR
-	DMA_IS_Rx.DMA_Priority = DMA_Priority_VeryHigh;//使Rx3优先级在DMA中最高
+	DMA_IS_Rx.DMA_Priority = dma_p;//使Rx3优先级在DMA中最高
 	DMA_Init(DMA1_Channel3, &DMA_IS_Rx);//配置给USART3_Rx对应的DMA1_Channel3
 	
 	DMA_Cmd(DMA1_Channel3, fs);
@@ -186,9 +187,9 @@ void Serial3_Init_All(void)
 	
 	/*note:保证DMA中断优先级高于USART的优先级，
 	否则当在USART中断中用USARTDMA发送连续发送一个以上字符串就会卡死*/
-	Serial3_Init_Tx_DMA(0, 0, DISABLE);//刚刚初始化，没有要转移的数据
+	Serial3_Init_Tx_DMA(DMA_Priority_High, 0, 0, DISABLE);//刚刚初始化，没有要转移的数据
 	Serial3_Init_Rx_USART(1, 1, ENABLE);
-	Serial3_Init_Rx_DMA(ENABLE);//接收常开
+	Serial3_Init_Rx_DMA(DMA_Priority_High, ENABLE);//接收常开
 }
 
 /*note:每当要发新的string时，DMA_MemoryBaseAddr要指向string的首地址，
@@ -215,25 +216,15 @@ int8_t Serial3_SendByte(char b)
 	return 1;	//SUCCESS
 }
 
-int8_t int_tst1 = 0;
-int8_t int_tst2 = 0;
-int8_t int_tst3 = 0;
-
 int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
 {
-	
-	int_tst1++;
 	
 	if(str_len <= 0 || str == NULL || str_len >= 1000)
 	{	
 		return -1;	//传入参数有误
 	}
 	
-	int_tst1++;
-	
 	while(tx3_tc_flag == 0);
-	
-	int_tst2++;
 	
 	/*确保关闭DMA*/
 	Serial3_Tx_Cmd(DISABLE);
@@ -247,8 +238,6 @@ int8_t Serial3_SendString(char *str, uint16_t str_len)//str_len不包括'\0'
 	DMA_Init(DMA1_Channel2, &DMA_IS_Tx);
 	Serial3_Tx_Cmd(ENABLE);//启动DMA
 	Serial3_USART3_Cmd(ENABLE);//防止USART3被误关
-	
-	int_tst3++;
 	
 	tx3_tc_flag = 0;//告诉其他函数有在传输的字符串
 	
@@ -370,14 +359,13 @@ void USART3_IRQHandler(void)
 //					Serial_SendStringV2(USARTPC, "WIFI_CONN_SUCCESS\r\n");
 					break;
 				case MSG_DOWNCMD:
-					int_tst1 = 10;//【Debug】
 					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));
 //					Serial_SendStringV2(USARTPC, "DOWNCMD\r\n");
 					
 //					【TODO】在此处调用下行命令相关函数
 					AT_ParseCmdMsg(rx3_buf, read_len, cmd_keywords, &cmd);
-					Serial3_SendString(cmd.request_id, strlen(cmd.request_id));// 【Debug】
-					Serial3_SendString("\r\n", strlen("\r\n"));// 【Debug】
+//					Serial3_SendString(cmd.request_id, strlen(cmd.request_id));// 【Debug】
+//					Serial3_SendString("\r\n", strlen("\r\n"));// 【Debug】
 					switch(cmd.type)
 					{
 						case CMD_UNKNOWN:
@@ -392,26 +380,55 @@ void USART3_IRQHandler(void)
 						case CMD_APRS:
 							Serial3_SendString("CMD_APRS\r\n", strlen("CMD_APRS\r\n"));
 //							Serial_SendStringV2(USARTPC, "CMD_APRS\r\n");
+							MyAirP_SetRunStatus(atoi(cmd.para_value));
 							break;
 						case CMD_WHRS:
 							Serial3_SendString("CMD_WHRS\r\n", strlen("CMD_WHRS\r\n"));
 //							Serial_SendStringV2(USARTPC, "CMD_WHRS\r\n");
+							MyWaterH_SetRunStatus(atoi(cmd.para_value));
 							break;
 						case CMD_ALVR:
 							Serial3_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));
 //							Serial_SendStringV2(USARTPC, "CMD_ALVR\r\n");
+							MyAquariumL_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_PGLVR:
 							Serial3_SendString("CMD_PGLVR\r\n", strlen("CMD_PGLVR\r\n"));
 //							Serial_SendStringV2(USARTPC, "CMD_PGLVR\r\n");
+							MyPlantGL_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_FT:
 							Serial3_SendString("CMD_FT\r\n", strlen("CMD_FT\r\n"));
 //							Serial_SendStringV2(USARTPC, "CMD_FT\r\n");
+							MyFeeder_Triger(atoi(cmd.para_value));
 							break;
 						default:
-							Serial3_SendString("CMDUNKNOWN\r\n", strlen("CMDUNKNOWN\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMDUNKNOWN\r\n");
+							Serial3_SendString("CMDTYPEERROR\r\n", strlen("CMDTYPEERROR\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMDTYPEERROR\r\n");
+					}
+					if(cmd.type != CMD_UNKNOWN)//如果命令类型没有识别失败
+					{
+						/*重置main字符串*/
+						memset(ATCMD_MQTTPUB_UPRSP_main,0,AT_MQTTPUB_UpRSP_LEN);
+						/*复制固定开头字符串到main*/
+						MyArray_Char_CopyBToATail(
+							ATCMD_MQTTPUB_UPRSP_main, 
+							ATCMD_MQTTPUB_UPRSP_part1and2, 
+							AT_MQTTPUB_UpRSP_LEN);
+						/*拼接本次上行响应的request_id到main尾巴*/
+						MyArray_Char_CopyBToATail(
+							ATCMD_MQTTPUB_UPRSP_main, 
+							cmd.request_id, 
+							AT_MQTTPUB_UpRSP_LEN);
+						/*复制固定尾巴字符串到main*/
+						MyArray_Char_CopyBToATail(
+							ATCMD_MQTTPUB_UPRSP_main, 
+							ATCMD_MQTTPUB_UPRSP_part3, 
+							AT_MQTTPUB_UpRSP_LEN);
+						/*发送上行响应*/
+						Serial3_SendString(
+							ATCMD_MQTTPUB_UPRSP_main, 
+							strlen(ATCMD_MQTTPUB_UPRSP_main));
 					}
 					break;
 				default:

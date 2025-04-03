@@ -17,10 +17,6 @@ extern uint16_t	tst_num1;
 void Serial3_Init_All(void);
 int8_t Serial3_SendByte(char b);
 
-extern int8_t int_tst1;
-extern int8_t int_tst2;
-extern int8_t int_tst3;
-
 int8_t Serial3_SendString(char *str, uint16_t str_len);
 
 #endif

@@ -7,6 +7,10 @@
 #define TX3_BUF_MAX_SIZE 512
 #define RX3_BUF_MAX_SIZE 512
 
+/*定义Serial2的Tx和Rx的宏定义*/
+#define TX3_BUF_MAX_SIZE 512
+#define RX3_BUF_MAX_SIZE 512
+
 /*定义 WiFi AT 宏定义*/
 #define WIFI_SSID_LEN	10
 #define WIFI_SSID		"321"
@@ -44,6 +48,16 @@
 #define ATCMD_MQTTPUB_UPRSP_part1 "AT+MQTTPUB=0,\"$oc/devices/"	//后接device_id
 #define ATCMD_MQTTPUB_UPRSP_part2 "/sys/commands/response/request_id="	//后接request_id
 #define ATCMD_MQTTPUB_UPRSP_part3 "\",\"{}\",0,1\r\n"//末尾
+
+
+/*SerialTx消息结构体*/
+typedef struct
+{
+	int8_t		tc;
+	char			*msg;
+	uint32_t	len;
+} tx_msg_t;
+
 
 /*消息类型枚举*/
 typedef enum
@@ -118,8 +132,6 @@ typedef struct
 	
 	char para_value[10];
 } Cmd_t;
-
-
 
 
 

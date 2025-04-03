@@ -49,6 +49,8 @@ uint16_t FeederAngle = 0;//【TODO】改进：上传电机角度或喂食次数�
 
 void MyFeeder_Triger(int8_t ft) {	//【TODO】喂食状态机，喂食1次、2次...复位。
 	
+	FeederRS = ft;
+	
 	if(ft == 1) {
 		if(FeederRS == 1) {
 			//RUNNING

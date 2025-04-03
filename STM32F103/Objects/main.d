@@ -58,3 +58,4 @@
 .\objects\main.o: .\Hardware\MyAirP.h
 .\objects\main.o: .\Hardware\MyWaterH.h
 .\objects\main.o: .\Hardware\MyAquariumL.h
+.\objects\main.o: .\Hardware\Serial2.h

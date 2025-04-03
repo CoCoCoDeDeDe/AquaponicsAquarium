@@ -890,6 +890,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\MyWaterH.h</FilePath>
             </File>
+            <File>
+              <FileName>Serial2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Serial2.c</FilePath>
+            </File>
+            <File>
+              <FileName>Serial2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\Serial2.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

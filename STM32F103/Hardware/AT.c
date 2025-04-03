@@ -100,7 +100,7 @@ char KEYW_WIFI_GOTIP[] = "FI GO";
 
 /*定义用于检测的关键词 命令类型*/
 char KEYW_WPVR[] = "WPVR";
-char KEYW_APRS[] = "APRSC";
+char KEYW_APRS[] = "APRS";
 char KEYW_WHRS[] = "WHRS";
 char KEYW_ALVR[] = "ALVR";
 char KEYW_PGLVR[] = "PGLVR";
@@ -150,7 +150,8 @@ char ATCMD_PART_CRLF[] = "\r\n";
 
 void AT_Init_Str(void)
 {
-	/*拼接初始化后不会变动的字符串及字符串片段*/
+	/*拼接初始化后不会变动的字符串及字符串片段。
+	这些字符串拼接完后就不能再更改，除非是设置变动。*/
 	//拼接AT+MQTTUSERCFG=...
 	MyArray_Char_CopyBToATail(ATCMD_MQTTUSERCFG_main, MQTT_USERNAME, AT_MQTTUSERCFG_LEN);
 	MyArray_Char_CopyBToATail(ATCMD_MQTTUSERCFG_main, ATCMD_MQTTUSERCFG_part2, AT_MQTTUSERCFG_LEN);
@@ -239,7 +240,9 @@ int8_t AT_Report_1(
 	
 	/*拼接AT+MQTTPUB=...report...(无data和末尾)。
 	之后data1\2嵌入数据后将data1/2接上*/
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_part1and2, AT_MQTTPUB_RPT_LEN);
+	/*【WARNING】未测试*/
+	memcpy(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_part1and2, strlen(ATCMD_MQTTPUB_RPT_part1and2));
+//	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_part1and2, AT_MQTTPUB_RPT_LEN);
 	
 	len = snprintf(ATCMD_MQTTPUB_RPT_data1, 
 		sizeof(ATCMD_MQTTPUB_RPT_data1), 
@@ -440,7 +443,6 @@ Cmd_t_e AT_ParseCmdMsg(
 	}
 	if(para_name_addr_head == NULL)
 	{
-		Serial3_SendString("tst\r\n", strlen("tst\r\n"));// 【Debug】
 		return CMD_UNKNOWN;	//在_msg中找到参数名
 	}
 	
@@ -448,7 +450,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	 (char*)(para_name_addr_head + para_name_len)指向的是para_name后紧随的双引号"\""的地址。
 	+2是用于跳过冒号":"*/
 	char *para_value_addr_head = (char*)(para_name_addr_head + para_name_len + 2);
-	Serial3_SendString((char*)(para_name_addr_head + para_name_len + 2), strlen((char*)(para_name_addr_head + para_name_len + 2)));// 【Debug】
+//	Serial3_SendString((char*)(para_name_addr_head + para_name_len + 2), strlen((char*)(para_name_addr_head + para_name_len + 2)));// 【Debug】
 	/*strstr()从para_value_addr_head开始寻找，界限是主串_msg的'\0'，*/
 	char *para_value_addr_tail = strstr((char*)para_name_addr_head, "},");
 	if(para_value_addr_tail == NULL)
@@ -464,12 +466,6 @@ Cmd_t_e AT_ParseCmdMsg(
 	/*给_cmd->para_Value的第para_value_len + 1位写入'\0'*/
 	_cmd->para_value[para_value_len] = '\0';
 	/*到此，_cmd的request_id、type、para_value已经获得*/
-	
-	Serial3_SendString(cmd.para_value, strlen(cmd.para_value));// 【Debug】
-	Serial3_SendString("\r\n", strlen("\r\n"));// 【Debug】
-	OLED_ShowString(1, 1, cmd.para_value);// 【Debug】
-	OLED_ShowNum(2, 1, atoi(cmd.para_value), 8);// 【Debug】
-	OLED_ShowNum(3, 1, para_value_len, 8);// 【Debug】
 	
 	return CMD_UNKNOWN;	//命令消息中未找到匹配的参数名
 }
