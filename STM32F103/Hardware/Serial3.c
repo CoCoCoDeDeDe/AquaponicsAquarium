@@ -1,5 +1,21 @@
 #include "Serial3.h"
 
+#include "stm32f10x.h"                  // Device header
+
+#include "AT.h"
+
+#include <string.h>
+
+#include "Array.h"
+
+#include "MySerial.h"
+
+#include "math.h"
+
+#include "MyTIM.h"
+
+#include "common_types.h"
+
 //TODO:USART3DMASendString
 //TODO:USART3DMAReceiveString
 
@@ -246,10 +262,14 @@ void USART3_IRQHandler(void)
 		DMA_Cmd(DMA1_Channel3, DISABLE);
 		
 		uint16_t read_len = RX3_BUF_MAX_SIZE - DMA_GetCurrDataCounter(DMA1_Channel3);
+		read_len++;
 		
-		if( read_len < RX3_BUF_MAX_SIZE)
+		if( read_len - 1 < RX3_BUF_MAX_SIZE)
 		{
-			rx3_buf[read_len] = '\0';
+			/*在rx3_buf的第read_len个char写入'\0'后，
+			rx3_buf便成了一个长为read_len的字符串（包含'\0'），
+			其终止符索引为read_len-1，位数为read_len*/
+			rx3_buf[read_len - 1] = '\0';
 		}
 		
 		/*一个标志位只能给一个使用方使用，一个使用方使用完清零可能导致其他使用方无法检测*/
@@ -257,53 +277,95 @@ void USART3_IRQHandler(void)
 		
 		//note:简单无缓存直接利用rx3_buf方案会导致接收频繁数据只能读到最后一串
 		
-		rx3_msg_type = ParseMessage(rx3_buf, read_len + 1);
+		Msg_t_e rx3_msg_type = MSG_NONE;
+		
+		rx3_msg_type = AT_ParseMessage(rx3_buf, read_len, msg_keywords);
 		
 		switch(rx3_msg_type)
 			{
 				case MSG_NONE:
 					Serial3_SendString("NONE\r\n", strlen("NONE\r\n"));
-//								Serial_SendStringV2(USARTPC, "NONE\r\n");
+//					Serial_SendStringV2(USARTPC, "NONE\r\n");
 					break;
 				case MSG_POWERON:
 					Serial3_SendString("POWERON\r\n", strlen("POWERON\r\n"));
-//								Serial_SendStringV2(USARTPC, "POWERON\r\n");
+//					Serial_SendStringV2(USARTPC, "POWERON\r\n");
 					break;
 				case MSG_OK:
 					Serial3_SendString("OK\r\n", strlen("OK\r\n"));
-//								Serial_SendStringV2(USARTPC, "OK\r\n");
+//					Serial_SendStringV2(USARTPC, "OK\r\n");
 					break;
 				case MSG_ERROR:
 					Serial3_SendString("ERROR\r\n", strlen("ERROR\r\n"));
-//								Serial_SendStringV2(USARTPC, "ERROR\r\n");
+//					Serial_SendStringV2(USARTPC, "ERROR\r\n");
 					break;
 				case MSG_WIFI_CONN:
 					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_CONN\r\n"));
-//								Serial_SendStringV2(USARTPC, "WIFI_CONN\r\n");
+//					Serial_SendStringV2(USARTPC, "WIFI_CONN\r\n");
+					break;
+				case MSG_WIFI_GOTIP:
+					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_GOTIP\r\n"));
+//					Serial_SendStringV2(USARTPC, "WIFI_CONN\r\n");
 					break;
 				case MSG_WIFI_DISCONN:
 					Serial3_SendString("WIFI_DISCONN\r\n", strlen("WIFI_DISCONN\r\n"));
-//								Serial_SendStringV2(USARTPC, "WIFI_DISCONN\r\n");
+//					Serial_SendStringV2(USARTPC, "WIFI_DISCONN\r\n");
 					break;
 				case MSG_MQTT_DISCONN:
 					Serial3_SendString("MQTT_DISCONN\r\n", strlen("MQTT_DISCONN\r\n"));
-//								Serial_SendStringV2(USARTPC, "MQTT_DISCONN\r\n");
+//					Serial_SendStringV2(USARTPC, "MQTT_DISCONN\r\n");
 					break;
 				case MSG_MQTT_CONN_SUCCESS:
 					Serial3_SendString("MQTT_CONN_SUCCESS\r\n", strlen("MQTT_CONN_SUCCESS\r\n"));
-//								Serial_SendStringV2(USARTPC, "MQTT_CONN_SUCCESS\r\n");
+//					Serial_SendStringV2(USARTPC, "MQTT_CONN_SUCCESS\r\n");
 					break;
 				case MSG_WIFI_CONN_SUCCESS:
 					Serial3_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));
-//								Serial_SendStringV2(USARTPC, "WIFI_CONN_SUCCESS\r\n");
+//					Serial_SendStringV2(USARTPC, "WIFI_CONN_SUCCESS\r\n");
 					break;
 				case MSG_DOWNCMD:
 					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));
-//								Serial_SendStringV2(USARTPC, "DOWNCMD\r\n");
+//					Serial_SendStringV2(USARTPC, "DOWNCMD\r\n");
+				//【TODO】在此处调用下行命令相关函数
+					AT_ParseCmdMsg(rx3_buf, read_len, cmd_keywords, &cmd);
+					switch(cmd.type)
+					{
+						case CMD_UNKNOWN:
+							Serial3_SendString("CMD_UNKNOWN\r\n", strlen("CMD_UNKNOWN\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_UNKNOWN\r\n");
+							break;
+						case CMD_WPVR:
+							Serial3_SendString("CMD_WPVR\r\n", strlen("CMD_WPVR\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_WPVR\r\n");
+							break;
+						case CMD_APRS:
+							Serial3_SendString("CMD_APRS\r\n", strlen("CMD_APRS\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_APRS\r\n");
+							break;
+						case CMD_WHRS:
+							Serial3_SendString("CMD_WHRS\r\n", strlen("CMD_WHRS\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_WHRS\r\n");
+							break;
+						case CMD_ALVR:
+							Serial3_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_ALVR\r\n");
+							break;
+						case CMD_PGLVR:
+							Serial3_SendString("CMD_PGLVR\r\n", strlen("CMD_PGLVR\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_PGLVR\r\n");
+							break;
+						case CMD_FT:
+							Serial3_SendString("CMD_FT\r\n", strlen("CMD_FT\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMD_FT\r\n");
+							break;
+						default:
+							Serial3_SendString("CMDUNKNOWN\r\n", strlen("CMDUNKNOWN\r\n"));
+//							Serial_SendStringV2(USARTPC, "CMDUNKNOWN\r\n");
+					}
 					break;
 				default:
-					Serial3_SendString("UNKNOWN\r\n", strlen("UNKNOWN\r\n"));
-//								Serial_SendStringV2(USARTPC, "UNKNOWN\r\n");
+					Serial3_SendString("MSGUNKNOWN\r\n", strlen("MSGUNKNOWN\r\n"));
+//					Serial_SendStringV2(USARTPC, "MSGUNKNOWN\r\n");
 			}
 
 //		rx3_buf_arr[rx3_buf_idx][read_len] = '\0';

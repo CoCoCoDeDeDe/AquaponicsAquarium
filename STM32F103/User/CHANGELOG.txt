@@ -31,9 +31,11 @@ Things TO DO
 	DONE		添加属性数值范围限制功能
 	DONE		测试数据嵌入字符串发给PC
 	DONE		测试report上报
-	DOING		测试对所有要用到的ESP8266发给STM32的信息的识别
-	TODO		解决AT与Serial3循环包含的问题
-	TODO		测试识别、解析、执行、响应下行命令
+	DONE		解决AT与Serial3循环包含的问题
+	DONE		测试对所有要用到的ESP8266发给STM32的信息的识别
+	DONE		修缮对MQTTCONN?以及CWJAP?的返回信息的识别
+	DOING		测试下行命令的识别、request_id的提取、参数的提取、命令的执行、上行响应的拼接、上行响应的及时发送
+	TODO		修缮下行命令处理的卡死，发出下行命令后发给PC"DOWNCMD"，然后卡死，OLED测的数据也卡死
 	TODO		测试STM32-ESP8266沟通逻辑
 	DOING		配置MQTT-MCU-ServerV2
 	TODO		组装原型机

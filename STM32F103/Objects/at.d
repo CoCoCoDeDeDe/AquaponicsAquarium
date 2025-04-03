@@ -1,5 +1,6 @@
 .\objects\at.o: Hardware\AT.c
 .\objects\at.o: Hardware\AT.h
+.\objects\at.o: .\System\common_types.h
 .\objects\at.o: .\Start\stm32f10x.h
 .\objects\at.o: .\Start\core_cm3.h
 .\objects\at.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -38,20 +39,15 @@
 .\objects\at.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\at.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\at.o: Hardware\Serial3.h
-.\objects\at.o: Hardware\AT.h
-.\objects\at.o: Hardware\MySerial.h
-.\objects\at.o: .\System\math.h
+.\objects\at.o: Hardware\MyFeeder.h
+.\objects\at.o: Hardware\MyWaterP.h
+.\objects\at.o: Hardware\MyWaterSS.h
 .\objects\at.o: .\System\MyTIM.h
 .\objects\at.o: .\Hardware\MyTest.h
 .\objects\at.o: .\Hardware\OLED.h
 .\objects\at.o: .\Hardware\MyWaterSS.h
-.\objects\at.o: .\System\MyTIM.h
 .\objects\at.o: .\Hardware\MyAirS.h
 .\objects\at.o: .\Hardware\MyWaterTS.h
-.\objects\at.o: .\Hardware\Serial3.h
-.\objects\at.o: .\System\common_types.h
-.\objects\at.o: Hardware\MyFeeder.h
-.\objects\at.o: Hardware\MyWaterP.h
 .\objects\at.o: Hardware\MyWaterQS.h
 .\objects\at.o: Hardware\MySoilMS.h
 .\objects\at.o: Hardware\MyIlluminationS.h
@@ -60,3 +56,4 @@
 .\objects\at.o: Hardware\MyAirP.h
 .\objects\at.o: Hardware\MyWaterH.h
 .\objects\at.o: Hardware\MyAquariumL.h
+.\objects\at.o: .\System\math.h
