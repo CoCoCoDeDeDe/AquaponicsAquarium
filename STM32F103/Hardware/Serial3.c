@@ -2,6 +2,10 @@
 
 #include "stm32f10x.h"                  // Device header
 
+#include <stdlib.h>						// atoi()
+
+#include <stdio.h>
+
 #include "AT.h"
 
 #include <string.h>
@@ -15,6 +19,29 @@
 #include "MyTIM.h"
 
 #include "common_types.h"
+
+#include "OLED.h"
+
+#include "MyTIM.h"
+
+#include "MyFeeder.h"
+#include "MyWaterP.h"
+
+#include "MyWaterSS.h"
+#include "MyAirS.h"
+#include "MyWaterTS.h"
+
+#include "MyWaterQS.h"
+#include "MySoilMS.h"
+#include "MyIlluminationS.h"
+
+#include "MyADCAndDMA.h"
+
+#include "MyPlantGL.h"
+#include "MyAirP.h"
+#include "MyWaterH.h"
+
+#include "MyAquariumL.h"
 
 //TODO:USART3DMASendString
 //TODO:USART3DMAReceiveString
@@ -349,6 +376,8 @@ void USART3_IRQHandler(void)
 					
 //					【TODO】在此处调用下行命令相关函数
 					AT_ParseCmdMsg(rx3_buf, read_len, cmd_keywords, &cmd);
+					Serial3_SendString(cmd.request_id, strlen(cmd.request_id));// 【Debug】
+					Serial3_SendString("\r\n", strlen("\r\n"));// 【Debug】
 					switch(cmd.type)
 					{
 						case CMD_UNKNOWN:
@@ -358,6 +387,7 @@ void USART3_IRQHandler(void)
 						case CMD_WPVR:
 							Serial3_SendString("CMD_WPVR\r\n", strlen("CMD_WPVR\r\n"));
 //							Serial_SendStringV2(USARTPC, "CMD_WPVR\r\n");
+							MyWaterP_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_APRS:
 							Serial3_SendString("CMD_APRS\r\n", strlen("CMD_APRS\r\n"));

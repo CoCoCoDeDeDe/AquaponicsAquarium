@@ -396,7 +396,7 @@ Cmd_t_e AT_ParseCmdMsg(
 		return CMD_UNKNOWN;
 	}
 	/*处理后才指向request_id的首地址*/
-	request_id_addr_head += 4;
+	request_id_addr_head += 5;
 	/*这里获取的是从request_id首开始的第一个','的地址*/
 	char *request_id_addr_tail = strstr((char*)request_id_addr_head, ",");
 	if(request_id_addr_tail == NULL)
@@ -404,11 +404,15 @@ Cmd_t_e AT_ParseCmdMsg(
 		return CMD_UNKNOWN;
 	}
 	/*处理后才指向request_id的尾地址，无'\0'*/
-	request_id_addr_tail -= 1;
+	request_id_addr_tail -= 2;
 	/*计算request_id的长度*/
 	size_t request_id_len = request_id_addr_tail - request_id_addr_head + 1;
 	/*利用子串request_id的首地址和长度通过memcpy()将其复制给_cmd->request_id*/
 	memcpy(_cmd->request_id, request_id_addr_head, request_id_len);
+	/*给_cmd读取到的request_id的末尾加上'\0'。
+	索引request_id_len对应第request_id_len+1位，此处原本不是有效数据，
+	是最后一个有效数据的下一个字符*/
+	_cmd->request_id[request_id_len] = '\0';
 	/*到此，_cmd的request_id已经获得*/
 	
 	char *para_name_addr_head;
@@ -426,23 +430,46 @@ Cmd_t_e AT_ParseCmdMsg(
 			_cmd->type = _cmd_keywords[i].type;
 			/*到此，_cmd的request_id、type已经获得*/
 			para_name_len = _cmd_keywords[i].len;
+			
+//			OLED_ShowNum(4, 1, _cmd_keywords[i].len, 8);// 【Debug】
+			
+			/*【重要】否则for会遍历完，导致已经匹配上的para_name_addr_head
+			变NULL，后续代码全失败*/
+			break;
 		}
+	}
+	if(para_name_addr_head == NULL)
+	{
+		Serial3_SendString("tst\r\n", strlen("tst\r\n"));// 【Debug】
+		return CMD_UNKNOWN;	//在_msg中找到参数名
 	}
 	
 	/*note:
 	 (char*)(para_name_addr_head + para_name_len)指向的是para_name后紧随的双引号"\""的地址。
 	+2是用于跳过冒号":"*/
 	char *para_value_addr_head = (char*)(para_name_addr_head + para_name_len + 2);
+	Serial3_SendString((char*)(para_name_addr_head + para_name_len + 2), strlen((char*)(para_name_addr_head + para_name_len + 2)));// 【Debug】
 	/*strstr()从para_value_addr_head开始寻找，界限是主串_msg的'\0'，*/
-	char *para_value_addr_tail = strstr((char*)para_value_addr_head, "}");
-	if(para_value_addr_tail == NULL) return CMD_UNKNOWN;	//找para_value紧随的"}"失败
+	char *para_value_addr_tail = strstr((char*)para_name_addr_head, "},");
+	if(para_value_addr_tail == NULL)
+	{
+		return CMD_UNKNOWN;	//上1行strstr()寻找失败
+	}
 	/*将地址从para_value紧随的"}"向前移动到para_value的尾地址*/
 	para_value_addr_tail -= 1;
+	/*计算para_value的字符串长度，不包括'\0'*/
 	uint16_t para_value_len = para_value_addr_tail - para_value_addr_head + 1;
 	/*利用para_value的首地址和para_value的长度（无'\0'）通过memcpy()复制给_cmd->para_value*/
 	memcpy(_cmd->para_value, para_value_addr_head, para_value_len);
+	/*给_cmd->para_Value的第para_value_len + 1位写入'\0'*/
+	_cmd->para_value[para_value_len] = '\0';
 	/*到此，_cmd的request_id、type、para_value已经获得*/
 	
+	Serial3_SendString(cmd.para_value, strlen(cmd.para_value));// 【Debug】
+	Serial3_SendString("\r\n", strlen("\r\n"));// 【Debug】
+	OLED_ShowString(1, 1, cmd.para_value);// 【Debug】
+	OLED_ShowNum(2, 1, atoi(cmd.para_value), 8);// 【Debug】
+	OLED_ShowNum(3, 1, para_value_len, 8);// 【Debug】
 	
 	return CMD_UNKNOWN;	//命令消息中未找到匹配的参数名
 }

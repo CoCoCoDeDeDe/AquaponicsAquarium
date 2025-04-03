@@ -253,12 +253,6 @@ int main(void)
 //		OLED_ShowNum(3, 9, MyAirS_DataArr[2], 2);
 //		OLED_ShowNum(4, 9, WaterSD, 4);
 		
-		OLED_ShowNum(1, 9, int_tst1, 2);
-		OLED_ShowNum(2, 9, int_tst2, 2);
-		OLED_ShowNum(3, 9, int_tst3, 2);
-		OLED_ShowNum(4, 9, tx3_tc_flag, 4);
-		
-		
 //		OLED_ShowNum(4, 1, MyAirS_Count_ReadInterval, 16);
 
 //		OLED_ShowNum(1, 1, MyAirS_Count_ReadBit, 16);
