@@ -29,8 +29,3 @@
 .\objects\mywaterp.o: .\Library\stm32f10x_usart.h
 .\objects\mywaterp.o: .\Library\stm32f10x_wwdg.h
 .\objects\mywaterp.o: .\Library\misc.h
-.\objects\mywaterp.o: Hardware\MySerial.h
-.\objects\mywaterp.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\mywaterp.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mywaterp.o: Hardware\Serial3.h
-.\objects\mywaterp.o: .\System\common_types.h

@@ -31,8 +31,3 @@
 .\objects\myairs.o: .\Library\misc.h
 .\objects\myairs.o: Hardware\MyTest.h
 .\objects\myairs.o: Hardware\OLED.h
-.\objects\myairs.o: Hardware\MySerial.h
-.\objects\myairs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\myairs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myairs.o: Hardware\Serial3.h
-.\objects\myairs.o: .\System\common_types.h

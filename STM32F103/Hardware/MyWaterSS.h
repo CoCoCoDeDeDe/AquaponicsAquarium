@@ -12,7 +12,7 @@
 
 #include "MyTIM.h"
 
-#include "MySerial.h"
+
 
 extern EXTI_InitTypeDef EXTI_InitStruct;
 

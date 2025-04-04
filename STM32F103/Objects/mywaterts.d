@@ -32,9 +32,4 @@
 .\objects\mywaterts.o: .\System\Array.h
 .\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\mywaterts.o: Hardware\MySerial.h
-.\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mywaterts.o: Hardware\Serial3.h
-.\objects\mywaterts.o: .\System\common_types.h
 .\objects\mywaterts.o: .\System\Delay.h

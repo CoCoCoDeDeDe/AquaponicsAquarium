@@ -1,13 +1,5 @@
 #include "Serial2.h"
 
-/*TEST*/
-uint32_t	tstnum1		= 0;
-uint32_t	tstnum2		= 0;
-uint32_t	tstnum3		= 0;
-uint32_t	tstnum4		= 0;
-uint32_t	tstnum5		= 0;
-uint32_t	tstnum6		= 0;
-
 /*USART先实现SendByte[OK]
 USARTDMA先实现SendString
 DMA优先级要高于USART优先级*/
@@ -148,8 +140,8 @@ void Serial2_Init_All(void)
 	Serial2_Init_Com(115200, ENABLE);
 	Serial2_Init_Tx_USART();
 	/*DMA_Cmd在上一个String发送完并且配置完要发送的String后要发送String时再开启*/
-	Serial2_Init_Tx_DMA(DMA_Priority_Medium, 1, 1, DISABLE);
-	Serial2_Init_Rx_USART(2, 2);
+	Serial2_Init_Tx_DMA(DMA_Priority_Medium, 0, 0, DISABLE);
+	Serial2_Init_Rx_USART(1, 1);
 	Serial2_Init_Rx_DMA(DMA_Priority_Medium);
 }
 
@@ -190,7 +182,6 @@ void DMA1_Channel7_IRQHandler(void)
 {
 	if(DMA_GetITStatus(DMA1_IT_TC7) != RESET)
 	{
-		tstnum2++;	//	【Debug】
 		
 		/*运行到此说明一个字符串已经发送完成*/
 		

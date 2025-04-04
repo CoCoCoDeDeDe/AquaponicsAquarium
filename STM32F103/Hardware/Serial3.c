@@ -12,7 +12,7 @@
 
 #include "Array.h"
 
-#include "MySerial.h"
+
 
 #include "math.h"
 
@@ -40,6 +40,8 @@
 #include "MyPlantGL.h"
 #include "MyAirP.h"
 #include "MyWaterH.h"
+
+#include "Serial2.h"
 
 #include "MyAquariumL.h"
 
@@ -318,122 +320,116 @@ void USART3_IRQHandler(void)
 		switch(rx3_msg_type)
 			{
 				case MSG_NONE:
-					Serial3_SendString("NONE\r\n", strlen("NONE\r\n"));
-//					Serial_SendStringV2(USARTPC, "NONE\r\n");
+//					Serial3_SendString("NONE\r\n", strlen("NONE\r\n"));	//【Debug】
+					Serial2_SendString("NONE\r\n", strlen("NONE\r\n"));	//【Debug】
 					break;
 				case MSG_POWERON:
-					Serial3_SendString("POWERON\r\n", strlen("POWERON\r\n"));
-//					Serial_SendStringV2(USARTPC, "POWERON\r\n");
+//					Serial3_SendString("POWERON\r\n", strlen("POWERON\r\n"));	//【Debug】
+					Serial2_SendString("POWERON\r\n", strlen("POWERON\r\n"));	//【Debug】
 					break;
 				case MSG_OK:
-					Serial3_SendString("OK\r\n", strlen("OK\r\n"));
-//					Serial_SendStringV2(USARTPC, "OK\r\n");
+//					Serial3_SendString("OK\r\n", strlen("OK\r\n"));	//【Debug】
+					Serial2_SendString("OK\r\n", strlen("OK\r\n"));	//【Debug】
 					break;
 				case MSG_ERROR:
-					Serial3_SendString("ERROR\r\n", strlen("ERROR\r\n"));
-//					Serial_SendStringV2(USARTPC, "ERROR\r\n");
+//					Serial3_SendString("ERROR\r\n", strlen("ERROR\r\n"));	//【Debug】
+					Serial2_SendString("ERROR\r\n", strlen("ERROR\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_CONN:
-					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_CONN\r\n"));
-//					Serial_SendStringV2(USARTPC, "WIFI_CONN\r\n");
+//					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_CONN\r\n"));	//【Debug】
+					Serial2_SendString("WIFI_CONN\r\n", strlen("WIFI_CONN\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_GOTIP:
-					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_GOTIP\r\n"));
-//					Serial_SendStringV2(USARTPC, "WIFI_CONN\r\n");
+//					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_GOTIP\r\n"));	//【Debug】
+					Serial2_SendString("WIFI_CONN\r\n", strlen("WIFI_GOTIP\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_DISCONN:
-					Serial3_SendString("WIFI_DISCONN\r\n", strlen("WIFI_DISCONN\r\n"));
-//					Serial_SendStringV2(USARTPC, "WIFI_DISCONN\r\n");
+//					Serial3_SendString("WIFI_DISCONN\r\n", strlen("WIFI_DISCONN\r\n"));	//【Debug】
+					Serial2_SendString("WIFI_DISCONN\r\n", strlen("WIFI_DISCONN\r\n"));	//【Debug】
 					break;
 				case MSG_MQTT_DISCONN:
-					Serial3_SendString("MQTT_DISCONN\r\n", strlen("MQTT_DISCONN\r\n"));
-//					Serial_SendStringV2(USARTPC, "MQTT_DISCONN\r\n");
+//					Serial3_SendString("MQTT_DISCONN\r\n", strlen("MQTT_DISCONN\r\n"));	//【Debug】
+					Serial2_SendString("MQTT_DISCONN\r\n", strlen("MQTT_DISCONN\r\n"));	//【Debug】
 					break;
 				case MSG_MQTT_CONN_SUCCESS:
-					Serial3_SendString("MQTT_CONN_SUCCESS\r\n", strlen("MQTT_CONN_SUCCESS\r\n"));
-//					Serial_SendStringV2(USARTPC, "MQTT_CONN_SUCCESS\r\n");
+//					Serial3_SendString("MQTT_CONN_SUCCESS\r\n", strlen("MQTT_CONN_SUCCESS\r\n"));	//【Debug】
+					Serial2_SendString("MQTT_CONN_SUCCESS\r\n", strlen("MQTT_CONN_SUCCESS\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_CONN_SUCCESS:
-//					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));
-					Serial3_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));
-//					Serial_SendStringV2(USARTPC, "WIFI_CONN_SUCCESS\r\n");
+//					Serial3_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));	//【Debug】
+					Serial2_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));	//【Debug】
 					break;
 				case MSG_DOWNCMD:
-					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));
-//					Serial_SendStringV2(USARTPC, "DOWNCMD\r\n");
+//					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));	//【Debug】
+					Serial2_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));	//【Debug】
 					
 //					【TODO】在此处调用下行命令相关函数
 					AT_ParseCmdMsg(rx3_buf, read_len, cmd_keywords, &cmd);
-//					Serial3_SendString(cmd.request_id, strlen(cmd.request_id));// 【Debug】
-//					Serial3_SendString("\r\n", strlen("\r\n"));// 【Debug】
+				
 					switch(cmd.type)
 					{
 						case CMD_UNKNOWN:
-							Serial3_SendString("CMD_UNKNOWN\r\n", strlen("CMD_UNKNOWN\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_UNKNOWN\r\n");
+//							Serial3_SendString("CMD_UNKNOWN\r\n", strlen("CMD_UNKNOWN\r\n"));	//【Debug】
+							Serial2_SendString("CMD_UNKNOWN\r\n", strlen("CMD_UNKNOWN\r\n"));	//【Debug】
 							break;
 						case CMD_WPVR:
-							Serial3_SendString("CMD_WPVR\r\n", strlen("CMD_WPVR\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_WPVR\r\n");
+//							Serial3_SendString("CMD_WPVR\r\n", strlen("CMD_WPVR\r\n"));	//【Debug】
+							Serial2_SendString("CMD_WPVR\r\n", strlen("CMD_WPVR\r\n"));	//【Debug】
 							MyWaterP_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_APRS:
-							Serial3_SendString("CMD_APRS\r\n", strlen("CMD_APRS\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_APRS\r\n");
+//							Serial3_SendString("CMD_APRS\r\n", strlen("CMD_APRS\r\n"));	//【Debug】
+							Serial2_SendString("CMD_APRS\r\n", strlen("CMD_APRS\r\n"));	//【Debug】
 							MyAirP_SetRunStatus(atoi(cmd.para_value));
 							break;
 						case CMD_WHRS:
-							Serial3_SendString("CMD_WHRS\r\n", strlen("CMD_WHRS\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_WHRS\r\n");
+//							Serial3_SendString("CMD_WHRS\r\n", strlen("CMD_WHRS\r\n"));	//【Debug】
+							Serial2_SendString("CMD_WHRS\r\n", strlen("CMD_WHRS\r\n"));	//【Debug】
 							MyWaterH_SetRunStatus(atoi(cmd.para_value));
 							break;
 						case CMD_ALVR:
-							Serial3_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_ALVR\r\n");
+//							Serial3_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));	//【Debug】
+							Serial2_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));	//【Debug】
 							MyAquariumL_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_PGLVR:
-							Serial3_SendString("CMD_PGLVR\r\n", strlen("CMD_PGLVR\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_PGLVR\r\n");
+//							Serial3_SendString("CMD_PGLVR\r\n", strlen("CMD_PGLVR\r\n"));	//【Debug】
+							Serial2_SendString("CMD_PGLVR\r\n", strlen("CMD_PGLVR\r\n"));	//【Debug】
 							MyPlantGL_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_FT:
-							Serial3_SendString("CMD_FT\r\n", strlen("CMD_FT\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMD_FT\r\n");
+//							Serial3_SendString("CMD_FT\r\n", strlen("CMD_FT\r\n"));	//【Debug】
+							Serial2_SendString("CMD_FT\r\n", strlen("CMD_FT\r\n"));	//【Debug】
 							MyFeeder_Triger(atoi(cmd.para_value));
 							break;
 						default:
-							Serial3_SendString("CMDTYPEERROR\r\n", strlen("CMDTYPEERROR\r\n"));
-//							Serial_SendStringV2(USARTPC, "CMDTYPEERROR\r\n");
+//							Serial3_SendString("CMDTYPEERROR\r\n", strlen("CMDTYPEERROR\r\n"));	//【Debug】
+							Serial2_SendString("CMDTYPEERROR\r\n", strlen("CMDTYPEERROR\r\n"));	//【Debug】
 					}
 					if(cmd.type != CMD_UNKNOWN)//如果命令类型没有识别失败
 					{
 						/*重置main字符串*/
-						memset(ATCMD_MQTTPUB_UPRSP_main,0,AT_MQTTPUB_UpRSP_LEN);
-						/*复制固定开头字符串到main*/
-						MyArray_Char_CopyBToATail(
-							ATCMD_MQTTPUB_UPRSP_main, 
-							ATCMD_MQTTPUB_UPRSP_part1and2, 
-							AT_MQTTPUB_UpRSP_LEN);
-						/*拼接本次上行响应的request_id到main尾巴*/
-						MyArray_Char_CopyBToATail(
-							ATCMD_MQTTPUB_UPRSP_main, 
-							cmd.request_id, 
-							AT_MQTTPUB_UpRSP_LEN);
-						/*复制固定尾巴字符串到main*/
-						MyArray_Char_CopyBToATail(
-							ATCMD_MQTTPUB_UPRSP_main, 
-							ATCMD_MQTTPUB_UPRSP_part3, 
-							AT_MQTTPUB_UpRSP_LEN);
+						memset(ATCMD_MQTTPUB_UPRSP_main,0,ATCMD_MQTTPUB_UPRSP_LEN);
+						
+						/*将body复制到main并将request_id嵌入*/
+						snprintf(
+							ATCMD_MQTTPUB_UPRSP_main,
+							ATCMD_MQTTPUB_UPRSP_LEN,
+							ATCMD_MQTTPUB_UPRSP_body,
+							cmd.request_id);
+						
 						/*发送上行响应*/
 						Serial3_SendString(
 							ATCMD_MQTTPUB_UPRSP_main, 
 							strlen(ATCMD_MQTTPUB_UPRSP_main));
+						Serial2_SendString(
+							ATCMD_MQTTPUB_UPRSP_main, 
+							strlen(ATCMD_MQTTPUB_UPRSP_main));	//【Debug】
 					}
 					break;
 				default:
-					Serial3_SendString("MSGUNKNOWN\r\n", strlen("MSGUNKNOWN\r\n"));
-//					Serial_SendStringV2(USARTPC, "MSGUNKNOWN\r\n");
+//					Serial3_SendString("MSGUNKNOWN\r\n", strlen("MSGUNKNOWN\r\n"));
+					Serial2_SendString("MSGUNKNOWN\r\n", strlen("MSGUNKNOWN\r\n"));
 			}
 
 //		rx3_buf_arr[rx3_buf_idx][read_len] = '\0';

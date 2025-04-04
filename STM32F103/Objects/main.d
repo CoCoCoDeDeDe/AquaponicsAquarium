@@ -36,17 +36,14 @@
 .\objects\main.o: .\System\Delay.h
 .\objects\main.o: .\Hardware\MyTest.h
 .\objects\main.o: .\Hardware\OLED.h
-.\objects\main.o: .\Hardware\MySerial.h
-.\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\main.o: .\Hardware\Serial3.h
-.\objects\main.o: .\System\common_types.h
 .\objects\main.o: .\System\math.h
 .\objects\main.o: .\System\MyTIM.h
 .\objects\main.o: .\Hardware\MyWaterSS.h
 .\objects\main.o: .\System\MyTIM.h
 .\objects\main.o: .\Hardware\MyAirS.h
 .\objects\main.o: .\Hardware\MyWaterTS.h
+.\objects\main.o: .\Hardware\Serial3.h
+.\objects\main.o: .\System\common_types.h
 .\objects\main.o: .\Hardware\AT.h
 .\objects\main.o: .\Hardware\MyFeeder.h
 .\objects\main.o: .\Hardware\MyWaterP.h
@@ -59,3 +56,4 @@
 .\objects\main.o: .\Hardware\MyWaterH.h
 .\objects\main.o: .\Hardware\MyAquariumL.h
 .\objects\main.o: .\Hardware\Serial2.h
+.\objects\main.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

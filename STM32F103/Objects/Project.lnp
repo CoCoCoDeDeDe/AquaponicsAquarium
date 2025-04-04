@@ -31,7 +31,6 @@
 ".\objects\math.o"
 ".\objects\common_types.o"
 ".\objects\mytest.o"
-".\objects\myserial.o"
 ".\objects\serial3.o"
 ".\objects\serial2.o"
 ".\objects\at.o"

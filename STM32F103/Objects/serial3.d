@@ -36,8 +36,6 @@
 .\objects\serial3.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\serial3.o: .\System\Array.h
 .\objects\serial3.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
-.\objects\serial3.o: Hardware\MySerial.h
-.\objects\serial3.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\serial3.o: .\System\math.h
 .\objects\serial3.o: .\System\MyTIM.h
 .\objects\serial3.o: .\Hardware\MyTest.h
@@ -56,4 +54,5 @@
 .\objects\serial3.o: Hardware\MyPlantGL.h
 .\objects\serial3.o: Hardware\MyAirP.h
 .\objects\serial3.o: Hardware\MyWaterH.h
+.\objects\serial3.o: Hardware\Serial2.h
 .\objects\serial3.o: Hardware\MyAquariumL.h

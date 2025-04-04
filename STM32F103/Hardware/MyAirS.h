@@ -4,7 +4,7 @@
 #include "stm32f10x.h"                  // Device header
 
 #include "MyTest.h"
-#include "MySerial.h"
+
 
 #define PA4SET			GPIO_WriteBit(GPIOA, GPIO_Pin_4, Bit_SET);
 

@@ -36,12 +36,9 @@
 .\objects\mywaterss.o: .\System\MyTIM.h
 .\objects\mywaterss.o: .\Hardware\MyTest.h
 .\objects\mywaterss.o: .\Hardware\OLED.h
-.\objects\mywaterss.o: .\Hardware\MySerial.h
-.\objects\mywaterss.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\mywaterss.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mywaterss.o: .\Hardware\Serial3.h
-.\objects\mywaterss.o: .\System\common_types.h
 .\objects\mywaterss.o: .\Hardware\MyWaterSS.h
 .\objects\mywaterss.o: .\Hardware\MyAirS.h
 .\objects\mywaterss.o: .\Hardware\MyWaterTS.h
+.\objects\mywaterss.o: .\Hardware\Serial3.h
+.\objects\mywaterss.o: .\System\common_types.h
 .\objects\mywaterss.o: .\Hardware\AT.h

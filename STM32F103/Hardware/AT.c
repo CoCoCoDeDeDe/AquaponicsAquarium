@@ -2,15 +2,19 @@
 
 #include "stm32f10x.h"                  // Device header
 
+#include "common_types.h"
+
 #include <string.h>
+
+#include <math.h>
+
+#include <stdio.h>
 
 #include "Array.h"
 
 #include "stdlib.h"
 
 #include "Delay.h"
-
-#include "MySerial.h"
 
 #include "MyFeeder.h"
 #include "MyWaterP.h"
@@ -32,10 +36,25 @@
 #include "MyAquariumL.h"
 
 #include "Serial3.h"
+#include "Serial2.h"
 
 #include "math.h"
 
-#include "common_types.h"
+
+/*定义MQTT配置信息结构体变量*/
+mqtt_cfg_info_t mqtt_cfg_info = {
+	MQTT_CLIENT_ID,
+	MQTT_USERNAME,
+	MQTT_PWD,
+	MQTT_HOSTNAME,
+	MQTT_PORT,
+	MQTT_DEVICE_ID};
+
+/*定义 MQTT 配置信息结构体变量*/
+wifi_cfg_info_t wifi_cfg_info = {
+	WIFI_SSID,
+	WIFI_PWD
+};
 
 /*定义 常规 AT 命令*/
 char ATCMD_QuitTT[] = "+++\r\n";	//退出透传模式
@@ -48,41 +67,45 @@ char ATCMD_CIPMUX0[] = "AT+CIPMUX=0\r\n";	//单连接模式
 char ATCMD_CWJAP_C[10 + WIFI_SSID_LEN + WIFI_PWD_LEN] = "AT+CWJAP=";	//配置 WiFi 连接
 char ATCMD_CWJAP_Q[] = "AT+CWJAP?\r\n";
 
+/*定义 WIFI AT命令字符*/
+#define ATCMD_CWJAP_C_BODY "AT+CWJAP=\"%s\",\"%s\"\r\n"
+char ATCMD_CWJAP_C_main[ATCMD_CWJAP_C_LEN] = ATCMD_CWJAP_C_BODY;
+
+
 /*定义 MQTT AT 命令字符串-USERCFG*/
-char ATCMD_MQTTUSERCFG_main[AT_MQTTUSERCFG_LEN]=	//后接MQTT_USERNAME
-	"AT+MQTTUSERCFG=0,1,\"NULL\",\"";
+#define ATCMD_MQTTUSERCFG_BODY "AT+MQTTUSERCFG=0,1,\"NULL\",\"%s\",\"%s\",0,0,\"\"\r\n"
+char ATCMD_MQTTUSERCFG_main[ATCMD_MQTTUSERCFG_LEN];
 
 /*定义 MQTT AT 命令字符串-CLIENTID*/
-char ATCMD_MQTTCLIENTID_main[AT_MQTTCLIENTID_LEN] =	//后接MQTT_CLIENT_ID
-	"AT+MQTTCLIENTID=0,\"";
+#define ATCMD_MQTTCLIENTID_BODY "AT+MQTTCLIENTID=0,\"%s\"\r\n"
+char ATCMD_MQTTCLIENTID_main[ATCMD_MQTTCLIENTID_LEN];
 
 /*定义 MQTT AT 命令字符串-CONN*/
-char ATCMD_MQTTCONN_main[AT_MQTTCONN_LEN] = 		//后接MQTT_HOSTNAME
-	"AT+MQTTCONN=0,\"";
+#define ATCMD_MQTTCONN_BODY "AT+MQTTCONN=0,\"%s\",%s,1\r\n"
+char ATCMD_MQTTCONN_main[ATCMD_MQTTCONN_LEN];
 
 /*定义 MQTT AT 命令字符串-SUB*/
-char ATCMD_MQTTSUB_main[AT_MQTTSUB_LEN] = 			//后接device_id
-	"AT+MQTTSUB=0,\"";
+#define ATCMD_MQTTSUB_BODY "AT+MQTTSUB=0,\"$oc/devices/%s/sys/commands/#\",0\r\n"
+char ATCMD_MQTTSUB_main[ATCMD_MQTTSUB_LEN];
 
-/*定义 MQTT AT 命令字符串-RPT*/
-char ATCMD_MQTTPUB_RPT_main1[AT_MQTTPUB_RPT_LEN] ;
-char ATCMD_MQTTPUB_RPT_main2[AT_MQTTPUB_RPT_LEN] ;
-char ATCMD_MQTTPUB_RPT_part1and2[AT_MQTTPUB_RPT_LEN] = ATCMD_MQTTPUB_RPT_part1;
-char ATCMD_MQTTPUB_RPT_data1[AT_MQTTPUB_RPT_LEN];			//用于插入数据
-char ATCMD_MQTTPUB_RPT_data2[AT_MQTTPUB_RPT_LEN];			//用于插入数据
+/**定义 MQTT AT 命令字符串-上报信息*/
+#define ATCMD_MQTTPUB_RPT_BODY "AT+MQTTPUB=0,\"$oc/devices/%s/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":%s}]}\",0,1\r\n"
+char ATCMD_MQTTPUB_RPT_body[ATCMD_MQTTPUB_RPT_LEN];
+char ATCMD_MQTTPUB_RPT_main1[ATCMD_MQTTPUB_RPT_LEN];
+char ATCMD_MQTTPUB_RPT_main2[ATCMD_MQTTPUB_RPT_LEN];
+char ATCMD_MQTTPUB_RPT_data1[ATCMD_MQTTPUB_RPT_LEN];
+char ATCMD_MQTTPUB_RPT_data2[ATCMD_MQTTPUB_RPT_LEN];
+#define ATCMD_MQTTPUB_RPT_DATA_BODY1 "{\\\"WSD\\\":%d\\,\\\"WQSVR\\\":%d\\,\\\"SMSVR\\\":%d\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}"
+#define ATCMD_MQTTPUB_RPT_DATA_BODY2 "{\\\"ISVR\\\":%d\\,\\\"ALVR\\\":%d\\,\\\"PGLVR\\\":%d\\,\\\"FRS\\\":%d\\,\\\"AT\\\":%d\\,\\\"AH\\\":%d}"
 
-/*定义 MQTT AT 命令字符串-UpRSP*/
-char ATCMD_MQTTPUB_UPRSP_main[AT_MQTTPUB_UpRSP_LEN];
-char ATCMD_MQTTPUB_UPRSP_part1and2[AT_MQTTPUB_UpRSP_LEN] = ATCMD_MQTTPUB_UPRSP_part1;
-
-///*定义 AT 常见响应 检测字段*/
-//char ATRSP_ERROR[]	= "ERROR";	//ERROR
-//char ATRSP_OK[]		= "OK";		//OK
-//char ATRSP_NECTED[]	= "NECTED";	//WIFI CONNECTED
-//char ATRSP_DISCON[]	= "DISCON";	//WIFI DISCONNECTED
-
-///*定义 下行命令 检测字段*/
-//char ATDownCmd_RECV[] = "RECV";	//+MQTTSUBRECV:0,"{topic}",81,{"data"}
+/*定义 MQTT AT 命令字符串-上行响应*/
+#define ATCMD_MQTTPUB_UPRSP_BODY "AT+MQTTPUB=0,\"$oc/devices/%s/sys/commands/response/request_id=%s\",\"{}\",0,1\r\n"
+/*body存储的字段是在初始化时根据mqtt或者wifi信息配置固定，
+会留下%s等等供后续插入每次可能不同的字段。
+其之后使用时整个复制给main，main在使用中会重复清零和复制，
+每次main要重置都要从body复制来基础的字段*/
+char ATCMD_MQTTPUB_UPRSP_body[ATCMD_MQTTPUB_UPRSP_LEN];
+char ATCMD_MQTTPUB_UPRSP_main[ATCMD_MQTTPUB_UPRSP_LEN];
 
 //【TODO】定义对应enum
 //【WARN】关键词在检测时不考虑关键词的'\0'
@@ -148,59 +171,60 @@ Cmd_t cmd;
 /*定义常用字段*/
 char ATCMD_PART_CRLF[] = "\r\n";
 
-void AT_Init_Str(void)
+void AT_Init_Str(void)//【TODO】改名
 {
-	/*拼接初始化后不会变动的字符串及字符串片段。
-	这些字符串拼接完后就不能再更改，除非是设置变动。*/
-	//拼接AT+MQTTUSERCFG=...
-	MyArray_Char_CopyBToATail(ATCMD_MQTTUSERCFG_main, MQTT_USERNAME, AT_MQTTUSERCFG_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTUSERCFG_main, ATCMD_MQTTUSERCFG_part2, AT_MQTTUSERCFG_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTUSERCFG_main, MQTT_PWD, AT_MQTTUSERCFG_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTUSERCFG_main, ATCMD_MQTTUSERCFG_part3, AT_MQTTUSERCFG_LEN);
-	//拼接AT+MQTTCLIENTID=...
-	MyArray_Char_CopyBToATail(ATCMD_MQTTCLIENTID_main, MQTT_CLIENT_ID, AT_MQTTCLIENTID_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTCLIENTID_main, ATCMD_MQTTCLIENTID_part2, AT_MQTTCLIENTID_LEN);
-	//拼接AT+MQTTCONN=...
-	MyArray_Char_CopyBToATail(ATCMD_MQTTCONN_main, MQTT_HOSTNAME, AT_MQTTCONN_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTCONN_main, ATCMD_MQTTCONN_part2, AT_MQTTCONN_LEN);
-	//拼接AT+MQTTSUB=...
-	MyArray_Char_CopyBToATail(ATCMD_MQTTSUB_main, MQTT_DEVICE_ID, AT_MQTTSUB_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTSUB_main, ATCMD_MQTTSUB_part2, AT_MQTTSUB_LEN);
-	//拼接ATCMD_MQTTPUB_RPT_part1and2，之后作为main的头，后接data1或data2
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_part1and2, MQTT_DEVICE_ID, AT_MQTTPUB_RPT_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_part1and2, ATCMD_MQTTPUB_RPT_part2, AT_MQTTPUB_RPT_LEN);
-	//拼接ATCMD_MQTTPUB_UPRSP_part1and2，之后作为main的头，后接request_id
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_UPRSP_part1and2, MQTT_DEVICE_ID, AT_MQTTPUB_RPT_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_UPRSP_part1and2, ATCMD_MQTTPUB_UPRSP_part2, AT_MQTTPUB_RPT_LEN);
-	
-}
-
-int8_t AT_Test(void)
-{
-	char str_tset1[252] = "";
-	
-	int8_t len;
-	
-	len = snprintf(str_tset1, 
-		sizeof(str_tset1), 
-		"{\\\"WSD\\\":%d\\,\\\"WQSV\\\":%d\\,\\\"SMSV\\\":%d\\,\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}\r\n", 
-		WaterSD,			//水面距离，mm
-		MyADCAndDMA_Result[1],			//水质传感器电压ADC转换值
-		MyADCAndDMA_Result[2],			//土壤湿度传感器电压ADC转换值
-		MyWaterTS_Result_12Bit_H7Bit,				//水温，摄氏度
-		WaterPVR,			//水泵电压相比满载比值
-		AirPRS,			//气泵运行状态
-		WaterHRS);			//水温加热器运行状态
-	
-	if(len < 0 || len > sizeof(str_tset1))
-	{
-		Serial_SendStringV2(USARTPC, "error");
-		return -1;	//格式化字符串后长度错误
-	}
-	
-	Serial_SendStringV2(USARTPC, str_tset1);
-	
-	return 1;//Succeed
+	/*拼接AT+CWJAP="WIFISSID","WIFIWPD"=完整命令。初始化后固定长*/
+	snprintf(
+		ATCMD_CWJAP_C_main,
+		ATCMD_CWJAP_C_LEN,
+		ATCMD_CWJAP_C_BODY,
+		wifi_cfg_info.ssid, 
+		wifi_cfg_info.pwd);
+//	Serial2_SendString(ATCMD_CWJAP_C_main, strlen(ATCMD_CWJAP_C_main));	//【Debug】
+	/*拼接AT+MQTTUSERCFG=完整命令。初始化后固定*/
+	snprintf(
+		ATCMD_MQTTUSERCFG_main,
+		ATCMD_MQTTUSERCFG_LEN,
+		ATCMD_MQTTUSERCFG_BODY,
+		MQTT_USERNAME,
+		MQTT_PWD);
+//	Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));	//【Debug】
+	/*拼接AT+MQTTCLIENTID=完整命令。初始化后固定*/
+	snprintf(
+		ATCMD_MQTTCLIENTID_main,
+		ATCMD_MQTTCLIENTID_LEN,
+		ATCMD_MQTTCLIENTID_BODY,
+		mqtt_cfg_info.client_id);
+//	Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));	//【Debug】
+	/*拼接AT+MQTTCONN=完整命令。初始化后固定*/
+	snprintf(
+		ATCMD_MQTTCONN_main,
+		ATCMD_MQTTCONN_LEN,
+		ATCMD_MQTTCONN_BODY,
+		mqtt_cfg_info.hostname,
+		mqtt_cfg_info.port);
+//	Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));	//【Debug】
+	/*拼接AT+MQTTSUB=订阅下行命令完整命令。初始化后固定*/
+	snprintf(
+		ATCMD_MQTTSUB_main,
+		ATCMD_MQTTSUB_LEN,
+		ATCMD_MQTTSUB_BODY,
+		mqtt_cfg_info.device_id);
+//	Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));	//【Debug】
+	/*拼接AT+MQTTPUB=上报属性不完整命令的头部。初始化后固定*/
+	snprintf(
+		ATCMD_MQTTPUB_RPT_body,
+		ATCMD_MQTTPUB_RPT_LEN,
+		ATCMD_MQTTPUB_RPT_BODY,
+		mqtt_cfg_info.device_id,
+		"%s");
+		/*拼接AT+MQTTPUB=上行响应不完整命令的头部。初始化后固定*/
+		snprintf(
+		ATCMD_MQTTPUB_UPRSP_body,
+		ATCMD_MQTTPUB_UPRSP_LEN,
+		ATCMD_MQTTPUB_UPRSP_BODY,
+		mqtt_cfg_info.device_id,
+		"%s");
 }
 
 int8_t AT_Report_1(
@@ -236,17 +260,11 @@ int8_t AT_Report_1(
 	int16_t len = 0;
 	
 	/*每次发送新report前重置字符串。防止旧字符串的残留信息未被覆盖导致将残留信息发出。*/
-	memset(ATCMD_MQTTPUB_RPT_main1, 0, AT_MQTTPUB_RPT_LEN);
-	
-	/*拼接AT+MQTTPUB=...report...(无data和末尾)。
-	之后data1\2嵌入数据后将data1/2接上*/
-	/*【WARNING】未测试*/
-	memcpy(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_part1and2, strlen(ATCMD_MQTTPUB_RPT_part1and2));
-//	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_part1and2, AT_MQTTPUB_RPT_LEN);
+	memset(ATCMD_MQTTPUB_RPT_main1, 0, ATCMD_MQTTPUB_RPT_LEN);
 	
 	len = snprintf(ATCMD_MQTTPUB_RPT_data1, 
 		sizeof(ATCMD_MQTTPUB_RPT_data1), 
-		"{\\\"WSD\\\":%d\\,\\\"WQSVR\\\":%d\\,\\\"SMSVR\\\":%d\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}", 
+		ATCMD_MQTTPUB_RPT_DATA_BODY1, 
 		wsd,			//水面距离，mm
 		wqsvr,			//水质传感器电压ADC转换值
 		smsvr,			//土壤湿度传感器电压ADC转换值
@@ -260,12 +278,14 @@ int8_t AT_Report_1(
 		return -1;	//snprintf转换后长度有问题
 	}
 	
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_data1, AT_MQTTPUB_RPT_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main1, ATCMD_MQTTPUB_RPT_part3, AT_MQTTPUB_RPT_LEN);
+	snprintf(
+	ATCMD_MQTTPUB_RPT_main1,
+	ATCMD_MQTTPUB_RPT_LEN,
+	ATCMD_MQTTPUB_RPT_body,
+	ATCMD_MQTTPUB_RPT_data1);
 	
+	Serial2_SendString(ATCMD_MQTTPUB_RPT_main1, strlen(ATCMD_MQTTPUB_RPT_main1));//【Debug】
 	Serial3_SendString(ATCMD_MQTTPUB_RPT_main1, strlen(ATCMD_MQTTPUB_RPT_main1));
-	
-	Serial_SendStringV2(USARTPC, ATCMD_MQTTPUB_RPT_main1);
 	
 	return 1;	//成功
 }
@@ -299,15 +319,15 @@ int8_t AT_Report_2(
 	int16_t len = 0;
 	
 	/*每次发送新report前重置字符串。防止旧字符串的残留信息未被覆盖导致将残留信息发出。*/
-	memset(ATCMD_MQTTPUB_RPT_main2, 0, AT_MQTTPUB_RPT_LEN);
+	memset(ATCMD_MQTTPUB_RPT_main2, 0, ATCMD_MQTTPUB_RPT_LEN);
 	
 	/*拼接AT+MQTTPUB=...report...(无data和末尾)。
 	之后data1\2嵌入数据后将data1/2接上part2*/
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main2, ATCMD_MQTTPUB_RPT_part1and2, AT_MQTTPUB_RPT_LEN);
+//	memcpy(ATCMD_MQTTPUB_RPT_main2, ATCMD_MQTTPUB_RPT_body, strlen(ATCMD_MQTTPUB_RPT_body) + 1);		//下面snprint()会复制
 
 	len = snprintf(ATCMD_MQTTPUB_RPT_data2, 
 		sizeof(ATCMD_MQTTPUB_RPT_data2),
-		"{\\\"ISVR\\\":%d\\,\\\"ALVR\\\":%d\\,\\\"PGLVR\\\":%d\\,\\\"FRS\\\":%d\\,\\\"AT\\\":%d\\,\\\"AH\\\":%d}",
+		ATCMD_MQTTPUB_RPT_DATA_BODY2,	//【TODO宏定义化】
 		isvr,			//光照传感器电压ADC转换值
 		alvr,			//鱼缸灯光电压相比满载比值
 		pglvr,		//植物生长等电压相比满载比值
@@ -319,13 +339,15 @@ int8_t AT_Report_2(
 	{
 		return -1;	//snprintf转换后长度出问题
 	}
-
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main2, ATCMD_MQTTPUB_RPT_data2, AT_MQTTPUB_RPT_LEN);
-	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_RPT_main2, ATCMD_MQTTPUB_RPT_part3, AT_MQTTPUB_RPT_LEN);
 	
+	snprintf(
+		ATCMD_MQTTPUB_RPT_main2,
+		ATCMD_MQTTPUB_RPT_LEN,
+		ATCMD_MQTTPUB_RPT_body,
+		ATCMD_MQTTPUB_RPT_data2);
+	
+	Serial2_SendString(ATCMD_MQTTPUB_RPT_main2, strlen(ATCMD_MQTTPUB_RPT_main2));	//【Debug】
 	Serial3_SendString(ATCMD_MQTTPUB_RPT_main2, strlen(ATCMD_MQTTPUB_RPT_main2));
-	
-	Serial_SendStringV2(USARTPC, ATCMD_MQTTPUB_RPT_main2);
 	
 	return 1;	//成功
 }
@@ -470,19 +492,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	return CMD_UNKNOWN;	//命令消息中未找到匹配的参数名
 }
 
-//int8_t AT_UpResponse(char *request_id)
-//{
-//	/*拼接AT+MQTTPUB=...response...(无request_id和末尾)。
-//	之后从AT串口接受的消息中提取request_id后将其接上再接上part1*/
-//	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_UPRSP_main, 
-//		MQTT_DEVICE_ID, 
-//		AT_MQTTPUB_UpRSP_LEN);
-//	MyArray_Char_CopyBToATail(ATCMD_MQTTPUB_UPRSP_main, 
-//		ATCMD_MQTTPUB_UPRSP_part1, 
-//		AT_MQTTPUB_UpRSP_LEN);
-//	
-//	return 1;
-//}
+
 
 
 

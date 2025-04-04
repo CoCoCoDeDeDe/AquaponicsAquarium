@@ -29,9 +29,4 @@
 .\objects\myfeeder.o: .\Library\stm32f10x_usart.h
 .\objects\myfeeder.o: .\Library\stm32f10x_wwdg.h
 .\objects\myfeeder.o: .\Library\misc.h
-.\objects\myfeeder.o: Hardware\MySerial.h
-.\objects\myfeeder.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\myfeeder.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myfeeder.o: Hardware\Serial3.h
-.\objects\myfeeder.o: .\System\common_types.h
 .\objects\myfeeder.o: .\System\Delay.h

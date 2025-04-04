@@ -29,8 +29,3 @@
 .\objects\myadcanddma.o: .\Library\stm32f10x_usart.h
 .\objects\myadcanddma.o: .\Library\stm32f10x_wwdg.h
 .\objects\myadcanddma.o: .\Library\misc.h
-.\objects\myadcanddma.o: Hardware\MySerial.h
-.\objects\myadcanddma.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\myadcanddma.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\myadcanddma.o: Hardware\Serial3.h
-.\objects\myadcanddma.o: .\System\common_types.h

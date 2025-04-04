@@ -31,11 +31,6 @@
 .\objects\mytim.o: .\Library\misc.h
 .\objects\mytim.o: .\Hardware\MyTest.h
 .\objects\mytim.o: .\Hardware\OLED.h
-.\objects\mytim.o: .\Hardware\MySerial.h
-.\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mytim.o: .\Hardware\Serial3.h
-.\objects\mytim.o: .\System\common_types.h
 .\objects\mytim.o: .\Hardware\MyWaterSS.h
 .\objects\mytim.o: .\System\Array.h
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\string.h
@@ -44,4 +39,6 @@
 .\objects\mytim.o: .\System\MyTIM.h
 .\objects\mytim.o: .\Hardware\MyAirS.h
 .\objects\mytim.o: .\Hardware\MyWaterTS.h
+.\objects\mytim.o: .\Hardware\Serial3.h
+.\objects\mytim.o: .\System\common_types.h
 .\objects\mytim.o: .\Hardware\AT.h

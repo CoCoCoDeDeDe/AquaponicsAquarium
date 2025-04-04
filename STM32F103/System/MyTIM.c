@@ -148,7 +148,6 @@ void TIM1_UP_IRQHandler(void) {		//IT per 20ms=	0.02s
 		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
 		
 		//MyTIM_1UpCount ++;
-		
 	}
 }
 
@@ -184,7 +183,6 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		MyTIM3_DIVy(3000000/10000);
 		
 		MyWaterTS_TaskSuccedCheckTimer();
-		
 	}
 }
 
@@ -207,7 +205,6 @@ void MyTIM3_DIVx(uint16_t x) {//TTIM3IT = 0.01s = 10,000us
 	if(DIVxCount >= x) {//每ITx次(1s)执行该if内1次, TIT=TCKCNT/x
 		DIVxCount=0;//使得再经历100个MyTIM3IT才再发送Trig信号
 		
-		
 		MyAirS_SwitchOn();
 	}
 }
@@ -220,21 +217,9 @@ void MyTIM3_DIVy(uint16_t y)
 	if(DIVyCount >= y) {//fRUN=1/5Hz, TRUN=5s
 		DIVyCount  = 0;
 		
-		
 		MyWaterTS_TaskSM_TurnOn();
 		
-		//AT_Test();
-		
-		//AT_Report();
-	
-//		Serial3_SendString(
-//			"AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"WSD\\\":%d\\,\\\"WQSV\\\":%.2f\\,\\\"SMSV\\\":%.2f\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}}]}\",0,1\r\n",
-//			strlen("AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"WSD\\\":%d\\,\\\"WQSV\\\":%.2f\\,\\\"SMSV\\\":%.2f\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}}]}\",0,1\r\n"));
-//		
-//		Serial3_SendString(
-//			"AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"ISV\\\":10\\,\\\"ALVR\\\":9\\,\\\"PGLVR\\\":9\\,\\\"FRS\\\":9\\,\\\"AT\\\":9\\,\\\"AH\\\":9}}]}\",0,1\r\n",
-//			strlen("AT+MQTTPUB=0,\"$oc/devices/AQAQ25032901/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":{\\\"ISV\\\":10\\,\\\"ALVR\\\":9\\,\\\"PGLVR\\\":9\\,\\\"FRS\\\":9\\,\\\"AT\\\":9\\,\\\"AH\\\":9}}]}\",0,1\r\n"));
-		
+		AT_Report();
 	}
 }
 
@@ -244,6 +229,5 @@ void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
 		
 		//MyTIM_4Count++;
 		
-		//EPS8266_SM();//RunTime_Period = 100us
 	}
 }

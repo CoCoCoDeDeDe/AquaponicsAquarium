@@ -716,16 +716,6 @@
               <FilePath>.\Hardware\MyTest.h</FilePath>
             </File>
             <File>
-              <FileName>MySerial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MySerial.c</FilePath>
-            </File>
-            <File>
-              <FileName>MySerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MySerial.h</FilePath>
-            </File>
-            <File>
               <FileName>Serial3.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\Serial3.c</FilePath>

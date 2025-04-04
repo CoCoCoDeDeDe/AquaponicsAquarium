@@ -12,43 +12,58 @@
 #define RX2_BUF_MAX_SIZE 512
 
 /*定义 WiFi AT 宏定义*/
-#define WIFI_SSID_LEN	10
+#define WIFI_SSID_LEN	20
 #define WIFI_SSID		"321"
-#define WIFI_PWD_LEN	10
+#define WIFI_PWD_LEN	20
 #define WIFI_PWD		"111000111"
+#define ATCMD_CWJAP_C_LEN 20+WIFI_SSID_LEN+WIFI_PWD_LEN
+
+/*定义 WIFI 配置信息结构体
+可放入IP【可更新】*/
+typedef struct
+{
+	char		ssid[WIFI_SSID_LEN];
+	char		pwd[WIFI_PWD_LEN];
+} wifi_cfg_info_t;
 
 /*定义 MQTT AT 宏定义*/
+#define MQTT_CLIENT_ID_SIZE	64
 #define MQTT_CLIENT_ID	"AQAQ25032901_0_0_2025032907"
+#define MQTT_USERNAME_SIZE	64
 #define MQTT_USERNAME	"AQAQ25032901"
+#define MQTT_PWD_SIZE	124
 #define MQTT_PWD		"5eecee18613e8930c19fb93469c89b153fd48a3bb2fb606e1ce6b27fd35af531"
+#define MQTT_HOSTNAME_SIZE	124
 #define MQTT_HOSTNAME	"ad0ce5c71f.st1.iotda-device.cn-north-4.myhuaweicloud.com"
+#define MQTT_PORT_SIZE	16
 #define MQTT_PORT		"1883"
+#define MQTT_DEVICE_ID_SIZE	64
 #define MQTT_DEVICE_ID	"AQAQ25032901"
-#define AT_MQTTUSERCFG_LEN		127
-#define AT_MQTTCLIENTID_LEN		127
-#define AT_MQTTCONN_LEN			127
-#define AT_MQTTSUB_LEN			127
-#define AT_MQTTPUB_RPT_LEN		255
-#define AT_MQTTPUB_UpRSP_LEN	127
+
+/*定义MQTT配置信息结构体*/
+typedef struct
+{
+    // MQTT客户端ID，用于唯一标识客户端
+    char client_id[MQTT_CLIENT_ID_SIZE];
+    // MQTT用户名，用于身份验证
+    char username[MQTT_USERNAME_SIZE];
+    // MQTT密码，用于身份验证
+    char pwd[MQTT_PWD_SIZE];
+    // MQTT服务器主机名
+    char hostname[MQTT_HOSTNAME_SIZE];
+    // MQTT服务器端口号
+    char port[MQTT_PORT_SIZE];
+    // 设备ID，用于标识连接的设备
+    char device_id[MQTT_DEVICE_ID_SIZE];
+} mqtt_cfg_info_t;
 
 /*定义命令字符串的define*/
-#define ATCMD_MQTTUSERCFG_part2 "\",\""				//后接MQTT_PWS
-#define ATCMD_MQTTUSERCFG_part3	"\",0,0,\"\"\r\n"	//末尾
-
-#define ATCMD_MQTTCLIENTID_part2 "\"\r\n"			//末尾
-
-#define ATCMD_MQTTCONN_part2 "\",1883,1\r\n"		//末尾
-
-#define ATCMD_MQTTSUB_part2 "\",0\r\n"				//末尾
-
-#define ATCMD_MQTTPUB_RPT_part1 "AT+MQTTPUB=0,\"$oc/devices/"//后接device_id
-#define ATCMD_MQTTPUB_RPT_part2 "/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":"//后接data1或data2
-#define ATCMD_MQTTPUB_RPT_part3 "}]}\",0,1\r\n"		//末尾
-
-#define ATCMD_MQTTPUB_UPRSP_part1 "AT+MQTTPUB=0,\"$oc/devices/"	//后接device_id
-#define ATCMD_MQTTPUB_UPRSP_part2 "/sys/commands/response/request_id="	//后接request_id
-#define ATCMD_MQTTPUB_UPRSP_part3 "\",\"{}\",0,1\r\n"//末尾
-
+#define ATCMD_MQTTUSERCFG_LEN		127
+#define ATCMD_MQTTCLIENTID_LEN		127
+#define ATCMD_MQTTCONN_LEN			127
+#define ATCMD_MQTTSUB_LEN			127
+#define ATCMD_MQTTPUB_RPT_LEN		255
+#define ATCMD_MQTTPUB_UPRSP_LEN	127
 
 /*SerialTx消息结构体*/
 typedef struct

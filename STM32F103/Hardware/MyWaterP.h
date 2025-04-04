@@ -3,7 +3,7 @@
 
 #include "stm32f10x.h"                  // Device header
 
-#include "MySerial.h"
+
 
 #define GPIO_MyWaterP		GPIOA
 #define GPIO_Pin_MyWaterP	GPIO_Pin_9

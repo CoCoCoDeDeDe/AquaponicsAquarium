@@ -29,8 +29,3 @@
 .\objects\mywaterqs.o: .\Library\stm32f10x_usart.h
 .\objects\mywaterqs.o: .\Library\stm32f10x_wwdg.h
 .\objects\mywaterqs.o: .\Library\misc.h
-.\objects\mywaterqs.o: Hardware\MySerial.h
-.\objects\mywaterqs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\mywaterqs.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mywaterqs.o: Hardware\Serial3.h
-.\objects\mywaterqs.o: .\System\common_types.h
