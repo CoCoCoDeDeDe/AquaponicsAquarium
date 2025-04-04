@@ -4,6 +4,20 @@
 #include "stm32f10x.h"                  // Device header
 #include <stdio.h>
 #include <stdlib.h>
+#include "common_types.h"
+
+/*TEST*/
+extern uint32_t	tstnum1;
+extern uint32_t	tstnum2;
+extern uint32_t	tstnum3;
+extern uint32_t	tstnum4;
+extern uint32_t	tstnum5;
+extern uint32_t	tstnum6;
+
+
+/*RX2接受消息结构体变量*/
+extern rx_msg_t rx2_msg;
+
 
 void Serial2_Init_All(void);
 void Serial2_SendByte(char byte);

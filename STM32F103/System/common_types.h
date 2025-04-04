@@ -8,8 +8,8 @@
 #define RX3_BUF_MAX_SIZE 512
 
 /*定义Serial2的Tx和Rx的宏定义*/
-#define TX3_BUF_MAX_SIZE 512
-#define RX3_BUF_MAX_SIZE 512
+#define TX2_MSG_LEN_MAX 1024
+#define RX2_BUF_MAX_SIZE 512
 
 /*定义 WiFi AT 宏定义*/
 #define WIFI_SSID_LEN	10
@@ -57,6 +57,14 @@ typedef struct
 	char			*msg;
 	uint32_t	len;
 } tx_msg_t;
+
+/*SerialRx消息结构体*/
+typedef struct
+{
+	char			str[RX2_BUF_MAX_SIZE];		//【WARN】写入前清零
+	uint32_t	len;
+	int8_t		rc;
+} rx_msg_t;
 
 
 /*消息类型枚举*/

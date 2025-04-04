@@ -42,11 +42,12 @@ Things TO DO
 	DONE		测试下行命令的执行
 	DONE		上行响应的拼接、上行响应的及时发送
 	DONE		测试属性上报、命令处理
-	DOING		改Serial2为USART-DMA
-	DOING		修缮Serial2的Tx
+	DONE		修缮Serial2的Tx。问题发现：TX_DMA初始化时NVIC中断通道用参数配置成了失能，后期也没有开启。
+	DONE		改Serial2为USART-DMA
 	TODO		测试所有会涉及的发送信息的发送
 	TODO		测试STM32-ESP8266沟通逻辑
 	DOING		配置MQTT-MCU-ServerV2
+	TODO		addtoTail可以改为snprintf(%s)
 	TODO		组装原型机
 	TODO		设计Feeder并完善代码.
 	TODO		配置AT24C02

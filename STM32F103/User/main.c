@@ -156,14 +156,38 @@ int main(void)
 //	Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));
 	
 	
+	Serial2_SendString("Serial2_On\r\n", strlen("Serial2_On\r\n"));
+	
 	while(1)
 	{
-		Serial2_SendString("Serial2_SendString\r\n", strlen("Serial2_SendString\r\n"));
+		if(rx2_msg.rc == 1)
+		{
+			Serial2_SendString(rx2_msg.str, rx2_msg.len);
+			
+			rx2_msg.rc = 0;
+		}
+		
+		tstnum1++;
+		
+		//Serial2_SendString("Serial2_SendString\r\n", strlen("Serial2_SendString\r\n"));
+		
+		OLED_ShowNum(1, 1, tstnum1, 4);
+		OLED_ShowNum(2, 1, tstnum2, 4);
+		OLED_ShowNum(3, 1, tstnum3, 4);
+		OLED_ShowNum(4, 1, tstnum4, 4);
+		OLED_ShowNum(1, 9, tstnum5, 4);
+		OLED_ShowNum(2, 9, tstnum6, 4);
+		
+		tstnum1++;
+		
 		Delay_ms(100);
+		
 	}
 	
 	while(1)
 	{
+			
+		
 	//Serial2_SendString("Serial2_SendString\r\n", strlen("Serial2_SendString\r\n"));
 //		if(rx3_idle_flag == 1)
 //		{
@@ -179,20 +203,20 @@ int main(void)
 //			rx3_idle_flag = 0;
 //		}
 		
-		if(Serial_RxFlag[2] == 1)
-		{
-			Serial3_SendString(Serial_Rx2StringPacket, strlen(Serial_Rx2StringPacket));
-			
-			Serial_RxFlag[2] = 0;
-		}
-		
-//		WaterPVR		
-		OLED_ShowNum(1, 1, WaterPVR, 4);
-		OLED_ShowNum(2, 1, AirPRS, 4);
-		OLED_ShowNum(3, 1, WaterHRS, 4);
-		OLED_ShowNum(4, 1, AquariumLVR, 4);
-		OLED_ShowNum(1, 9, PlantGLVR, 4);
-		OLED_ShowNum(2, 9, FeederRS, 4);
+//		if(Serial_RxFlag[2] == 1)
+//		{
+//			Serial3_SendString(Serial_Rx2StringPacket, strlen(Serial_Rx2StringPacket));
+//			
+//			Serial_RxFlag[2] = 0;
+//		}
+
+
+//		OLED_ShowNum(1, 1, WaterPVR, 4);
+//		OLED_ShowNum(2, 1, AirPRS, 4);
+//		OLED_ShowNum(3, 1, WaterHRS, 4);
+//		OLED_ShowNum(4, 1, AquariumLVR, 4);
+//		OLED_ShowNum(1, 9, PlantGLVR, 4);
+//		OLED_ShowNum(2, 9, FeederRS, 4);
 		
 		
 //		AT_Test();

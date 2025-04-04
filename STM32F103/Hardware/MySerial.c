@@ -174,22 +174,22 @@ void Serial_Auto_StateMachine(
 		}
 }
 
-void USART2_IRQHandler() {
-	
-	//Serial_SendByte(USART2, 'h');//【Debug】
-	
-	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
-		
-		//Serial_SendByte(USART2, 'H');//【Debug】
-		
-		//USART_ClearITPendingBit(USART2, USART_IT_RXNE);//自动清标志位
-		
-		uint16_t size = sizeof(Serial_Rx2StringPacket)/sizeof(Serial_Rx2StringPacket[0]);
-		
-		//进入状态机程序
-		Serial_Auto_StateMachine(USART2, 2, &StateMachine_s2, &StateMachine_count2, Serial_Rx2StringPacket, size);
-	}
-}
+//void USART2_IRQHandler() {
+//	
+//	//Serial_SendByte(USART2, 'h');//【Debug】
+//	
+//	if(USART_GetITStatus(USART2,USART_IT_RXNE) == SET) {	//错点：将GetITStatus错写为GetFlagStatus
+//		
+//		//Serial_SendByte(USART2, 'H');//【Debug】
+//		
+//		//USART_ClearITPendingBit(USART2, USART_IT_RXNE);//自动清标志位
+//		
+//		uint16_t size = sizeof(Serial_Rx2StringPacket)/sizeof(Serial_Rx2StringPacket[0]);
+//		
+//		//进入状态机程序
+//		Serial_Auto_StateMachine(USART2, 2, &StateMachine_s2, &StateMachine_count2, Serial_Rx2StringPacket, size);
+//	}
+//}
 
 //void USART3_IRQHandler() {
 //	
