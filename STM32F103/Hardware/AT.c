@@ -42,19 +42,35 @@
 
 
 /*定义MQTT配置信息结构体变量*/
-mqtt_cfg_info_t mqtt_cfg_info = {
+mqtt_t mqtt = {
 	MQTT_CLIENT_ID,
 	MQTT_USERNAME,
 	MQTT_PWD,
 	MQTT_HOSTNAME,
 	MQTT_PORT,
-	MQTT_DEVICE_ID};
+	MQTT_DEVICE_ID,
+	DISCONNECT		//MQTT服务默认未连接
+};
 
 /*定义 MQTT 配置信息结构体变量*/
-wifi_cfg_info_t wifi_cfg_info = {
+wifi_t wifi = {
 	WIFI_SSID,
-	WIFI_PWD
+	WIFI_PWD,
+	DISCONNECT				//未连接
 };
+
+/** 
+  * @brief  创建并初始化存储AT_SM()信息的结构体
+  */
+at_sm_status_t at_sm_status = 
+{
+	AT_SM_S_Default,
+	0,			//计数器清零
+	100,		//目前是TIM4中断周期
+	DIDNOT		//默认刚进入第一个要发送消息的状态下时还没有发送特定消息
+};
+
+onOrOff_t_e AT_Report_Ctrl = OFF;
 
 /*定义 常规 AT 命令*/
 char ATCMD_QuitTT[] = "+++\r\n";	//退出透传模式
@@ -171,15 +187,26 @@ Cmd_t cmd;
 /*定义常用字段*/
 char ATCMD_PART_CRLF[] = "\r\n";
 
-void AT_Init_Str(void)//【TODO】改名
+/**
+* @name	将AT命令要用到的固定字符串或者字符串的固定字段拼接起来。
+* @brief	由于AT命令字符串的部分参数可能在未来进行修改，
+*  所以采用将可能要修改的字段与一定不会修改的字段进行分离，
+*  并在初始化时按情况进行拼接。
+*  整个字符串运行后都不会变动的拼接后存到main字符串中，
+*  运行后会需要更改数据或字段的字符的固定部分拼接后存到body字符串中，
+*  在要使用时复制给main字符串并嵌入数据或字段
+* @param	没有参数，直接调用全局变量并将数据存储到全局变量中。
+* @retval	无返回，非复杂程序，主要是简单步骤的多次重复。
+*/
+void AT_Init_Str(void)
 {
 	/*拼接AT+CWJAP="WIFISSID","WIFIWPD"=完整命令。初始化后固定长*/
 	snprintf(
 		ATCMD_CWJAP_C_main,
 		ATCMD_CWJAP_C_LEN,
 		ATCMD_CWJAP_C_BODY,
-		wifi_cfg_info.ssid, 
-		wifi_cfg_info.pwd);
+		wifi.ssid, 
+		wifi.pwd);
 //	Serial2_SendString(ATCMD_CWJAP_C_main, strlen(ATCMD_CWJAP_C_main));	//【Debug】
 	/*拼接AT+MQTTUSERCFG=完整命令。初始化后固定*/
 	snprintf(
@@ -194,39 +221,54 @@ void AT_Init_Str(void)//【TODO】改名
 		ATCMD_MQTTCLIENTID_main,
 		ATCMD_MQTTCLIENTID_LEN,
 		ATCMD_MQTTCLIENTID_BODY,
-		mqtt_cfg_info.client_id);
+		mqtt.client_id);
 //	Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));	//【Debug】
 	/*拼接AT+MQTTCONN=完整命令。初始化后固定*/
 	snprintf(
 		ATCMD_MQTTCONN_main,
 		ATCMD_MQTTCONN_LEN,
 		ATCMD_MQTTCONN_BODY,
-		mqtt_cfg_info.hostname,
-		mqtt_cfg_info.port);
+		mqtt.hostname,
+		mqtt.port);
 //	Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));	//【Debug】
 	/*拼接AT+MQTTSUB=订阅下行命令完整命令。初始化后固定*/
 	snprintf(
 		ATCMD_MQTTSUB_main,
 		ATCMD_MQTTSUB_LEN,
 		ATCMD_MQTTSUB_BODY,
-		mqtt_cfg_info.device_id);
+		mqtt.device_id);
 //	Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));	//【Debug】
 	/*拼接AT+MQTTPUB=上报属性不完整命令的头部。初始化后固定*/
 	snprintf(
 		ATCMD_MQTTPUB_RPT_body,
 		ATCMD_MQTTPUB_RPT_LEN,
 		ATCMD_MQTTPUB_RPT_BODY,
-		mqtt_cfg_info.device_id,
+		mqtt.device_id,
 		"%s");
 		/*拼接AT+MQTTPUB=上行响应不完整命令的头部。初始化后固定*/
 		snprintf(
 		ATCMD_MQTTPUB_UPRSP_body,
 		ATCMD_MQTTPUB_UPRSP_LEN,
 		ATCMD_MQTTPUB_UPRSP_BODY,
-		mqtt_cfg_info.device_id,
+		mqtt.device_id,
 		"%s");
-}
+}	// END OF AT_Init_Str()
 
+/**
+* @name	从Serial3发送第1号属性上报消息。
+* @brief	传入第1号属性上报消息所需的各种属性数据，先判断传入参数的合法性，
+*  然后将属性上报的用于嵌入数据的字段的固定字符串复制到用于嵌入数据的字符串中，
+*  并通过snprintf()函数嵌入数据，最后从Serial3发送。【可优化，将2个snprintf合并并优化掉data字符串】
+* @param	HC-SR04测量的水面距离传感器的距离，单位是mm。
+* @param	水质传感器模拟输出口的电压经过ADC转换后的数值。
+* @param	土壤湿度传感器模拟输出口的电压经过ADC转换后的数值。
+* @param	DS18B20温度传感器测量的水温数据的整数部分，范围以及单位是-55~125摄氏度。
+*  【待测试：零下温度的测量能力】
+* @param	水泵的PWM供电的功率百分比的分子。
+* @param	气泵的运行状态。
+* @param	水加热器的运行状态。
+* @retval	运行结果所对应的整数数字。
+*/
 int8_t AT_Report_1(
 	int16_t wsd, 
 	int16_t wqsvr, 
@@ -288,8 +330,21 @@ int8_t AT_Report_1(
 	Serial3_SendString(ATCMD_MQTTPUB_RPT_main1, strlen(ATCMD_MQTTPUB_RPT_main1));
 	
 	return 1;	//成功
-}
+}	// END OF AT_Report_1()
 
+/**
+* @name	从Serial3发送第2号属性上报消息。
+* @brief	传入第2号属性上报消息所需的各种属性数据，先判断传入参数的合法性，
+*  然后将属性上报的用于嵌入数据的字段的固定字符串复制到用于嵌入数据的字符串中，
+*  并通过snprintf()函数嵌入数据，最后从Serial3发送。【可优化，将2个snprintf合并并优化掉data字符串】
+* @param	光照强度传感器模拟输出口的电压经过ADC转换后的数值。
+* @param	鱼缸灯光的PWM供电的功率百分比的分子。
+* @param	植物生长等的PWM供电的功率百分比的分子。
+* @param	喂食器运行状态对应的整数数字。
+* @param	DHT11温湿度传感器测量的空气温度数值，范围0~55摄氏度。
+* @param	DHT11温湿度传感器测量的空气温度数值，范围0~100相对湿度。
+* @retval	运行结果所对应的整数数字。
+*/
 int8_t AT_Report_2(
 	int16_t isvr, 
 	int16_t alvr, 
@@ -350,10 +405,21 @@ int8_t AT_Report_2(
 	Serial3_SendString(ATCMD_MQTTPUB_RPT_main2, strlen(ATCMD_MQTTPUB_RPT_main2));
 	
 	return 1;	//成功
-}
+}	// END OF AT_Report_2()
 
+/**
+  * @name  循环调用AT_Report_1和2函数
+  * @brief  循环调用AT_Report_1()和AT_Report_2()，将大量参数传入两个函数，
+  * 由于ESP8266接受AT消息限制长度，所以要将属性上报消息分两个上传，
+  * 为了频繁接受还要让两个消息发送有一定时间间隔，
+  * 因此本项目采用每隔固定时间轮流发送两个消息的方式。
+  * 会根据运行结果返回响应整数数字。
+  * @retval  表示运行结果的整数。
+  */
 int8_t AT_Report(void)
 {
+	if(AT_Report_Ctrl == 1)
+	{
 	static int8_t selecter = 0;
 	
 	switch(selecter)
@@ -381,9 +447,19 @@ int8_t AT_Report(void)
 			break;
 	}
 	return 1;//成功
-}
+	}
+	return -1;//未允许发送
+}	// END OF AT_Report()
 
-
+/**
+  * @name  判断AT消息的类型并返回类型。
+  * @brief  将传入的AT消息字符串首地址和传入的消息类型对比关键词结构体数组中的关键词进行一一对比，判断出
+  * 传入的AT消息的类型并返回AT消息类型枚举值。
+  * @param  要判断类型的AT消息字符串的首地址的指针。
+  * @param  AT消息字符的长度，不包括'\0'。
+  * @param  存储用于对比和匹配的消息类型结构体变量的数组的首地址指针。
+  * @retval  匹配到的AT消息类型，或者表示识别失败的类型。
+  */
 Msg_t_e AT_ParseMessage(const char *msg, uint16_t msg_len, const Msg_KeyWord_t *_msg_keywords)
 {
 	for(uint8_t i = 0; i < Msg_KeyWord_t_count; i++)//按优先级顺序分析
@@ -396,8 +472,18 @@ Msg_t_e AT_ParseMessage(const char *msg, uint16_t msg_len, const Msg_KeyWord_t *
 		}
 	}
 	return MSG_NONE;		//如果匹配到msg的类型则在上面for中就已经return，运行到这里说明没有匹配到msg的类型
-}
+}	// END OF AT_ParseMessage()
 
+/**
+  * @name  提取下行命令AT消息中的关键信息并存储和返回。
+  * @brief  将转入的消息与传入的命令关键词数组中的关键词进行逐一寻找，当在传入的消息中找到了对应的关键次则返回
+  * 存储在关键词数组中的关键词结构体中的命令类型枚举值。提取并存储消息中的request_id、type、para_value。
+  * @param  指向消息字符首地址的指针。
+  * @param  消息的字符长度，不包括'\0'。
+  * @param  关键词结构体数组的首地址指针
+  * @param  命令结构体指针，用于存储从消息中提取出来的request_id字符串、type枚举值、para_value字符串
+  * @retval  命令类型枚举值
+  */
 /*note:通过AT_ParseMessage确定消息是下行命令后，需要从消息中获取request_id并保存
 直到命令执行完并拼接到上行响应中发送回去。
 然后从消息的request_id后面开始识别命令的类型即命令参数名，
@@ -490,11 +576,283 @@ Cmd_t_e AT_ParseCmdMsg(
 	/*到此，_cmd的request_id、type、para_value已经获得*/
 	
 	return CMD_UNKNOWN;	//命令消息中未找到匹配的参数名
-}
+}	//	END OF AT_ParseCmdMsg()
 
-
-
-
+//【TODO】属性上报默认关闭，MQTT连接且wifi连接的情况下再开启
+//【TODO】MQTT重连机制，MQTT连接标志，WIFI连接标志
+//【TODO】WIFI重连机制，MQTT连接标志，WIFI连接标志
+/*note:自动恢复配置机制：在任何情况下，
+如果WIFI连接标志为0，就去连接WIFI，
+如果MQTT连接标志为0，就去连接MQTT*/
+/**
+* @name	负责处理STM32与ESP8266之间AT命令沟通的状态机函数
+* @brief		
+*  
+*  
+* @param	
+* @param	
+* @param	
+* @param	
+* @retval		
+*/
+void AT_SM(at_sm_status_t *_status, wifi_t *_wifi, rx3_msg_t *_rx3_msg)
+{
+	_status->runtimes++;
+	switch(_status->state)
+	{
+		case AT_SM_S_Default:		//替代了PowerOn状态
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)//是否等待消息超时
+			{
+				_status->state = AT_SM_S_ATE0;		//去关闭ESP8266消息回显
+					_status->isMsgSended = SENDED;	//记录未发送
+			} else {
+				switch(_rx3_msg->type)
+				{
+					/*未接到消息，消息type还是初始化时状态*/
+					case MSG_Default:
+						return;
+					/*接到默认上电消息，再接再探，如果超时没有WiFi连接消息就认为没有WiFi配置*/
+					case MSG_POWERON:
+						_status->runtimes = 0;
+						_rx3_msg->type = MSG_Default;		//防止再入MSG_POWER导致runtimes频繁清零无法触发超时
+						_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
+						break;
+					/*接到WiFi连接消息，但之后还可能会有GOT IP消息，
+					如果有就等到GOTIP再去关消息回显（或者在消息回显状态接到GOTIP时忽略），
+					如果没有就等超时后转去关消息回显再靠wifi连接标志位转去配置MQTT*/
+					case MSG_WIFI_CONN:
+						_wifi->isConnect = CONNECT;	//	连上wifi
+						_rx3_msg->type = MSG_Default;	//等待可能收到的GOT IP
+						break;
+					/*接到WIFI连接消息，转去关闭消息回显*/
+					case MSG_WIFI_GOTIP:
+						_wifi->isConnect = CONNECT;//保证wifi连接标志置1，防止未收到WIFI CON
+						_status->state = AT_SM_S_ATE0;	//去关消息回显，并通过wifi连接标志位转去配置MQTT
+						_status->isMsgSended = SENDED;	//记录未发送
+						_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
+						break;
+					/*存储的消息type不是预定的此时会出现的消息，认为发送错误*/
+					default:
+						//ERROR
+					Serial2_SendString("switch(_rx3_msg->type):default", strlen("switch(_rx3_msg->type):default"));
+						break;
+				}
+			}
+			break;
+		/*主动发出*/
+		case AT_SM_S_ATE0:
+			if(_status->isMsgSended == DIDNOT)//ATE0是否已经发送
+			{//如果ATE0没有发送
+				Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));	//发送ATE0
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->isMsgSended = SENDED;	//记录已经发送
+				_status->runtimes = 0;//计时发送后过了多久
+				return;	//退出，再进就是要等回应
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)//是否超时
+			{//如果超时，重发ATE0，重新等待
+				Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));	//发送ATE0
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;//计时发送后过了多久
+				return;//退出，再进还是要等待回应
+			}
+			switch(_rx3_msg->type)
+			{
+				case MSG_Default://只要进了wtich(msgtype)，都要_rx3_msg->type = MSG_Default;
+					return;
+				case MSG_OK:
+					//收到消息OK，认为是ATE0OK了，根据WIFI连接状态判断接下来是配置WiFi还是MQTT
+					//要转到下一个状态了，下个状态咨询信息发送状态时要回答没有发送该发送的消息
+					_status->isMsgSended = DIDNOT;
+					if(_wifi->isConnect == CONNECT)
+					{//如果连接了WiFi，去配置MQTT
+						_status->state = AT_SM_S_MQTTUSERCFG;		//去配置MQTT
+					} else {//如果没有连接WiFi，去配置WiFi
+						_status->state = AT_SM_S_ATCWMODE_1;
+					}
+					_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
+					return;
+				
+				case MSG_ERROR:
+					//收到ERROR，认为ATE0失败，重发ATE0
+				default:
+					//存储的不是预想的可能收到的消息类型，发生错误，重发ATE0
+					Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));	//发送ATE0
+					_status->runtimes = 0;//计时发送后过了多久
+					_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
+					return;
+			}
+//			break;	//	Unreachable
+		case AT_SM_S_ATCWMODE_1:
+			
+			break;
+		case AT_SM_S_CWQAP_1:
+			
+			break;
+		case AT_SM_S_CIPMUX_0:
+			
+			break;
+		case AT_SM_S_CWJAP_1:
+			
+			break;
+		case AT_SM_S_MQTTUSERCFG:
+			if(_status->isMsgSended == DIDNOT)
+			{//MQTTUSERCFG没有发送
+				Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
+			{//等待接收超时，重发，重等
+				Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			switch(_rx3_msg->type)
+			{
+				case MSG_Default:
+					return;
+				case MSG_OK:
+					//收到OK，认为USERCFG配置成功
+					_status->state = AT_SM_S_MQTTCLIENTID;
+					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
+					_rx3_msg->type = MSG_Default;
+					break;
+				//存储的不是预想的消息类型，重发重等
+				default:
+					Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
+					_status->isMsgSended = SENDED;
+					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+					_status->runtimes = 0;
+					return;
+			}
+			break;
+		case AT_SM_S_MQTTCLIENTID:
+			if(_status->isMsgSended == DIDNOT)
+			{//MQTTUSERCFG没有发送
+				Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
+			{//等待接收超时，重发，重等
+				Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			switch(_rx3_msg->type)
+			{
+				case MSG_Default:
+					return;
+				case MSG_OK:
+					//收到OK，认为USERCFG配置成功
+					_status->state = AT_SM_S_MQTTCONN;
+					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
+					_rx3_msg->type = MSG_Default;
+					break;
+				//存储的不是预想的消息类型，重发重等
+				default:
+					Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
+					_status->isMsgSended = SENDED;
+					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+					_status->runtimes = 0;
+					return;
+			}
+			break;
+		case AT_SM_S_MQTTCONN:
+			if(_status->isMsgSended == DIDNOT)
+			{//MQTTUSERCFG没有发送
+				Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
+			{//等待接收超时，重发，重等
+				Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			switch(_rx3_msg->type)
+			{
+				case MSG_Default:
+					return;
+				case MSG_OK:
+					//收到OK，认为USERCFG配置成功
+					_status->state = AT_SM_S_MQTTSUB;
+					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
+					_rx3_msg->type = MSG_Default;
+					break;
+				//存储的不是预想的消息类型，重发重等
+				default:
+					Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
+					_status->isMsgSended = SENDED;
+					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+					_status->runtimes = 0;
+					return;
+			}
+			break;
+		case AT_SM_S_MQTTSUB:
+			if(_status->isMsgSended == DIDNOT)
+			{//MQTTUSERCFG没有发送
+				Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
+			{//等待接收超时，重发，重等
+				Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
+				_status->isMsgSended = SENDED;
+				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+				_status->runtimes = 0;
+				return;
+			}
+			switch(_rx3_msg->type)
+			{
+				case MSG_Default:
+					return;
+				case MSG_OK:
+					//收到OK，认为USERCFG配置成功
+					_status->state = AT_SM_S_Report;
+					/*进AT_SM_S_Report前的配置*/
+					AT_Report_Ctrl = ON;
+					
+					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
+					_rx3_msg->type = MSG_Default;
+					break;
+				//存储的不是预想的消息类型，重发重等
+				default:
+					Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
+					_status->isMsgSended = SENDED;
+					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
+					_status->runtimes = 0;
+					return;
+			}
+			break;
+		case AT_SM_S_Report:
+			
+			break;
+		case AT_SM_S_CWJAP_Q:
+			
+			break;
+		default:
+			Serial2_SendString("AT_SM state error\r\n",strlen("AT_SM state error\r\n"));	//【Debug】
+			break;
+	}	//	END OF switch()
+}	//	END OF AT_SM()
 
 
 

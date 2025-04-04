@@ -1,4 +1,7 @@
 #include "MyTIM.h"                  // Device header
+#include "Serial2.h"
+#include "Serial3.h"
+#include "AT.h"
 
 uint32_t MyTIM_1UpCount = 0;
 uint32_t MyTIM_2Count = 0;
@@ -105,7 +108,7 @@ void MyTIM3_Init(
 
 void MyTIM4_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 
-	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=【1000】Hz,TCNT=【0.001】s=【1000】us
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=【10000】Hz,TCNT=【0.0001】s=【100】us
 	
 	TIM_InternalClockConfig(TIM4);
 	
@@ -229,5 +232,6 @@ void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
 		
 		//MyTIM_4Count++;
 		
+		AT_SM(&at_sm_status, &wifi, &rx3_msg);
 	}
 }

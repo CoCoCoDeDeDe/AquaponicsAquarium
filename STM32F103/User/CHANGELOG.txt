@@ -52,8 +52,10 @@ Things TO DO
 	DONE		修复与云平台的通行无效的问题
 	DONE		修复給云平台发送上行响应ESP返回ERROR的问题。问题解决：1.UPRSP字段初始化拼接时错拼成RPT字段；2.UPRSPbody字段末尾没有换行。
 	DONE		测试所有与云平台的MQTT通信
+	DONE		注释了AT.c内的所有函数
+	DONE			测试使用rx3_msg后Serial3功能
 	DOING		删除所有用Serial3输出调试信息的代码
-	TODO		测试STM32-ESP8266沟通逻辑
+	DOING		测试STM32-ESP8266沟通逻辑
 	DOING		配置MQTT-MCU-ServerV2
 	TODO		组装原型机
 	TODO		设计Feeder并完善代码.

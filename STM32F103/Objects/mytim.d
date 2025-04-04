@@ -42,3 +42,6 @@
 .\objects\mytim.o: .\Hardware\Serial3.h
 .\objects\mytim.o: .\System\common_types.h
 .\objects\mytim.o: .\Hardware\AT.h
+.\objects\mytim.o: .\Hardware\Serial2.h
+.\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h

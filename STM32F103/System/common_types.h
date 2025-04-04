@@ -18,13 +18,20 @@
 #define WIFI_PWD		"111000111"
 #define ATCMD_CWJAP_C_LEN 20+WIFI_SSID_LEN+WIFI_PWD_LEN
 
+typedef enum
+{
+	CONNECT,
+	DISCONNECT
+}	connectStatus_t_e;
+
 /*定义 WIFI 配置信息结构体
 可放入IP【可更新】*/
 typedef struct
 {
 	char		ssid[WIFI_SSID_LEN];
 	char		pwd[WIFI_PWD_LEN];
-} wifi_cfg_info_t;
+	connectStatus_t_e		isConnect;
+} wifi_t;
 
 /*定义 MQTT AT 宏定义*/
 #define MQTT_CLIENT_ID_SIZE	64
@@ -55,7 +62,9 @@ typedef struct
     char port[MQTT_PORT_SIZE];
     // 设备ID，用于标识连接的设备
     char device_id[MQTT_DEVICE_ID_SIZE];
-} mqtt_cfg_info_t;
+	//MQTT服务连接标志位
+	connectStatus_t_e	isMqttConnect;
+} mqtt_t;
 
 /*定义命令字符串的define*/
 #define ATCMD_MQTTUSERCFG_LEN		127
@@ -81,10 +90,12 @@ typedef struct
 	int8_t		rc;
 } rx_msg_t;
 
-
-/*消息类型枚举*/
+/** 
+  * @brief  消息类型枚举
+  */
 typedef enum
 {
+	MSG_Default,
 	MSG_NONE,
 	MSG_POWERON,
 	MSG_OK,
@@ -98,6 +109,19 @@ typedef enum
 	MSG_DOWNCMD
 } Msg_t_e;
 
+/** 
+  * @brief  Serial3消息结构体
+  */
+typedef struct
+{
+	int8_t			rc_1;		//代表是否有接受完可供使用的字符串
+	char			buf[RX3_BUF_MAX_SIZE];
+	Msg_t_e		type;
+}	rx3_msg_t;
+
+/** 
+  * @brief  消息识别关键词枚举类型
+  */
 typedef enum
 {
 	CMD_UNKNOWN,
@@ -109,7 +133,9 @@ typedef enum
 	CMD_FT
 } Cmd_t_e;
 
-/*消息识别关键词结构体*/
+/** 
+  * @brief  消息类型类型关键词结构体
+  */
 typedef struct
 {
 	//消息类型的匹配关键词
@@ -157,8 +183,57 @@ typedef struct
 } Cmd_t;
 
 
+/** 
+  * @brief  AT_SM()的状态枚举类型
+  */
+typedef enum
+{
+	AT_SM_S_Default,
+	AT_SM_S_PowerOn,
+	AT_SM_S_ATE0,		//关闭消息回显，下一状态去哪取决于WiFi是否连接
+	AT_SM_S_ATCWMODE_1,
+	AT_SM_S_CWQAP_1,
+	AT_SM_S_CIPMUX_0,
+	AT_SM_S_CWJAP_1,
+	AT_SM_S_MQTTUSERCFG,
+	AT_SM_S_MQTTCLIENTID,
+	AT_SM_S_MQTTCONN,
+	AT_SM_S_MQTTSUB,		//MQTT配置完成后SM进入日常report状态
+	AT_SM_S_Report,				//下行命令的处理和上行命令的发送在接受中断中自动完成，但可能因为性能问题而异常。【可优化】
+	AT_SM_S_CWJAP_Q,		//AT+CEJAP?命令的收发处理，用于在WiFi连接出现异常后对WiFi状态的检查。在配置过WiFi和MQTT后才能进入。
+} at_sm_state_t_e;
 
 
+/** 
+  * @brief  表示消息是否已经发送的标志
+  */
+typedef enum
+{
+	DIDNOT,
+	SENDED
+}	isMsgSended_t_e;
+
+/** 
+  * @brief  表示是否开启的标志
+  */
+typedef enum
+{
+	OFF,
+	ON
+}	onOrOff_t_e;
+
+/** 
+  * @brief  存储AT_SM()信息的结构体
+  */
+typedef struct
+{
+	at_sm_state_t_e		state;
+	int32_t						runtimes;
+	int32_t						runtimes_repriod;
+	isMsgSended_t_e	isMsgSended;	//只存储当前状态下应该发送的某个特定的消息，要及时清零。
+} at_sm_status_t;
 
 
 #endif
+
+

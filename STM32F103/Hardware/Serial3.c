@@ -12,8 +12,6 @@
 
 #include "Array.h"
 
-
-
 #include "math.h"
 
 #include "MyTIM.h"
@@ -48,19 +46,16 @@
 //TODO:USART3DMASendString
 //TODO:USART3DMAReceiveString
 
-
-//int8_t rx3_buf_idx = 0;
-int8_t rx3_idle_flag = 0;
-
-char tx3_buf[TX3_BUF_MAX_SIZE] = {0};
-char rx3_buf[RX3_BUF_MAX_SIZE] = {0};
-//char rx3_buf_0[RX3_BUF_MAX_SIZE] = {0};
-//char rx3_buf_1[RX3_BUF_MAX_SIZE] = {0};
-//char *rx3_buf_arr[2] = {rx3_buf_0, rx3_buf_1};
+/** 
+  * @brief  创建并初始化Serial3消息结构体
+  */
+rx3_msg_t rx3_msg = {
+	1,
+	"",
+	MSG_Default
+};
 
 int8_t tx3_tc_flag = 0;
-uint16_t tc_count = 0;
-uint16_t tst_num1 = 0;
 
 static GPIO_InitTypeDef GPIO_IS_Tx;
 static GPIO_InitTypeDef GPIO_IS_Rx;
@@ -74,6 +69,7 @@ static NVIC_InitTypeDef NVIC_IS_Rx_USART;
 
 void Serial3_Init_Com(uint32_t br, FunctionalState fs)
 {
+	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
@@ -114,7 +110,7 @@ void Serial3_Init_Tx_DMA(uint32_t dma_p, uint8_t nvic_pp, uint8_t nvic_sp, Funct
 	DMA_IS_Tx.DMA_BufferSize			= 0;//0代表关闭DMA转移
 	DMA_IS_Tx.DMA_DIR					= DMA_DIR_PeripheralDST;//外设为目的地
 	DMA_IS_Tx.DMA_M2M					= DMA_M2M_Disable;//非内存到内存
-	DMA_IS_Tx.DMA_MemoryBaseAddr		= (u32)tx3_buf;
+	DMA_IS_Tx.DMA_MemoryBaseAddr		= (u32)0;
 	DMA_IS_Tx.DMA_MemoryDataSize		= DMA_MemoryDataSize_Byte;
 	DMA_IS_Tx.DMA_MemoryInc				= DMA_MemoryInc_Enable;
 	DMA_IS_Tx.DMA_Mode					= DMA_Mode_Normal;
@@ -169,7 +165,7 @@ void Serial3_Init_Rx_DMA(uint32_t dma_p,FunctionalState fs)
 	DMA_IS_Rx.DMA_BufferSize = RX3_BUF_MAX_SIZE;//一个循环最大可转移字符数
 	DMA_IS_Rx.DMA_DIR = DMA_DIR_PeripheralSRC;//DR转移到存储器
 	DMA_IS_Rx.DMA_M2M = DMA_M2M_Disable;//外设到存储器
-	DMA_IS_Rx.DMA_MemoryBaseAddr = (u32)rx3_buf;//DR转移到rx3_buf，从rx3_buf[0]开始
+	DMA_IS_Rx.DMA_MemoryBaseAddr = (u32)rx3_msg.buf;//DR转移到rx3_buf，从rx3_buf[0]开始
 	DMA_IS_Rx.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;//1Char~1Byte
 	DMA_IS_Rx.DMA_MemoryInc = DMA_MemoryInc_Enable;//rx3_buf索引地址递增
 	DMA_IS_Rx.DMA_Mode = DMA_Mode_Circular;//计数器归零后自动重装为BufferSize
@@ -305,66 +301,75 @@ void USART3_IRQHandler(void)
 			/*在rx3_buf的第read_len个char写入'\0'后，
 			rx3_buf便成了一个长为read_len的字符串（包含'\0'），
 			其终止符索引为read_len-1，位数为read_len*/
-			rx3_buf[read_len - 1] = '\0';
+			rx3_msg.buf[read_len - 1] = '\0';
 		}
 		
 		/*一个标志位只能给一个使用方使用，一个使用方使用完清零可能导致其他使用方无法检测*/
-		rx3_idle_flag = 1;
+		rx3_msg.rc_1 = 1;
 		
 		//note:简单无缓存直接利用rx3_buf方案会导致接收频繁数据只能读到最后一串
 		
-		Msg_t_e rx3_msg_type = MSG_NONE;
+		rx3_msg.type = AT_ParseMessage(rx3_msg.buf, read_len, msg_keywords);
 		
-		rx3_msg_type = AT_ParseMessage(rx3_buf, read_len, msg_keywords);
-		
-		switch(rx3_msg_type)
+		switch(rx3_msg.type)
 			{
 				case MSG_NONE:
+					
 //					Serial3_SendString("NONE\r\n", strlen("NONE\r\n"));	//【Debug】
 					Serial2_SendString("NONE\r\n", strlen("NONE\r\n"));	//【Debug】
 					break;
 				case MSG_POWERON:
+					
 //					Serial3_SendString("POWERON\r\n", strlen("POWERON\r\n"));	//【Debug】
 					Serial2_SendString("POWERON\r\n", strlen("POWERON\r\n"));	//【Debug】
 					break;
 				case MSG_OK:
+					
 //					Serial3_SendString("OK\r\n", strlen("OK\r\n"));	//【Debug】
 					Serial2_SendString("OK\r\n", strlen("OK\r\n"));	//【Debug】
 					break;
 				case MSG_ERROR:
+					
 //					Serial3_SendString("ERROR\r\n", strlen("ERROR\r\n"));	//【Debug】
 					Serial2_SendString("ERROR\r\n", strlen("ERROR\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_CONN:
+					
 //					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_CONN\r\n"));	//【Debug】
 					Serial2_SendString("WIFI_CONN\r\n", strlen("WIFI_CONN\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_GOTIP:
+					
 //					Serial3_SendString("WIFI_CONN\r\n", strlen("WIFI_GOTIP\r\n"));	//【Debug】
 					Serial2_SendString("WIFI_CONN\r\n", strlen("WIFI_GOTIP\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_DISCONN:
+					
 //					Serial3_SendString("WIFI_DISCONN\r\n", strlen("WIFI_DISCONN\r\n"));	//【Debug】
 					Serial2_SendString("WIFI_DISCONN\r\n", strlen("WIFI_DISCONN\r\n"));	//【Debug】
 					break;
 				case MSG_MQTT_DISCONN:
+					
 //					Serial3_SendString("MQTT_DISCONN\r\n", strlen("MQTT_DISCONN\r\n"));	//【Debug】
 					Serial2_SendString("MQTT_DISCONN\r\n", strlen("MQTT_DISCONN\r\n"));	//【Debug】
 					break;
 				case MSG_MQTT_CONN_SUCCESS:
+					
 //					Serial3_SendString("MQTT_CONN_SUCCESS\r\n", strlen("MQTT_CONN_SUCCESS\r\n"));	//【Debug】
 					Serial2_SendString("MQTT_CONN_SUCCESS\r\n", strlen("MQTT_CONN_SUCCESS\r\n"));	//【Debug】
 					break;
 				case MSG_WIFI_CONN_SUCCESS:
+					
 //					Serial3_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));	//【Debug】
 					Serial2_SendString("WIFI_CONN_SUCCESS\r\n", strlen("WIFI_CONN_SUCCESS\r\n"));	//【Debug】
 					break;
 				case MSG_DOWNCMD:
+					
 //					Serial3_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));	//【Debug】
 					Serial2_SendString("DOWNCMD\r\n", strlen("DOWNCMD\r\n"));	//【Debug】
 					
 //					【TODO】在此处调用下行命令相关函数
-					AT_ParseCmdMsg(rx3_buf, read_len, cmd_keywords, &cmd);
+					AT_ParseCmdMsg(rx3_msg.buf, read_len, cmd_keywords, &cmd);
 				
 					switch(cmd.type)
 					{
@@ -431,33 +436,6 @@ void USART3_IRQHandler(void)
 //					Serial3_SendString("MSGUNKNOWN\r\n", strlen("MSGUNKNOWN\r\n"));
 					Serial2_SendString("MSGUNKNOWN\r\n", strlen("MSGUNKNOWN\r\n"));
 			}
-
-//		rx3_buf_arr[rx3_buf_idx][read_len] = '\0';
-//		
-//		/*利用rx3_buf*/
-//		rx3_idle_flag = 1;
-//		switch(rx3_buf_idx)//此时idx还未改变
-//		{
-//			case 0:
-//				Serial3_SendString(rx3_buf_0, sizeof(rx3_buf_0));
-//				break;
-//			case 1:
-//				Serial3_SendString(rx3_buf_1, sizeof(rx3_buf_1));
-//				break;
-//		}
-//		
-//		/*重置计数，重新配置DMA*/
-//		DMA_SetCurrDataCounter(DMA1_Channel3, RX3_BUF_MAX_SIZE);
-//		rx3_buf_idx = !rx3_buf_idx;//0和1轮流，更改目的数组。该周期此后利用idx要取反
-//		switch(rx3_buf_idx)
-//		{
-//			case 0:
-//				DMA_IS_Rx.DMA_MemoryBaseAddr = (u32)&rx3_buf_0;
-//				break;
-//			case 1:
-//				DMA_IS_Rx.DMA_MemoryBaseAddr = (u32)&rx3_buf_1;
-//				break;
-//		}
 		
 		/*重启DMA，可以开始接受新Rx数据*/
 		DMA_SetCurrDataCounter(DMA1_Channel3, RX3_BUF_MAX_SIZE);

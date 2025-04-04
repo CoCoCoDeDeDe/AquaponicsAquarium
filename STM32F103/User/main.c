@@ -191,3 +191,22 @@ void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15的中断是合并的
 }
 
 
+/*函数注释模板*/
+/**
+* @name	
+* @brief		
+*  
+*  
+* @param	
+* @param	
+* @param	
+* @param	
+* @param	
+* @param	
+* @retval		
+*/
+
+/** 
+  * @brief  Bit_SET and Bit_RESET enumeration  
+  */
+
