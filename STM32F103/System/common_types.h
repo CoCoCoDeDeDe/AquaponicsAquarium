@@ -96,17 +96,15 @@ typedef struct
 typedef enum
 {
 	MSG_Default,
+	MSG_PowerOn,
 	MSG_NONE,
-	MSG_POWERON,
-	MSG_OK,
+	MSG_WIFI_CONNECTED,
+	MSG_WIFI_GOT_IP,
+	MSG_WIFI_DISCONNECTED,
 	MSG_ERROR,
-	MSG_WIFI_CONN,
-	MSG_WIFI_GOTIP,
-	MSG_WIFI_DISCONN,
-	MSG_MQTT_DISCONN,
-	MSG_MQTT_CONN_SUCCESS,
-	MSG_WIFI_CONN_SUCCESS,
-	MSG_DOWNCMD
+	MSG_OK,		//多一些识别标志防止误判
+	MSG_MQTTCONN_OK,
+	MSG_MQTTDISCONNECTED
 } Msg_t_e;
 
 /** 
@@ -117,6 +115,7 @@ typedef struct
 	int8_t			rc_1;		//代表是否有接受完可供使用的字符串
 	char			buf[RX3_BUF_MAX_SIZE];
 	Msg_t_e		type;
+	Msg_t_e		type_2;
 }	rx3_msg_t;
 
 /** 

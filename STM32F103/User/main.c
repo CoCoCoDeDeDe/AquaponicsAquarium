@@ -112,37 +112,41 @@ int main(void)
 	MyWaterH_Init();
 
 	Serial3_Init_All();
-	Serial2_Init_All();
-	
-	AT_Init_Str();
-	
 //	Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));	//【Debug】
+	Serial2_Init_All();
 	Serial2_SendString("Serial2_On\r\n", strlen("Serial2_On\r\n"));	//【Debug】
+	
+	//【TODO】让AT_SM在其他外设都初始化完后才能开始处理消息
+//	AT_Init_Str();
+	
+	
+	
 	
 	while(1)
 	{
-//		if(rx2_msg.rc == 1)
-//		{
-//			Serial3_SendString(rx2_msg.str, rx2_msg.len);
-//			
-//			rx2_msg.rc = 0;
-//		}
+		if(rx2_msg.rc == 1)
+		{
+			Serial3_SendString(rx2_msg.str, rx2_msg.len);
+			
+			rx2_msg.rc = 0;
+		}
+		
+		if(rx3_msg.rc_1 == 1)
+		{
+			Serial2_SendString("rx3:\r\n", strlen("rx3:\r\n"));
+			Serial2_SendString(rx3_msg.buf, strlen(rx3_msg.buf));
+			
+			rx3_msg.rc_1 = 0;
+		}
+		
+//		OLED_ShowNum(1, 1, WaterPVR, 4);
+//		OLED_ShowNum(2, 1, AirPRS, 4);
+//		OLED_ShowNum(3, 1, WaterHRS, 4);
+//		OLED_ShowNum(4, 1, AquariumLVR, 4);
+//		OLED_ShowNum(1, 9, PlantGLVR, 4);
+//		OLED_ShowNum(2, 9, FeederRS, 4);
 //		
-//		if(rx3_idle_flag == 1)
-//		{
-//			Serial2_SendString(rx3_buf, strlen(rx3_buf));
-//			
-//			rx3_idle_flag = 0;
-//		}
-		
-		OLED_ShowNum(1, 1, WaterPVR, 4);
-		OLED_ShowNum(2, 1, AirPRS, 4);
-		OLED_ShowNum(3, 1, WaterHRS, 4);
-		OLED_ShowNum(4, 1, AquariumLVR, 4);
-		OLED_ShowNum(1, 9, PlantGLVR, 4);
-		OLED_ShowNum(2, 9, FeederRS, 4);
-		
-		Delay_us(100);
+//		Delay_us(100);
 		
 //		OLED_ShowNum(1, 1, MyADCAndDMA_Result[0], 4);
 //		OLED_ShowNum(2, 1, MyADCAndDMA_Result[1], 4);

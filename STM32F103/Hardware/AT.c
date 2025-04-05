@@ -126,16 +126,14 @@ char ATCMD_MQTTPUB_UPRSP_main[ATCMD_MQTTPUB_UPRSP_LEN];
 //【TODO】定义对应enum
 //【WARN】关键词在检测时不考虑关键词的'\0'
 /*定义用于检测的关键词 消息类型*/
-char KEYW_POWERON[] = "ESP";
-char KEYW_OK[] = "OK";
+char KEYW_PowerOn[] = "arch:ESP";
+char KEYW_WIFI_CONNECTED[] = "FI CO";
+char KEYW_WIFI_GOT_IP[] = "FI_GO";
+char KEYW_WIFI_DISCONNECTED[] = "FI DIS";
 char KEYW_ERROR[] = "ERRO";
-char KEYW_WIFI_CONN[] = "FI CO";
-char KEYW_WIFI_DISCONN[] = "FI DI";
-char KEYW_MQTT_DISCONN[] = "TTDI";
-char KEYW_MQTT_CONN_SUCCESS[] = MQTT_HOSTNAME;//用于:1.MQTT连上;2.MQTTCONN?检查
-char KEYW_WIFI_CONN_SUCCESS[] = WIFI_SSID;//用于:CWJAP?检查
-char KEYW_DOWNCMD[] = "SUBRE";
-char KEYW_WIFI_GOTIP[] = "FI GO";
+char KEYW_OK[] = "OK";
+char KEYW_MQTTCONN_OK[] = MQTT_HOSTNAME;
+char KEYW_MQTTDISCONNECTED[] = "TTDI";
 
 /*定义用于检测的关键词 命令类型*/
 char KEYW_WPVR[] = "WPVR";
@@ -148,24 +146,17 @@ char KEYW_FT[] = "FT";
 /*定义数组用于在ParseMessage函数中按顺序识别对应消息类型并返回消息类型枚举值*/
 const Msg_KeyWord_t msg_keywords[] =
 {
-	/*关键词不包括字符串末尾'\0'*/
-	/*高优先级*/
-	{KEYW_WIFI_DISCONN, sizeof(KEYW_WIFI_DISCONN) - 1, MSG_WIFI_DISCONN},
-	{KEYW_MQTT_DISCONN, sizeof(KEYW_MQTT_DISCONN) - 1, MSG_MQTT_DISCONN},
-	{KEYW_WIFI_CONN, sizeof(KEYW_WIFI_CONN) - 1, MSG_WIFI_CONN},
-	/*中优先级*/
-	{KEYW_POWERON, sizeof (KEYW_POWERON) - 1, MSG_POWERON},
-	{KEYW_MQTT_CONN_SUCCESS, sizeof(MQTT_HOSTNAME) - 1, MSG_MQTT_CONN_SUCCESS},
-	{KEYW_WIFI_CONN_SUCCESS, sizeof(WIFI_SSID) - 1, MSG_WIFI_CONN_SUCCESS},
-	{KEYW_DOWNCMD, sizeof(KEYW_DOWNCMD) - 1, MSG_DOWNCMD},
-	{KEYW_WIFI_GOTIP, sizeof(KEYW_WIFI_GOTIP) - 1, MSG_WIFI_GOTIP},
-	/*低优先级*/
-	/*前面集中消息中可能包含OK或ERROR，为防止误识别降低OK和ERROR的识别优先级*/
-	{KEYW_OK, sizeof(KEYW_OK) - 1, MSG_OK},
-	{KEYW_ERROR, sizeof(KEYW_ERROR) - 1, MSG_ERROR}
+	{KEYW_PowerOn,							sizeof(KEYW_PowerOn) - 1,								MSG_PowerOn},
+	{KEYW_WIFI_CONNECTED,			sizeof(KEYW_WIFI_CONNECTED) - 1,			MSG_WIFI_CONNECTED},
+	{KEYW_WIFI_GOT_IP,					sizeof(KEYW_WIFI_GOT_IP) - 1,						MSG_WIFI_GOT_IP},
+	{KEYW_WIFI_DISCONNECTED,	sizeof(KEYW_WIFI_DISCONNECTED) - 1,		MSG_WIFI_DISCONNECTED},
+	{KEYW_MQTTCONN_OK,				sizeof(KEYW_MQTTCONN_OK) - 1,					MSG_MQTTCONN_OK},
+	{KEYW_MQTTDISCONNECTED,	sizeof(KEYW_MQTTDISCONNECTED) - 1,	MSG_MQTTDISCONNECTED},
+	{KEYW_ERROR,								sizeof(KEYW_ERROR) - 1,							MSG_ERROR},
+	{KEYW_OK,										sizeof(KEYW_OK) - 1,										MSG_OK}
 };
 
-uint8_t Msg_KeyWord_t_count = (sizeof(msg_keywords) / sizeof(Msg_KeyWord_t));
+uint8_t msg_keywords_count = (sizeof(msg_keywords) / sizeof(Msg_KeyWord_t));
 
 /*定义数组用于按顺序识别对应命令类型并返回命令类型枚举值即识别出要设置的参数，
 同时按顺序提取命令参数，同时提取出request_id*/
@@ -462,7 +453,7 @@ int8_t AT_Report(void)
   */
 Msg_t_e AT_ParseMessage(const char *msg, uint16_t msg_len, const Msg_KeyWord_t *_msg_keywords)
 {
-	for(uint8_t i = 0; i < Msg_KeyWord_t_count; i++)//按优先级顺序分析
+	for(uint8_t i = 0; i < msg_keywords_count; i++)//按优先级顺序分析
 	{
 		const Msg_KeyWord_t *kw = &_msg_keywords[i];	//指针指向全局变量关键字结构体数组内的关键词结构体类型元素
 		
@@ -598,9 +589,15 @@ Cmd_t_e AT_ParseCmdMsg(
 void AT_SM(at_sm_status_t *_status, wifi_t *_wifi, rx3_msg_t *_rx3_msg)
 {
 	_status->runtimes++;
+	Serial2_SendString("InAT_SM\r\n", strlen("InAT_SM\r\n"));	//【Debug】
 	switch(_status->state)
 	{
-		case AT_SM_S_Default:		//替代了PowerOn状态
+		case AT_SM_S_Default:
+			//等待串口2开启后外部将AT_SM状态转换
+			
+			break;
+		
+		case AT_SM_S_PowerOn:		//替代了PowerOn状态
 			if(_status->runtimes * _status->runtimes_repriod >= 10000000)//是否等待消息超时
 			{
 				_status->state = AT_SM_S_ATE0;		//去关闭ESP8266消息回显

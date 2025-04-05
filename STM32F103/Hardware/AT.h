@@ -3,6 +3,7 @@
 
 #include "common_types.h"
 
+extern mqtt_t mqtt;
 extern wifi_t wifi;
 
 extern char ATCMD_MQTTPUB_UPRSP_main[];

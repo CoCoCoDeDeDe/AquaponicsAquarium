@@ -222,7 +222,7 @@ void MyTIM3_DIVy(uint16_t y)
 		
 		MyWaterTS_TaskSM_TurnOn();
 		
-		AT_Report();
+//		AT_Report();
 	}
 }
 
@@ -232,6 +232,6 @@ void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
 		
 		//MyTIM_4Count++;
 		
-		AT_SM(&at_sm_status, &wifi, &rx3_msg);
+//		AT_SM(&at_sm_status, &wifi, &rx3_msg);
 	}
 }
