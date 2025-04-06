@@ -44,8 +44,6 @@
 
 #include "Serial2.h"
 
-int16_t num_test1 = 0;
-
 int main(void)
 {
 	Delay_ms(1000);	//等待设备电压稳定
@@ -85,12 +83,12 @@ int main(void)
 	MyTIM1_Init(3, 3);
 	MyTIM2_Init(1, 1);
 	MyTIM3_Init(1, 1);
-	MyTIM4_Init(0, 0);
+//	MyTIM4_Init(3, 3);
 	
 	MyTIMx_ENABLECmd(TIM1);
 	MyTIMx_ENABLECmd(TIM2);
 	MyTIMx_ENABLECmd(TIM3);
-	MyTIMx_ENABLECmd(TIM4);
+//	MyTIMx_ENABLECmd(TIM4);
 	
 	MyWaterTS_Init();			//DS18B20
 	MyAirS_Init(1, 1);			//DHT11
@@ -111,15 +109,17 @@ int main(void)
 	MyAirP_Init();
 	MyWaterH_Init();
 
-	Serial3_Init_All();
-//	Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));	//【Debug】
 	Serial2_Init_All();
 	Serial2_SendString("Serial2_On\r\n", strlen("Serial2_On\r\n"));	//【Debug】
 	
-	//【TODO】让AT_SM在其他外设都初始化完后才能开始处理消息
-//	AT_Init_Str();
-	
-	
+	/*让AT_SM在其他外设都初始化完后才能开始处理消息和连接ESP8266*/
+	AT_Init_Str();
+	Serial3_Init_All(115200, DMA_Priority_VeryHigh, 0, 0, 1, 1);
+//	Serial3_SendString("DuBug:\r\nSerial3_On\r\n", strlen("DuBug:\r\nSerial3_On\r\n"));	//【Debug】
+	at_sm_status.runtimes = 0;
+	at_sm_status.runtimes_repriod = 10000;
+	at_sm_status.state = AT_SM_S_PowerOn;
+//	Serial3_SendString("DuBug:\r\nSetAT_SM_S_PowerOn\r\n", strlen("DuBug:\r\nSetAT_SM_S_PowerOn\r\n"));	//【Debug】
 	
 	
 	while(1)
@@ -131,13 +131,16 @@ int main(void)
 			rx2_msg.rc = 0;
 		}
 		
-		if(rx3_msg.rc_1 == 1)
-		{
-			Serial2_SendString("rx3:\r\n", strlen("rx3:\r\n"));
-			Serial2_SendString(rx3_msg.buf, strlen(rx3_msg.buf));
-			
-			rx3_msg.rc_1 = 0;
-		}
+//		if(rx3_msg.rc_1 == 1)
+//		{
+//			Serial2_SendString("Rx3:\r\n", strlen("Rx3:\r\n"));
+//			Serial2_SendString(rx3_msg.buf, strlen(rx3_msg.buf));
+//			
+//			rx3_msg.rc_1 = 0;
+//		}
+		
+		
+		Delay_ms(1);
 		
 //		OLED_ShowNum(1, 1, WaterPVR, 4);
 //		OLED_ShowNum(2, 1, AirPRS, 4);

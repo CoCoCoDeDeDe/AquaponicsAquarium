@@ -26,6 +26,6 @@ Cmd_t_e AT_ParseCmdMsg(
 	uint16_t								msg_len,
 	const Cmd_KeyWord_t		*_cmd_keywords,
 	Cmd_t									*_cmd);
-void AT_SM(at_sm_status_t *status, wifi_t *_wifi, rx3_msg_t *_rx3_msg);
+void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *_mqtt);
 
 #endif

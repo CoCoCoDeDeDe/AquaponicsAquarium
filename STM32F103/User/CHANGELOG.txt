@@ -54,12 +54,14 @@ Things TO DO
 	DONE		测试所有与云平台的MQTT通信
 	DONE		注释了AT.c内的所有函数
 	DONE			测试使用rx3_msg后Serial3功能
-	DOING		删除所有用Serial3输出调试信息的代码
-	DOING		测试STM32-ESP8266沟通逻辑
-	DOING		配置MQTT-MCU-ServerV2
+	DONE		测试Serail3对消息的识别
+	DONE		测试PC-STM32 Serial3信息识别功能
+	DONE		测试STM32-ESP8266沟通逻辑
+	DONE		配置MQTT-MCU-ServerV2
 	TODO		组装原型机
 	TODO		设计Feeder并完善代码.
 	TODO		配置AT24C02
+	TODO		设计用手机配置WIFI账号和密码以及分配使用权到用户账号的功能
 	TODO		配置时间系统
 	TODO		设计鱼缸、PCB、喂食器
 	TODO		配置PWM变化缓冲

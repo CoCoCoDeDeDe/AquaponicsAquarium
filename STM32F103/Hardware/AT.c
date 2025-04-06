@@ -56,6 +56,7 @@ mqtt_t mqtt = {
 wifi_t wifi = {
 	WIFI_SSID,
 	WIFI_PWD,
+	DIDNOTCFG,
 	DISCONNECT				//未连接
 };
 
@@ -67,7 +68,7 @@ at_sm_status_t at_sm_status =
 	AT_SM_S_Default,
 	0,			//计数器清零
 	100,		//目前是TIM4中断周期
-	DIDNOT		//默认刚进入第一个要发送消息的状态下时还没有发送特定消息
+	DIDNOTSEND		//默认刚进入第一个要发送消息的状态下时还没有发送特定消息
 };
 
 onOrOff_t_e AT_Report_Ctrl = OFF;
@@ -75,35 +76,27 @@ onOrOff_t_e AT_Report_Ctrl = OFF;
 /*定义 常规 AT 命令*/
 char ATCMD_QuitTT[] = "+++\r\n";	//退出透传模式
 char ATCMD_ATE0[] = "ATE0\r\n";		//关闭回显
-
 /*定义 WiFi AT 命令字符串*/
 char ATCMD_CWMODE1[] = "AT+CWMODE=1\r\n";	//Station 模式
 char ATCMD_CWQAP1[] = "AT+CWQAP=1\r\n";		//断开与 AP 的连接
 char ATCMD_CIPMUX0[] = "AT+CIPMUX=0\r\n";	//单连接模式
 char ATCMD_CWJAP_C[10 + WIFI_SSID_LEN + WIFI_PWD_LEN] = "AT+CWJAP=";	//配置 WiFi 连接
 char ATCMD_CWJAP_Q[] = "AT+CWJAP?\r\n";
-
 /*定义 WIFI AT命令字符*/
 #define ATCMD_CWJAP_C_BODY "AT+CWJAP=\"%s\",\"%s\"\r\n"
 char ATCMD_CWJAP_C_main[ATCMD_CWJAP_C_LEN] = ATCMD_CWJAP_C_BODY;
-
-
 /*定义 MQTT AT 命令字符串-USERCFG*/
 #define ATCMD_MQTTUSERCFG_BODY "AT+MQTTUSERCFG=0,1,\"NULL\",\"%s\",\"%s\",0,0,\"\"\r\n"
 char ATCMD_MQTTUSERCFG_main[ATCMD_MQTTUSERCFG_LEN];
-
 /*定义 MQTT AT 命令字符串-CLIENTID*/
 #define ATCMD_MQTTCLIENTID_BODY "AT+MQTTCLIENTID=0,\"%s\"\r\n"
 char ATCMD_MQTTCLIENTID_main[ATCMD_MQTTCLIENTID_LEN];
-
 /*定义 MQTT AT 命令字符串-CONN*/
 #define ATCMD_MQTTCONN_BODY "AT+MQTTCONN=0,\"%s\",%s,1\r\n"
 char ATCMD_MQTTCONN_main[ATCMD_MQTTCONN_LEN];
-
 /*定义 MQTT AT 命令字符串-SUB*/
 #define ATCMD_MQTTSUB_BODY "AT+MQTTSUB=0,\"$oc/devices/%s/sys/commands/#\",0\r\n"
 char ATCMD_MQTTSUB_main[ATCMD_MQTTSUB_LEN];
-
 /**定义 MQTT AT 命令字符串-上报信息*/
 #define ATCMD_MQTTPUB_RPT_BODY "AT+MQTTPUB=0,\"$oc/devices/%s/sys/properties/report\",\"{\\\"services\\\":[{\\\"service_id\\\":\\\"All\\\"\\,\\\"properties\\\":%s}]}\",0,1\r\n"
 char ATCMD_MQTTPUB_RPT_body[ATCMD_MQTTPUB_RPT_LEN];
@@ -113,7 +106,6 @@ char ATCMD_MQTTPUB_RPT_data1[ATCMD_MQTTPUB_RPT_LEN];
 char ATCMD_MQTTPUB_RPT_data2[ATCMD_MQTTPUB_RPT_LEN];
 #define ATCMD_MQTTPUB_RPT_DATA_BODY1 "{\\\"WSD\\\":%d\\,\\\"WQSVR\\\":%d\\,\\\"SMSVR\\\":%d\\,\\\"WT\\\":%d\\,\\\"WPVR\\\":%d\\,\\\"APRS\\\":%d\\,\\\"WHRS\\\":%d}"
 #define ATCMD_MQTTPUB_RPT_DATA_BODY2 "{\\\"ISVR\\\":%d\\,\\\"ALVR\\\":%d\\,\\\"PGLVR\\\":%d\\,\\\"FRS\\\":%d\\,\\\"AT\\\":%d\\,\\\"AH\\\":%d}"
-
 /*定义 MQTT AT 命令字符串-上行响应*/
 #define ATCMD_MQTTPUB_UPRSP_BODY "AT+MQTTPUB=0,\"$oc/devices/%s/sys/commands/response/request_id=%s\",\"{}\",0,1\r\n"
 /*body存储的字段是在初始化时根据mqtt或者wifi信息配置固定，
@@ -123,17 +115,19 @@ char ATCMD_MQTTPUB_RPT_data2[ATCMD_MQTTPUB_RPT_LEN];
 char ATCMD_MQTTPUB_UPRSP_body[ATCMD_MQTTPUB_UPRSP_LEN];
 char ATCMD_MQTTPUB_UPRSP_main[ATCMD_MQTTPUB_UPRSP_LEN];
 
-//【TODO】定义对应enum
 //【WARN】关键词在检测时不考虑关键词的'\0'
 /*定义用于检测的关键词 消息类型*/
 char KEYW_PowerOn[] = "arch:ESP";
 char KEYW_WIFI_CONNECTED[] = "FI CO";
-char KEYW_WIFI_GOT_IP[] = "FI_GO";
+char KEYW_WIFI_GOT_IP[] = "FI GO";
 char KEYW_WIFI_DISCONNECTED[] = "FI DIS";
 char KEYW_ERROR[] = "ERRO";
 char KEYW_OK[] = "OK";
 char KEYW_MQTTCONN_OK[] = MQTT_HOSTNAME;
 char KEYW_MQTTDISCONNECTED[] = "TTDI";
+char KEYW_MQTTSUBRECV[] = "SUBRE";
+char KEYW_BUSY[] = "busy";
+char KEYW_ATE0_OK[] = "ATE0";
 
 /*定义用于检测的关键词 命令类型*/
 char KEYW_WPVR[] = "WPVR";
@@ -146,16 +140,18 @@ char KEYW_FT[] = "FT";
 /*定义数组用于在ParseMessage函数中按顺序识别对应消息类型并返回消息类型枚举值*/
 const Msg_KeyWord_t msg_keywords[] =
 {
-	{KEYW_PowerOn,							sizeof(KEYW_PowerOn) - 1,								MSG_PowerOn},
-	{KEYW_WIFI_CONNECTED,			sizeof(KEYW_WIFI_CONNECTED) - 1,			MSG_WIFI_CONNECTED},
-	{KEYW_WIFI_GOT_IP,					sizeof(KEYW_WIFI_GOT_IP) - 1,						MSG_WIFI_GOT_IP},
-	{KEYW_WIFI_DISCONNECTED,	sizeof(KEYW_WIFI_DISCONNECTED) - 1,		MSG_WIFI_DISCONNECTED},
+	{KEYW_BUSY,									sizeof(KEYW_BUSY) - 1,										MSG_BUSY},
+	{KEYW_OK,										sizeof(KEYW_OK) - 1,											MSG_OK},
+	{KEYW_ERROR,								sizeof(KEYW_ERROR) - 1,									MSG_ERROR},
+	{KEYW_WIFI_CONNECTED,			sizeof(KEYW_WIFI_CONNECTED) - 1,				MSG_WIFI_CONNECTED},
+	{KEYW_WIFI_GOT_IP,						sizeof(KEYW_WIFI_GOT_IP) - 1,							MSG_WIFI_GOT_IP},
+	{KEYW_WIFI_DISCONNECTED,		sizeof(KEYW_WIFI_DISCONNECTED) - 1,			MSG_WIFI_DISCONNECTED},
 	{KEYW_MQTTCONN_OK,				sizeof(KEYW_MQTTCONN_OK) - 1,					MSG_MQTTCONN_OK},
-	{KEYW_MQTTDISCONNECTED,	sizeof(KEYW_MQTTDISCONNECTED) - 1,	MSG_MQTTDISCONNECTED},
-	{KEYW_ERROR,								sizeof(KEYW_ERROR) - 1,							MSG_ERROR},
-	{KEYW_OK,										sizeof(KEYW_OK) - 1,										MSG_OK}
+	{KEYW_MQTTDISCONNECTED,		sizeof(KEYW_MQTTDISCONNECTED) - 1,			MSG_MQTTDISCONNECTED},
+	{KEYW_MQTTSUBRECV,					sizeof(KEYW_MQTTSUBRECV) - 1,					MSG_MQTTSUBRECV},
+	{KEYW_ATE0_OK,							sizeof(KEYW_ATE0_OK) - 1,								MSG_ATE0_OK},
+//	{KEYW_PowerOn,								sizeof(KEYW_PowerOn) - 1,									MSG_PowerOn},
 };
-
 uint8_t msg_keywords_count = (sizeof(msg_keywords) / sizeof(Msg_KeyWord_t));
 
 /*定义数组用于按顺序识别对应命令类型并返回命令类型枚举值即识别出要设置的参数，
@@ -169,7 +165,6 @@ const Cmd_KeyWord_t cmd_keywords[] =
 	{KEYW_PGLVR, sizeof(KEYW_PGLVR) - 1, CMD_PGLVR},
 	{KEYW_FT, sizeof(KEYW_FT) - 1, CMD_FT}
 };
-
 uint8_t Cmd_KeyWord_t_count = (sizeof(cmd_keywords) / sizeof(Cmd_KeyWord_t));
 
 /*定义命令结构体，用于存储一次下行命令的request_id、命令类型、命令参数值*/
@@ -495,7 +490,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	char *request_id_addr_head = strstr((char*)_msg, "t_id=");	
 	if(request_id_addr_head == NULL)
 	{
-		return CMD_UNKNOWN;
+		return CMD_UNKNOW;
 	}
 	/*处理后才指向request_id的首地址*/
 	request_id_addr_head += 5;
@@ -503,7 +498,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	char *request_id_addr_tail = strstr((char*)request_id_addr_head, ",");
 	if(request_id_addr_tail == NULL)
 	{
-		return CMD_UNKNOWN;
+		return CMD_UNKNOW;
 	}
 	/*处理后才指向request_id的尾地址，无'\0'*/
 	request_id_addr_tail -= 2;
@@ -542,7 +537,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	}
 	if(para_name_addr_head == NULL)
 	{
-		return CMD_UNKNOWN;	//在_msg中找到参数名
+		return CMD_UNKNOW;	//在_msg中找到参数名
 	}
 	
 	/*note:
@@ -554,7 +549,7 @@ Cmd_t_e AT_ParseCmdMsg(
 	char *para_value_addr_tail = strstr((char*)para_name_addr_head, "},");
 	if(para_value_addr_tail == NULL)
 	{
-		return CMD_UNKNOWN;	//上1行strstr()寻找失败
+		return CMD_UNKNOW;	//上1行strstr()寻找失败
 	}
 	/*将地址从para_value紧随的"}"向前移动到para_value的尾地址*/
 	para_value_addr_tail -= 1;
@@ -566,8 +561,10 @@ Cmd_t_e AT_ParseCmdMsg(
 	_cmd->para_value[para_value_len] = '\0';
 	/*到此，_cmd的request_id、type、para_value已经获得*/
 	
-	return CMD_UNKNOWN;	//命令消息中未找到匹配的参数名
+	return CMD_UNKNOW;	//命令消息中未找到匹配的参数名
 }	//	END OF AT_ParseCmdMsg()
+
+at_sm_status_t at_sm_status;
 
 //【TODO】属性上报默认关闭，MQTT连接且wifi连接的情况下再开启
 //【TODO】MQTT重连机制，MQTT连接标志，WIFI连接标志
@@ -586,269 +583,221 @@ Cmd_t_e AT_ParseCmdMsg(
 * @param	
 * @retval		
 */
-void AT_SM(at_sm_status_t *_status, wifi_t *_wifi, rx3_msg_t *_rx3_msg)
+void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *_mqtt)
 {
 	_status->runtimes++;
-	Serial2_SendString("InAT_SM\r\n", strlen("InAT_SM\r\n"));	//【Debug】
 	switch(_status->state)
 	{
 		case AT_SM_S_Default:
-			//等待串口2开启后外部将AT_SM状态转换
-			
+//			Serial2_SendString("Debug:\r\nAT_SM_S_Default\r\n", strlen("Debug:\r\nAT_SM_S_Default\r\n"));//【Debug】
 			break;
 		
-		case AT_SM_S_PowerOn:		//替代了PowerOn状态
-			if(_status->runtimes * _status->runtimes_repriod >= 10000000)//是否等待消息超时
-			{
-				_status->state = AT_SM_S_ATE0;		//去关闭ESP8266消息回显
-					_status->isMsgSended = SENDED;	//记录未发送
-			} else {
-				switch(_rx3_msg->type)
-				{
-					/*未接到消息，消息type还是初始化时状态*/
-					case MSG_Default:
-						return;
-					/*接到默认上电消息，再接再探，如果超时没有WiFi连接消息就认为没有WiFi配置*/
-					case MSG_POWERON:
-						_status->runtimes = 0;
-						_rx3_msg->type = MSG_Default;		//防止再入MSG_POWER导致runtimes频繁清零无法触发超时
-						_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
-						break;
-					/*接到WiFi连接消息，但之后还可能会有GOT IP消息，
-					如果有就等到GOTIP再去关消息回显（或者在消息回显状态接到GOTIP时忽略），
-					如果没有就等超时后转去关消息回显再靠wifi连接标志位转去配置MQTT*/
-					case MSG_WIFI_CONN:
-						_wifi->isConnect = CONNECT;	//	连上wifi
-						_rx3_msg->type = MSG_Default;	//等待可能收到的GOT IP
-						break;
-					/*接到WIFI连接消息，转去关闭消息回显*/
-					case MSG_WIFI_GOTIP:
-						_wifi->isConnect = CONNECT;//保证wifi连接标志置1，防止未收到WIFI CON
-						_status->state = AT_SM_S_ATE0;	//去关消息回显，并通过wifi连接标志位转去配置MQTT
-						_status->isMsgSended = SENDED;	//记录未发送
-						_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
-						break;
-					/*存储的消息type不是预定的此时会出现的消息，认为发送错误*/
-					default:
-						//ERROR
-					Serial2_SendString("switch(_rx3_msg->type):default", strlen("switch(_rx3_msg->type):default"));
-						break;
-				}
+		case AT_SM_S_PowerOn:
+			/*到了需要判断时间的状态要提前将计时器清零*/
+			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
+			{/*距离上次几次清零后10,000,000us没有收到消息或收到WiFi连接的消息转去配置MQTT。
+				于是转去配置WiFi*/
+				_status->state = AT_SM_S_ATE0;
+//				Serial3_SendString("Debug:\r\nS_PowerOn TimeOut\r\n", strlen("Debug:\r\nS_PowerOn TimeOut\r\n"));//【Debug】
+				return;
 			}
-			break;
-		/*主动发出*/
+			if(_wifi->isConnect == CONNECT)
+			{
+				_status->state = AT_SM_S_ATE0;
+				_status->isMsgSended = DIDNOTSEND;
+				_wifi->isConnect = CONNECT;
+//				Serial3_SendString("Debug:\r\nGOTOS_MQTTUSERCFG\r\n", strlen("Debug:\r\nGOTOS_MQTTUSERCFG\r\n"));//【Debug】
+				return;
+			}
+			return;
+			
 		case AT_SM_S_ATE0:
-			if(_status->isMsgSended == DIDNOT)//ATE0是否已经发送
-			{//如果ATE0没有发送
-				Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));	//发送ATE0
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->isMsgSended = SENDED;	//记录已经发送
-				_status->runtimes = 0;//计时发送后过了多久
-				return;	//退出，再进就是要等回应
+			if(_status->isMsgSended == DIDNOTSEND)
+			{//没发就发
+				Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));
+				_rx3_msg->type_2 = MSG_Default;
+				_status->isMsgSended = SENDED;
+				_status->runtimes = 0;
 			}
-			if(_status->runtimes * _status->runtimes_repriod >= 10000000)//是否超时
-			{//如果超时，重发ATE0，重新等待
-				Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));	//发送ATE0
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;//计时发送后过了多久
-				return;//退出，再进还是要等待回应
+			if(_status->runtimes * _status->runtimes_repriod >= 3000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_CWJAP_C TimeOut\r\n", strlen("Debug:\r\nS_CWJAP_C TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				return;
 			}
-			switch(_rx3_msg->type)
+			if(_rx3_msg->type_2 == MSG_OK || _rx3_msg->type_2 == MSG_ATE0_OK)
+			{//成功则下一步
+				_rx3_msg->type_2 = MSG_Default;
+				if(_wifi->isConnect == CONNECT) _status->state = AT_SM_S_MQTTUSERCFG;
+				_status->state = AT_SM_S_CWJAP_C;
+				_status->isMsgSended = DIDNOTSEND;
+			return;
+			}
+			return;
+			
+		case AT_SM_S_CWJAP_C:
+			if(_wifi->isConnect == CONNECT)
 			{
-				case MSG_Default://只要进了wtich(msgtype)，都要_rx3_msg->type = MSG_Default;
-					return;
-				case MSG_OK:
-					//收到消息OK，认为是ATE0OK了，根据WIFI连接状态判断接下来是配置WiFi还是MQTT
-					//要转到下一个状态了，下个状态咨询信息发送状态时要回答没有发送该发送的消息
-					_status->isMsgSended = DIDNOT;
-					if(_wifi->isConnect == CONNECT)
-					{//如果连接了WiFi，去配置MQTT
-						_status->state = AT_SM_S_MQTTUSERCFG;		//去配置MQTT
-					} else {//如果没有连接WiFi，去配置WiFi
-						_status->state = AT_SM_S_ATCWMODE_1;
-					}
-					_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
-					return;
-				
-				case MSG_ERROR:
-					//收到ERROR，认为ATE0失败，重发ATE0
-				default:
-					//存储的不是预想的可能收到的消息类型，发生错误，重发ATE0
-					Serial3_SendString(ATCMD_ATE0, strlen(ATCMD_ATE0));	//发送ATE0
-					_status->runtimes = 0;//计时发送后过了多久
-					_rx3_msg->type = MSG_Default;	//为之后接收新消息做准备
-					return;
+				_status->state = AT_SM_S_MQTTUSERCFG;
+				return;
 			}
-//			break;	//	Unreachable
-		case AT_SM_S_ATCWMODE_1:
-			
-			break;
-		case AT_SM_S_CWQAP_1:
-			
-			break;
-		case AT_SM_S_CIPMUX_0:
-			
-			break;
-		case AT_SM_S_CWJAP_1:
-			
-			break;
+			if(_status->isMsgSended == DIDNOTSEND)
+			{//没发就发
+				Serial3_SendString(ATCMD_CWJAP_C_main, strlen(ATCMD_CWJAP_C_main));
+				_rx3_msg->type_2 = MSG_Default;
+				_status->isMsgSended = SENDED;
+				_status->runtimes = 0;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_CWJAP_C TimeOut\r\n", strlen("Debug:\r\nS_CWJAP_C TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				return;
+			}
+			if(_rx3_msg->type_2 == MSG_OK ||
+				_rx3_msg->type_2 == MSG_WIFI_CONNECTED ||
+				_rx3_msg->type_2 == MSG_WIFI_GOT_IP ||
+				_wifi->isConnect == CONNECT)
+			{//成功则下一步
+				_rx3_msg->type_2 = MSG_Default;
+				_wifi->isConfiged = CFGED;
+				_wifi->isConnect = CONNECT;
+				_status->state = AT_SM_S_MQTTUSERCFG;
+				_status->isMsgSended = DIDNOTSEND;
+			return;
+			}
+			return;
+		
 		case AT_SM_S_MQTTUSERCFG:
-			if(_status->isMsgSended == DIDNOT)
-			{//MQTTUSERCFG没有发送
-				Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
-			{//等待接收超时，重发，重等
-				Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			switch(_rx3_msg->type)
+			if(_wifi->isConnect == DISCONNECT)
 			{
-				case MSG_Default:
-					return;
-				case MSG_OK:
-					//收到OK，认为USERCFG配置成功
-					_status->state = AT_SM_S_MQTTCLIENTID;
-					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
-					_rx3_msg->type = MSG_Default;
-					break;
-				//存储的不是预想的消息类型，重发重等
-				default:
-					Serial2_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
-					_status->isMsgSended = SENDED;
-					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-					_status->runtimes = 0;
-					return;
+				return;
 			}
-			break;
+			if(_status->isMsgSended == DIDNOTSEND)
+			{//没发就发
+				Serial3_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
+				_rx3_msg->type_2 = MSG_Default;
+				_status->isMsgSended = SENDED;
+				_status->runtimes = 0;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTUSERCFG TimeOut\r\n", strlen("Debug:\r\nS_MQTTUSERCFG TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				return;
+			}
+			if(_rx3_msg->type_2 == MSG_OK)
+			{//成功则下一步
+				_rx3_msg->type_2 = MSG_Default;
+				_status->state = AT_SM_S_MQTTCLIENTID;
+				_status->isMsgSended = DIDNOTSEND;
+			return;
+			}
+			return;
+		
 		case AT_SM_S_MQTTCLIENTID:
-			if(_status->isMsgSended == DIDNOT)
-			{//MQTTUSERCFG没有发送
-				Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
-			{//等待接收超时，重发，重等
-				Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			switch(_rx3_msg->type)
+			if(_wifi->isConnect == DISCONNECT)
 			{
-				case MSG_Default:
-					return;
-				case MSG_OK:
-					//收到OK，认为USERCFG配置成功
-					_status->state = AT_SM_S_MQTTCONN;
-					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
-					_rx3_msg->type = MSG_Default;
-					break;
-				//存储的不是预想的消息类型，重发重等
-				default:
-					Serial2_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
-					_status->isMsgSended = SENDED;
-					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-					_status->runtimes = 0;
-					return;
+				return;
 			}
-			break;
+			if(_status->isMsgSended == DIDNOTSEND)
+			{//没发就发
+				Serial3_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
+				_rx3_msg->type_2 = MSG_Default;
+				_status->isMsgSended = SENDED;
+				_status->runtimes = 0;
+				/*不retuen，如果退出SM前就接到并解析消息可以直接在下面检查消息类型*/
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTCLIENTID TimeOut\r\n", strlen("Debug:\r\nS_MQTTCLIENTID TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				return;
+			}
+			if(_rx3_msg->type_2 == MSG_OK)
+			{//成功则下一步
+				_rx3_msg->type_2 = MSG_Default;
+				_status->state = AT_SM_S_MQTTCONN;
+				_status->isMsgSended = DIDNOTSEND;
+			return;
+			}
+			return;
+		
 		case AT_SM_S_MQTTCONN:
-			if(_status->isMsgSended == DIDNOT)
-			{//MQTTUSERCFG没有发送
-				Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
-			{//等待接收超时，重发，重等
-				Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			switch(_rx3_msg->type)
+			if(_wifi->isConnect == DISCONNECT)
 			{
-				case MSG_Default:
-					return;
-				case MSG_OK:
-					//收到OK，认为USERCFG配置成功
-					_status->state = AT_SM_S_MQTTSUB;
-					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
-					_rx3_msg->type = MSG_Default;
-					break;
-				//存储的不是预想的消息类型，重发重等
-				default:
-					Serial2_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
-					_status->isMsgSended = SENDED;
-					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-					_status->runtimes = 0;
-					return;
+				return;
 			}
-			break;
+			if(_status->isMsgSended == DIDNOTSEND)
+			{//没发就发
+				Serial3_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
+				_rx3_msg->type_2 = MSG_Default;
+				_status->isMsgSended = SENDED;
+				_status->runtimes = 0;
+				/*不retuen，如果退出SM前就接到并解析消息可以直接在下面检查消息类型*/
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTCONN TimeOut\r\n", strlen("Debug:\r\nS_MQTTCONN TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				return;
+			}
+			if(_rx3_msg->type_2 == MSG_OK || _rx3_msg->type_2 == MSG_MQTTCONN_OK)
+			{//成功则下一步
+				_rx3_msg->type_2 = MSG_Default;
+				_status->state = AT_SM_S_MQTTSUB;
+				_status->isMsgSended = DIDNOTSEND;
+			return;
+			}
+			return;
+			
 		case AT_SM_S_MQTTSUB:
-			if(_status->isMsgSended == DIDNOT)
-			{//MQTTUSERCFG没有发送
-				Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 10000000)
-			{//等待接收超时，重发，重等
-				Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
-				_status->isMsgSended = SENDED;
-				_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-				_status->runtimes = 0;
-				return;
-			}
-			switch(_rx3_msg->type)
+			if(_wifi->isConnect == DISCONNECT)
 			{
-				case MSG_Default:
-					return;
-				case MSG_OK:
-					//收到OK，认为USERCFG配置成功
-					_status->state = AT_SM_S_Report;
-					/*进AT_SM_S_Report前的配置*/
-					AT_Report_Ctrl = ON;
-					
-					_status->isMsgSended = DIDNOT;	//进新状态要置DIDNOT发送特定消息
-					_rx3_msg->type = MSG_Default;
-					break;
-				//存储的不是预想的消息类型，重发重等
-				default:
-					Serial2_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
-					_status->isMsgSended = SENDED;
-					_rx3_msg->type = MSG_Default;	//为接收新消息做准备
-					_status->runtimes = 0;
-					return;
+				return;
 			}
-			break;
-		case AT_SM_S_Report:
-			
-			break;
-		case AT_SM_S_CWJAP_Q:
-			
-			break;
+			if(_status->isMsgSended == DIDNOTSEND)
+			{//没发就发
+				Serial3_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
+				_rx3_msg->type_2 = MSG_Default;
+				_status->isMsgSended = SENDED;
+//				_status->runtimes = 0;
+				/*不retuen，如果退出SM前就接到并解析消息可以直接在下面检查消息类型*/
+				return;
+			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTSUB TimeOut\r\n", strlen("Debug:\r\nS_MQTTSUB TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				return;
+			}
+			if(_rx3_msg->type_2 == MSG_OK)
+			{//成功则下一步
+				_rx3_msg->type_2 = MSG_Default;
+				_status->state = AT_SM_S_IDLE;
+				AT_Report_Ctrl = ON;
+				_status->isMsgSended = DIDNOTSEND;
+			return;
+			}
+			return;
+		
+		case AT_SM_S_IDLE:
+			if(_wifi->isConnect == DISCONNECT)
+			{//没网就等
+				AT_Report_Ctrl = OFF;
+				return;
+			}
+			if(_wifi->isConnect == CONNECT && _mqtt->isMqttConnect ==CONNECT)
+			{
+				AT_Report_Ctrl = ON;
+				return;
+			}
+		
 		default:
-			Serial2_SendString("AT_SM state error\r\n",strlen("AT_SM state error\r\n"));	//【Debug】
 			break;
-	}	//	END OF switch()
+	}
+	
+	
 }	//	END OF AT_SM()
 
 

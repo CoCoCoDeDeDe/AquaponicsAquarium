@@ -24,12 +24,21 @@ typedef enum
 	DISCONNECT
 }	connectStatus_t_e;
 
+typedef enum
+{
+	DIDNOTCFG,
+	CFGED
+}	configStatus_t_e;
+
 /*定义 WIFI 配置信息结构体
 可放入IP【可更新】*/
 typedef struct
 {
 	char		ssid[WIFI_SSID_LEN];
 	char		pwd[WIFI_PWD_LEN];
+	/*要重新配置WiFi前需重置，按要求配置完WiFi后置1，
+	没有更改WiFi需求的情况下一旦连接过WiFi就一直置1*/
+	configStatus_t_e			isConfiged;
 	connectStatus_t_e		isConnect;
 } wifi_t;
 
@@ -98,13 +107,16 @@ typedef enum
 	MSG_Default,
 	MSG_PowerOn,
 	MSG_NONE,
+	MSG_BUSY,
+	MSG_ATE0_OK,
 	MSG_WIFI_CONNECTED,
 	MSG_WIFI_GOT_IP,
 	MSG_WIFI_DISCONNECTED,
 	MSG_ERROR,
 	MSG_OK,		//多一些识别标志防止误判
 	MSG_MQTTCONN_OK,
-	MSG_MQTTDISCONNECTED
+	MSG_MQTTDISCONNECTED,
+	MSG_MQTTSUBRECV
 } Msg_t_e;
 
 /** 
@@ -123,7 +135,7 @@ typedef struct
   */
 typedef enum
 {
-	CMD_UNKNOWN,
+	CMD_UNKNOW,
 	CMD_WPVR,
 	CMD_APRS,
 	CMD_WHRS,
@@ -187,19 +199,25 @@ typedef struct
   */
 typedef enum
 {
+	/*此状态是为了同步AT_SM与Serial3的开启，防止TIM4开启使得AT_SM也开启，
+	但此时Serial3还未开启导致收发不同步*/
 	AT_SM_S_Default,
+	/*此状态是Serial3开启后，STM32接受ESP8266的上电消息，确认ESP8266的连接状态*/
 	AT_SM_S_PowerOn,
-	AT_SM_S_ATE0,		//关闭消息回显，下一状态去哪取决于WiFi是否连接
-	AT_SM_S_ATCWMODE_1,
-	AT_SM_S_CWQAP_1,
-	AT_SM_S_CIPMUX_0,
-	AT_SM_S_CWJAP_1,
+	AT_SM_S_ATE0,
+	/*此状态是为未来可变wifi配置准备的，手机端更改STM32的WiFi配置信息，
+	并让STM32通知ESP8266重新配置和连接WiFi*/
+	AT_SM_S_CWJAP_C,
+	/*此状态是每次上电后为ESP8266配置MQTT配置信息的第一步，先发送配置信息，
+	然后检查接受超时和接受信息，标志记得清零*/
 	AT_SM_S_MQTTUSERCFG,
 	AT_SM_S_MQTTCLIENTID,
 	AT_SM_S_MQTTCONN,
-	AT_SM_S_MQTTSUB,		//MQTT配置完成后SM进入日常report状态
-	AT_SM_S_Report,				//下行命令的处理和上行命令的发送在接受中断中自动完成，但可能因为性能问题而异常。【可优化】
-	AT_SM_S_CWJAP_Q,		//AT+CEJAP?命令的收发处理，用于在WiFi连接出现异常后对WiFi状态的检查。在配置过WiFi和MQTT后才能进入。
+	AT_SM_S_MQTTSUB,		//此后，MQTT配置完成，SM进入日常根据WIFI连接状态控制report状态
+	/*此状态的前提是WiFi、MQTT、订阅都已配置且连接成功，
+	此状态要report控制运行状态，当WIFI连接则开启report*/
+	AT_SM_S_IDLE,
+	AT_SM_S_WaitingWiFi
 } at_sm_state_t_e;
 
 
@@ -208,7 +226,7 @@ typedef enum
   */
 typedef enum
 {
-	DIDNOT,
+	DIDNOTSEND,
 	SENDED
 }	isMsgSended_t_e;
 

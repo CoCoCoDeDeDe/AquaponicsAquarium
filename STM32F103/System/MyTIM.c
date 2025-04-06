@@ -108,7 +108,7 @@ void MyTIM3_Init(
 
 void MyTIM4_Init(
 	uint8_t NVIC_IRQChannelPreemptionPriority, 
-	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=【10000】Hz,TCNT=【0.0001】s=【100】us
+	uint8_t NVIC_IRQChannelSubPriority) {	//fCNT=【1000】Hz,TCNT=【0.001】s=【1000】us
 	
 	TIM_InternalClockConfig(TIM4);
 	
@@ -117,7 +117,7 @@ void MyTIM4_Init(
 	TIM_TimeBaseInitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInitStruct.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInitStruct.TIM_Prescaler = 720 - 1;	//0~65535
-	TIM_TimeBaseInitStruct.TIM_Period = 10 - 1;	//0~65535
+	TIM_TimeBaseInitStruct.TIM_Period = 1000 - 1;	//0~65535
 	TIM_TimeBaseInitStruct.TIM_RepetitionCounter = 1-1;
 	TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStruct);
 	
@@ -134,6 +134,7 @@ void MyTIM4_Init(
 	NVIC_Init(&NVIC_InitStruct);
 	
 	TIM_Cmd(TIM4, DISABLE);//【Cmd】
+	
 }
 
 void MyTIMx_ENABLECmd(TIM_TypeDef* TIMx) {
@@ -169,7 +170,7 @@ void TIM2_IRQHandler(void) {//TCKCNT=1us,TCNT=5us
 }
 
 
-void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
+void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s=10000us
 	if(TIM_GetITStatus(TIM3, TIM_IT_Update) == SET) {
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 		
@@ -186,6 +187,8 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s
 		MyTIM3_DIVy(3000000/10000);
 		
 		MyWaterTS_TaskSuccedCheckTimer();
+		
+		AT_SM(&at_sm_status, &rx3_msg, &wifi, &mqtt);
 	}
 }
 
@@ -222,16 +225,16 @@ void MyTIM3_DIVy(uint16_t y)
 		
 		MyWaterTS_TaskSM_TurnOn();
 		
-//		AT_Report();
+		AT_Report();
 	}
 }
 
+/*TIM4中断权限如果太高会阻塞程序*/
 void TIM4_IRQHandler(void) {//TCKCNT=【】us,TCNT=【】s
 	if(TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
 		
-		//MyTIM_4Count++;
+		MyTIM_4Count++;
 		
-//		AT_SM(&at_sm_status, &wifi, &rx3_msg);
 	}
 }
