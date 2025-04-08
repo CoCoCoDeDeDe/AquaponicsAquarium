@@ -1,5 +1,5 @@
-.\objects\myadcanddma.o: Hardware\MyADCAndDMA.c
-.\objects\myadcanddma.o: Hardware\MyADCAndDMA.h
+.\objects\myadcanddma.o: Hardware_ADC\MyADCAndDMA.c
+.\objects\myadcanddma.o: Hardware_ADC\MyADCAndDMA.h
 .\objects\myadcanddma.o: .\Start\stm32f10x.h
 .\objects\myadcanddma.o: .\Start\core_cm3.h
 .\objects\myadcanddma.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdint.h

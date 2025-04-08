@@ -161,7 +161,7 @@ void TIM2_IRQHandler(void) {//TCKCNT=1us,TCNT=5us
 		
 		//MyTIM_2Count++;
 		
-		MyWaterSS_TrigCtrler();
+//		MyWaterSS_TrigCtrler();
 		
 		MyAirS_WriterSM();
 		
@@ -200,7 +200,7 @@ void MyTIM3_DIV10(void)
 	{
 		cnt = 0;
 		
-		MyWaterSS_TrigCtrlerSwitchOn();//批准发送Trig信号，在下一个TIM2中断开始
+//		MyWaterSS_TrigCtrlerSwitchOn();//批准发送Trig信号，在下一个TIM2中断开始
 	}
 }
 

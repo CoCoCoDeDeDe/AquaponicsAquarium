@@ -1,5 +1,5 @@
-.\objects\mywaterp.o: Hardware\MyWaterP.c
-.\objects\mywaterp.o: Hardware\MyWaterP.h
+.\objects\mywaterp.o: Hardware_TIM\MyWaterP.c
+.\objects\mywaterp.o: Hardware_TIM\MyWaterP.h
 .\objects\mywaterp.o: .\Start\stm32f10x.h
 .\objects\mywaterp.o: .\Start\core_cm3.h
 .\objects\mywaterp.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdint.h

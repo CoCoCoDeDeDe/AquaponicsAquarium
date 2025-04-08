@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Library;.\User;.\Start;.\System;.\Hardware</IncludePath>
+              <IncludePath>.\Library;.\User;.\Start;.\System;.\Hardware;.\Hardware_ADC;.\Hardware_OneWire;.\Hardware_TIM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -426,11 +426,6 @@
               <FilePath>.\Library\misc.h</FilePath>
             </File>
             <File>
-              <FileName>stm32f10x_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Library\stm32f10x_adc.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f10x_bkp.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Library\stm32f10x_bkp.c</FilePath>
@@ -439,6 +434,11 @@
               <FileName>stm32f10x_adc.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Library\stm32f10x_adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Library\stm32f10x_adc.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_bkp.h</FileName>
@@ -761,134 +761,129 @@
               <FilePath>.\Hardware\OLED.h</FilePath>
             </File>
             <File>
+              <FileName>AirP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\AirP.c</FilePath>
+            </File>
+            <File>
+              <FileName>AirP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\AirP.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Hardware_OneWire</GroupName>
+          <Files>
+            <File>
+              <FileName>AirS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_OneWire\AirS.c</FilePath>
+            </File>
+            <File>
+              <FileName>AirS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_OneWire\AirS.h</FilePath>
+            </File>
+            <File>
               <FileName>MyWaterTS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterTS.c</FilePath>
+              <FilePath>.\Hardware_OneWire\MyWaterTS.c</FilePath>
             </File>
             <File>
               <FileName>MyWaterTS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterTS.h</FilePath>
+              <FilePath>.\Hardware_OneWire\MyWaterTS.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Hardware_TIM</GroupName>
+          <Files>
             <File>
-              <FileName>MyAirS.c</FileName>
+              <FileName>PlantGL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAirS.c</FilePath>
+              <FilePath>.\Hardware_TIM\PlantGL.c</FilePath>
             </File>
             <File>
-              <FileName>MyAirS.h</FileName>
+              <FileName>PlantGL.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAirS.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterSS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterSS.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterSS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterSS.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyFeeder.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyFeeder.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyFeeder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyFeeder.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterP.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterP.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterP.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyAquariumL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAquariumL.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyAquariumL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAquariumL.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyPlantGL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyPlantGL.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyPlantGL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyPlantGL.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyADCAndDMA.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyADCAndDMA.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyADCAndDMA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyADCAndDMA.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterQS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterQS.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyWaterQS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterQS.h</FilePath>
-            </File>
-            <File>
-              <FileName>MySoilMS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MySoilMS.c</FilePath>
-            </File>
-            <File>
-              <FileName>MySoilMS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MySoilMS.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyIlluminationS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyIlluminationS.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyIlluminationS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyIlluminationS.h</FilePath>
-            </File>
-            <File>
-              <FileName>MyAirP.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\MyAirP.c</FilePath>
-            </File>
-            <File>
-              <FileName>MyAirP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\MyAirP.h</FilePath>
+              <FilePath>.\Hardware_TIM\PlantGL.h</FilePath>
             </File>
             <File>
               <FileName>MyWaterH.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\MyWaterH.c</FilePath>
+              <FilePath>.\Hardware_TIM\MyWaterH.c</FilePath>
             </File>
             <File>
               <FileName>MyWaterH.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\MyWaterH.h</FilePath>
+              <FilePath>.\Hardware_TIM\MyWaterH.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_TIM\MyWaterP.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyWaterP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_TIM\MyWaterP.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyFeeder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_TIM\MyFeeder.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyFeeder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_TIM\MyFeeder.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Hardware_ADC</GroupName>
+          <Files>
+            <File>
+              <FileName>WaterLS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_ADC\WaterLS.c</FilePath>
+            </File>
+            <File>
+              <FileName>WaterLS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_ADC\WaterLS.h</FilePath>
+            </File>
+            <File>
+              <FileName>WaterQS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_ADC\WaterQS.c</FilePath>
+            </File>
+            <File>
+              <FileName>WaterQS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_ADC\WaterQS.h</FilePath>
+            </File>
+            <File>
+              <FileName>LightS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_ADC\LightS.c</FilePath>
+            </File>
+            <File>
+              <FileName>LightS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_ADC\LightS.h</FilePath>
+            </File>
+            <File>
+              <FileName>MyADCAndDMA.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware_ADC\MyADCAndDMA.c</FilePath>
+            </File>
+            <File>
+              <FileName>MyADCAndDMA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware_ADC\MyADCAndDMA.h</FilePath>
             </File>
           </Files>
         </Group>

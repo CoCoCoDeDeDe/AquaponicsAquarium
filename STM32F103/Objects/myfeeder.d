@@ -1,5 +1,5 @@
-.\objects\myfeeder.o: Hardware\MyFeeder.c
-.\objects\myfeeder.o: Hardware\MyFeeder.h
+.\objects\myfeeder.o: Hardware_TIM\MyFeeder.c
+.\objects\myfeeder.o: Hardware_TIM\MyFeeder.h
 .\objects\myfeeder.o: .\Start\stm32f10x.h
 .\objects\myfeeder.o: .\Start\core_cm3.h
 .\objects\myfeeder.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdint.h

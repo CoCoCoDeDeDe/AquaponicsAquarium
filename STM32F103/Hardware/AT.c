@@ -20,20 +20,18 @@
 #include "MyWaterP.h"
 
 #include "MyWaterSS.h"
-#include "MyAirS.h"
+#include "AirS.h"
 #include "MyWaterTS.h"
 
-#include "MyWaterQS.h"
-#include "MySoilMS.h"
-#include "MyIlluminationS.h"
+#include "WaterLS.h"
+#include "WaterQS.h"
+#include "LightS.h"
 
 #include "MyADCAndDMA.h"
 
-#include "MyPlantGL.h"
-#include "MyAirP.h"
+#include "PlantGL.h"
+#include "AirP.h"
 #include "MyWaterH.h"
-
-#include "MyAquariumL.h"
 
 #include "Serial3.h"
 #include "Serial2.h"
@@ -412,7 +410,8 @@ int8_t AT_Report(void)
 	{
 		case 0:
 			AT_Report_1(
-				WaterSD, 
+				1,
+//				WaterSD, 
 				MyADCAndDMA_Result[1], 
 				MyADCAndDMA_Result[2], 
 				MyWaterTS_Result_12Bit_H7Bit, 
@@ -424,7 +423,7 @@ int8_t AT_Report(void)
 		case 1:
 			AT_Report_2(
 				MyADCAndDMA_Result[3], 
-				AquariumLVR, 
+				66, 												//【TODO】
 				PlantGLVR, 
 				FeederRS, 
 				AirT, 
@@ -599,6 +598,7 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 				于是转去配置WiFi*/
 				_status->state = AT_SM_S_ATE0;
 //				Serial3_SendString("Debug:\r\nS_PowerOn TimeOut\r\n", strlen("Debug:\r\nS_PowerOn TimeOut\r\n"));//【Debug】
+				_status->runtimes = 0;
 				return;
 			}
 			if(_wifi->isConnect == CONNECT)
@@ -623,6 +623,7 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 			{//超时重发
 //				Serial3_SendString("Debug:\r\nS_CWJAP_C TimeOut\r\n", strlen("Debug:\r\nS_CWJAP_C TimeOut\r\n"));//【Debug】
 				_status->isMsgSended = DIDNOTSEND;
+				_status->runtimes = 0;
 				return;
 			}
 			if(_rx3_msg->type_2 == MSG_OK || _rx3_msg->type_2 == MSG_ATE0_OK)
@@ -641,6 +642,13 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 				_status->state = AT_SM_S_MQTTUSERCFG;
 				return;
 			}
+			if(_status->runtimes * _status->runtimes_repriod >= 20000000)
+			{//超时重发
+				Serial3_SendString("Debug:\r\nS_CWJAP_C TimeOut\r\n", strlen("Debug:\r\nS_CWJAP_C TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				_status->runtimes = 0;
+				return;
+			}
 			if(_status->isMsgSended == DIDNOTSEND)
 			{//没发就发
 				Serial3_SendString(ATCMD_CWJAP_C_main, strlen(ATCMD_CWJAP_C_main));
@@ -648,14 +656,7 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 				_status->isMsgSended = SENDED;
 				_status->runtimes = 0;
 			}
-			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
-			{//超时重发
-//				Serial3_SendString("Debug:\r\nS_CWJAP_C TimeOut\r\n", strlen("Debug:\r\nS_CWJAP_C TimeOut\r\n"));//【Debug】
-				_status->isMsgSended = DIDNOTSEND;
-				return;
-			}
-			if(_rx3_msg->type_2 == MSG_OK ||
-				_rx3_msg->type_2 == MSG_WIFI_CONNECTED ||
+			if(_rx3_msg->type_2 == MSG_WIFI_CONNECTED ||
 				_rx3_msg->type_2 == MSG_WIFI_GOT_IP ||
 				_wifi->isConnect == CONNECT)
 			{//成功则下一步
@@ -673,18 +674,19 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 			{
 				return;
 			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTUSERCFG TimeOut\r\n", strlen("Debug:\r\nS_MQTTUSERCFG TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				_status->runtimes = 0;
+				return;
+			}
 			if(_status->isMsgSended == DIDNOTSEND)
 			{//没发就发
 				Serial3_SendString(ATCMD_MQTTUSERCFG_main, strlen(ATCMD_MQTTUSERCFG_main));
 				_rx3_msg->type_2 = MSG_Default;
 				_status->isMsgSended = SENDED;
 				_status->runtimes = 0;
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
-			{//超时重发
-//				Serial3_SendString("Debug:\r\nS_MQTTUSERCFG TimeOut\r\n", strlen("Debug:\r\nS_MQTTUSERCFG TimeOut\r\n"));//【Debug】
-				_status->isMsgSended = DIDNOTSEND;
-				return;
 			}
 			if(_rx3_msg->type_2 == MSG_OK)
 			{//成功则下一步
@@ -700,6 +702,13 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 			{
 				return;
 			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTCLIENTID TimeOut\r\n", strlen("Debug:\r\nS_MQTTCLIENTID TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				_status->runtimes = 0;
+				return;
+			}
 			if(_status->isMsgSended == DIDNOTSEND)
 			{//没发就发
 				Serial3_SendString(ATCMD_MQTTCLIENTID_main, strlen(ATCMD_MQTTCLIENTID_main));
@@ -707,12 +716,6 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 				_status->isMsgSended = SENDED;
 				_status->runtimes = 0;
 				/*不retuen，如果退出SM前就接到并解析消息可以直接在下面检查消息类型*/
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
-			{//超时重发
-//				Serial3_SendString("Debug:\r\nS_MQTTCLIENTID TimeOut\r\n", strlen("Debug:\r\nS_MQTTCLIENTID TimeOut\r\n"));//【Debug】
-				_status->isMsgSended = DIDNOTSEND;
-				return;
 			}
 			if(_rx3_msg->type_2 == MSG_OK)
 			{//成功则下一步
@@ -728,6 +731,13 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 			{
 				return;
 			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTCONN TimeOut\r\n", strlen("Debug:\r\nS_MQTTCONN TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				_status->runtimes = 0;
+				return;
+			}
 			if(_status->isMsgSended == DIDNOTSEND)
 			{//没发就发
 				Serial3_SendString(ATCMD_MQTTCONN_main, strlen(ATCMD_MQTTCONN_main));
@@ -735,12 +745,6 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 				_status->isMsgSended = SENDED;
 				_status->runtimes = 0;
 				/*不retuen，如果退出SM前就接到并解析消息可以直接在下面检查消息类型*/
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
-			{//超时重发
-//				Serial3_SendString("Debug:\r\nS_MQTTCONN TimeOut\r\n", strlen("Debug:\r\nS_MQTTCONN TimeOut\r\n"));//【Debug】
-				_status->isMsgSended = DIDNOTSEND;
-				return;
 			}
 			if(_rx3_msg->type_2 == MSG_OK || _rx3_msg->type_2 == MSG_MQTTCONN_OK)
 			{//成功则下一步
@@ -756,6 +760,13 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 			{
 				return;
 			}
+			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
+			{//超时重发
+//				Serial3_SendString("Debug:\r\nS_MQTTSUB TimeOut\r\n", strlen("Debug:\r\nS_MQTTSUB TimeOut\r\n"));//【Debug】
+				_status->isMsgSended = DIDNOTSEND;
+				_status->runtimes = 0;
+				return;
+			}
 			if(_status->isMsgSended == DIDNOTSEND)
 			{//没发就发
 				Serial3_SendString(ATCMD_MQTTSUB_main, strlen(ATCMD_MQTTSUB_main));
@@ -763,12 +774,6 @@ void AT_SM(at_sm_status_t *_status, rx3_msg_t *_rx3_msg, wifi_t *_wifi, mqtt_t *
 				_status->isMsgSended = SENDED;
 //				_status->runtimes = 0;
 				/*不retuen，如果退出SM前就接到并解析消息可以直接在下面检查消息类型*/
-				return;
-			}
-			if(_status->runtimes * _status->runtimes_repriod >= 5000000)
-			{//超时重发
-//				Serial3_SendString("Debug:\r\nS_MQTTSUB TimeOut\r\n", strlen("Debug:\r\nS_MQTTSUB TimeOut\r\n"));//【Debug】
-				_status->isMsgSended = DIDNOTSEND;
 				return;
 			}
 			if(_rx3_msg->type_2 == MSG_OK)

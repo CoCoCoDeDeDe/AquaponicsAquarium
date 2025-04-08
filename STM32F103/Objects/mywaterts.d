@@ -1,5 +1,5 @@
-.\objects\mywaterts.o: Hardware\MyWaterTS.c
-.\objects\mywaterts.o: Hardware\MyWaterTS.h
+.\objects\mywaterts.o: Hardware_OneWire\MyWaterTS.c
+.\objects\mywaterts.o: Hardware_OneWire\MyWaterTS.h
 .\objects\mywaterts.o: .\Start\stm32f10x.h
 .\objects\mywaterts.o: .\Start\core_cm3.h
 .\objects\mywaterts.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stdint.h

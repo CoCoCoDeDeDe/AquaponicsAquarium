@@ -58,6 +58,18 @@ Things TO DO
 	DONE		测试PC-STM32 Serial3信息识别功能
 	DONE		测试STM32-ESP8266沟通逻辑
 	DONE		配置MQTT-MCU-ServerV2
+	DONE		ADC调试
+	TODO		PlantGL调试
+	TODO		AirPump调试
+	TODO		WaterP调试
+	TODO		Feeder调试
+	TODO		Feeder设计
+	TODO		WaterH调试
+	TODO		更新华为云IoT产品
+	TODO		更新AT\Serial2
+	TODO		配置新版功能。更新:WaterSD
+	TODO		将新版配置到AT
+	TODO		全面检查:上传的属性
 	TODO		组装原型机
 	TODO		设计Feeder并完善代码.
 	TODO		配置AT24C02

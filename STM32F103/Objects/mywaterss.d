@@ -37,7 +37,7 @@
 .\objects\mywaterss.o: .\Hardware\MyTest.h
 .\objects\mywaterss.o: .\Hardware\OLED.h
 .\objects\mywaterss.o: .\Hardware\MyWaterSS.h
-.\objects\mywaterss.o: .\Hardware\MyAirS.h
+.\objects\mywaterss.o: .\Hardware\AirS.h
 .\objects\mywaterss.o: .\Hardware\MyWaterTS.h
 .\objects\mywaterss.o: .\Hardware\Serial3.h
 .\objects\mywaterss.o: .\System\common_types.h

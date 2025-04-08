@@ -37,8 +37,8 @@
 .\objects\mytim.o: D:\YYFprogramFiles\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\mytim.o: .\System\Delay.h
 .\objects\mytim.o: .\System\MyTIM.h
-.\objects\mytim.o: .\Hardware\MyAirS.h
-.\objects\mytim.o: .\Hardware\MyWaterTS.h
+.\objects\mytim.o: .\Hardware_OneWire\AirS.h
+.\objects\mytim.o: .\Hardware_OneWire\MyWaterTS.h
 .\objects\mytim.o: .\Hardware\Serial3.h
 .\objects\mytim.o: .\System\common_types.h
 .\objects\mytim.o: .\Hardware\AT.h

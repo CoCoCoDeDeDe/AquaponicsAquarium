@@ -26,22 +26,19 @@
 #include "MyWaterP.h"
 
 #include "MyWaterSS.h"
-#include "MyAirS.h"
+#include "AirS.h"
 #include "MyWaterTS.h"
 
-#include "MyWaterQS.h"
-#include "MySoilMS.h"
-#include "MyIlluminationS.h"
+#include "WaterQS.h"
+#include "LightS.h"
 
 #include "MyADCAndDMA.h"
 
-#include "MyPlantGL.h"
-#include "MyAirP.h"
+#include "PlantGL.h"
+#include "AirP.h"
 #include "MyWaterH.h"
 
 #include "Serial2.h"
-
-#include "MyAquariumL.h"
 
 //TODO:USART3DMASendString
 //TODO:USART3DMAReceiveString
@@ -433,7 +430,7 @@ void USART3_IRQHandler(void)
 						case CMD_ALVR:
 //							Serial3_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));	//【Debug】
 							Serial2_SendString("CMD_ALVR\r\n", strlen("CMD_ALVR\r\n"));	//【Debug】
-							MyAquariumL_SetVoltageRatio(atoi(cmd.para_value));
+//							MyAquariumL_SetVoltageRatio(atoi(cmd.para_value));
 							break;
 						case CMD_PGLVR:
 //							Serial3_SendString("CMD_PGLVR\r\n", strlen("CMD_PGLVR\r\n"));	//【Debug】

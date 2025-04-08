@@ -23,21 +23,19 @@
 #include "MyFeeder.h"
 #include "MyWaterP.h"
 
-#include "MyWaterSS.h"
-#include "MyAirS.h"
+//#include "MyWaterSS.h"
+#include "AirS.h"
 #include "MyWaterTS.h"
 
-#include "MyWaterQS.h"
-#include "MySoilMS.h"
-#include "MyIlluminationS.h"
+#include "WaterLS.h"
+#include "WaterQS.h"
+#include "LightS.h"
 
 #include "MyADCAndDMA.h"
 
-#include "MyPlantGL.h"
-#include "MyAirP.h"
+#include "PlantGL.h"
+#include "AirP.h"
 #include "MyWaterH.h"
-
-#include "MyAquariumL.h"
 
 #include "Serial3.h"
 #include "AT.h"
@@ -92,17 +90,18 @@ int main(void)
 	
 	MyWaterTS_Init();			//DS18B20
 	MyAirS_Init(1, 1);			//DHT11
-	MyWaterSS_Trig_Init();		//HC-SR04
-	MyWaterSS_Echo_Init(0, 0);	//HC-SR04
+//	MyWaterSS_Trig_Init();		//HC-SR04
+//	MyWaterSS_Echo_Init(0, 0);	//HC-SR04
 	
 	MyFeeder_Init(500);					//PA8-OC1
 	MyWaterP_Init(WaterPVR);			//PA9-OC2
-	MyAquariumL_Init(AquariumLVR);		//PA10-OC3
+	
 	MyPlantGL_Init(PlantGLVR);			//PA11-OC4
 	
-	MyWaterQS_Init();
-	MySoilMS_Init();
-	MyIlluminationS_Init();
+	
+	WaterLS_Init();
+	WaterQS_Init();
+	LightS_Init();
 	
 	MyADCAndDMA_Init(4);
 	
@@ -124,12 +123,12 @@ int main(void)
 	
 	while(1)
 	{
-		if(rx2_msg.rc == 1)
-		{
-			Serial3_SendString(rx2_msg.str, rx2_msg.len);
-			
-			rx2_msg.rc = 0;
-		}
+//		if(rx2_msg.rc == 1)
+//		{
+//			Serial3_SendString(rx2_msg.str, rx2_msg.len);
+//			
+//			rx2_msg.rc = 0;
+//		}
 		
 //		if(rx3_msg.rc_1 == 1)
 //		{
@@ -193,7 +192,7 @@ void EXTI15_10_IRQHandler(void) {	//EXTI Line 10to15的中断是合并的
 	if(EXTI_GetITStatus(EXTI_Line15) == SET) {
 		EXTI_ClearITPendingBit(EXTI_Line15);
 		
-		MyWaterSS_EchoCtrlerSM();
+//		MyWaterSS_EchoCtrlerSM();
 	}
 }
 

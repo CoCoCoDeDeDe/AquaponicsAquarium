@@ -24,7 +24,7 @@ extern uint32_t MyWaterSS_CountEchoSpan;
 
 extern uint8_t MyWaterSS_EchoCtrlerSM_State;
 
-extern uint16_t WaterSD;
+//extern uint16_t WaterSD;
 
 void MyWaterSS_Trig_Init(void);
 void MyWaterSS_Echo_Init(
