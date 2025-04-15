@@ -1,0 +1,56 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app x",
+				"backgroundColor": "black",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 50,
+				"disableSwipeBack": false,
+				"mp-weixin": {
+					"visualEffectInBackground": "hidden"
+				}
+			},
+			"needLogin": false
+		},
+		{
+			"path" : "pages/demo1/demo1",
+			"style" : 
+			{
+				"navigationBarTitleText" : "demo1",
+				"disableScroll": false
+			},
+			"needLogin": false
+		},
+		{
+			"path" : "pages/ZhiLian/ZhiLian",
+			"style" : 
+			{
+				"navigationBarTitleText" : "ZhiLian"
+			}
+		},
+		{
+			"path" : "pages/Product/Product",
+			"style" : 
+			{
+				"navigationBarTitleText" : "Product"
+			}
+		},
+		{
+			"path" : "pages/User/User",
+			"style" : 
+			{
+				"navigationBarTitleText" : "User"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationStyle": "custom",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app x",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}

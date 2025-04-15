@@ -1,0 +1,261 @@
+<script setup lang="uts">
+// 使用 Vue 3 的 <script setup> 语法糖
+/*<script type="importmap">
+  {
+    "imports": {
+      "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+    }
+  }
+<//script>
+*/
+import { ref, onMounted} from 'vue'  // 从 Vue 导入需要的 Composition API 方法
+
+// 创建一个响应式引用对象，初始值为 '20px'
+// ref() 会将基本类型值包装为响应式对象，通过 .value 访问
+const statusBarHeight = ref('20px') // 默认值设为带单位的字符串
+
+// 组件挂载完成后执行的生命周期钩子
+onMounted(() => {
+  // 调用 uni-app 的 API 获取系统信息
+  uni.getSystemInfo({
+    // 成功回调函数
+    success: (res) => {
+      // 从返回结果中获取状态栏高度，若不存在则使用默认值 20
+      // 使用模板字符串添加 'px' 单位
+      statusBarHeight.value = `${res.statusBarHeight || 20}px`
+    }
+  })
+})
+
+onPullDownRefresh(async () => {
+	try {
+		// 1. 封装同步 API 为 Promise 
+		await new Promise(resolve => {
+			uni.startPullDownRefresh();	//触发下拉动画（同步)
+			setTimeout(resolve, 300);	//模拟动画耗时
+		})
+		
+		// 2. 刷新操作（异步)
+		
+		// 3. 停止刷新
+		uni.stopPullDownRefresh();
+	} catch (err) {
+		console.error('下拉刷新出错:',err);
+		uni.stopPullDownRefresh();	//确保动画关闭
+	}
+});
+
+//下拉刷新的刷新操作
+function fetchData() {
+	return new Promise((resolve, reject) => {
+		uni.request({
+			url: '/api/data',
+			success: (res) => resolve(res.data),
+			fail: (err) => reject(new Error(err.errCode.toString()))
+		});
+	});
+}
+</script>
+
+<template lang="html">
+	<view class="allBox">
+		<view class="background">
+			<view class="status_bar" :style="{height: statusBarHeight}">
+				<!-- 状态栏占位 -->
+			</view>
+			<view class="placeAndWeatherRow">
+				<view class="placeBox">
+					<text class="font-Main">虚拟康复路小区</text>
+					<image src="/static/icon_button_Arrow1_Left.png" mode="aspectFit" class="placeBox-image"></image>
+				</view>
+				<view class="weatherBox">
+					<text class="font-Main">西青区 25℃</text>
+					<image src="/static/icon_weather_多云.png" mode="aspectFit" class="weatherBox-image"></image>
+				</view>
+			</view>
+			<view class="topBar2">
+				<view class="roomsBox">
+					<text>全场所</text>
+					<text>客厅</text>
+					<text>名字长的房间</text>
+					<text>名字更长的房间</text>
+					<text>厕所</text>
+				</view>
+				<view class="gapBox">
+					<image src="" mode=""></image>
+				</view>
+				<view class="buttonsBox">
+					<image src="" mode=""></image>
+					<image src="" mode=""></image>
+				</view>
+			</view>
+			<view class="cardsBox">
+				<view class="card1">
+					
+				</view>
+				<view class="card2">
+					
+				</view>
+				<view class="card3">
+					
+				</view>
+				<view class="card4">
+					
+				</view>
+				<view class="card5">
+					
+				</view>
+			</view>
+		</view>
+		<view class="btm_bar background-color-btm_bar-cardBoard">
+			<navigator url="/pages/index/index" class="btm_bar_linkBox">
+				<image src="/static/icon_Space_Client@4x.png" mode="aspectFit" class="btm_bar_linkBox_img" />
+				<text class="btm_bar_linkBox_text font-Vice">场所</text>
+			</navigator>
+			<navigator url="/pages/ZhiLian/ZhiLian" class="btm_bar_linkBox">
+				<image src="/static/icon_Product_Client@4x.png" mode="aspectFit" class="btm_bar_linkBox_img" />
+				<text class="btm_bar_linkBox_text font-Vice">智联</text>
+			</navigator>
+			<navigator url="/pages/Product/Product" class="btm_bar_linkBox">
+				<image src="/static/icon_ZhiLian_Sclien@4x.png" mode="aspectFit" class="btm_bar_linkBox_img" />
+				<text class="btm_bar_linkBox_text font-Vice">产品</text>
+			</navigator>
+			<navigator url="/pages/User/User" class="btm_bar_linkBox">
+				<image src="/static/icon_User_Clien@4x.png" mode="aspectFit" class="btm_bar_linkBox_img" />
+				<text class="btm_bar_linkBox_text font-Vice">用户</text>
+			</navigator>
+		</view>
+	</view>
+</template>
+
+<style lang="scss">
+
+.font-Main {
+	color: #181441;
+}
+
+.font-Vice {
+	color:#767676;
+}
+
+.background-color-btm_bar-cardBoard {
+	background-color: FFFFFF;
+}
+
+.allBox {
+	width: 100%;
+	height: 100%;
+}
+
+.background {
+	background: #CAE4F8;
+	background: linear-gradient(180deg, rgba(202, 228, 248, 1) 0%, rgba(202, 228, 248, 1) 21%, rgba(248, 252, 255, 1) 100%);
+	height: 90%;
+}
+
+.status_bar {
+	width: 100%;
+}
+
+.placeAndWeatherRow {
+	width: 100%;
+	height: 80rpx;
+	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+}
+
+.placeBox {
+	margin-left: 20rpx;
+	box-align: center;
+	
+	flex: auto;
+	flex-grow: 0;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8rpx;
+}
+
+.placeBox > text {
+	font-size: 38rpx;
+	font-weight: 500;
+}
+
+.placeBox-image {
+	padding-top: 4rpx;
+	
+	width: 28rpx;
+	height: 28rpx;
+	
+	
+	display: block;
+}
+
+.weatherBox {
+	margin-right: 20rpx;
+	box-align: center;
+	text-align: center;
+	
+	flex: auto;
+	flex-grow: 0;
+	
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8rpx;
+}
+
+.weatherBox > text{
+	font-size: 26rpx;
+	font-weight: 500;
+	
+	margin-right: 5rpx;
+}
+
+.weatherBox-image {
+	display: block;
+	
+	width: 66rpx;
+	height: 66rpx;
+}
+
+.btm_bar {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 10%;
+	padding-left: 10rpx;
+	padding-right: 10rpx;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: stretch;
+}
+.btm_bar > .btm_bar_linkBox {
+	flex: auto;
+	flex-grow: 0;
+	width: 160rpx;
+	padding-top: 26rpx;
+}
+.btm_bar > .btm_bar_linkBox .btm_bar_linkBox_img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	box-align: center;
+	width: 60rpx;
+	height: 60rpx;
+}
+.btm_bar > .btm_bar_linkBox .btm_bar_linkBox_text {
+	font-size: 20rpx;
+	margin-top: 16rpx;
+	text-align: center;
+}
+</style>

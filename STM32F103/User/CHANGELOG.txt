@@ -73,6 +73,7 @@ Things TO DO
 	TODO		组装原型机
 	TODO		设计Feeder并完善代码.
 	TODO		配置AT24C02
+	TODO		配置W25Q64
 	TODO		设计用手机配置WIFI账号和密码以及分配使用权到用户账号的功能
 	TODO		配置时间系统
 	TODO		设计鱼缸、PCB、喂食器
