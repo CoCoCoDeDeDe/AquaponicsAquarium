@@ -34,7 +34,10 @@ export default async function (ctx: FunctionContext) {
     })
 
   // 如果未找到匹配的用户文档
-  if (!user) return { error: "invalid username or password" };
+  if (!user) return {
+    runCondition: 'param error',
+    errMsg: '无效的用户名或密码',
+  };
 
   // 生成 JWT（JSON Web Token）令牌
   // 从找到的用户文档中获取用户的 _id 字段
@@ -52,6 +55,7 @@ export default async function (ctx: FunctionContext) {
 
   // 返回包含用户 ID 和访问令牌的对象
   return {
+    runCondition: 'succeed',
     uid: user_id,
     access_token: access_token,
   };

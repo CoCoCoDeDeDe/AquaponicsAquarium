@@ -8,7 +8,7 @@ import common from './utils/common'
 const db = cloud.mongo.db
 
 // 导出一个异步函数作为默认导出，该函数接收一个上下文对象 ctx
-export default async function (ctx: FunctionContext) {
+export default async function register (ctx: FunctionContext) {
   // 从上下文对象的 body 中获取用户名，如果不存在则赋值为空字符串
   const username = ctx.body?.username || "";
   // 从上下文对象的 body 中获取密码，如果不存在则赋值为空字符串
@@ -17,11 +17,17 @@ export default async function (ctx: FunctionContext) {
   // 检查用户名是否符合规则（3 到 16 位字母或数字）
   // 如果不符合规则，返回包含错误信息的对象
   if (!/^[a-zA-Z0-9]{3,16}$/.test(username))
-    return { error: "invalid username" };
+    return {
+    runCondition: 'invalid username',
+    errMsg: '用户名无效',
+  }
   // 检查密码是否符合规则（3 到 16 位字母或数字）
   // 如果不符合规则，返回包含错误信息的对象
   if (!/^[a-zA-Z0-9]{3,16}$/.test(password))
-    return { error: "invalid password" };
+    return {
+    runCondition: 'invalid password',
+    errMsg: '密码无效',
+  }
 
   // 检查用户名是否已经存在于数据库中
   // 使用 countDocuments 方法统计 users 集合中具有该用户名的文档数量
@@ -30,7 +36,10 @@ export default async function (ctx: FunctionContext) {
     .countDocuments({ username: username })
 
   // 如果用户名已存在，返回包含错误信息的对象
-  if (exists > 0) return { error: "username already existed" };
+  if (exists > 0) return {
+    runCondition: 'invalid username',
+    errMsg: '用户名已存在',
+  }
 
   // 获取当前时间并格式化
   const currentDate = new Date();
@@ -58,7 +67,12 @@ export default async function (ctx: FunctionContext) {
   const res = await db.collection("iot2_users").insertOne(document);
 
   // 打印新注册用户的插入 ID
-  console.log("user registered: ", res.insertedId);
+  console.log('成功插入新账号记录 res:', res)
+  // console.log("user registered: ", res.insertedId);
   // 返回包含插入 ID 的对象
-  return { data: res.insertedId };
-};
+  return {
+    runCondition: 'succeed',
+    errMsg: 'succeed',
+    user_id: res.insertedId,
+  }
+}

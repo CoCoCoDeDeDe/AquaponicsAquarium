@@ -76,6 +76,7 @@ export default async function (ctx: FunctionContext) {
         uniIO_id: uniIO_id,
         event_time: event_time,
         value: uniIO_valueArr[i],
+        type: 'up',
       })
     }
   }

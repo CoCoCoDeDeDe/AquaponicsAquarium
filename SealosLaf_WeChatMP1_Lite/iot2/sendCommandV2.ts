@@ -19,7 +19,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
   }
 
   // 获取用户信息记录
-  const user = laf_token_VerifyRes  // user._id 即 user_id
+  const user = laf_token_VerifyRes.user  // user._id 即 user_id
 
   // 获取 sendCommandV2 除了 laf_token 以外所有的参数
   let cmd_uniIO_id, cmd_value
@@ -64,7 +64,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
   } catch (err) {
     console.log('find uniIO 记录出错 err:', err)
     return {
-      runCondition: 'find error',
+      runCondition: 'db error',
       errMsg: 'find uniIO 记录出错',
     }
   }
@@ -92,7 +92,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
   } catch (err) {
     console.log('find device 记录出错 err:', err)
     return {
-      runCondition: 'find error',
+      runCondition: 'db error',
       errMsg: 'find device 记录出错',
     }
   }
@@ -127,7 +127,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
   } catch (err) {
     console.log('find template uniIO 记录出错 err:', err)
     return {
-      runCondition: 'find error',
+      runCondition: 'db error',
       errMsg: 'find template uniIO 记录出错',
     }
   }
@@ -240,6 +240,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
         uniIO_id: new ObjectId(cmd_uniIO_id),
         event_time: formattedDate,
         value: cmd_value,
+        type: 'down',
       })
 
   } catch (err) {
