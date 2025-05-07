@@ -3,6 +3,26 @@ import common from './utils/common'
 import getHuaweiIAMUserTokenByPassword from './admin/getHuaweiIAMUserTokenByPassword'
 import readLateastHuaweiIAMUserToken from './admin/getHuaweiIAMUserTokenByPassword'
 
+// 定义返回类型
+interface SuccessResponse {
+    command_id: string;
+    response: null;
+}
+
+interface ErrorResponse {
+    error_code: string;
+    error_msg: string;
+}
+
+// 类型守卫函数
+function isSuccessResponse(response: SuccessResponse | ErrorResponse): response is SuccessResponse {
+    return 'command_id' in response;
+}
+
+function isErrorResponse(response: SuccessResponse | ErrorResponse): response is ErrorResponse {
+    return 'error_code' in response;
+}
+
 const PROJECT_ID = process.env.PROJECT_ID
 
 const db = cloud.mongo.db
@@ -66,10 +86,10 @@ export default async function sendCommand(ctx: FunctionContext) {
                 }
             })
     } catch (err) {
-        console.log('uniIO_id:', uniIO_id)
+        console.log('find err:', err)
         return {
-            runCondition: 'find uniIO error',
-            errMsg: `find uniIO error uniIO_id: ${uniIO_id}`
+            runCondition: 'find err',
+            errMsg: `find err`
         }
     }
     console.log('获取 uniIO 信息完成 findUniIOResult:', findUniIOResult)
@@ -77,7 +97,7 @@ export default async function sendCommand(ctx: FunctionContext) {
     console.log('获取 product_id 完成 product_id:', product_id)
     console.log('获取 templateName 完成 templateName:', templateName)
 
-    // 根据 uniIO_id 和 product_id 获取 uniIO 的 type
+    // 根据 uniIO_id 和 product_id 获取 uniIO 的 type、templateName
     let findTemplateUniIOResult
     try {
     
@@ -91,8 +111,12 @@ export default async function sendCommand(ctx: FunctionContext) {
                     _id: 0,
                 }
             })
-    } catch(err) {
-        
+    } catch (err) {
+        console.log('find err:', err)
+        return {
+            runCondition: 'find err',
+            errMsg: `find err`
+        }
     }
     console.log('获取到 findTemplateUniIOResult:', findTemplateUniIOResult)
 
@@ -133,6 +157,7 @@ export default async function sendCommand(ctx: FunctionContext) {
     //     "command_id": "c241008e-fc48-4df7-a138-03bad75e68df",
     //     "response": null
     // }
+
     // 失败情况1: token 无效, 调用 getHuaweiIAMUserTokenByPassword 获取并存储新华为 token
 
     // 失败情况2: 设备不在线
@@ -149,16 +174,13 @@ export default async function sendCommand(ctx: FunctionContext) {
     // }
 
     const myHeaders = {
-        // "Authorization": "3pqDewsv2EzKAAVBMquxpE7PSwFMZt5Eq8EAf2t0",
-        // "Authorization": `Bearer  ${token}`,
-
         "X-Auth-Token": token,
         'Content-Type': 'application/json;charset=utf-8'
     }
 
-    // console.log('myHeaders:', myHeaders)
-
-    var raw = "{\"service_id\":\"All\",\"command_name\":\"FTC\",\"paras\":{\"FT\":8}}"
+    // command_name 省略
+    // var raw = "{\"service_id\":\"All\",\"command_name\":\"FTC\",\"paras\":{\"FT\":8}}"
+    var raw = `{\"service_id\":\"All\",\"paras\":{\"${templateName}\":${value}}}`
 
     var requestOptions = {
         method: 'POST',
@@ -166,11 +188,40 @@ export default async function sendCommand(ctx: FunctionContext) {
         body: raw,
     };
 
-    return await fetch("https://ad0ce5c71f.st1.iotda-app.cn-north-4.myhuaweicloud.com:443/v5/iot/509f40fd6e084d55897ef136b49777ed/devices/AQAQ25032901/commands", requestOptions)
+    const fetchRes = await fetch("https://ad0ce5c71f.st1.iotda-app.cn-north-4.myhuaweicloud.com:443/v5/iot/509f40fd6e084d55897ef136b49777ed/devices/AQAQ25032901/commands", requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+        .then(result => {
+            console.log(result)
+            return result
+        })
+        .catch(error => {
+            console.log('error', error)
+            return error
+        });
 
+    let newHuaweiToken
+
+    // 辨别华为命令 API 执行状况
+    if (isSuccessResponse(fetchRes)) {
+        console.log('成功响应:', fetchRes.command_id);
+        
+    } else if (isErrorResponse(fetchRes)) {
+        console.log('错误响应:', fetchRes.error_code, fetchRes.error_msg);
+
+        // 认为是华为 token 过期，允许获取新华为 token 1次，继续失败则失败退出
+        const getNewHuaweiTokenRes = await getHuaweiIAMUserTokenByPassword()
+        switch (getNewHuaweiTokenRes.runCondition) {
+            case 'request error':
+                console.log('sendCommand 中获取新华为 token 失败')
+                return {
+                    runCondition: 'get new huawei token error',
+                    errMsg: `get new huawei token error`
+                }
+            case 'succeed':
+                console.log('sendCommand 中获取新华为 token 成功')
+                // 继续
+        }
+    }  
 
     // 获取当前时间并格式化
     // const currentDate = new Date();
