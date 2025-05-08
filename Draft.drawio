@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17" pages="17">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17" pages="18">
   <diagram name="连接图" id="3rJq7PluwZheI7Nyh-d6">
     <mxGraphModel dx="5942" dy="2199" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -7052,6 +7052,104 @@
         </mxCell>
         <mxCell id="C1cTyxDRWLEoLjl0TApf-4" value="AHB1:&lt;div&gt;DMA&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=15;align=center;spacingRight=0;" vertex="1" parent="1">
           <mxGeometry x="-1857" y="-128" width="190" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="MCS6mwvWy6HajJ4Gf6vL" name="STM32ESP8266沟通">
+    <mxGraphModel dx="1102" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-1" target="0rTR7rVhJmdXIpJIiMI0-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-1" value="属性上报" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="570" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-2" target="0rTR7rVhJmdXIpJIiMI0-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-2" value="下行命令" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="520" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-3" target="0rTR7rVhJmdXIpJIiMI0-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-3" value="上行响应" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="570" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-5" value="每3s一次" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="230" y="595" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-6" target="0rTR7rVhJmdXIpJIiMI0-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-6" target="0rTR7rVhJmdXIpJIiMI0-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-6" value="STM32" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-7" target="0rTR7rVhJmdXIpJIiMI0-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-7" value="ESP8266" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="740" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-14" value="属性上报" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="240" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="0rTR7rVhJmdXIpJIiMI0-16" target="3mYosU-v831HqBDq7z5h-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0rTR7rVhJmdXIpJIiMI0-16" value="WSD=70&amp;amp;WQSVR=666&amp;amp;SMSVR=36&amp;amp;WT=466&amp;amp;WPVR=566&amp;amp;APRS=666&amp;amp;WHRS=667&amp;amp;ISVR=8&amp;amp;ALVR=1&amp;amp;PGLVR=6" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="270" width="700" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3mYosU-v831HqBDq7z5h-1" target="0rTR7rVhJmdXIpJIiMI0-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-1" value="STM32拼接" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-3" value="ESP8266解析" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1320" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-7" value="下行命令" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="920" y="560" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-11" value="STM32解析" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-12" value="ESP8266拼接" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="660" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3mYosU-v831HqBDq7z5h-13" target="3mYosU-v831HqBDq7z5h-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3mYosU-v831HqBDq7z5h-13" target="3mYosU-v831HqBDq7z5h-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-13" value="&lt;span style=&quot;color: rgb(25, 25, 25); font-family: Helvetica, Arial, PingFangSC-Regular, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, 微软雅黑, &amp;quot;Microsoft JhengHei&amp;quot;; text-align: start; background-color: rgb(255, 255, 255);&quot;&gt;WPVR=100&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="585" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-16" value="上行响应" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="563" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3mYosU-v831HqBDq7z5h-17" target="3mYosU-v831HqBDq7z5h-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-17" value="STM32拼接" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-18" value="解析" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="653" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="3mYosU-v831HqBDq7z5h-19" target="3mYosU-v831HqBDq7z5h-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3mYosU-v831HqBDq7z5h-19" value="&lt;span style=&quot;color: rgb(25, 25, 25); font-family: Helvetica, Arial, PingFangSC-Regular, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, 微软雅黑, &amp;quot;Microsoft JhengHei&amp;quot;; text-align: start; background-color: rgb(255, 255, 255);&quot;&gt;DOMMAND/RESPONSE&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1420" y="588" width="160" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
