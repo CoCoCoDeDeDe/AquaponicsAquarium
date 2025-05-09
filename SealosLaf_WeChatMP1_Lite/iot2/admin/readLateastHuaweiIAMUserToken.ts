@@ -21,7 +21,13 @@ export default async function readLateastHuaweiIAMUserToken() {
     })
     .then(res => {
       console.log('读取最近的华为 token 完成, res.updateAt:', res.updateAt)
-      return res
+      // return res
+      return {
+        runCondition: 'succeed',
+        errMsg: 'succeed',
+        token: res.token,
+        token_updateAt: res.updateAt,
+      }
     })
     .catch(res => {
       console.log('读取最近的华为 token 失败, res:', res)

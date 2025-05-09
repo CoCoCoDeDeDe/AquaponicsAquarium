@@ -188,7 +188,7 @@ void TIM3_IRQHandler(void) {//TCKCNT=1us,TCNT=0.01s=10000us
 		
 		MyWaterTS_TaskSuccedCheckTimer();
 		
-		AT_SM(&at_sm_status, &rx3_msg, &wifi, &mqtt);
+		
 	}
 }
 
@@ -225,7 +225,7 @@ void MyTIM3_DIVy(uint16_t y)
 		
 		MyWaterTS_TaskSM_TurnOn();
 		
-		AT_Report();
+		
 	}
 }
 

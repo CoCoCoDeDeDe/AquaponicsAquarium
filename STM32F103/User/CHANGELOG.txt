@@ -59,6 +59,9 @@ Things TO DO
 	DONE		测试STM32-ESP8266沟通逻辑
 	DONE		配置MQTT-MCU-ServerV2
 	DONE		ADC调试
+	TODO		弃用AT指令
+	TODO		属性上报到ESP8266串口
+	TODO		响应ESP8266串口命令
 	TODO		PlantGL调试
 	TODO		AirPump调试
 	TODO		WaterP调试

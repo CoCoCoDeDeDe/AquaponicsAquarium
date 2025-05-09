@@ -37,6 +37,11 @@ async function verifyTokenAndGetUser(ctx: any) {
           runCondition: 'succeed',
           user
         };
+      } else {
+        return {
+          runCondition: 'token error',
+          error: 'Invalid or expired token'
+        };
       }
     } catch (error) {
       return {
@@ -51,4 +56,9 @@ async function verifyTokenAndGetUser(ctx: any) {
   };
 }
 
-export default { formatDate, verifyTokenAndGetUser }
+function isValidNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+
+export default { formatDate, verifyTokenAndGetUser, isValidNonEmptyString }

@@ -1,4 +1,5 @@
 #include "MyTest.h"
+#include "math.h"
 
 void MyTest_PB5_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;

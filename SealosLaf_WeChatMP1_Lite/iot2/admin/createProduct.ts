@@ -10,16 +10,17 @@ export default async function createProduct (ctx: FunctionContext) {
   const currentDate = new Date();
   const formattedDate = common.formatDate(currentDate);
 
-  return
+  // return
 
   db.collection('iot2_products')
     .insertOne({
-      _id: new ObjectId('67e22c942902516e866abb29'),
-      name: '鱼菜共生智能鱼缸se1',
-      createdAt: formattedDate,
-      updateAt: formattedDate,
+      // _id: new ObjectId('67e22c942902516e866abb29'),
+      name: '鱼菜共生智能鱼缸11Promax',
+      intro: '迷你款一体式智能耕养一体设备',
       previewImg_url: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png',
       detailPoster_url: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/devicePoster1x1_22213.png',
+      createdAt: formattedDate,
+      updateAt: formattedDate,
     })
 
 }

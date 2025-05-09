@@ -30,3 +30,4 @@
 .\objects\mytest.o: .\Library\stm32f10x_wwdg.h
 .\objects\mytest.o: .\Library\misc.h
 .\objects\mytest.o: Hardware\OLED.h
+.\objects\mytest.o: .\System\math.h

@@ -13,12 +13,22 @@ export default async function (ctx: FunctionContext) {
   
   db.collection('iot2_devices')
     .insertOne({
-      _id: new ObjectId('AQAQ25032901'),
-      product_id: new ObjectId('67e22c942902516e866abb29'),
-      name: '鱼菜共生智能鱼缸se1',
+      // _id: new ObjectId('AQAQ25032901'),
+      product_id: new ObjectId('681cbb76e5dd1deebd143ff7'),
+      // huawei_device_id: null,
+      name: '鱼菜共生智能鱼缸4Promax',
       createdAt: formattedDate,
       updateAt: formattedDate,
+      test: 1,
     })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+  return
 
   db.collection('iot2_uniIOs')
     .insertMany([

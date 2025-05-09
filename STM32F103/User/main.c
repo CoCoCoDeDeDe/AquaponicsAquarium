@@ -111,18 +111,20 @@ int main(void)
 	Serial2_Init_All();
 	Serial2_SendString("Serial2_On\r\n", strlen("Serial2_On\r\n"));	//【Debug】
 	
-	/*让AT_SM在其他外设都初始化完后才能开始处理消息和连接ESP8266*/
-	AT_Init_Str();
-	Serial3_Init_All(115200, DMA_Priority_VeryHigh, 0, 0, 1, 1);
-//	Serial3_SendString("DuBug:\r\nSerial3_On\r\n", strlen("DuBug:\r\nSerial3_On\r\n"));	//【Debug】
-	at_sm_status.runtimes = 0;
-	at_sm_status.runtimes_repriod = 10000;
-	at_sm_status.state = AT_SM_S_PowerOn;
-//	Serial3_SendString("DuBug:\r\nSetAT_SM_S_PowerOn\r\n", strlen("DuBug:\r\nSetAT_SM_S_PowerOn\r\n"));	//【Debug】
+	Serial3_Init_All(115200, DMA_Priority_Medium, 0, 0, 1, 1);
+	Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));	//【Debug】
 	
 	
 	while(1)
 	{
+		Delay_ms(2000);
+		
+		Serial2_SendString("Serial2_On\r\n", strlen("Serial2_On\r\n"));	//【Debug】
+		Serial3_SendString("Serial3_On\r\n", strlen("Serial3_On\r\n"));	//【Debug】
+		
+		OLED_ShowNum(1, 1, 1, 8);
+		
+		
 //		if(rx2_msg.rc == 1)
 //		{
 //			Serial3_SendString(rx2_msg.str, rx2_msg.len);
