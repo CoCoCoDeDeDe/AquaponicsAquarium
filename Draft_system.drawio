@@ -236,7 +236,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Xh1M7-ou8zUhPZzafD54" name="taskTable">
-    <mxGraphModel dx="3864" dy="2683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="3559" dy="2477" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -649,7 +649,7 @@
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-1" value="补全&#xa;getDeviceListOfUser" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="1760" y="20" width="170" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="P6r5Z6k3Mv99crbdrZTP-3" target="Ruscn7dn7S_DIrgxad8w-53">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-3" target="Ruscn7dn7S_DIrgxad8w-53" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-3" value="退出登录卡片" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
@@ -658,7 +658,7 @@
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-4" target="P6r5Z6k3Mv99crbdrZTP-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="P6r5Z6k3Mv99crbdrZTP-4" target="Ruscn7dn7S_DIrgxad8w-57">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-4" target="Ruscn7dn7S_DIrgxad8w-57" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-4" value="退出登录图标" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -682,7 +682,7 @@
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-11" target="P6r5Z6k3Mv99crbdrZTP-13" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="P6r5Z6k3Mv99crbdrZTP-11" target="Ruscn7dn7S_DIrgxad8w-60">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-11" target="Ruscn7dn7S_DIrgxad8w-60" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-11" value="查看设备详情" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -691,243 +691,273 @@
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-12" value="编辑设备信息" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="2010" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="P6r5Z6k3Mv99crbdrZTP-13" target="Ruscn7dn7S_DIrgxad8w-1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-13" target="Ruscn7dn7S_DIrgxad8w-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-13" value="&lt;div&gt;学习动态组件&lt;/div&gt;&lt;a href=&quot;https://juejin.cn/post/7231432555321163835&quot;&gt;微信小程序中如何使用动态组件？我们都知道Vue中可以使用动态组件，那么小程序中也有这个功能吗？具体该怎么使用呢？通过文中 - 掘金&lt;/a&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1510" y="-162.5" width="210" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-1" target="Ruscn7dn7S_DIrgxad8w-34">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-1" target="Ruscn7dn7S_DIrgxad8w-34" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-1" value="uniIO卡片制作" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-1" value="uniIO卡片制作" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1830" y="-390" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-3" value="WSD" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-3" value="WSD" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1682" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-4" value="WQSVR" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-4" value="WQSVR" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1830" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-5" value="SMSVR" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-5" value="SMSVR" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1980" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-6" value="WT" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-6" value="WT" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2120" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-8" value="WPVR" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-8" value="WPVR" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2270" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-9" value="APRS" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-9" value="APRS" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2410" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-10" value="WHRS" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-10" value="WHRS" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2550" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-11" value="ISVR" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-11" value="ISVR" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2690" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-14" value="ALVR" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-14" value="ALVR" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2830" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-15" value="PGLVR" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-15" value="PGLVR" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2970" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-16" value="WPVRC" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-16" value="WPVRC" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2270" y="-690" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-17" value="APRSC" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-17" value="APRSC" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2410" y="-690" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-18" value="WHRSC" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-18" value="WHRSC" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2550" y="-690" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-19" value="ALVRC" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-19" value="ALVRC" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2830" y="-690" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-20" value="PGLVRC" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-20" value="PGLVRC" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2970" y="-690" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-21" value="FTC" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-21" value="FTC" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="3110" y="-690" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-22" value="FRS" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-22" value="FRS" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="3110" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-23" value="AT" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-23" value="AT" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="3250" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-24" value="AH" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-24" value="AH" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="3380" y="-520" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-25" target="Ruscn7dn7S_DIrgxad8w-26">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-25" target="Ruscn7dn7S_DIrgxad8w-26" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-25" target="Ruscn7dn7S_DIrgxad8w-28">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-25" target="Ruscn7dn7S_DIrgxad8w-28" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-25" value="分离控制和控制的属性的上报" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-25" value="分离控制和控制的属性的上报" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2830" y="-212.5" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-26" value="分离控制和控制的属性的上报&lt;div&gt;命令下发&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-26" value="分离控制和控制的属性的上报&lt;div&gt;命令下发&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="2770" y="-102.5" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-28" value="分离控制和控制的属性的上报&lt;div&gt;属性上报规则转发接收&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-28" value="分离控制和控制的属性的上报&lt;div&gt;属性上报规则转发接收&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="2920" y="-102.5" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-30" value="查" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-30" value="查" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1770" y="-560" width="32" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-31" value="查" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-31" value="查" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2358" y="-730" width="32" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-32" value="增" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-32" value="增" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2358" y="-770" width="32" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-33" value="子组件控制父组件" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-33" value="子组件控制父组件" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2620" y="10" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-34" target="Ruscn7dn7S_DIrgxad8w-36">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-34" target="Ruscn7dn7S_DIrgxad8w-36" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-34" target="Ruscn7dn7S_DIrgxad8w-38">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-34" target="Ruscn7dn7S_DIrgxad8w-38" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-34" value="uniIO卡片API 调用" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-34" value="uniIO卡片API 调用" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2040" y="-400" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-36" value="前端 卡片 组&lt;div&gt;有组织地调用读取 record&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-36" value="前端 卡片 组&lt;div&gt;有组织地调用读取 record&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2192" y="-290" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-38" value="指定 uniIO 调用下发命令API" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-38" value="指定 uniIO 调用下发命令API" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2332" y="-290" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-44">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-44" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-46">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-46" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-48">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-42" target="Ruscn7dn7S_DIrgxad8w-48" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-42" value="页面动态卡片组" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-42" value="页面动态卡片组" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1640" y="-400" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-44" value="flex row wrap 布局&lt;div&gt;宽屏幕可多排&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-44" value="flex row wrap 布局&lt;div&gt;宽屏幕可多排&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1450" y="-510" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-46" value="根据 智联组 获取 uniIOCardList" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-46" value="根据 智联组 获取 uniIOCardList" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1310" y="-510" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-48" value="根据 设备 获取 uniIOCardList" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-48" value="根据 设备 获取 uniIOCardList" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1180" y="-510" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-50" target="Ruscn7dn7S_DIrgxad8w-55">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-50" target="Ruscn7dn7S_DIrgxad8w-55" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-50" value="每个 uniIO 的 detail 页面" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-50" value="每个 uniIO 的 detail 页面" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="3100" y="-272.5" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-51" value="数据库&amp;nbsp;&lt;div&gt;uniIO 模版&lt;/div&gt;&lt;div&gt;对外名称&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-51" value="数据库&amp;nbsp;&lt;div&gt;uniIO 模版&lt;/div&gt;&lt;div&gt;对外名称&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2370" y="-65" width="200" height="65" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-52" value="数据库&amp;nbsp;&lt;div&gt;uniIO 实例&lt;/div&gt;&lt;div&gt;昵称，智联组&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-52" value="数据库&amp;nbsp;&lt;div&gt;uniIO 实例&lt;/div&gt;&lt;div&gt;昵称，智联组&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="2370" y="27.5" width="200" height="65" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-53" value="退出登录确认弹窗" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-53" value="退出登录确认弹窗" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="910" y="-10" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-55" value="点击 uniIO 卡片跳转到 uniIO 卡片详情页面" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-55" value="点击 uniIO 卡片跳转到 uniIO 卡片详情页面" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="3290" y="-220" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-57" value="所有默认的占位图片打上水印" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-57" value="所有默认的占位图片打上水印" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="720" y="92.5" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-62">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-62" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-64">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-64" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-66">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-66" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-68">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-68" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-70">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-60" target="Ruscn7dn7S_DIrgxad8w-70" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1105" y="-480" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-60" value="大量动态uniIO卡片页面 APIs" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-60" value="大量动态uniIO卡片页面 APIs" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="960" y="-510" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-62" value="API&lt;div&gt;获取设备详细信息（包括所属产品信息）&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-62" value="API&lt;div&gt;获取设备详细信息（包括所属产品信息）&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="510" y="-640" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-64" value="API&lt;div&gt;获取smartLinkGroup详细信息&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-64" value="API&lt;div&gt;获取smartLinkGroup详细信息&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="640" y="-640" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-66" value="API&lt;div&gt;根据 smartLinkGroup_id 或 huawei_device_id 获取 uniIOList&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-66" value="API&lt;div&gt;根据 smartLinkGroup_id 或 huawei_device_id 获取 uniIOList&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="770" y="-660" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-68" value="API&lt;div&gt;根据 uniIOList 获取&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;uniIOCardDataList&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-68" value="API&lt;div&gt;根据 uniIOList 获取&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;uniIOCardDataList&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rounded=0;glass=0;shadow=0;" parent="1" vertex="1">
           <mxGeometry x="900" y="-640" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-70" target="Ruscn7dn7S_DIrgxad8w-68">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-71" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-70" target="Ruscn7dn7S_DIrgxad8w-68" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-70" target="Ruscn7dn7S_DIrgxad8w-66">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-70" target="Ruscn7dn7S_DIrgxad8w-66" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-70" value="API&lt;div&gt;根据 smartLinkGroup_id 或 huawei_device_id&amp;nbsp;获取 uniIOCardDataList&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="egCqhH3HCcYazlkOez__-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-70" target="egCqhH3HCcYazlkOez__-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-70" value="API&lt;div&gt;根据 smartLinkGroup_id 或 huawei_device_id&amp;nbsp;获取 uniIOCardDataList&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="1030" y="-750" width="150" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-74" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;/iot2/uniIO/sendCommandV2&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;校验用户与设备匹配情况&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-74" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;/iot2/uniIO/sendCommandV2&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;校验用户与设备匹配情况&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="270" y="-785" width="200" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-75" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;external_name&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-75" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;external_name&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="750" y="-300" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-76" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;uniIO 卡片显示设备名称&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-76" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;uniIO 卡片显示设备名称&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="750" y="-390" width="180" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-77" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;部分获取列表的查询&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;不校验查询结果是否为空，为空是一种情况&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-77" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;部分获取列表的查询&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span style=&quot;color: #008000;&quot;&gt;不校验查询结果是否为空，为空是一种情况&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="670" y="-175" width="280" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-78" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;属性名首字母大写&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-78" value="&lt;div style=&quot;background-color: rgb(255, 255, 254); font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;属性名首字母大写&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1390" y="-745" width="180" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-79" value="API&lt;div&gt;将 uniIOs 分配到指定的 smartLinkGroup&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-79" value="API&lt;div&gt;将 uniIOs 分配到指定的 smartLinkGroup&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="1730" y="-770" width="150" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-80" target="Ruscn7dn7S_DIrgxad8w-79">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-80" target="Ruscn7dn7S_DIrgxad8w-79" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-80" value="API&lt;div&gt;将 uniIOs 从指定的 smartLinkGroup 中移除&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1960" y="-770" width="150" height="70" as="geometry" />
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-80" value="API&lt;div&gt;将 uniIOs 从指定的 smartLinkGroup 中移除&lt;/div&gt;&lt;div&gt;即 $unset&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;smartLinkGroup&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;属性&lt;/span&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="1960" y="-770" width="170" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Ruscn7dn7S_DIrgxad8w-83" target="Ruscn7dn7S_DIrgxad8w-79">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="Ruscn7dn7S_DIrgxad8w-83" target="Ruscn7dn7S_DIrgxad8w-79" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-83" value="API&lt;div&gt;为 user 添加 smartLinkGroup&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-83" value="API&lt;div&gt;为 user 添加 smartLinkGroup&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="1910" y="-950" width="150" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-84" value="调用" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-84" value="调用" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1730" y="-700" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-85" value="调用" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-85" value="调用" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1960" y="-700" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Ruscn7dn7S_DIrgxad8w-86" value="调用" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="Ruscn7dn7S_DIrgxad8w-86" value="调用" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1910" y="-880" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="egCqhH3HCcYazlkOez__-2" target="egCqhH3HCcYazlkOez__-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-2" value="根据 设备 或者 组 获取的卡片的记录不可自定义时间范围" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="-897" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-4" value="在 UniIO 详情 获取的卡片的记录可自定义时间范围" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="-1020" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-6" value="规范时间单位&lt;br&gt;&lt;span style=&quot;color: rgba(0, 0, 0, 0.9); font-family: &amp;quot;PingFang SC&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Ubuntu, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei UI&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Source Han Sans CN&amp;quot;, sans-serif; font-size: 16px; text-align: left; background-color: rgb(252, 252, 252);&quot;&gt;如将&amp;nbsp;&lt;/span&gt;&lt;code style=&quot;margin: 0px; padding: 0px; border: 0px; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-alternates: inherit; font-variant-position: inherit; font-stretch: inherit; font-size: 14px; line-height: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; vertical-align: baseline; white-space-collapse: break-spaces; word-break: break-word; color: rgba(0, 0, 0, 0.9); text-align: left; background-color: rgb(252, 252, 252); font-family: ui-monospace, SFMono-Regular, &amp;quot;SF Mono&amp;quot;, Menlo, Consolas, &amp;quot;Liberation Mono&amp;quot;, monospace !important;&quot; class=&quot;hyc-common-markdown__code__inline&quot;&gt;event_time&lt;/code&gt;&lt;span style=&quot;color: rgba(0, 0, 0, 0.9); font-family: &amp;quot;PingFang SC&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Ubuntu, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei UI&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Source Han Sans CN&amp;quot;, sans-serif; font-size: 16px; text-align: left; background-color: rgb(252, 252, 252);&quot;&gt;&amp;nbsp;字段改为&amp;nbsp;&lt;/span&gt;&lt;code style=&quot;margin: 0px; padding: 0px; border: 0px; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-alternates: inherit; font-variant-position: inherit; font-stretch: inherit; font-size: 14px; line-height: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; vertical-align: baseline; white-space-collapse: break-spaces; word-break: break-word; color: rgba(0, 0, 0, 0.9); text-align: left; background-color: rgb(252, 252, 252); font-family: ui-monospace, SFMono-Regular, &amp;quot;SF Mono&amp;quot;, Menlo, Consolas, &amp;quot;Liberation Mono&amp;quot;, monospace !important;&quot; class=&quot;hyc-common-markdown__code__inline&quot;&gt;Date&lt;/code&gt;&lt;span style=&quot;color: rgba(0, 0, 0, 0.9); font-family: &amp;quot;PingFang SC&amp;quot;, -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Ubuntu, &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Arial, &amp;quot;Hiragino Sans GB&amp;quot;, &amp;quot;Microsoft YaHei UI&amp;quot;, &amp;quot;Microsoft YaHei&amp;quot;, &amp;quot;Source Han Sans CN&amp;quot;, sans-serif; font-size: 16px; text-align: left; background-color: rgb(252, 252, 252);&quot;&gt;&amp;nbsp;类型并创建索引&lt;/span&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1360" y="-1140" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-7" value="合并功能重复的卡片" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2620" y="-810" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="egCqhH3HCcYazlkOez__-8" target="egCqhH3HCcYazlkOez__-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-8" value="卡片组成卡片列表，抽象成卡片列表组件" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2620" y="-945" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="egCqhH3HCcYazlkOez__-11" target="Ruscn7dn7S_DIrgxad8w-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="egCqhH3HCcYazlkOez__-11" value="设备卡片跳转到设备详情" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="640" y="-900" width="150" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

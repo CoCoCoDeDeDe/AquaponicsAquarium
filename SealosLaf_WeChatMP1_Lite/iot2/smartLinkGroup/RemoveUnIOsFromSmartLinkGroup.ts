@@ -1,11 +1,12 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/addUnIOsToSmartLinkGroup
+// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/RemoveUnIOsFromSmartLinkGroup
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 
 const db = cloud.mongo.db
 
 // 接收 {_id: 'uniIO_id'} 数组
-export default async function addUnIOsToSmartLinkGroup (ctx: FunctionContext) {
+
+export default async function (ctx: FunctionContext) {
 
   // 验证 laf_token
   const laf_token_VerifyRes = await common.verifyTokenAndGetUser(ctx)
@@ -21,22 +22,6 @@ export default async function addUnIOsToSmartLinkGroup (ctx: FunctionContext) {
   // 获取 user 信息
   const user = laf_token_VerifyRes.user  // 内含 user._id 即 user_id
   // console.log('user:', user)
-  
-  // 校验 smartLinkGroup_id 是否有传入且有效
-  if (ctx.query.smartLinkGroup_id == undefined || 
-  ctx.query.smartLinkGroup_id.trim() == '') {
-    console.log('无效的 Query 参数 ctx.query.smartLinkGroup_id:', ctx.query.smartLinkGroup_id)
-    return {
-      runCondition: 'para error',
-      errMsg: '无效的 Query 参数',
-    }
-  }
-
-  // 校验 smartLinkGroup_id 对应 group 是否存在
-  // 略
-
-  // 校验 smartLinkGroup_id 对应 group 是否属于该 user
-  // 略
 
   // 校验 uniIOList 是否有传入且有效
   if (ctx.body.uniIOList.length < 1) {
@@ -74,13 +59,13 @@ export default async function addUnIOsToSmartLinkGroup (ctx: FunctionContext) {
   // console.log('UniIO_Id_List:', UniIO_Id_List)
 
   // 为 UniIO_Id_List 指定的 uniIO 记录更新键名为 smartLinkGroup_id 的属性
-  try{
+  try {
     const result = await db.collection('iot2_uniIOs').updateMany(
       {
         _id: { $in: UniIO_Id_List }
       },
       {
-        $set: { smartLinkGroup_id: new ObjectId(query.smartLinkGroup_id) }
+        $unset: { smartLinkGroup_id: '' } // $unset 的字段值可以是任意值, 操作结果都是移除
       }
     )
     console.log('更新结果 result:', result)
@@ -93,11 +78,13 @@ export default async function addUnIOsToSmartLinkGroup (ctx: FunctionContext) {
   }
 
 
-  console.log('分组成功')
+  console.log('移除成功')
   return {
     runCondition: 'succeed',
-    errMsg: '分组成功',
+    errMsg: '移除成功',
     targetSmartLinkGroup_id: query.smartLinkGroup_id,
   }
+
+  
 
 }

@@ -10,7 +10,7 @@ const db = cloud.mongo.db
 // 若传入 huawei_device_id 按 huawei_device_id 查找
 // 若传入 smartLinkGroup_id 按 smartLinkGroup_id 查找
 // 若同时传入 huawei_device_id 和 smartLinkGroup_id, 按 huawei_device_id 查找
-export default async function (ctx: FunctionContext) {
+export default async function GetUniIOList (ctx: FunctionContext) {
 
   // 检验 laf_token 获取 user_id
   const laf_token_VerifyRes = await common.verifyTokenAndGetUser(ctx)
@@ -26,16 +26,16 @@ export default async function (ctx: FunctionContext) {
   user._id = new ObjectId(user._id)
   console.log('user._id:', user._id)
 
-  // 获取参数 device_id, smartLinkGroup_id
+  // 获取参数 huawei_device_id, smartLinkGroup_id
   let param = {
-    device_id: 0,
+    huawei_device_id: 0,
     smartLinkGroup_id: 0,
   }
-  param.device_id = ctx.query.device_id
+  param.huawei_device_id = ctx.query.huawei_device_id
   param.smartLinkGroup_id = ctx.query.smartLinkGroup_id
   let paramArr = await Object.values(param)
 
-  // 检验参数 device_id smartLinkGroup_id
+  // 检验参数 huawei_device_id smartLinkGroup_id
   let uniIOListFilter
   for (let i = 0; i < paramArr.length; i++) {
     if (common.isValidNonEmptyString(paramArr[i])) {
@@ -44,9 +44,9 @@ export default async function (ctx: FunctionContext) {
       // 可优化：不用 switch 的方法，体检建立参数对照表，不用参数用不同的 filter 条件，拿到参数后按表匹配
       switch(i) {
         case 0:
-          console.log('用 device_id')
+          console.log('用 huawei_device_id')
           uniIOListFilter = {
-            device_id: { $eq: new ObjectId(paramArr[i])}
+            huawei_device_id: { $eq: paramArr[i]}
           }
           break
         case 1:
@@ -99,11 +99,12 @@ export default async function (ctx: FunctionContext) {
   }
 
   // console.log('获取到 uniIOList:', uniIOList)
-  console.log('获取 uniIOList 成功')
-  return {
+  console.log('获取 uniIOList 成功, uniIOList.length:', uniIOList.length)
+  const returnTmp = {
     runCondition: 'succeed',
     errMsg: '获取 uniIOList 成功',
     uniIOList
   }
+  return returnTmp
 
 }
