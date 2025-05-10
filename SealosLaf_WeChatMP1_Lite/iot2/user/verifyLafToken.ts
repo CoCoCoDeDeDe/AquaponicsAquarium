@@ -1,6 +1,6 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/verifyLafToken
+// https://dhb91nur4r.bja.sealos.run/iot2/user/verifyLafToken
 import cloud from '@lafjs/cloud'
-import common from './utils/common'
+import common from '../utils/common'
 
 export default async function verifyLafToken (ctx: FunctionContext) {
 

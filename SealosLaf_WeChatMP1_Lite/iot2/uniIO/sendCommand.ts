@@ -1,7 +1,8 @@
+// https://dhb91nur4r.bja.sealos.run/iot2/uniIO/sendCommand
 import cloud from '@lafjs/cloud'
-import common from './utils/common'
-import getHuaweiIAMUserTokenByPassword from './admin/getHuaweiIAMUserTokenByPassword'
-import readLateastHuaweiIAMUserToken from './admin/getHuaweiIAMUserTokenByPassword'
+import common from '../utils/common'
+import getHuaweiIAMUserTokenByPassword from '../admin/getHuaweiIAMUserTokenByPassword'
+import readLateastHuaweiIAMUserToken from '../admin/getHuaweiIAMUserTokenByPassword'
 
 // 定义返回类型
 interface SuccessResponse {

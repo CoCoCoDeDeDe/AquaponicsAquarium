@@ -1,11 +1,11 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/device/unbindUserWithDevice
+// https://dhb91nur4r.bja.sealos.run/iot2/device/getDeviceInfo
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 
 const db = cloud.mongo.db
 
 export default async function (ctx: FunctionContext) {
-  
+
   // 检验 laf_token 获取 user_id
   const laf_token_VerifyRes = await common.verifyTokenAndGetUser(ctx)
   switch (laf_token_VerifyRes.runCondition) {
@@ -49,7 +49,7 @@ export default async function (ctx: FunctionContext) {
   try {
     const result = await db.collection(document_common).findOne(filter_com, options_check)
 
-  // 检验已匹配的 user_id 是否存在是否与发起请求的 user_id 相同
+    // 检验已匹配的 user_id 是否存在是否与发起请求的 user_id 相同
     // console.log('reslut:', result)
     if (result.user_id === undefined) { // 这是不符合调用规范的情况，前端只能用正在绑定的设备的华为 id 申请本 API
       // 不太可能发生并且没什么影响，本就是没有绑定的，暂不处理
@@ -63,7 +63,71 @@ export default async function (ctx: FunctionContext) {
         errMsg: '用户与设备不匹配',
       }
     }
-    console.log('用户与设备匹配，准备执行删除')
+    console.log('用户与设备匹配，准备执行获取设备信息')
+  } catch (err) {
+    console.log('findOne err:', err)
+    return {
+      runCondition: 'db error',
+      errMsg: '数据库错误',
+    }
+  }
+
+  // 获取设备本身信息
+  let device_info
+  try{
+    const response = await db.collection('iot2_devices').findOne({
+      huawei_device_id: { $eq: param.huawei_device_id }
+    },
+    {
+      projection: {
+        _id: 1,
+        product_id: 1,
+        huawei_device_id: 1,
+        name: 1,
+        createdAt: 1,
+        updateAt: 1,
+      }
+    })
+    if (response == null || response == undefined) {
+      console.log('未找到设备')
+      return {
+        runCondition: 'no found',
+        errMsg: '未找到设备',
+      }
+    }
+    device_info = response
+  } catch (err) {
+    console.log('findOne err:', err)
+    return {
+      runCondition: 'db error',
+      errMsg: '数据库错误',
+    }
+  }
+
+  // 获取设备所属产品信息
+  let product_info
+  try {
+    const response = await db.collection('iot2_products').findOne({
+      _id: { $eq: device_info.product_id }
+    },
+      {
+        projection: {
+          _id: 1,
+          name: 1,
+          previewImg_url: 1,
+          detailPoster_url: 1,
+          intro: 1,
+          updateAt: 1,
+        }
+      })
+    if (response == null || response == undefined) {
+      console.log('未找到产品')
+      return {
+        runCondition: 'not found',
+        errMsg: '未找到产品',
+      }
+    }
+    product_info = response
   } catch (err) {
     console.log('findOne err:', err)
     return {
@@ -73,35 +137,17 @@ export default async function (ctx: FunctionContext) {
   }
 
 
-  // 更新 huawei_device_id 对应设备记录的 user_id 为空
-  try{
-
-    const updateResult = await db.collection(document_common).updateOne(
-      {
-        huawei_device_id: { $eq: param.huawei_device_id }
-      },
-      {
-        $unset: { user_id: '' }
-      }
-    )
-
-    // 处理成功操控数据库时的返回结果
-    if (updateResult.modifiedCount === 1) {
-      console.log(`成功删除属性: user_id`);
-    } else {
-      throw Error('未找到匹配的文档或属性未修改')
-    }
-
-  } catch (err) {
-    console.log('updateOne err:', err)
-    return {
-      runCondition: 'db error',
-      errMsg: '数据库错误',
-    }
+  // 整合设备以及设备所属产品信息
+  let common_info = {
+    device_info,
+    product_info,
   }
 
+
+  // 返回整合后得到的信息
   return {
     runCondition: 'succeed',
-    errMsg: '成功解绑',
+    errMsg: '查询成功',
+    common_info,
   }
 }

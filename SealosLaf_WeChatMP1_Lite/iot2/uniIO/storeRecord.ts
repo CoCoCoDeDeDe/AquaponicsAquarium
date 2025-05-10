@@ -1,5 +1,6 @@
+// https://dhb91nur4r.bja.sealos.run/iot2/uniIO/storeRecord
 import cloud from '@lafjs/cloud'
-import common from './utils/common'
+import common from '../utils/common'
 
 
 export default async function (ctx: FunctionContext) {
@@ -70,6 +71,7 @@ export default async function (ctx: FunctionContext) {
 
     
     if (res != null) {
+      // console.log('获取到 uniIO res:', res)
       const uniIO_id = res._id
       // console.log(`获取到 uniIO_id: ${uniIO_id}`)
       document.push({
@@ -84,6 +86,7 @@ export default async function (ctx: FunctionContext) {
   // console.log('规则转发的数据格式处理完成 document:', document)
   // console.log('规则转发的数据格式处理完成 document.length:', document.length)
 
+// 插入记录
   let res
   try {
     res = await db.collection('iot2_records')
@@ -96,7 +99,7 @@ export default async function (ctx: FunctionContext) {
     }
   }
 
-  console.log('规则转发数据存储成功 res:', res)
+  // console.log('规则转发数据存储成功 res:', res)
   return {
     runCondition: 'success',
     errMsg: 'success'

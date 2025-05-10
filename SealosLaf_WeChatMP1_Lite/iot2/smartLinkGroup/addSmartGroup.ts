@@ -1,5 +1,6 @@
+// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/addSmartLinkGroup
 import cloud from '@lafjs/cloud'
-import common from './utils/common'
+import common from '../utils/common'
 
 const db = cloud.mongo.db
 

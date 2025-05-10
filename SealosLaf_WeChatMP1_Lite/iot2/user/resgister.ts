@@ -1,8 +1,9 @@
+// https://dhb91nur4r.bja.sealos.run/iot2/user/register
 // 从 @lafjs/cloud 模块导入 cloud 对象
 import cloud from "@lafjs/cloud";
 // 从 crypto 模块导入 createHash 函数，用于创建哈希对象
 import { createHash } from "crypto";
-import common from './utils/common'
+import common from '../utils/common'
 
 // 获取云数据库的实例
 const db = cloud.mongo.db

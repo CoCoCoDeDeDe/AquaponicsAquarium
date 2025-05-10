@@ -1,7 +1,8 @@
+// https://dhb91nur4r.bja.sealos.run/iot2/uniIO/sendCommandV2
 import cloud from '@lafjs/cloud'
-import common from './utils/common'
-import getHuaweiIAMUserTokenByPassword from './admin/getHuaweiIAMUserTokenByPassword'
-import readLateastHuaweiIAMUserToken from './admin/getHuaweiIAMUserTokenByPassword'
+import common from '../utils/common'
+import getHuaweiIAMUserTokenByPassword from '../admin/getHuaweiIAMUserTokenByPassword'
+import readLateastHuaweiIAMUserToken from '../admin/getHuaweiIAMUserTokenByPassword'
 
 const db = cloud.mongo.db
 
@@ -108,6 +109,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
       {
         projection: {
           _id: 0,
+          para_name: 1,
           type: 1,
           data_type: 1,
           enum_list: 1,
@@ -131,6 +133,16 @@ export default async function sendCommandV2(ctx: FunctionContext) {
       errMsg: 'find template uniIO 记录出错',
     }
   }
+  // console.log('findTemplateUniIORes:', findTemplateUniIORes)
+
+  // 判断该 uniIO type 是否为 actor
+  if (findTemplateUniIORes.type !== 'actor') {
+    console.log('指定 uniIO 非 actor findTemplateUniIORes:', findTemplateUniIORes)
+    return {
+      runCondition: 'para error',
+      errMsg: '指定 uniIO 非 actor',
+    }
+  }
 
   // 整理华为命令 API 要用到的参数
   let huaweiAPIParams = {
@@ -138,8 +150,10 @@ export default async function sendCommandV2(ctx: FunctionContext) {
     device_id: findUniIORes.device_id,
     huawei_device_id: findDeviceRes.huawei_device_id,
     templateName: findUniIORes.templateName,
+    para_name: findTemplateUniIORes.para_name,
     value: cmd_value
   }
+  console.log('huaweiAPIParams:', huaweiAPIParams)
 
   // 循环调用华为命令 API
   for(let i = 0; i < 1; i++) {
@@ -172,7 +186,7 @@ export default async function sendCommandV2(ctx: FunctionContext) {
         'Content-Type': 'application/json;charset=utf-8'
       }
       // var raw = "{\"service_id\":\"All\",\"command_name\":\"FTC\",\"paras\":{\"FT\":8}}"
-      const raw = `{\"service_id\":\"All\",\"paras\":{\"${huaweiAPIParams.templateName}\":${huaweiAPIParams.value}}}` // command_name 省略
+      const raw = `{\"service_id\":\"All\",\"paras\":{\"${huaweiAPIParams.para_name}\":${huaweiAPIParams.value}}}` // command_name 省略
       const url = `https://ad0ce5c71f.st1.iotda-app.cn-north-4.myhuaweicloud.com:443/v5/iot/509f40fd6e084d55897ef136b49777ed/devices/${huaweiAPIParams.huawei_device_id}/commands`
       const requestOptions = {
         method: 'POST',

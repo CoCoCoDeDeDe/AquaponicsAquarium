@@ -1,10 +1,10 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/product/getProductProfile
+// https://dhb91nur4r.bja.sealos.run/iot2/product/getProductInfo
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 
 const db = cloud.mongo.db
 
-export default async function (ctx: FunctionContext) {
+export default async function getProductInfo (ctx: FunctionContext) {
 
   // 验证 laf_token
   const laf_token_VerifyRes = await common.verifyTokenAndGetUser(ctx)

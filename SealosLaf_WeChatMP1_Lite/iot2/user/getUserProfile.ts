@@ -1,6 +1,6 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/getUserProfile
+// https://dhb91nur4r.bja.sealos.run/iot2/user/getUserProfile
 import cloud from '@lafjs/cloud'
-import common from './utils/common'
+import common from '../utils/common'
 
 const db = cloud.mongo.db
 

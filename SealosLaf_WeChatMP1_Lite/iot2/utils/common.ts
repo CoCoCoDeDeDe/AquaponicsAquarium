@@ -31,11 +31,20 @@ async function verifyTokenAndGetUser(ctx: any) {
       const decoded = jwt.verify(token, JWT_SECRET) as { uid: string; exp: number };  // 类型断言
       const user_id = decoded.uid;
       console.log('user_id:', user_id)
-      const user = await db.collection("iot2_users").findOne({ _id: new ObjectId(user_id)});
+      const user = await db.collection("iot2_users").findOne(
+        {
+          _id: new ObjectId(user_id)
+        },
+        {
+          projection: {
+            password: 0,
+          }
+        });
       if (user) {
         return {
           runCondition: 'succeed',
-          user
+          error: '验证成功',
+          user,
         };
       } else {
         return {
