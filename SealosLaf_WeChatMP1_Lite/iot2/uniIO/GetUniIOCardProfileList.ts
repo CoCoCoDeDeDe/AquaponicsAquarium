@@ -1,4 +1,4 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/uniIO/GetUniIOCardDataList
+// https://dhb91nur4r.bja.sealos.run/iot2/uniIO/GetUniIOCardProfileList
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 import GetUniIOList from './GetUniIOList'
@@ -30,23 +30,24 @@ type Type_UniIODataList_Item = {
   Product_Id: string,
   SmartLinkGroup_Id: string,
   SmartLinkGroup_Name: string,
-  Records: Array<object>,
   UniIO_MainColor: string,
 }
 
 const db = cloud.mongo.db
 
+// huawei_device_id
 // AQAQ25032901
+// smartLinkGroup_id
 // 681ad710ec955cc190f61ae8
 
-export default async function GetUniIOCardDataList (ctx: FunctionContext) {
+export default async function GetUniIOCardProfileList(ctx: FunctionContext) {
 
   // 调用 GetUniIOList 获取 UniIOList
   let UniIOList
-  try{
+  try {
     const Result = await GetUniIOList(ctx) as Type_GetUniIOList_Result
     // console.log('GetUniIOList(ctx) Result:', Result)
-    switch(Result.runCondition) {
+    switch (Result.runCondition) {
       case 'succeed':
         UniIOList = await Result.uniIOList
         break
@@ -77,7 +78,7 @@ export default async function GetUniIOCardDataList (ctx: FunctionContext) {
       // 获取 UniIO 实例信息
       const FindUniIOInfo_Result = await db.collection('iot2_uniIOs').findOne(
         {
-          _id: { $eq: new ObjectId(NewItem.UniIO_Id)}
+          _id: { $eq: new ObjectId(NewItem.UniIO_Id) }
         },
         {
           projection: {
@@ -104,7 +105,7 @@ export default async function GetUniIOCardDataList (ctx: FunctionContext) {
       const FindTemplateUniIOInfo_Result = await db.collection('iot2_templateUniIOs').findOne(
         {
           templateName: { $eq: NewItem.UniIO_TemplateName },
-          product_id: { $eq: new ObjectId(NewItem.Product_Id)},
+          product_id: { $eq: new ObjectId(NewItem.Product_Id) },
         },
         {
           projection: {
@@ -179,34 +180,10 @@ export default async function GetUniIOCardDataList (ctx: FunctionContext) {
 
       // return
 
-      // 获取 UniIO 对应 records
-      const now = new Date(); // 获取当前时间（UTC）
-      const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);  // 计算 1 天前的时间（UTC）
-      const FindRecords_Result = await db.collection('iot2_records').find(
-        {
-          uniIO_id: { $eq: new ObjectId(NewItem.UniIO_Id) },
-          event_time: {
-            $gte: oneDayAgo.toISOString(),
-            // $lte: now.toISOString(), // ? 添加后 records 返回空
-             },
-        },
-        {
-          sort: { event_time: -1 },
-          projection: {
-            _id: 0,
-            event_time: 1,
-            value: 1,
-          }
-        }
-      ).toArray()
-      // console.log('FindRecords_Result:', FindRecords_Result)
-      NewItem.Records = FindRecords_Result
-      // console.log('NewItem:', NewItem)
-
       // 将操作后的项返还给原数组
       return NewItem
     }))
-  } catch(err) {
+  } catch (err) {
     const errMsg = 'map() 遍历 UniIOList 错误'
     console.log(`${errMsg} err:`, err)
     return {

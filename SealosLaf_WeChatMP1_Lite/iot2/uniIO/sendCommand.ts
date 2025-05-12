@@ -4,255 +4,270 @@ import common from '../utils/common'
 import getHuaweiIAMUserTokenByPassword from '../admin/getHuaweiIAMUserTokenByPassword'
 import readLateastHuaweiIAMUserToken from '../admin/getHuaweiIAMUserTokenByPassword'
 
-// 定义返回类型
-interface SuccessResponse {
-    command_id: string;
-    response: null;
-}
-
-interface ErrorResponse {
-    error_code: string;
-    error_msg: string;
-}
-
-// 类型守卫函数
-function isSuccessResponse(response: SuccessResponse | ErrorResponse): response is SuccessResponse {
-    return 'command_id' in response;
-}
-
-function isErrorResponse(response: SuccessResponse | ErrorResponse): response is ErrorResponse {
-    return 'error_code' in response;
-}
-
-const PROJECT_ID = process.env.PROJECT_ID
-
 const db = cloud.mongo.db
 
-export default async function sendCommand(ctx: FunctionContext) {
+export default async function sendCommandV2(ctx: FunctionContext) {
 
-    // 请求情况分析: 用户 a 请求控制其所拥有的 b 设备的 c actor uniIO
-    // 输入参数1: from Headers: 用户的 laf_token, 包含了用户的 user_id, 要验证是否有效并提取出用户 user_id
-    // 输入参数2: from Query: 要控制的 actor uniIO 的 id, 需要验证是否是该用户的 uniIO, uniIO 的 type 是否是 actor
-    // 输入参数3: from Query:  要输入 acrot uniIO 的用户控制的 参数数值
-
-    // 获取并验证 laf_token
-    const tokenVerifyReport = await common.verifyTokenAndGetUser(ctx)
-    switch (tokenVerifyReport.runCondition) {
+  // 验证 laf_token
+  const laf_token_VerifyRes = await common.verifyTokenAndGetUser(ctx)
+  switch (laf_token_VerifyRes.runCondition) {
     case 'token error':
-        console.log('laf_token 验证失败')
-        return tokenVerifyReport  // token 错误, 退出
+      console.log('laf_token 验证失败')
+      return laf_token_VerifyRes  // token 错误, 退出
     default:
-        console.log('laf_token 验证成功')
-        break
-    }
+      console.log('laf_token 验证成功')
+      break
+  }
 
-    // 提取和校验 query
-    const parseQueryResult = await ctx.query
-    console.log('parseQueryResult: ', parseQueryResult)
-    if (parseQueryResult === null || Object.entries(parseQueryResult).length == 0) {
-        console.log('解析 query 错误, parseQueryResult:', parseQueryResult)
-        return {
-            runCondition: 'query error',
-            errMsg: `解析 query 错误 parseQueryResult: ${parseQueryResult}`
+  // 获取用户信息记录
+  const user = laf_token_VerifyRes.user  // user._id 即 user_id
+
+  // 获取 sendCommandV2 除了 laf_token 以外所有的参数
+  let cmd_uniIO_id, cmd_value
+  try {
+    cmd_uniIO_id = await ctx.query['uniIO_id']
+    cmd_value = await ctx.query['value']
+    if (cmd_uniIO_id === null || cmd_uniIO_id === '') {
+      throw new Error('参数 uniIO 无效')
+    }
+    if (cmd_value === null || cmd_value === '') {
+      throw new Error('参数 value 无效')
+    }
+  } catch(err) {
+    console.log('获取 sendCommandV2 参数出错 err:', err)
+    return {
+      runCondition: 'parameter error',
+      errMsg: '获取 sendCommandV2 参数出错',
+    }
+  }
+
+  // find uniIO 信息记录（device_id, templateName）
+  let findUniIORes
+  try {
+    findUniIORes = await db.collection('iot2_uniIOs')
+      .findOne({
+        _id: { $eq: new ObjectId(cmd_uniIO_id) }
+      },
+      {
+        projection: {
+          _id: 0,
+          name: 1,
+          templateName: 1,
+          device_id: 1,
         }
+      })
+
+      if( findUniIORes === null || findUniIORes === '' ){
+        console.log('find res:', findUniIORes)
+        throw new Error('find uniIO res 空')
+      }
+
+  } catch (err) {
+    console.log('find uniIO 记录出错 err:', err)
+    return {
+      runCondition: 'db error',
+      errMsg: 'find uniIO 记录出错',
+    }
+  }
+
+  // find device 信息记录（product_id, huawei_device_id）
+  let findDeviceRes
+  try {
+    findDeviceRes = await db.collection('iot2_devices')
+      .findOne({
+        _id: { $eq: findUniIORes.device_id }  // 通过 find 从 iot2_uniIOs 集合获取到的 device_id 本身就是 ObjectId
+      },
+        {
+          projection: {
+            _id: 0,
+            product_id: 1,
+            huawei_device_id: 1,
+          }
+        })
+
+    if (findDeviceRes === null || findDeviceRes === '') {
+      console.log('find res:', findUniIORes)
+      throw new Error('find device res 空')
     }
 
-    // 获取并检验 uniIO_id 字符串
-    let uniIO_id
+  } catch (err) {
+    console.log('find device 记录出错 err:', err)
+    return {
+      runCondition: 'db error',
+      errMsg: 'find device 记录出错',
+    }
+  }
+
+  // find template uniIO 信息记录（）
+  let findTemplateUniIORes
+  try {
+    findTemplateUniIORes = await db.collection('iot2_templateUniIOs')
+      .findOne({
+        templateName: { $eq: findUniIORes.templateName },
+        product_id: { $eq: findDeviceRes.product_id },
+      },
+      {
+        projection: {
+          _id: 0,
+          para_name: 1,
+          type: 1,
+          data_type: 1,
+          enum_list: 1,
+          min: 1,
+          max: 1,
+          max_length: 1,
+          step: 1,
+          unit: 1,
+        }
+      }
+    )
+
+    if (findTemplateUniIORes === null || findTemplateUniIORes === '') {
+      console.log('find res:', findUniIORes)
+      throw new Error('find template uniIO res 空')
+    }
+  } catch (err) {
+    console.log('find template uniIO 记录出错 err:', err)
+    return {
+      runCondition: 'db error',
+      errMsg: 'find template uniIO 记录出错',
+    }
+  }
+  // console.log('findTemplateUniIORes:', findTemplateUniIORes)
+
+  // 判断该 uniIO type 是否为 actor
+  if (findTemplateUniIORes.type !== 'actor') {
+    console.log('指定 uniIO 非 actor findTemplateUniIORes:', findTemplateUniIORes)
+    return {
+      runCondition: 'para error',
+      errMsg: '指定 uniIO 非 actor',
+    }
+  }
+
+  // 整理华为命令 API 要用到的参数
+  let huaweiAPIParams = {
+    'X-Auth-Token': null,
+    device_id: findUniIORes.device_id,
+    huawei_device_id: findDeviceRes.huawei_device_id,
+    templateName: findUniIORes.templateName,
+    para_name: findTemplateUniIORes.para_name,
+    value: cmd_value
+  }
+  console.log('huaweiAPIParams:', huaweiAPIParams)
+
+  // 循环调用华为命令 API
+  for(let i = 0; i < 1; i++) {
+
+    // 获取 huawei_token
+    // let huawei_token
     try {
-        uniIO_id = parseQueryResult['uniIO_id']
+      if (i < 1) {
+        // 第 1 次调用华为命令 API, 读取最近的 huawei_token
+        const readLateastHWTokenRes = await readLateastHuaweiIAMUserToken()
+        huaweiAPIParams['X-Auth-Token'] = readLateastHWTokenRes.token
+      } else if (0 < i && i < 2) {
+        // 第 2 次调用华为命令 API, 获取新的 huawei_token
+        const getHWTokenRes = await getHuaweiIAMUserTokenByPassword()
+        huaweiAPIParams['X-Auth-Token'] = getHWTokenRes.token
+      }
     } catch (err) {
-        console.log('uniIO_id:', uniIO_id)
-        return {
-            runCondition: 'query error',
-            errMsg: `解析 query 错误 parseQueryResult: ${parseQueryResult}`
-        }
+      console.log('获取 huawei_token err:', err)
+      return {
+        runCondition: 'internal error',
+        errMsg: '获取 huawei_token err',
+      }
     }
-    console.log('uniIO_id:', uniIO_id)
+    // console.log('整理华为命令 API 要用到的参数, huaweiAPIParams:', huaweiAPIParams)
 
-    // 根据 uniIO_id 字符串获取 uniIO 的 product_id
-    let findUniIOResult
     try {
-        findUniIOResult = await db.collection('iot2_uniIOs')
-            .findOne({
-                _id: new ObjectId(uniIO_id)
-            },
-            {
-                projection: {
-                    _id: 0,
-                    name: 1,
-                    templateName: 1,
-                    device_id: 1,
-                    product_id: 1,
-                }
-            })
-    } catch (err) {
-        console.log('find err:', err)
-        return {
-            runCondition: 'find err',
-            errMsg: `find err`
-        }
-    }
-    console.log('获取 uniIO 信息完成 findUniIOResult:', findUniIOResult)
-    const { product_id, templateName, device_id } = findUniIOResult
-    console.log('获取 product_id 完成 product_id:', product_id)
-    console.log('获取 templateName 完成 templateName:', templateName)
-
-    // 根据 uniIO_id 和 product_id 获取 uniIO 的 type、templateName
-    let findTemplateUniIOResult
-    try {
-    
-        findTemplateUniIOResult = await db.collection('iot2_templateUniIOs')
-            .findOne({
-                product_id: { $eq: product_id },
-                templateName: { $eq: templateName }
-            },
-            {
-                projection: {
-                    _id: 0,
-                }
-            })
-    } catch (err) {
-        console.log('find err:', err)
-        return {
-            runCondition: 'find err',
-            errMsg: `find err`
-        }
-    }
-    console.log('获取到 findTemplateUniIOResult:', findTemplateUniIOResult)
-
-    // 获取控制 actor uniIO 的参数数值字
-    let value
-    try {
-        value = Number(parseQueryResult['value'])
-    } catch (err) {
-        console.log('value:', value)
-        return {
-            runCondition: 'query error',
-            errMsg: `解析 query 错误 parseQueryResult: ${parseQueryResult}`
-        }
-    }
-    console.log('value:', value)
-
-    // 从数据库读取最近的华为 token
-    const readTokenResult = await readLateastHuaweiIAMUserToken()
-    // console.log(readTokenResult)
-
-    switch (readTokenResult.runCondition) {
-        case 'request error':
-            return readTokenResult
-        case 'succeed':
-            console.log('读取最近华为 token 成功')
-            break
-        default:
-            console.log('readLateastHuaweiIAMUserToken 返回无法识别')
-            return readTokenResult
-    }
-    const token = readTokenResult.token
-    // console.log('读取到的 token 字符串 token:', token)
-
-    // 用读取到的华为 token 调用华为 command API, 分辨返回结果
-    // 成功情况:
-    // body:
-    // {
-    //     "command_id": "c241008e-fc48-4df7-a138-03bad75e68df",
-    //     "response": null
-    // }
-
-    // 失败情况1: token 无效, 调用 getHuaweiIAMUserTokenByPassword 获取并存储新华为 token
-
-    // 失败情况2: 设备不在线
-    // body:
-    // {
-    //     "error_code": "IOTDA.014016",
-    //     "error_msg": "Operation not allowed. The device is not online."
-    // }
-    // 失败情况3: 设备超时未响应
-    // body:
-    // {
-    //     "error_code": "IOTDA.014111",
-    //     "error_msg": "Command request timed out. Check whether the device returns a response within the specified time after receiving the request."
-    // }
-
-    const myHeaders = {
-        "X-Auth-Token": token,
+      // 准备调用华为命令 API 的参数
+      const myHeaders = {
+        "X-Auth-Token": huaweiAPIParams['X-Auth-Token'],
         'Content-Type': 'application/json;charset=utf-8'
-    }
-
-    // command_name 省略
-    // var raw = "{\"service_id\":\"All\",\"command_name\":\"FTC\",\"paras\":{\"FT\":8}}"
-    var raw = `{\"service_id\":\"All\",\"paras\":{\"${templateName}\":${value}}}`
-
-    var requestOptions = {
+      }
+      // var raw = "{\"service_id\":\"All\",\"command_name\":\"FTC\",\"paras\":{\"FT\":8}}"
+      const raw = `{\"service_id\":\"All\",\"paras\":{\"${huaweiAPIParams.para_name}\":${huaweiAPIParams.value}}}` // command_name 省略
+      const url = `https://ad0ce5c71f.st1.iotda-app.cn-north-4.myhuaweicloud.com:443/v5/iot/509f40fd6e084d55897ef136b49777ed/devices/${huaweiAPIParams.huawei_device_id}/commands`
+      const requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: raw,
-    };
-
-    const fetchRes = await fetch("https://ad0ce5c71f.st1.iotda-app.cn-north-4.myhuaweicloud.com:443/v5/iot/509f40fd6e084d55897ef136b49777ed/devices/AQAQ25032901/commands", requestOptions)
+      };
+      const fetchRes = await fetch(url, requestOptions)
         .then(response => response.text())
         .then(result => {
-            console.log(result)
-            return result
+          return JSON.parse(result)
         })
-        .catch(error => {
-            console.log('error', error)
-            return error
-        });
+      console.log('华为 API 返回结果处理后的 body fetchRes:', fetchRes)
 
-    let newHuaweiToken
-
-    // 辨别华为命令 API 执行状况
-    if (isSuccessResponse(fetchRes)) {
-        console.log('成功响应:', fetchRes.command_id);
-        
-    } else if (isErrorResponse(fetchRes)) {
-        console.log('错误响应:', fetchRes.error_code, fetchRes.error_msg);
-
-        // 认为是华为 token 过期，允许获取新华为 token 1次，继续失败则失败退出
-        const getNewHuaweiTokenRes = await getHuaweiIAMUserTokenByPassword()
-        switch (getNewHuaweiTokenRes.runCondition) {
-            case 'request error':
-                console.log('sendCommand 中获取新华为 token 失败')
-                return {
-                    runCondition: 'get new huawei token error',
-                    errMsg: `get new huawei token error`
-                }
-            case 'succeed':
-                console.log('sendCommand 中获取新华为 token 成功')
-                // 继续
+      if ('command_id' in fetchRes) {  // 命令下发成功
+        i = 10 // 结束 for 循环调用华为 API
+        break
+      } else if ('error_code' in fetchRes) {
+        // console.log('华为命令 API 调用错误 fetchRes:', fetchRes)
+        switch (fetchRes.error_code) {
+          case 'IOTDA.014016':  // 设备不在线，不再重新调用，返回标志让前端提醒用户设备未在线（原则上未在线不可调用本 API）
+            return {
+              runCondition: 'device offline',
+              errMsg: '设备不在线',
+            }
+          case 'IOTDA.014111':  // 设备命令响应超时
+            return {
+              runCondition: 'device error',
+              errMsg: '设备命令响应超时',
+            }
+          default:  // 没有 case 的默认是 huawei_token 时效, 循环调用华为命令 API 并在第二次调用时使用新获取的 huawei_token
+          if (i > 0) {  // 若已经调用过1次华为命令 API 则不在认为 huawei_token 有错误, 而是认为是华为 API 返回未知的 error_code
+            return {
+              runCondition: 'internal error',
+              errMsg: '华为 API 返回未知 error_code',
+            }
+          }
+            console.log('重新调用华为命令 API, 并获取新 huawei_token')
+            // 继续循环调用华为命令 API
         }
-    }  
+      } else {
+        console.log('华为 API 返回未知, 无 command_id 和 error_code fetchRes:', fetchRes)
+        return {
+          runCondition: 'internal error',
+          errMsg: '华为 API 返回未知, 无 command_id 和 error_code',
+        }
+      }
 
+    } catch(err) {
+      console.log('fetch 华为 API err:', err)
+      return {
+        runCondition: 'internal error',
+        errMsg: 'fetch 华为 API error',
+      }
+    }
+  }
+  
+  // 华为命令成功后存入命令记录到 iot2_records
+  try {
     // 获取当前时间并格式化
-    // const currentDate = new Date();
-    // const formattedDate = common.formatDate(currentDate);
+    const currentDate = new Date();
+    const formattedDate = common.formatDate(currentDate);
 
-    // console.log('PROJECT_ID:', PROJECT_ID)
+    db.collection('iot2_records')
+      .insertOne({
+        uniIO_id: new ObjectId(cmd_uniIO_id),
+        event_time: formattedDate,
+        value: cmd_value,
+        type: 'down',
+      })
 
-    // const url = `https://iotda.cn-north-4.myhuaweicloud.com/v5/iot/${PROJECT_ID}/devices/${device_id}/commands`
-    // const raw = `{\"service_id\":\"All\",\"command_name\":\"${templateName}\",\"paras\":${value}}`
+  } catch (err) {
+    console.log('insert 命令记录 err:', err)
+    return {
+      runCondition: 'internal error',
+      errMsg: 'insert 命令记录 err',
+    }
+  }
 
-    // const huaweiRes = await fetch(url, {
-    //     method: 'POST',
-    //     headers: {
-    //         "Authorization": `Bearer  ${token}`,
-    //         "User-Agent": "API Explorer",
-    //         "Host": "ad0ce5c71f.st1.iotda-app.cn-north-4.myhuaweicloud.com:443",
-    //         "X-Language": "zh-cn",
-    //         "X-Project-Id": PROJECT_ID,
-    //         "X-Sdk-Date": formattedDate,
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: raw
-    // })
-    // .then(response => response.text())
-    // .then(result => console.log(result))
-    // .catch(error => console.log('error', error));
-
-    // return huaweiRes
-
+  // 本 API 全部成功
+  return {
+    runCondition: 'succeed',
+    errMsg: 'succeed',
+  }
 }
-
-    // TODO 小程序读取记录的 API
-    // GIVEUP 将云函数中读取最近的保存的华为 token 的程序和获取新华为 token 的程序封装

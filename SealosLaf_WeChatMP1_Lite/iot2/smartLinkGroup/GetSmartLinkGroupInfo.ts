@@ -1,11 +1,12 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/GetSmartLinkGroupInfo
+// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/GetSLGroupInfo
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 
-type Type_SmartLinkGroupInfo = {
-  SmartLinkGroup_Name: string,
-  SmartLinkGroup_CreateTime: string,
-  SmartLinkGroup_UpdateTime: string,
+type Type_SLGroupInfo = {
+  SLGroup_Id: string,
+  SLGroup_Name: string,
+  SLGroup_CreateTime: string,
+  SLGroup_UpdateTime: string,
 }
 
 const db = cloud.mongo.db
@@ -15,7 +16,7 @@ const db = cloud.mongo.db
 // Authorization
 // Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE0NzBhYzY1OGI1MDQ1NjZjYTJjMjUiLCJleHAiOjE3NDczMTU2MjgsImlhdCI6MTc0NjcxMDgyOH0.006x74ukzwtp1fW3s-vzZp7KqsFIKiHuQwyKjO-QXhY
 
-export default async function GetSmartLinkGroupInfo(ctx: FunctionContext) {
+export default async function GetSLGroupInfo(ctx: FunctionContext) {
 
   // 验证 laf_token
   const laf_token_VerifyRes = await common.verifyTokenAndGetUser(ctx)
@@ -53,7 +54,7 @@ export default async function GetSmartLinkGroupInfo(ctx: FunctionContext) {
   // console.log('Query:', Query)
 
   // 查询 smart link group info
-  let SmartLinkGroupInfo = {} as Type_SmartLinkGroupInfo
+  let SLGroupInfo = {} as Type_SLGroupInfo
   try{
     const Result = await db.collection('iot2_smartLinkGroups').findOne(
       {
@@ -61,7 +62,7 @@ export default async function GetSmartLinkGroupInfo(ctx: FunctionContext) {
       },
       {
         projection: {
-          _id: 0,
+          _id: 1,
           name: 1,
           createdAt: 1,
           updatedAt: 1,
@@ -69,20 +70,21 @@ export default async function GetSmartLinkGroupInfo(ctx: FunctionContext) {
       }
     )
     if (Result == null || Result == undefined) {
-      console.log('查询 SmartLinkGroupInfo 为空')
+      console.log('查询 SLGroupInfo 为空')
       return {
         runCondition: 'not found',
-        errMsg: '查询 SmartLinkGroupInfo 为空',
+        errMsg: '查询 SLGroupInfo 为空',
       }
     }
-    SmartLinkGroupInfo.SmartLinkGroup_Name = Result.name
-    SmartLinkGroupInfo.SmartLinkGroup_CreateTime = Result.createdAt
-    SmartLinkGroupInfo.SmartLinkGroup_UpdateTime = Result.updatedAt
+    SLGroupInfo.SLGroup_Id = Result._id
+    SLGroupInfo.SLGroup_Name = Result.name
+    SLGroupInfo.SLGroup_CreateTime = Result.createdAt
+    SLGroupInfo.SLGroup_UpdateTime = Result.updatedAt
   } catch (err) {
-    console.log('查询 SmartLinkGroupInfo 错误 err:', err)
+    console.log('查询 SLGroupInfo 错误 err:', err)
     return {
       runCondition: 'db error',
-      errMsg: '查询 SmartLinkGroupInfo 错误',
+      errMsg: '查询 SLGroupInfo 错误',
     }
   }
 
@@ -91,7 +93,7 @@ export default async function GetSmartLinkGroupInfo(ctx: FunctionContext) {
   return {
     runCondition: 'succeed',
     errMsg,
-    SmartLinkGroupInfo,
+    SLGroupInfo,
   }
   
 }
