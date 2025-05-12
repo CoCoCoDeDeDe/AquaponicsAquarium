@@ -1,0 +1,235 @@
+view {
+  --text-1column-min-height: 60px;
+}
+
+.componentBox{
+  width: 100%;
+  padding: 8px;
+}
+.componentBoard{
+  width: 100%;  /* TODO 根据屏幕宽度不同允许一行有不同数量的卡片 */
+
+  border-radius: 14px;
+  background-color: #fff;
+  
+  box-shadow: var(--box-shadow-3d);
+
+  padding: 7px 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  
+  animation: appear 0.5s ease-out forwards;
+}
+
+/* 下面：顶部文本部分 */
+.ComponentTxtBox{ /* 本盒子一般由 右侧子盒子撑起 */
+  flex: 1 1 auto; /* 需容器高度独立于该子标签才有效 */
+
+  width: 100%;
+  /* min-height: 60px; */
+
+  padding: 4px 5px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.TxtBoxLeftBox{
+  /* 高度由双亲盒子的 align-items: stretch; 控制 */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* stretch 将双亲盒子剩余控制分配给子盒子的本身，space-between将剩余空间分配给子盒子之间的空隙 */
+  align-items: flex-start;
+
+  color: var(--vice-text-color);
+  font-size: 15px;
+}
+.LeftTxt_TopTxtBox{
+  font-size: inherit;
+}
+.LeftTxt_BtmTxtBox{
+  padding: 1px 0 0;
+
+  font-size: inherit;
+}
+.TxtBoxRightBox{
+  height: 100%;
+  min-height: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  text-align: right;
+}
+.RightTxt_TopTxtBox{
+  flex: 3 3 auto;
+
+  font-size: 15px;
+  color: var(--main-text-color);
+}
+.RightTxt_BtmTxtBox_Com{
+  flex: 2 2 auto;
+
+  font-size: 16px;
+}
+.RightTxt_BtmTxtBox_Mode2{
+  color: var(--vice-text-color);
+}
+.RightTxt_BtmTxtBox_Mode1{
+  color: var(--main-text-color);
+}
+.RightTxt_BtmTxtBox_Mode1_Unit{
+  display: inline;
+
+  color: var(--vice-text-color);
+  font-size: 13px;
+}
+
+/* 下面：图表部分 */
+.ComponentChartBoxBox{
+  flex: 1 1 auto;
+  position: relative;
+
+  width: 100%;
+  height: 180px;
+
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 
+    inset 0 4px 6px rgba(50, 50, 93, 0.11),
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+     0 1px 0 rgba(255, 255, 255, 0.15),
+     0 -1px 0 rgba(0, 0, 0, 0.1);
+
+  /* display: flex; */
+
+}
+.ComponentChartBox{
+  position: absolute; /* 相对于最近的非 static 双亲盒子定位 */
+  top: -40px;
+  left: 10px;
+  /* z-index: -1; */
+
+  width: 100%;
+  height: 270px;
+}
+.ec_canvas {
+  
+}
+
+/* 下面：键值对部分 */
+.ComponentValueMeanPairBoxBox{
+  flex: 1 1 auto;
+  margin: 8px 0 0;
+
+  padding: 0px 2px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-wrap: wrap;
+
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 
+    inset 0 4px 6px rgba(50, 50, 93, 0.06),
+    inset 0 1px 3px rgba(0, 0, 0, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.15),
+    0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.ComponentValueMeanPairBox{
+  width: max-content;
+  margin: 0px 0;
+
+  padding: 4px 4px;
+  text-align: center;
+  
+  border-radius: 8px;
+}
+.inline{
+  display: inline;
+}
+
+/* 下面：命令部分 */
+.ComponentSendCommandBox{
+  flex: 1 1 auto;
+
+  padding: 6px 2px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.Cmd_BtnBox{
+  position: relative;
+  width: 22%;
+  margin: 4px 0;
+
+  padding: 4px 4px;
+  text-align: center;
+  border-radius: 8px;
+    
+  box-shadow: var(--box-shadow-3d);
+}
+.Cmd_BtnBox:active{
+  top: 1px;
+  
+  /* 立体阴影效果 */
+  box-shadow: 
+    0 2px 6px rgba(50, 50, 93, 0.11),
+    0 0.5px 3px rgba(0, 0, 0, 0.08),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.1);
+}
+.Cmd_IptBox{
+  flex: 4 4 auto;
+  
+  padding: 3px 0px 3px 8px;
+
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  box-shadow: 
+    inset 0 4px 6px rgba(50, 50, 93, 0.041),
+    inset 0 1px 3px rgba(0, 0, 0, 0.048),
+    0 1px 0 rgba(255, 255, 255, 0.082),
+    0 -1px 0 rgba(0, 0, 0, 0.055);
+}
+.Cmd_Ipt{
+  padding: 2px 4px;
+
+  color: var(--main-text-color);
+  font-size:15px;
+}
+.Cmd_IptConfirmBox{
+  flex: 1 1 auto; /* 位置和大小 */
+  margin: 0 0px 0 10px;
+  position: relative;
+
+  background-color: #1bbb1b;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow-3d);
+
+  padding: 4px 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.Cmd_IptConfirmBox:active{
+  top: 1px;
+  
+  background-color: #20c420;
+  
+  box-shadow: 
+    0 2px 6px rgba(50, 50, 93, 0.11),
+    0 0.5px 3px rgba(0, 0, 0, 0.08),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -0.5px 0 rgba(0, 0, 0, 0.1);
+}

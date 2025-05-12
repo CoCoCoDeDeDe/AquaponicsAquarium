@@ -1,0 +1,95 @@
+<view class="Page">
+
+  <view class="WxNavigatorDecor"></view>
+
+  <scroll-view class="PurePage" scroll-y="{{true}}"  scroll-with-animation="{{true}}" enable-back-to-top="{{true}}">
+
+    <view class="PurePageAdapter">
+    
+      <!-- 智联组盒子 -->
+      <view class="TxtImgCard_Box TxtImgCard_Box_CustomGroup">
+        <view class="TxtImgCard_Board TxtImgCard_Board_CustomGroup" bind:tap="On_BindTap_SwitchSLGroupCmdCardShow">
+        
+          <view class="TxtImgCard_LeftBox">
+            {{PageOption.SLGroupProfile.SLGroup_Name}}
+          </view>
+          <view class="TxtImgCard_RightBox">
+            <image class="TxtImgCard_RightBox_Img TxtImgCard_RightBox_Img_CustomGroup" src="/static/images/icons/icon_group_line_skyBlue.svg" mode="aspectFit"/>
+          </view>
+        
+        </view>
+      </view>
+
+      <!-- UniIO盒子 -->
+      <view class="TxtImgCard_Box TxtImgCard_Box_CustomUniIO">
+        <view class="TxtImgCard_Board TxtImgCard_Board_CustomUniIO" bind:tap="On_BindTap_GoTo_UniIOListCmdPage">
+        
+          <view class="TxtImgCard_LeftBox">UniIO</view>
+          <view class="TxtImgCard_RightBox">
+            <image class="TxtImgCard_RightBox_Img TxtImgCard_RightBox_Img_CustomUniIO" src="/static/images/icons/icon_UniIO_block_skyBlue.svg" mode="aspectFit"/>
+          </view>
+        
+        </view>
+      </view>
+
+      <!-- 管理 智联组 的弹窗 -->
+      <view class="GroupCmdCard_Box" wx:if="{{Is_GroupCmdCard_Show}}">
+      
+        <view class="GroupCmdCard_Board">
+
+          <view class="GroupCreateRow_Box">
+            <view class="GroupCreateRow_Board" bind:tap="On_BindTap_Create">
+              新增智联组
+            </view>
+          </view>
+        
+          <block wx:for="{{SLGroupProfileList}}" wx:key="*this">
+            <view class="GroupRow_Box">
+              
+              <view class="GroupRow_LeftBox" bind:tap="On_BindTap_Read">
+                <view class="GroupRow_Left_Tx">
+                  {{item.SLGroup_Name}}
+                </view>
+              </view>
+
+              <view class="GroupRow_RightBox">
+              
+                <block wx:for="{{GroupCmdBtnList}}" wx:key="*this">
+                  <view class="GroupRow_Right_BtnBox" bind:tap="{{item.BindTapHandlerName}}">
+                    <image class="GroupRow_Right_BtnImg" src="{{item.Img_Url}}" mode="aspectFit"/>
+                  </view>
+                </block>
+              
+              </view>
+
+            </view>
+          </block>
+          <!-- 智联组表为空时显示提示词 -->
+          <block wx:if="{{SLGroupProfileList.length <= 0}}">
+            <view class="GroupRow_Box">
+
+              <view class="GroupRow_EmptyTipBox">
+                —— 暂无智联组 ——
+              </view>
+
+            </view>
+          </block>
+        
+        </view>
+      
+      </view>
+
+      <!-- 抽象获取和处理 UniIODataList 的函数 -->
+      <block>
+        <UniIOCard_Com1></UniIOCard_Com1>
+        <UniIOCard_Com1></UniIOCard_Com1>
+        <UniIOCard_Com1></UniIOCard_Com1>
+      </block>
+
+    </view>
+
+  </scroll-view>
+
+  <view class="WxTabbarDecor"></view>
+
+</view>

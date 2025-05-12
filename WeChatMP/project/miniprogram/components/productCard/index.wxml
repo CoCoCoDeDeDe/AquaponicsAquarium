@@ -1,0 +1,25 @@
+<!-- 卡片点击事件在调用本组件的地方配置 -->
+<view class="cardBox">
+
+  <view class="board">
+
+    <view class="imgBox-column">
+
+      <image src="{{cardData.previewImg_url}}" mode="heightFix" class="img"/>
+
+    </view>
+
+    <view class="textBox-column">
+
+      <view class="name-row">
+        {{cardData.name}}
+      </view>
+      <view class="intro-row">
+        {{cardData.intro}}
+      </view>
+
+    </view>
+
+  </view>
+
+</view>

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "UniIOCard_Com1": "/components/uniIOCard/UniIOCard_Com1"
+  },
+  "navigationBarBackgroundColor": "#fefefe",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "设备详情"
+}

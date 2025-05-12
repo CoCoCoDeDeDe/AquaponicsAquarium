@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navigatorCardsCardBox": "/components/navigatorCardsCardBox/index",
+    "navigatorCard": "/components/navigatorCard/index"
+  },
+  "navigationBarBackgroundColor": "#f3f7fa",
+  "navigationBarTextStyle": "black"
+}

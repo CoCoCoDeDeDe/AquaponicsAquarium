@@ -1,0 +1,33 @@
+
+<view class="page">
+
+  <view class="page-background">
+    <!-- 插入画幅为1x1的产品海报 -->
+    <image src="{{common_info.product_info.detailPoster_url}}" mode="widthFix" class="page-background-img"/>
+  </view>
+
+  <view class="page-posterPlaceholder"></view>
+
+  <view class="page-mainCard">
+  
+    <view class="page-mainCard-board">
+      <block wx:if="{{UniIODataList.length <= 0}}">
+        <UniIOCard_Com1></UniIOCard_Com1>
+      </block>
+      <!-- DEBUG -->
+      <!-- <UniIOCard_Com1></UniIOCard_Com1> -->
+      
+      <block wx:for="{{UniIODataList}}" wx:key="_id">
+        <UniIOCard_Com1 UniIOData="{{item}}" ></UniIOCard_Com1>
+      </block>
+
+      <!-- TODO: 底部印花背景图 -->
+      <view class="BtmPatternBox">
+        <image src="" mode="widthFix" class="BtmPattern"/>
+      </view>
+    
+    </view>
+  
+  </view>
+
+</view>

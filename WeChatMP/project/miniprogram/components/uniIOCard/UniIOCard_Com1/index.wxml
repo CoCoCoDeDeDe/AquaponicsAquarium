@@ -1,0 +1,94 @@
+<template name="Template_ValueMeanPair">
+  <view class="ComponentValueMeanPairBox">
+  
+    <view class="inline">{{index}}</view>
+    <view class="inline">:</view>
+    <view class="inline">{{item}}</view>
+
+  </view>
+</template>
+
+<view class="componentBox">
+
+  <view class="componentBoard">
+    
+    <view class="ComponentTxtBox">
+
+      <view class="TxtBoxLeftBox">
+      
+        <view class="LeftTxt_TopTxtBox">
+          {{UniIOData.Device_Name}}
+        </view>
+
+        <view class="LeftTxt_BtmTxtBox">
+          {{UniIOData.SmartLinkGroup_Name == null ? '无智联组' : UniIOData.SmartLinkGroup_Name}}
+        </view>
+
+      </view>
+    
+      <view class="TxtBoxRightBox">
+      
+        <view class="RightTxt_TopTxtBox">
+          {{UniIOData.UniIO_ExternalName}}
+        </view>
+
+        <view class="RightTxt_BtmTxtBox_Com RightTxt_BtmTxtBox_Mode2" wx:if="{{UniIOData.LateastRecord == null}}">
+          24小时内无数据
+        </view>
+        <view class="RightTxt_BtmTxtBox_Com RightTxt_BtmTxtBox_Mode1" wx:else>
+          
+          <block wx:if="{{Is_VALUE_MEAN_PAIR_ON}}">
+            {{UniIOData.UniIO_Value_Mean_Pair[UniIOData.LateastRecord.value]}}
+          </block>
+          <block wx:else>
+            {{UniIOData.LateastRecord.value}}
+          </block>
+          
+          <view class="RightTxt_BtmTxtBox_Mode1_Unit">
+             {{UniIOData.UniIO_Value_Unit}}
+          </view>
+        </view>
+
+      </view>
+
+    </view>
+
+    <view class="ComponentChartBoxBox" wx:if="{{UniIOData.LateastRecord != null}}" >
+    
+      <view class="ComponentChartBox">
+    
+        <ec-canvas class="ec_canvas" canvas-id="{{ 'myChart_' + UniIOData._id }}" ec="{{ec}}"></ec-canvas>
+    
+      </view>
+    
+    </view>
+  
+    <view class="ComponentValueMeanPairBoxBox"  wx:if="{{Is_VALUE_MEAN_PAIR_ON}}">
+    
+      <block wx:for="{{UniIOData.UniIO_Value_Mean_Pair}}" wx:key="*this">
+        <template is="Template_ValueMeanPair" data="{{item, index}}"/>
+      </block>
+
+    </view>
+
+    <view class="ComponentSendCommandBox" wx:if="{{UniIOData.UniIO_Type == 'actor'}}">
+      
+      <block wx:if="{{UniIOData.Cmd_Config.Is_Enum}}">
+      
+        <block wx:for="{{UniIOData.Cmd_Config.Enum}}" wx:key="*this">
+          <view class="Cmd_BtnBox" bind:tap="OnBindTapCmdBtn" data-CmdValue="{{item.Value}}" style="background-color:{{item.Main_Color}};">{{item.Mean}}</view>
+        </block>
+
+      </block>
+      <block wx:else>
+        <view class="Cmd_IptBox">
+          <input type="digit" class="Cmd_Ipt" placeholder="请输入命令数值" placeholder-style="padding: 2px 4px; color: #aaa; font-size:15px;" model:value="{{Cmd_Ipt_Value}}" />
+        </view>
+        <view class="Cmd_IptConfirmBox" bind:tap="OnBindTapCmdIptConfirm">发送</view>
+      </block>
+
+    </view>
+
+  </view>
+
+</view>

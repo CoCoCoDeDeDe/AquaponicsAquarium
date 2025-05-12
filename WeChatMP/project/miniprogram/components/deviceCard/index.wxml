@@ -1,0 +1,28 @@
+<view class="cardBox">
+  <view class="board">
+
+    <view class="column_PreviewImgAndTextInfo" bind:tap="onBindtapNavigateToDeviceDetailPage" data-deviceprofile="{{deviceProfile}}">
+      <view class="columnPreviewImg">
+        <image src="{{deviceProfile.previewImg_url}}" mode="heightFix" class="previewImg"/>
+      </view>
+
+      <view class="columnTextInfo">
+        <view class="rowNickName">
+          {{deviceProfile.name}}
+        </view>
+        <!-- <view class="rowPosition">
+            {{deviceProfile.smartLinkGroupName ? deviceProfile.smartLinkGroupName : '未分配智联组'}}
+        </view> -->
+      </view>
+    </view>
+
+    <view class="columnBtns">
+      <block wx:for="{{columnBtnsArr}}" wx:key="bindtap">
+        <view class="columnBtn" bind:tap="{{item.bindtap}}" data-deviceprofile="{{deviceProfile}}">
+          <image src="{{item.imageSrc}}" mode="heightFix" class="btnIcon"/>
+        </view>
+      </block>
+    </view>
+
+  </view>
+</view>

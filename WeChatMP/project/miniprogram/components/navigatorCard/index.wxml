@@ -1,0 +1,13 @@
+<view class="navigatorCardBox">
+
+  <view class="navigatorCard">
+    <view class="navigatorIconBox">
+      <image src="{{cardData.iconUrl}}" mode="heightFix" class="navigatorIcon"/>
+    </view>
+    <view class="navigatorTextBox">
+      <text class="navigatorText">{{cardData.title}}</text>
+    </view>
+  </view>
+
+</view>
+

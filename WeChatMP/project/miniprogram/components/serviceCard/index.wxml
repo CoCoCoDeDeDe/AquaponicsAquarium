@@ -1,0 +1,20 @@
+<view class="cardBox">
+  <view class="board">
+
+    <view class="dataInfoTextBoxBox">
+      <view class="dataInfoTextBox">
+        <text class="dataText">24</text>
+        <text class="dataUnitText">摄氏度</text>
+      </view>
+    </view>
+
+    <view class="descTextBox">
+      <view class="descText">环境温度</view>
+    </view>
+
+    <view class="deviceInfoTextBox">
+      <view class="deviceInfoText">鱼菜共生鱼缸 | 客厅</view>
+    </view>
+
+  </view>
+</view>

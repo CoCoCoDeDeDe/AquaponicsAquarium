@@ -1,0 +1,48 @@
+.page{
+  width: 100vw;
+  height: 100vh;
+}
+.page-background{
+  width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.page-background-img{
+  width: 100%;
+}
+
+.page-posterPlaceholder{
+  position: relative;
+  width: 100%;
+  height: 40vh; /* 对应组 1 */
+}
+
+.page-mainCard{
+  width: 100%;
+  height: fit-content;
+  /* min-height: 600px; */
+}
+.page-mainCard-board{
+  width: 100%;
+  height: fit-content;
+  min-height: 60vh;   /* 对应组 1 */
+  background-color: #fff;
+  border-radius: 17px;
+  
+  padding: 6px 0 0;
+}
+.BtmPatternBox{
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: fit-content;
+}
+.BtmPattern{
+  width: 100%;
+  height: fit-content;
+  min-height: 20px; /* 没有图片时内容高度为0可能，此时作为空白填充块防止卡片被底部手势标识覆盖 */
+}

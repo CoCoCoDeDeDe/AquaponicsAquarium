@@ -1,0 +1,37 @@
+
+
+<view class="page">
+
+  <view class="topBar">
+
+    <view class="topBar-topRow">
+    
+      <view class="topBar-topRow-functionSelectorColumn">
+        
+        <view class="topBar-topRow-functionSelectorColumn-textColumn">
+          <view class="topBar-topRow-functionSelectorColumn-textColumn-text">每日定时任务表</view>
+        </view>
+
+        <view class="topBar-topRow-functionSelectorColumn-iconColumn">
+          <image src="" mode="" class="topBar-topRow-functionSelectorColumn-iconColumn-icon"/>
+        </view>
+
+      </view>
+
+      <view class="topBar-topRow-infomColumn">
+        <image src="/static/images/icons/ringIcon_line_darkBlue@2x.png" mode="" class="topBar-topRow-infomColumn-icon"/>
+      </view>
+    
+    </view>
+  
+    <scroll-view class="topBar-deviceGroupSelectorRow">
+      
+      <block>
+        
+      </block>
+
+    </scroll-view>
+  
+  </view>
+
+</view>

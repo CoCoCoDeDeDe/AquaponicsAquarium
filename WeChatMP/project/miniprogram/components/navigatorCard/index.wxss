@@ -1,0 +1,32 @@
+.navigatorCardBox {
+  padding: 10px 15px;
+}
+
+.navigatorCard {
+  padding: 17px 18px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  border-radius: 20px;
+  background-color: #fefefe;
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.03);
+}
+.navigatorIconBox {
+  display: flex;
+  height: 29px;
+}
+.navigatorIcon {
+  height: 100%;
+}
+.navigatorTextBox {
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+  height: 38px;
+}
+.navigatorText {
+  display: inline-block;
+  font-size: 19px;
+}

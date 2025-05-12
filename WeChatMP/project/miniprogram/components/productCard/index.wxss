@@ -1,0 +1,35 @@
+.cardBox{
+  padding: 10px;
+}
+.board{
+  background-color: #fff;
+  box-shadow: 1px 1px 8px 2px #0000000e;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.imgBox-column{
+  padding: 6px 0px 6px 16px;
+}
+.img{
+  height: 80px;
+  width: 80px;
+}
+.textBox-column{
+  padding: 0 18px 0 0;
+}
+.name-row{
+
+  color: var(--main-text-color);
+  font-size: 20px;
+  text-align: right;
+}
+.intro-row{
+
+  color: var(--vice-text-color);
+  font-size: 16px;
+  text-align: right;
+}

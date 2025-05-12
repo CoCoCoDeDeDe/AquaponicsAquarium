@@ -1,0 +1,62 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  /* padding-top: 10px; */
+
+  background: #f3f7fa;
+}
+
+.accountCardBox {
+  padding: 15px 15px 15px;
+}
+.accountBoard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 25px;
+  padding-right: 20px;
+
+  border-radius: 20px;
+  background: #fefefe;
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.03);
+}
+.accountTextBox {
+  display: flexbox;
+
+  padding-top: 13px;
+}
+.usernameBox {
+  padding-left: 4px;
+  padding-bottom: 8px;
+}
+.usernameText {
+  display: inline-block;
+  font-size: 20px;
+  color: #181441;
+}
+.arrowImg {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-left: 2.5px;
+}
+.accountNumberBox {
+
+}
+.accountNumber {
+  display: inline-block;
+  font-size: 16px;
+  color: #999;
+}
+.accountAvatarImgBox {
+  display: flexbox;
+
+}
+.accountAvatarImg {
+  width: 76px;
+  height: 76px;
+}
+

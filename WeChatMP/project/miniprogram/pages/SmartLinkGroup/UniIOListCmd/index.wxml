@@ -1,0 +1,96 @@
+<view class="page">
+
+  <view class="WxNavDecor"></view>
+
+  <scroll-view class="ScrollView" scroll-y="{{true}}"  scroll-with-animation="{{true}}" enable-back-to-top="{{true}}">
+    <view class="ScrollViewAdapter">
+    
+      <view class="Card1x1_Box">
+        <view class="Card1x1_Board Card1x1_Board_Add" bind:tap="On_BindTap_Add">
+          
+          <view class="Card1x1_Add_1Row1">
+            <view class="Card1x1_Add_1Row1_Txt">添加</view>
+            <view class="Card1x1_Add_1Row1_Txt">UniIO</view>
+            <view class="Card1x1_Add_1Row1_Txt_Bg AddBtn_Var">Add</view>
+          </view>
+
+        </view>
+      </view>
+
+      <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
+        <view class="Card1x1_Box">
+          <view class="Card1x1_Board Card1x1_Board_UniIO">
+
+            <view class="Card1x1_UniIO_TopDecorBox">
+            
+              <view class="Card1x1_UniIO_TopDecor_Rectangle" style="background-color: {{item.UniIO_MainColor}};"></view>
+              <view class="Card1x1_UniIO_TopDecor_Dot" style="background-color: {{item.UniIO_MainColor}};"></view>
+
+            </view>
+
+            <view class="Card1x1_BoardMask">
+            
+              <view class="Card1x1_UniIO_1Row1">
+                {{item.UniIO_Name}}
+              </view>
+              <view class="Card1x1_UniIO_1Row2">
+                {{item.Device_Name}}
+              </view>
+              <view class="Card1x1_UniIO_1Row3">
+                <block wx:for="{{UniIOCardBtnList}}" wx:key="BindTapHandlerName" wx:for-item="i">
+                  <view class="Card1x1_UniIO_1Row3_BtnBox" bind:tap="{{i.BindTapHandlerName}}" data-uniioid="{{item.UniIO_Id}}">
+                    <image src="{{i.Img_Url}}" mode="aspectFit" class="Card1x1_UniIO_1Row3_BtnImg"/>
+                  </view>
+                </block>
+              </view>
+
+            </view>
+            
+          </view>
+        </view>
+      </block>
+
+      <block wx:if="{{UniIOProfileList.length > 0}}">
+        
+        <view class="Card1x1_Box">
+          <view class="Card1x1_Board">
+            
+            <view class="Card1x1_Overview_1Row1">
+              <view class="Card1x1_Overview_1Row1_Txt_Bg">
+                Overview
+              </view>
+              <view class="Card1x1_Overview_1Row1_InfoBox">
+
+                <view class="Card1x1_Overview_1Row1_Info_Left">UniIO 数量:</view>
+                <view class="Card1x1_Overview_1Row1_Info_Right">{{UniIOProfileList.length}}</view>
+                
+              </view>
+            </view>
+
+          </view>
+        </view>
+
+      </block>
+      <block wx:else>
+        
+        <view class="Card1x1_Box">
+          <view class="Card1x1_Board">
+            
+            <view class="Card1x1_Prompt_1Row1">
+              <view class="Card1x1_Prompt_1Row1_Txt_Bg">
+                INFORM
+              </view>
+              <view class="Card1x1_Prompt_1Row1_Txt">
+                暂时没有 UniIO
+              </view>
+            </view>
+
+          </view>
+        </view>
+
+      </block>
+
+    </view>
+  </scroll-view>
+
+</view>

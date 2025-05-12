@@ -1,0 +1,8 @@
+{
+  "usingComponents": {},
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "智联组 UniIOList 管理",
+  "enableShareTimeline": true,
+  "enablePullDownRefresh": true
+}

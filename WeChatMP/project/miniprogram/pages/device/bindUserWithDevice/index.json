@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "productCard": "/components/productCard"
+  },
+  "navigationBarBackgroundColor": "#ebf6ff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "匹配设备",
+  "onReachBottomDistance": 0
+}

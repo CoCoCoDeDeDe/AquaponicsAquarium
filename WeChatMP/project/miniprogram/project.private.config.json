@@ -1,0 +1,93 @@
+{
+  "setting": {
+    "compileHotReLoad": true,
+    "urlCheck": true,
+    "bigPackageSizeSupport": true
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "TabBar-智联组",
+          "pathName": "pages/TabBar/SmartLinkGroup/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "智联组/UniIO表管理",
+          "pathName": "pages/SmartLinkGroup/UniIOListCmd/index",
+          "query": "SLGroupId=681ad710ec955cc190f61ae8",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "device/设备详情",
+          "pathName": "pages/device/deviceDetail/index",
+          "query": "huawei_device_id=AQAQ25032901",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "TabBar-我的页面",
+          "pathName": "pages/TabBar/mine/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "TabBar-智联页",
+          "pathName": "pages/TabBar/smartLink/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "TabBar-产品页",
+          "pathName": "pages/TabBar/product/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "index首页",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/test/index",
+          "pathName": "pages/test/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "device/产品列表",
+          "pathName": "pages/device/productList/index",
+          "query": "product_id=67e22c942902516e866abb29",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "device/绑定设备",
+          "pathName": "pages/device/bindUserWithDevice/index",
+          "query": "product_id=67e22c942902516e866abb29",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "登录和注册",
+          "pathName": "pages/login/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "project",
+  "libVersion": "3.8.3"
+}

@@ -1,0 +1,67 @@
+<view class="page">
+
+  <block wx:if="{{page_state == 'loginOrRegister'}}">
+    <view class="titleBox">
+      <view class="title">
+        请在登录后使用
+      </view>
+    </view>
+
+    <view class="iptBoxBox">
+    
+      <view class="iptBox">
+        <input class="ipt" type="text" name="" id="" model:value="{{value_ipt_username}}" placeholder="请输入用户名" placeholder-style="font-size: 16px; color:var(--vice-text-color);" />
+      </view>
+    
+      <view class="iptBox">
+        <input class="ipt" type="text" password="{{true}}" confirm-type="done" name="" id=""model:value="{{value_ipt_pwd}}" placeholder="请输入密码" placeholder-style="font-size: 16px; color:var(--vice-text-color);" />
+      </view>
+
+    </view>
+
+    <view class="tipBoxBox">
+    
+      <view class="tipBox">
+        <view class="tip">
+          登录或注册即代表您同意本平台的使用协议
+        </view>
+      </view>
+
+    </view>
+
+    <view class="btnBoxBox">
+    
+      <view class="btnBox" bind:tap="onLogin">
+        <view class="btn-com btn-login">
+          登录
+        </view>
+      </view>
+    
+      <view class="btnBox" bind:tap="onRegister">
+        <view class="btn-com btn-register">
+          注册
+        </view>
+      </view>
+
+    </view>
+    
+  </block>
+  <block wx:elif="{{page_state == 'loginSucceed'}}">
+    <view class="2iconBox">
+      <icon class="2icon" type="success" size="88" color="#09bb07"/>
+    </view>
+
+    <view class="2titleBox">
+      <view class="2title">
+        登录成功
+      </view>
+    </view>
+
+    <view class="2linkBox">
+      <view class="2link" bind:tap="onBack"></view>
+    </view>
+  </block>
+
+
+
+</view>

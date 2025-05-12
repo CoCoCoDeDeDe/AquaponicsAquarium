@@ -1,0 +1,26 @@
+<view class="page">
+
+    <view class="attachCardBox">
+    
+      <view class="board">
+              
+        <productCard cardData="{{cardData}}"></productCard>
+
+        <view class="tip">请输入设备 ID</view>
+
+        <view class="iptBox">
+          <input class="ipt" type="text" model:value="{{ipt_huawei_device_id}}" maxlength="{{30}}" confirm-type="done"/>
+        </view>
+
+        <button>
+          
+        </button>
+        <view class="confirmBtn" bind:tap="on_confirmBtn_bindTap">
+          <text class="confirmTxt" space="nbsp">匹  配</text>
+        </view>
+      
+      </view>
+
+    </view>
+
+</view>

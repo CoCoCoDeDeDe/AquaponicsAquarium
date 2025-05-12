@@ -1,0 +1,61 @@
+view, image, text, text, scroll-view, input, form {
+  box-sizing: border-box;
+
+  font-family:"webfont" !important;
+  font-size:16px;font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+
+  --box-shadow-3d: 
+  0 4px 6px rgba(50, 50, 93, 0.11),
+  0 1px 3px rgba(0, 0, 0, 0.08),
+  inset 0 -4px 6px rgba(0, 0, 0, 0.05),
+  inset 0 -1px 4px rgba(0, 0, 0, 0.1);
+  
+  --box-shadow-3d-shallow:  
+  0px 3px 7px rgba(0, 0, 0, 0.17),
+  0px -2px 4px rgba(0, 0, 0, 0.13) inset;
+
+  --box-shadow-3d-shallow-active:  
+  0px 1px 4px rgba(0, 0, 0, 0.1),
+  0px -2px 4px rgba(0, 0, 0, 0.13) inset;
+
+  /* var(--main-text-color) */
+  --main-text-color: #181441;
+  /* var(--vice-text-color) */
+  --vice-text-color: #9f9f9f;
+  
+  --Promotion-text-color: #e09040;
+  /* var(--goodPrice-text-color) */
+  --goodPrice-text-color: #e75247;
+}
+
+
+/* .container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}  */
+
+/* 以下是公用动画 */
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+  }
+}

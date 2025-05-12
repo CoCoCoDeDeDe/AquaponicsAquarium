@@ -1,0 +1,18 @@
+
+  <view class="navigatorCardsCardBox">
+    <view class="navigatorCardsBoard">
+
+      <block wx:for="{{navigatorCardList}}" wx:key="title">
+        <view class="navigatorCard" bind:tap="onNavigate" data-navigateUrl="{{item.navigateUrl}}">
+          <view class="navigatorIconBox">
+            <image src="{{item.iconUrl}}" mode="heightFix" class="navigatorIcon"/>
+          </view>
+          <view class="navigatorTextBox">
+            <text class="navigatorText">{{item.title}}</text>
+          </view>
+        </view>
+      </block>
+
+
+    </view>
+  </view>

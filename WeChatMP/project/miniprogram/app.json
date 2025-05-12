@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/TabBar/SmartLinkGroup/index",
+    "pages/TabBar/smartLink/index",
+    "pages/TabBar/product/index",
+    "pages/TabBar/mine/index",
+    "pages/login/index",
+    "pages/device/deviceDetail/index",
+    "pages/device/productList/index",
+    "pages/device/bindUserWithDevice/index",
+    "pages/SmartLinkGroup/UniIOListCmd/index",
+    "pages/test/index"
+  ],
+  "usingComponents": {},
+  "window": {
+    "navigationBarBackgroundColor": "#b7e1ff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "CoCresco Linking",
+    "navigationStyle": "default",
+    "homeButton": true,
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 20,
+    "pageOrientation": "portrait",
+    "restartStrategy": "homePage",
+    "visualEffectInBackground": "none"
+  },
+  "tabBar": {
+    "color": "#767676",
+    "selectedColor": "#181441",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "position": "bottom",
+    "custom": false,
+    "list": [
+      {
+        "pagePath": "pages/TabBar/SmartLinkGroup/index",
+        "text": "智联组",
+        "iconPath": "/static/images/icons/icon_tabbar_group_inactive.png",
+        "selectedIconPath": "/static/images/icons/icon_tabbar_group_active.png"
+      },
+      {
+        "pagePath": "pages/TabBar/product/index",
+        "text": "产品",
+        "iconPath": "/static/images/icons/tabBar_product_inactive.png",
+        "selectedIconPath": "/static/images/icons/tabBar_product_active.png"
+      },
+      {
+        "pagePath": "pages/TabBar/mine/index",
+        "text": "我的",
+        "iconPath": "/static/images/icons/tabBar_mine_inactive.png",
+        "selectedIconPath": "/static/images/icons/tabBar_mine_active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

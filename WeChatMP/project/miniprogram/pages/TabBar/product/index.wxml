@@ -1,0 +1,124 @@
+
+
+<view class="page">
+
+  <view class="myDeviceArea">
+
+    <view class="myDeviceTopBarBox">
+      <view class="myDeviceTopBarTitlebox">
+        <text class="myDeviceTopBarTitle">我的设备</text>
+      </view>
+      <view class="addDeviceBox" bind:tap="onAddDevice">
+        <view class="addDeviceTextBox">
+          <text class="addDeviceText">新增设备</text>
+        </view>
+        <view class="addDeviceIconBox">
+          <image src="/static/images/icons/icon_product_line_darkBlue@2x.png" mode="heightFix" class="addDeviceIcon"/>
+        </view>
+      </view>
+    </view>
+    <!-- 设备列表空时，不显示设备列表，显示提示词
+    要求 deviceList 为数组类型，不可为 undefined 等等 -->
+    <block wx:if="{{deviceList.length  != 0 ? true : false}}">
+
+      <view class="myDevicesList">
+        <block wx:for="{{deviceList}}" wx:key="_id">
+          <deviceCard deviceProfile="{{item}}"></deviceCard>
+        </block>
+      </view>
+      
+      <!-- TODO 页面要有下拉刷新功能，下拉刷新后显示showMoreBtn，默认展示n个设备 -->
+      <!-- 设备来源是从服务器获取该用户的设备列表，进入产品页面默认获取n个（Limit: n）设备，点击更多获取全部并不再渲染showMoreBtn -->
+      <!-- 产品页面的设备卡片要获取的信息有：产品设备卡片专用预览图、设备名、region、zone、id -->
+      <!-- 设备卡片的 查看设备按钮（按卡片本身也算）、编辑按钮、删除按钮 要用data-deviceId="{{item.id}}"携带把设备id数据。作为路由数据带到设备详细页面，或用于指引编辑的哪个设备，或用于指引删除的哪个设备 -->
+      <view class="showMoreBtnBox" wx:if="{{ deviceList.length >= deviceListProfile.total ? false : true }}">
+        <view class="showMoreBtn" bind:tap="onShowMoreDevices">
+          <text class="showMoreBtnText">更多</text>
+          <image src="/static/images/icons/simpleArrowIcon_darkBlue_Left@2x.png" mode="heightFix" class="showMoreBtnImg"/>
+        </view>
+      </view>
+
+    </block>
+    <block wx:else>
+      <view class="noDevicesTipBox">
+        <view class="noDevicesTip">您暂时没有已注册的设备</view>
+        <view class="noDevicesTip_btmWarnPattern_box">
+          <view class="noDevicesTip_btmWarnPattern" wx:for="{{3}}" wx:key="index"></view>
+        </view>
+      </view>
+    </block>
+    
+  </view>
+
+  <view class="shoppingArea">
+    
+    <view class="shoppingAreaDecorationSmallTopLine"></view>
+    
+    <view class="advertisementSwiperArea">
+
+      <swiper 
+      class="advertisementSwiper"
+      indicator-dots="{{false}}"
+      autoplay="{{true}}"
+      interval="{{2500}}"
+      duration="{{2000}}"
+      circular="{{true}}"
+      display-multiple-items="{{1}}"
+      easing-function="easeInOutCubic"
+      >
+        <block wx:for="{{advertisementSwiperItemList}}" wx:key="imgUrl">
+        
+          <swiper-item 
+          class="shoppingAdvertisementSwiperItem"
+          bind:tap="onToAdvertisementPage"
+          data-advertisementSwiperItem="{{item}}"
+          >
+
+            <view class="shoppingAdvertisementSwiperItemImgBox">
+              <image src="{{item.imgUrl}}" mode="aspectFill" class="shoppingAdvertisementSwiperItemImg"/>
+            </view>
+
+          </swiper-item>
+
+        </block>
+      </swiper>
+
+    </view>
+
+    <view class="commodityCardsArea">
+      <block wx:for="{{commodityCardProfileList}}" wx:key="id" wx:for-item="item_profile">
+        
+        <view class="commodityCardArea">
+          <view class="commodityCardBoard" bind:tap="onToCommodityDetailPage" data-commodityProfile="{{item_profile}}">
+
+            <view class="commodityCardPreviewImgBox">
+              <image src="{{item_profile.previewImgUrl}}" mode="widthFix" class="commodityCardPreviewImg"/>
+            </view>
+
+            <view class="commodityCardTextBox">
+              <view class="commodityCardTitle">
+                {{item_profile.title}}
+              </view>
+              <scroll-view scroll-x="{{true}}" enable-flex show-scrollbar="{{false}}" enhanced="{{true}}" class="commodityCardPromotionsBox">
+                <block wx:for="{{item_profile.promotionList}}" wx:key="id" wx:for-item="item_promotion">
+                  <view class="commodityCardPromotionBox">
+                    <view class="commodityCardPromotionText">
+                      {{item_promotion.title_short}}
+                    </view>
+                  </view>
+                </block>
+              </scroll-view>
+              <view class="commodityCardPrice">
+                ¥ {{item_profile.price}}
+              </view>
+            </view>
+
+          </view>
+        </view>
+
+      </block>
+    </view>
+
+  </view>
+
+</view>

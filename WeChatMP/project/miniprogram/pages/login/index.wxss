@@ -1,0 +1,98 @@
+.page{
+  width: 100%;
+  height: 100%;
+
+  padding: 50px 0 50px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.titleBox{
+  padding: 20px 0;
+  font-size: 40px;
+}
+.title{
+  font-size: 22px;
+  color: var(--main-text-color);
+}
+.iptBoxBox{
+  padding: 3px 0;
+}
+.iptBox{
+  background-color: #eee;
+  border: 1px solid #eee;
+  border-radius: 30px;
+  padding: 5px 16px;
+  margin: 14px;
+}
+.iptBox:first-child {
+  margin-top: 0px;
+}
+.iptBox:last-child {
+  margin-bottom: 0px;
+}
+.ipt{
+  min-width: 210px;
+  font-size: 16px;
+  color: var(--main-text-color);
+}
+.iptBoxBox{
+  padding: 10px;
+  
+}
+.tipBoxBox{
+  padding: 10px 0;
+}
+.tipBox:first-child {
+  padding-top: 0px;
+}
+.tipBox:last-child {
+  padding-bottom: 0px;
+}
+.tip{
+  font-size: 14px;
+  color: var(--vice-text-color);
+}
+.btnBoxBox{
+  min-width: 270px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.btnBox{
+  padding: 10px 10px;
+}
+.btn-com{
+  border-radius: 14px;
+
+  font-size: 18px;
+  padding: 10px 24px;
+}
+.btn-login{
+  background-color: #00b26a;
+}
+.btn-register{
+  background-color: #e7e7e7;
+}
+.btn-com:active{
+  border-radius: 20px;
+  animation: btn-com_active 0.2s ease-in 0s 1;
+}
+@keyframes btn-com_active {
+  0% {
+    border-radius: 14px;
+  }
+  100% {
+    border-radius: 50px;
+  }
+}
+.btn-login:active{
+  background-color: #12ce83;
+}
+.btn-register:active{
+  background-color: #eeeeee;
+}

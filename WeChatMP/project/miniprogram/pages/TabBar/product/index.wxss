@@ -1,0 +1,251 @@
+.page{
+  width: 100vw;
+  min-height: 100vh;
+  background: #ebf6ff;
+
+}
+
+/* myDevice */
+.myDeviceArea{
+  padding: 0 0 5px 0;
+  /* backdrop-filter: blur(10px); */
+}
+
+/* myDevice topBar */
+.myDeviceTopBarBox{
+  padding: 0 11px 0 15px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #181441;
+}
+.myDeviceTopBarTitlebox{
+  display: flex;
+}
+.myDeviceTopBarTitle{
+  font-size: 20px;
+  letter-spacing: 0.2em;
+}
+.addDeviceBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 8px 3px 14px;
+  border-radius: 30px;
+  background: #fff;
+  backdrop-filter: blur(10px);
+  box-shadow: 1px 1px 4px 2px #0000000c;
+}
+.addDeviceTextBox{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 4px;
+  padding-bottom: 1px;
+}
+.addDeviceText{
+  font-size: 15px;
+  color: #181441;
+}
+.addDeviceIconBox{
+  display: flex;
+}
+.addDeviceIcon{
+  height: 23px;
+}
+
+/* myDevice showMore */
+.showMoreBtnBox{
+width: 100%;
+padding: 0 120px;
+}
+.showMoreBtn{
+  padding: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.showMoreBtnText{
+  display: flex;
+  font-size: 15px;
+  color: var(--main-text-color);
+}
+.showMoreBtnImg{
+  padding-top: 2px;
+  display: flex;
+  height: 14px;
+}
+
+/* 没有设备时的Tip */
+.noDevicesTipBox{
+  width: 100%;
+  padding: 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.noDevicesTip{
+  padding: 20px 0;
+  color: var(--vice-text-color);
+  text-align: center;
+}
+.noDevicesTip_btmWarnPattern_box{
+  display: flex;
+  flex-direction: row;
+}
+.noDevicesTip_btmWarnPattern{
+  width: 6px;
+  height: 6px;
+  margin: 0px 5px 10px;
+  border-radius: 3px;
+  background-color: #ccc;
+}
+
+
+/* 购物区 */
+.shoppingArea{
+  background-color: #f8f8f8;
+  border-radius: 15px 15px 0 0;
+  padding: 15px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.shoppingAreaDecorationSmallTopLine{
+  width: 50px;
+  height: 6px;
+  border-radius: 6px;
+  background-color: #b5d8f5;
+}
+
+/* 滚动广告 */
+.advertisementSwiperArea{
+  padding: 15px 0px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.advertisementSwiper{
+  width: 375px;
+  height: 180px;
+}
+.shoppingAdvertisementSwiperItem{
+  /* height: fit-content; */
+  /* border-radius: 20rpx; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+}
+.shoppingAdvertisementSwiperItemImgBox{
+  width: 100%;
+  height: fit-content;
+  padding: 0 15px;
+  /* border-radius: 30rpx; */
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.shoppingAdvertisementSwiperItemImg{
+  width: 100%;
+  border-radius: 15px;
+}
+
+/* 商品卡片 */
+.commodityCardsArea{
+  padding: 0px 5px 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  /* background-color: #f6f6f6; */
+}
+
+.commodityCardArea{
+  padding: 5px;
+}
+.commodityCardBoard{
+  width: fit-content;
+  width: 170px;
+  max-width: 170px;
+
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px 2px #0000000a;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.commodityCardPreviewImgBox{
+  width: 100%;
+  /* padding: 14rpx 14rpx 0rpx; */
+}
+.commodityCardPreviewImg{
+  /* width: 170px; */
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.commodityCardTextBox{
+  width: 100%;
+  /* max-width: 140px; */
+  padding: 0px 7px 10px;
+}
+.commodityCardTitle{
+  /* TODO 学习 -webkit-box */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  color: var(--main-text-color);
+}
+.commodityCardPromotionsBox{
+  line-height: 15px;
+  white-space: nowrap;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: nowrap; */
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+}
+.commodityCardPromotionBox{
+  display: inline-block;
+  /* width: fit-content; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  border-radius: 4px;
+  border: 0.8px solid var(--Promotion-text-color);
+  /* padding: 1rpx; */
+  margin: 0 1px;
+}
+.commodityCardPromotionBox:first-child{
+  margin-left: 0;
+}
+.commodityCardPromotionBox:last-child{
+  margin-right: 0;
+}
+.commodityCardPromotionText{
+  font-size: 12px;
+  color: var(--Promotion-text-color);
+}
+
+.commodityCardPrice{
+  font-size: 15px;
+  color: var(--goodPrice-text-color);
+}

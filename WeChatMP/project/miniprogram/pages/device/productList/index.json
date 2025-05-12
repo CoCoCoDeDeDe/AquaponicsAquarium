@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "productCard": "/components/productCard"
+  },
+  "navigationBarBackgroundColor": "#ebf6ff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "产品列表",
+  "onReachBottomDistance": 10
+}

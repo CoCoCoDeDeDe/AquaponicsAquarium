@@ -1,0 +1,18 @@
+
+<view class="page">
+
+  <view class="productCardsContainer">
+
+    <block wx:for="{{productList}}" wx:key="_id">
+      <productCard cardData="{{item}}" bind:tap="onToBindPageWithProductId" data-product_id="{{item._id}}"></productCard>
+    </block>
+
+    <block wx:if="{{ dbInfo.total != undefined && productList.length >= dbInfo.total }}">
+      <view class="noMore_tipContainer">
+        <view class="noMore_tip">已经看了很多咯...</view>
+      </view>
+    </block>
+
+  </view>
+
+</view>

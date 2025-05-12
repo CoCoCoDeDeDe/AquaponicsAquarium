@@ -1,0 +1,58 @@
+/* 主盒子 */
+.cardBox {
+  padding: 20rpx 10rpx;
+  width: fit-content;
+}
+
+/* 底板 */
+.board {
+  width: 320rpx;
+  height: 290rpx;
+  border-radius: 30rpx;
+
+  background-color: #fefefe;
+  box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.03);
+
+  padding: 50rpx 0 20rpx;
+
+  display: grid;
+  grid-template-rows: 4fr 1fr 1fr;
+  /* justify-content: center; */
+
+  text-align: center;
+}
+
+/* 检测数据 */
+.dataInfoTextBoxBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  color: #1c1946;
+}
+.dataInfoTextBox {
+  /* display: flexbox; */
+}
+.dataText {
+  font-size: 60rpx;
+}
+.dataUnitText {
+  font-size: 38rpx;
+}
+
+/* 数据简介 */
+.descTextBox {
+  padding-bottom: 6rpx;
+}
+.descText {
+  font-size: 28rpx;
+  color: #1c1946;
+}
+
+/* 来源设备信息 */
+.deviceInfoTextBox {
+}
+.deviceInfoText {
+  font-size: 24rpx;
+  color: #9f9f9f;
+}

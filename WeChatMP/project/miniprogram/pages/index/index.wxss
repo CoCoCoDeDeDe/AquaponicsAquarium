@@ -1,0 +1,98 @@
+.page{
+  width: 100vw;
+  height: 100vh;
+
+  background: #f6f6f6;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.NavigatorBox{
+  position: relative;
+  width: 100%;
+  height: max-content;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+.NavigatorBoard{
+  position: relative;
+  width: 100%;
+  height: max-content;
+
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: var(--box-shadow-3d-shallow);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 10px 13px;
+}
+/* Navigator 遮罩 */
+.NavigatorMask_Box{
+  position: absolute;
+  width: 100%;
+  height: 280rpx;
+  /* 毛玻璃核心属性：模糊背景 */
+  backdrop-filter: blur(1px);
+  background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.NavigatorMask_Txt{
+  font-size: 20px;
+  font-weight: 800;
+  color: rgba(133, 129, 163, 0.87);
+}
+.NavigatorBoard:active{
+  top: 1px;
+  box-shadow: var(--box-shadow-3d-shallow-active);
+  transform: scale(0.99)
+}
+.Navigator_1Row1{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px 4px 4px;
+}
+.Navigator_1Col1{
+  font-size: 19px;
+  font-weight: 800;
+  text-shadow: #eee 2px 4px 2px;
+  color: var(--main-text-color);
+}
+.Navigator_1Col2{
+  position: relative;
+}
+.Navigator_1Col2_Img{
+  z-index: 0;
+  --Img-edge-length: 38px;
+  width: var(--Img-edge-length);
+  height: var(--Img-edge-length);
+}
+
+.Navigator_1Row2{
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  color: var(--vice-text-color);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 8px;
+}
+
