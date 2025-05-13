@@ -19,9 +19,9 @@ Component({
       type: Object,
       value: {
         UniIO_Id: 'Default_UniIO_Id',
-        UniIO_ExternalName: '负水位负水位负水位负水位',
-        SmartLinkGroup_Name: '智联组12345678',
-        Device_Name: '鱼菜共生智能鱼缸se1promax',
+        UniIO_ExternalName: '示例 UniIO 名称',
+        SmartLinkGroup_Name: '示例智联组名称',
+        Device_Name: '示例设备名称',
         UniIO_Type: 'actor',
         Cmd_Config: {
           Is_Enum: true,

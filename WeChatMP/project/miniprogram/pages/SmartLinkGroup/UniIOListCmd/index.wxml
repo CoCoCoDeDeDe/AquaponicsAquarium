@@ -19,6 +19,13 @@
 
       <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
         <view class="Card1x1_Box">
+
+          <view class="Card1x1_UniIO_BgPatternBox">
+          
+            <view class="Card1x1_UniIO_BgPattern_TxtUniIOType">{{item.UniIO_Type}}</view>
+
+          </view>
+
           <view class="Card1x1_Board Card1x1_Board_UniIO">
 
             <view class="Card1x1_UniIO_TopDecorBox">
@@ -29,7 +36,7 @@
             </view>
 
             <view class="Card1x1_BoardMask">
-            
+              
               <view class="Card1x1_UniIO_1Row1">
                 {{item.UniIO_Name}}
               </view>

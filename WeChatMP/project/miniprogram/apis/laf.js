@@ -1,3 +1,5 @@
+import { TimeStrConvert_ISO8601_To_HHmm } from '../utils/common'
+
 const baseUrl = 'https://dhb91nur4r.bja.sealos.run'
 
 // register
@@ -329,6 +331,114 @@ export function on_common_error(err) {
     icon: 'none',
     mask: true,
   })
+}
+
+
+/* 通过 huawei_device_id 或 SmartLinkGroup_Id 获取 uniIOCardDataList。数据由 html 的 wx:for 用于渲染卡片 */
+export const GetUniIODataList = async (Pgae, Query) => {
+  // 需传入 Page 示例一方分
+  let resData
+  try{
+    resData = await requestWithLafToken('GET', '/iot2/uniIO/GetUniIOCardDataList', Query)
+    // console.log("resData:", resData)
+  } catch(err) {
+    switch(err.runCondition) {
+      case 'laf_token error':
+        on_laf_token_Invalid()
+        return
+      default:
+        on_common_error(err)
+        return
+    }
+  }
+    
+  // 处理每个 UniIOData
+  const UniIODataList = await Promise.all( resData.UniIODataList.map( async (item, idx, arr) => {
+    // console.log("item 1:", item)
+
+    let NewItem = {}
+
+    // 遍历每个 UniIOData 项，找到其 Records 中最近的一项 Record 并单独存放
+    // 校验 Records
+    let LateastRecord = null
+    // console.log("item.Records.length:", item.Records.length)
+    if(item.Records.length > 0) { // 获取的记录为空时不 reduce()
+      LateastRecord = item.Records.reduce( (prev, current) => {
+        const prevTime = new Date(prev.event_time).getTime()
+        const currentTime = new Date(current.event_time).getTime()
+        return currentTime > prevTime ? current : prev
+      } )
+      Object.assign(NewItem, {LateastRecord})
+      // console.log("NewItem 1:", NewItem)
+    } else{
+      Object.assign(NewItem, {LateastRecord})
+      // console.log("NewItem 2:", NewItem)
+    }
+
+    // 存储已经可用的数据到新介质
+    Object.assign(NewItem,
+      {
+        UniIO_Id: item.UniIO_Id,
+        UniIO_Type: item.UniIO_Type,
+        UniIO_TemplateName: item.UniIO_TemplateName,
+        UniIO_ExternalName: item.UniIO_ExternalName,
+        SmartLinkGroup_Name: item.SmartLinkGroup_Name,
+        Device_Name: item.Device_Name,
+        UniIO_Value_Mean_Pair: item.UniIO_Value_Mean_Pair,  // 没有则为 undefined
+        UniIO_Value_Unit: item.UniIO_Value_Unit,
+        Cmd_Config: item.Cmd_Config,
+      })
+      // console.log("NewItem 3:", NewItem)
+      // console.log("NewItem.UniIO_Type:", NewItem.UniIO_Type)
+      // console.log("NewItem.UniIO_Type:", NewItem.UniIO_Type)
+      // console.log("NewItem.Cmd_Config:", NewItem.Cmd_Config)
+
+    // 将部分数据改为适合 echart 的格式
+    let DataX = [], DataY = []
+    if(item.Records.length > 0) {
+      for (let i = 0; i < item.Records.length; i++) {
+
+        // 把20250510T120031Z字符串格式时间转化为 06:00 格式的字符串
+        DataX[i] = TimeStrConvert_ISO8601_To_HHmm(item.Records[item.Records.length - 1 - i].event_time)
+        
+        // 转化单独 Y 轴数据到数组
+        DataY[i] = item.Records[item.Records.length - 1 - i].value
+        // 如果 UniIO_Value_Mean_Pair 有值则匹配为对应意义 string
+        // 本方案已放弃，echart 折线图的 y 周数据只可为数值
+        // if(NewItem.UniIO_Value_Mean_Pair !== undefined) {
+        //   DataY[i] = NewItem.UniIO_Value_Mean_Pair[DataY[i].toString()]
+        // }   
+      }
+    } else{
+      // 无 Records 不处理
+    }
+    // console.log("DataX:", DataX)
+    // console.log("DataY:", DataY)
+    Object.assign(NewItem, {
+      EChartData: {
+        xAxis: {
+          data: DataX,
+        },
+        series: [{  // 可一个表显示多条数据
+          data: DataY,
+        }]
+      }
+    })
+    // console.log("NewItem 4:", NewItem)
+
+    // 赋值默认值给暂时没有网络数据的 echart 配置项
+    NewItem.EChartData.series[0].name = NewItem.UniIO_ExternalName
+    NewItem.EChartData.series[0].itemStyle = { color: item.MainColor }
+
+    return NewItem
+  } ) )
+
+  // return
+
+  Pgae.setData({
+    UniIODataList: UniIODataList,
+  })
+
 }
 
 // 已弃用

@@ -41,13 +41,17 @@
 
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 
-  background-color: #fff;
+  background-color: #fafafa;
 }
 
+/* 修复 UniIOCard 的宽度 */
+.UniIOCard{
+  width: 100%;
+}
 
 /* 以下是 卡片区 的 卡片 */
 .TxtImgCard_Box{

@@ -11,7 +11,7 @@
         <view class="TxtImgCard_Board TxtImgCard_Board_CustomGroup" bind:tap="On_BindTap_SwitchSLGroupCmdCardShow">
         
           <view class="TxtImgCard_LeftBox">
-            {{PageOption.SLGroupProfile.SLGroup_Name}}
+            {{PageOption.SLGroupProfile.SLGroup_Name == null ? '暂无智联组' : PageOption.SLGroupProfile.SLGroup_Name}}
           </view>
           <view class="TxtImgCard_RightBox">
             <image class="TxtImgCard_RightBox_Img TxtImgCard_RightBox_Img_CustomGroup" src="/static/images/icons/icon_group_line_skyBlue.svg" mode="aspectFit"/>
@@ -43,7 +43,7 @@
             </view>
           </view>
         
-          <block wx:for="{{SLGroupProfileList}}" wx:key="*this">
+          <block wx:for="{{SLGroupProfileList}}" wx:key="SLGroup_Id">
             <view class="GroupRow_Box">
               
               <view class="GroupRow_LeftBox" bind:tap="On_BindTap_Read">
@@ -54,7 +54,7 @@
 
               <view class="GroupRow_RightBox">
               
-                <block wx:for="{{GroupCmdBtnList}}" wx:key="*this">
+                <block wx:for="{{GroupCmdBtnList}}" wx:key="BindTapHandlerName">
                   <view class="GroupRow_Right_BtnBox" bind:tap="{{item.BindTapHandlerName}}">
                     <image class="GroupRow_Right_BtnImg" src="{{item.Img_Url}}" mode="aspectFit"/>
                   </view>
@@ -80,10 +80,15 @@
       </view>
 
       <!-- 抽象获取和处理 UniIODataList 的函数 -->
-      <block>
-        <UniIOCard_Com1></UniIOCard_Com1>
-        <UniIOCard_Com1></UniIOCard_Com1>
-        <UniIOCard_Com1></UniIOCard_Com1>
+      <block wx:if="{{UniIODataList.length > 0}}">
+        <block wx:for="{{UniIODataList}}" wx:key="UniIO_Id">
+          <UniIOCard_Com1 class="UniIOCard" UniIOData="{{item}}"></UniIOCard_Com1>
+        </block>
+      </block>
+      <block wx:else>
+        <UniIOCard_Com1 class="UniIOCard"></UniIOCard_Com1>
+        <UniIOCard_Com1 class="UniIOCard"></UniIOCard_Com1>
+        <UniIOCard_Com1 class="UniIOCard"></UniIOCard_Com1>
       </block>
 
     </view>

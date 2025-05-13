@@ -88,6 +88,31 @@
     0 2px 4px rgba(0, 0, 0, 0.068),
     0 1px 0.1px rgba(0, 0, 0, 0.027);
 }
+/* UniIOProfileCard 背景印花 */
+.Card1x1_UniIO_BgPatternBox{
+  position: absolute;
+  
+  /* background-color: rebeccapurple; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.Card1x1_UniIO_BgPattern_TxtUniIOType{
+  z-index: 10;
+  /* 绝对定位相对于祖先盒子中辈分最近的 relative 盒子 Card1x1_Board */
+  position: absolute;
+  /* bottom 和 top 都定义时仅 top 起作用 */
+  bottom: -80px;
+  /* top: -80px; */
+  left: -72px;
+  
+  font-size: 32px;
+  font-weight: 800;
+  text-transform: capitalize;
+  color: #ddd;
+}
 .Card1x1_Board_UniIO{
   /* background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"%3E%3Ccircle cx="20" cy="20" r="7" fill="%23{--dot-color}"%3E%3C/circle%3E%3C/svg%3E'); */
   background-size: 43px;
@@ -122,7 +147,9 @@
   height: 10px;
   margin: 4px;
 }
+
 .Card1x1_BoardMask{
+  z-index: 11;
   height: 100%;
   width: 100%;
 
@@ -232,7 +259,7 @@
 
 .Card1x1_UniIO_1Row3_BtnBox{
   border-radius: 6px;
-  background-color: #eee;
+  background-color: #eeea;
 
   display: flex;
   flex-direction: column;
@@ -241,7 +268,7 @@
   padding: 6px 8px;
 }
 .Card1x1_UniIO_1Row3_BtnBox:active{
-  background: linear-gradient(145deg, #f6f6f6 30%, #f5f5f5);
+  background: linear-gradient(145deg, #f6f6f6aa 30%, #f5f5f5aa);
   /* background: #fff; */
   transform: scale(0.98);
 }

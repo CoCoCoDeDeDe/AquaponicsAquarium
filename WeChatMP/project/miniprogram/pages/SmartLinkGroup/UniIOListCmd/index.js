@@ -38,6 +38,7 @@ Page({
         Device_Id: 'Default_Device_Id1',
         Device_Name: '默认的长的设备名称',
         UniIO_Main_Color: '#1bbb1b',
+        UniIOType: 'actor',
       },
       {
         UniIO_Id: 'Default_UniIO_Id2',
@@ -45,6 +46,7 @@ Page({
         Device_Id: 'Default_Device_Id2',
         Device_Name: '默认的很长很长的设备名称',
         UniIO_Main_Color: '#42a5f5',
+        UniIOType: 'sensor',
       },
       {
         UniIO_Id: 'Default_UniIO_Id3',
@@ -52,6 +54,7 @@ Page({
         Device_Id: 'Default_Device_Id3',
         Device_Name: '默认的长的设备名称',
         UniIO_Main_Color: '#f08705',
+        UniIOType: 'actor',
       },
       {
         UniIO_Id: 'Default_UniIO_Id4',
@@ -59,6 +62,7 @@ Page({
         Device_Id: 'Default_Device_Id4',
         Device_Name: '默认的长的设备名称',
         UniIO_Main_Color: '#f8d714',
+        UniIOType: 'sensor',
       },
     ],
   },
@@ -269,7 +273,8 @@ Page({
         Device_Id: ResData.UniIODataList[i].Device_Id,
         Device_Name: ResData.UniIODataList[i].Device_Name,
         UniIO_MainColor: ResData.UniIODataList[i].UniIO_MainColor,
-        UniIO_TemplateName: ResData.UniIODataList[i].UniIO_TemplateName
+        UniIO_TemplateName: ResData.UniIODataList[i].UniIO_TemplateName,
+        UniIO_Type: ResData.UniIODataList[i].UniIO_Type,
       }
     }
     // console.log("UniIOList_ForSave:", UniIOList_ForSave)
