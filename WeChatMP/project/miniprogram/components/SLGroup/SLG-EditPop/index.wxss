@@ -1,0 +1,22 @@
+.Anchor{
+  z-index: 100;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
+  background-color: rgba(102, 51, 153, 0.233);
+  /* transition: background-color 4s ease-in-out; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ComponentContainer{
+  /* position: absolute; */
+
+  height: 10px;
+  width: 10px;
+
+  background-color: rgba(153, 51, 90, 0.233);
+}

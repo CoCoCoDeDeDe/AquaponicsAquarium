@@ -5,6 +5,13 @@
   <scroll-view class="PurePage" scroll-y="{{true}}"  scroll-with-animation="{{true}}" enable-back-to-top="{{true}}">
 
     <view class="PurePageAdapter">
+
+      <!-- 下：弹窗s -->
+
+      <SLG-EditPop style="width: 100%; height: 100%;" model:Options="{{SLG_EditPop_Options}}"></SLG-EditPop>
+
+
+      <!-- 上：弹窗s -->
     
       <!-- 智联组盒子 -->
       <view class="TxtImgCard_Box TxtImgCard_Box_CustomGroup">
@@ -38,7 +45,7 @@
         <view class="GroupCmdCard_Board">
 
           <view class="GroupCreateRow_Box">
-            <view class="GroupCreateRow_Board" bind:tap="On_BindTap_Create">
+            <view class="GroupCreateRow_Board" bind:tap="On_BindTap_Create_SLGroup">
               新增智联组
             </view>
           </view>
@@ -46,7 +53,7 @@
           <block wx:for="{{SLGroupProfileList}}" wx:key="SLGroup_Id">
             <view class="GroupRow_Box">
               
-              <view class="GroupRow_LeftBox" bind:tap="On_BindTap_Read">
+              <view class="GroupRow_LeftBox" bind:tap="On_BindTap_Read_SLGroup" data-slgroupprofile="{{item}}">
                 <view class="GroupRow_Left_Tx">
                   {{item.SLGroup_Name}}
                 </view>
@@ -54,9 +61,9 @@
 
               <view class="GroupRow_RightBox">
               
-                <block wx:for="{{GroupCmdBtnList}}" wx:key="BindTapHandlerName">
-                  <view class="GroupRow_Right_BtnBox" bind:tap="{{item.BindTapHandlerName}}">
-                    <image class="GroupRow_Right_BtnImg" src="{{item.Img_Url}}" mode="aspectFit"/>
+                <block wx:for="{{GroupCmdBtnList}}" wx:key="BindTapHandlerName" wx:for-item="i">
+                  <view class="GroupRow_Right_BtnBox" bind:tap="{{i.BindTapHandlerName}}" data-slgroupprofile="{{item}}">
+                    <image class="GroupRow_Right_BtnImg" src="{{i.Img_Url}}" mode="aspectFit"/>
                   </view>
                 </block>
               

@@ -230,7 +230,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
-  padding: 4px 12px;
+  padding: 4px 4px 4px 4px;
   
   animation: appear 0.5s ease-out forwards;
 }
@@ -246,6 +246,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 0 0 0 6px;
+}
+.GroupRow_Left_Tx{
+
 }
 .GroupRow_LeftBox:active{
   background-color: #eee;

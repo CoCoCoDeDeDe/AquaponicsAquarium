@@ -1,0 +1,11 @@
+<block wx:if="{{Options.IsShow_Component}}">
+  <view class="Anchor">
+
+  <view class="ComponentContainer">
+
+    
+
+  </view>
+
+  </view>
+</block>

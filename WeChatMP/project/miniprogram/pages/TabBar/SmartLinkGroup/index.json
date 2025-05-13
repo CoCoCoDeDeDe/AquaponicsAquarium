@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "UniIOCard_Com1": "/components/uniIOCard/UniIOCard_Com1"
+    "UniIOCard_Com1": "/components/uniIOCard/UniIOCard_Com1",
+    "SLG-EditPop": "/components/SLGroup/SLG-EditPop"
   },
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black",

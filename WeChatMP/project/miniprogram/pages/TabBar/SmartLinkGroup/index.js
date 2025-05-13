@@ -11,17 +11,17 @@ Page({
       {
         Img_Url: '/static/images/icons/icon_deviceDetail_line_dekBlue@2x.png',
         FunctionName: '查看',
-        BindTapHandlerName: 'On_BindTap_Read',
+        BindTapHandlerName: 'On_BindTap_Read_SLGroup',
       },
       {
         Img_Url: '/static/images/icons/icon_edit_line_darkBlue@2x.png',
         FunctionName: '修改',
-        BindTapHandlerName: 'On_BindTap_Update',
+        BindTapHandlerName: 'On_BindTap_Update_SLGroup',
       },
       {
         Img_Url: '/static/images/icons/icon_delete_line_darkBlue@2x.png',
         FunctionName: '删除',
-        BindTapHandlerName: 'On_BindTap_Delete',
+        BindTapHandlerName: 'On_BindTap_Delete_SLGroup',
       },
     ],
     Is_GroupCmdCard_Show: true,
@@ -34,6 +34,10 @@ Page({
         SLGroup_CreateTime: '',
         SLGroup_UpdateTime: '',
       },
+    },
+
+    SLG_EditPop_Options: {  // 双向绑定
+      IsShow_Component: false,
     },
 
     SLGroupProfileList: [
@@ -184,10 +188,10 @@ Page({
     // 获取用户的智联组简介表
     await this.GetSLGroupProfileList() // Debug Delete
 
-    // 若获取的该用户的智联组表为空，则本也为空智联组状态，很多智联组不为空时的操作和函数不执行或显示表为空的提示
-
+    // 指定当前在浏览的智联组的页面参数
+    // console.log("options.SLGroupId:", options.SLGroupId)
     if(this.data.SLGroupProfileList.length > 0) {
-      if(options.SLGroupId === undefined || options.SLGroupId === '' || options.SLGroupId === ' ') {
+      if(options.SLGroupId === undefined || options.SLGroupId === '' || options.SLGroupId === ' ' || options.SLGroupId === 'undefined') {
         console.log("无传入 options.SLGroupId")
         await this.setData({
           'PageOption.SLGroup_Id': this.data.SLGroupProfileList[0].SLGroup_Id,
@@ -195,21 +199,13 @@ Page({
       } else{
         console.log("有传入 options.SLGroupId")
         await this.setData({
-          'PageOption.SLGroup_Id': options. SLGroupId
+          'PageOption.SLGroup_Id': options.SLGroupId
         })
       }
 
       // 获取本 SLGroup 的 Profile
       await this.GetNewSLGroupProfile()
-      // PageOption: {
-      //   SLGroup_Id: 'Default_SLGroup_Id',
-      //   SLGroupProfile: {
-      //     SLGroup_Id: 'Default_SLGroup_Id',
-      //     SLGroup_Name: '默认智联组名称',
-      //     SLGroup_CreateTime: '',
-      //     SLGroup_UpdateTime: '',
-      //   },
-      // },
+
       // 获取本 SLGroup 的所有的 UniIO 的 UniIODataCardList
       await GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroup_Id})
       
@@ -219,6 +215,7 @@ Page({
       }, 10000)
 
     } else{ // 显示 智联组 为空时的提示
+      // 若获取的该用户的智联组表为空，则本也为空智联组状态，很多智联组不为空时的操作和函数不执行或显示表为空的提示
 
       setTimeout(() => {  // 等页面出场动画差不多加载完后显示  
         wx.showToast({
@@ -230,8 +227,6 @@ Page({
       }, 1000);
 
     }
-
-
     
 
   },
@@ -268,13 +263,6 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
 
   },
 
@@ -393,6 +381,208 @@ Page({
     })
   },
 
+  async On_BindTap_Create_SLGroup(e) {
+    wx.showModal({
+      cancelColor: '#aaa',
+      cancelText: '取消',
+      confirmColor: '#9cd6f1',
+      confirmText: '新增',
+      content: '',
+      editable: true,
+      placeholderText: '请输入新智联组的名称',
+      showCancel: true,
+      title: `新增智联组`,
+      success: async (result) => {
+        if(result.cancel) {
+          return
+        }
+        if(result.confirm) {
+          // console.log("result:", result)
+          this.Create_SLGroup(result.content)
+        }
+      },
+      fail: (res) => {},
+      complete: (res) => {},
+    })
+  },
+
+  async Create_SLGroup(Para_SLGroup_Name) {
+    // console.log("新智联组名称参数 Para_SLGroup_Name:", Para_SLGroup_Name)
+    // 校验参数
+    // 如果参数是数组则转数字为字符串
+    let Target_SLGroup_Name
+    // console.log("typeof Para_SLGroup_Name:", typeof Para_SLGroup_Name)
+    if(typeof Para_SLGroup_Name === 'number') {
+      Target_SLGroup_Name = Para_SLGroup_Name.toString()
+    } else{
+      Target_SLGroup_Name = Para_SLGroup_Name
+    }
+    // 校验字符串
+    if(Target_SLGroup_Name === undefined || Target_SLGroup_Name === null || typeof Target_SLGroup_Name !== 'string' || Target_SLGroup_Name.trim() === '') {
+      // console.log("新智联组名称无效 Target_SLGroup_Name:", Target_SLGroup_Name)
+
+      // 提示
+      wx.showToast({
+        title: `新智联组名称无效: ${Target_SLGroup_Name}`,
+        duration: 1500,
+        icon: 'none',
+        mask: false,
+      })
+
+      // 结束
+      return
+    } else{
+      // console.log("新智联组名称有效 Target_SLGroup_Name:", Target_SLGroup_Name)
+    }
+
+    // 请求 API
+    let Res_Create_SLGroup
+    try{
+      Res_Create_SLGroup = await requestWithLafToken('GET', '/iot2/smartLinkGroup/CreateSmartLinkGroup', 
+        {
+          name: Target_SLGroup_Name,
+        })
+    } catch(err) {
+      switch(err.runCondition) {
+        case 'laf_token error':
+          on_laf_token_Invalid()
+          return
+        default:
+          on_common_error(err)
+          return
+      }
+    }
+    console.log("Res_Create_SLGroup:", Res_Create_SLGroup)
+    const New_SLGroup_Id = Res_Create_SLGroup.SLGroup_Id
+
+    // 新增成功后刷新页面，现在默认进入到新建的智联组的页面
+    const Duration = 1500
+    wx.showToast({
+      title: `新增智联组 ${Target_SLGroup_Name} 成功，即将自动跳转`,
+      duration: Duration,
+      icon: 'none',
+      mask: true,
+    })
+    setTimeout(() => {
+      wx.reLaunch({
+        url: `/pages/TabBar/SmartLinkGroup/index?SLGroup_Id=${New_SLGroup_Id}`,
+      })
+    }, Duration)
+
+  },
+
+
+  On_BindTap_Read_SLGroup(e) {
+    // console.log("e:", e)
+    const Target_SLGroup_Id = e.currentTarget.dataset.slgroupprofile.SLGroup_Id
+
+    this.GoTO_SLGroup(Target_SLGroup_Id)
+    
+  },
+
+  GoTO_SLGroup(Target_SLGroup_Id) {
+
+    const Target_Url = `/pages/TabBar/SmartLinkGroup/index?SLGroupId=${Target_SLGroup_Id}`
+
+    wx.reLaunch({
+      url: Target_Url,
+      success: (res) => {},
+      fail: (res) => {},
+      complete: (res) => {},
+    })
+
+  },
+
+  On_BindTap_Update_SLGroup(e) {
+    const Target_SLGroupProfile = e.currentTarget.dataset.slgroupprofile
+    // show SLG-EditPop
+    this.setData({
+      'SLG_EditPop_Options.IsShow_Component': true,
+    })
+  },
+
+  async On_BindTap_Delete_SLGroup(e) {
+    // console.log("e:", e)
+    const Target_SLGroupProfile = e.currentTarget.dataset.slgroupprofile
+    // console.log("Target_SLGroupProfile:", Target_SLGroupProfile)
+    const Target_IsCurrentSLGroup = Target_SLGroupProfile.SLGroup_Id === this.data.PageOption.SLGroupProfile.SLGroup_Id
+    // modal
+    wx.showModal({
+      cancelColor: '#aaa',
+      cancelText: '取消',
+      confirmColor: '#c41a16',
+      confirmText: '删除',
+      content: '其下所有 UniIO 将不再绑定该智联组，并且智联组下所有配置将被删除',
+      editable: false,
+      placeholderText: 'placeholderText',
+      showCancel: true,
+      title: `是否确认删除智联组 ${Target_SLGroupProfile.SLGroup_Name}`,
+      success: async (result) => {
+        if(result.cancel) {
+          return
+        }
+        if(result.confirm) {
+          this.Delete_SLGroup(Target_SLGroupProfile, Target_IsCurrentSLGroup)
+        }
+      },
+      fail: (res) => {},
+      complete: (res) => {},
+    })
+    
+  },
+
+  async Delete_SLGroup(Target_SLGroupProfile, Target_IsCurrentSLGroup) {
+    // console.log("Delete_SLGroup Target_SLGroupProfile:", Target_SLGroupProfile)
+    // console.log("Delete_SLGroup Target_IsCurrentSLGroup:", Target_IsCurrentSLGroup)
+
+    // 请求删除智联组的 API
+    let ResData
+    try{
+      ResData = await requestWithLafToken('GET', '/iot2/smartLinkGroup/DeleteSmartLinkGroup', {SLGroup_Id: Target_SLGroupProfile.SLGroup_Id})
+    } catch(err) {
+      switch(err.runCondition) {
+        case 'laf_token error':
+          on_laf_token_Invalid()
+          return
+        default:
+          on_common_error(err)
+          return
+      }
+    }
+    console.log("API DeleteSmartLinkGroup ResData:", ResData)
+
+    // 显示删除成功的提示
+    // Bug: 参数当前浏览的智联组时弹窗不显示
+    wx.showToast({
+      title: `删除 ${Target_SLGroupProfile.SLGroup_Name} 成功`,
+      duration: 1500,
+      icon: 'none',
+      mask: false,
+      success: (res) => {},
+      fail: (res) => {},
+      complete: (res) => {},
+    })
+
+    // 删除后刷新页面
+    // 刷新页面全部
+    // 分为两张删除情况：1. 删除本页面在浏览的智联组，2.删除不是本页面在浏览的智联组
+    if(Target_IsCurrentSLGroup) { // 1. 删除本页面在浏览的智联组
+      // 重新进入TabBar智联组页面，不传入目标智联组参数
+      const Target_Url = `/pages/TabBar/SmartLinkGroup/index`
+      wx.reLaunch({
+        url: Target_Url,
+        success: (res) => {},
+        fail: (res) => {},
+        complete: (res) => {},
+      })
+
+    } else{ // 2.删除不是本页面在浏览的智联组
+
+      // 重新获取用户的智联组简介表
+      await this.GetSLGroupProfileList() // Debug Delete
+    }
+
+  }
   
 
 })

@@ -71,20 +71,46 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    // console.log("options:", options)
+    console.log("options:", options)
     await this.setData({
       'PageOption.SLGroup_Id': options. SLGroupId
     })
 
+    
     // 获取本 SLGroup 的 Profile
-    await this.GetNewSLGroupProfile()
+    const Res_GetNewSLGroupProfile = await this.GetNewSLGroupProfile()
+    switch(Res_GetNewSLGroupProfile.errMsg) {
+      case 'succeed':
 
-    // 获取本 SLGroup 的 UniIOProfileList
-    await this.GetNewUniIOProfileList()
+        // 获取本 SLGroup 的 UniIOProfileList
+        await this.GetNewUniIOProfileList()
 
-    await wx.setNavigationBarTitle({
-      title: this.data.PageOption.SLGroup_Name,
-    })
+        // 设置导航栏标题
+        await wx.setNavigationBarTitle({
+          title: this.data.PageOption.SLGroup_Name,
+        })
+        break
+      default:
+        const Duration = 1500
+
+        // 显示提示
+        wx.showToast({
+          title: Res_GetNewSLGroupProfile.errMsg,
+          duration: Duration,
+          icon: 'none',
+          mask: false,
+        })
+        
+        // showToast 结束后转主页
+        setTimeout(() => {
+          wx.reLaunch({
+            url: '/pages/index/index',
+          })
+        }, Duration);
+        break
+    }
+
+    
   },
 
   /**
@@ -120,10 +146,27 @@ Page({
    */
   async onPullDownRefresh() {
     
-    await this.GetNewSLGroupProfile()
-    
-    await this.GetNewUniIOProfileList()
-
+    const Res_GetNewSLGroupProfile = await this.GetNewSLGroupProfile()
+    switch(Res_GetNewSLGroupProfile.errMsg) {
+      case 'succeed':
+        await this.GetNewUniIOProfileList()
+        break
+      default:
+        const Duration = 1500
+        wx.showToast({
+          title: Res_GetNewSLGroupProfile.errMsg,
+          duration: Duration,
+          icon: 'none',
+          mask: false,
+        })
+        // showToast 结束后转主页
+        setTimeout(() => {
+          wx.reLaunch({
+            url: '/pages/index/index',
+          })
+        }, Duration);
+        break
+    }
     wx.stopPullDownRefresh()
   },
 
@@ -211,7 +254,6 @@ Page({
   },
 
   async GetNewSLGroupProfile(e) {
-    
     let ResData
     try{
       ResData = await requestWithLafToken('GET', '/iot2/smartLinkGroup/GetSmartLinkGroupInfo', {smartLinkGroup_id: this.data.PageOption.SLGroup_Id})
@@ -219,11 +261,12 @@ Page({
       switch(err.runCondition) {
         case 'laf_token error':
           on_laf_token_Invalid()
-          return
+          break
         default:
           on_common_error(err)
-          return
+          break
       }
+      return err
     }
     console.log("ResData:", ResData)
 
@@ -236,6 +279,10 @@ Page({
     this.setData({
       PageOption: PageOption_ToSave,
     })
+    return {
+      runCondition: 'succeed',
+      errMsg: 'succeed',
+    }
   },
 
   async GetNewUniIOProfileList(e) {
