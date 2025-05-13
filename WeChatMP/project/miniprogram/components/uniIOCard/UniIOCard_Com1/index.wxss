@@ -46,7 +46,7 @@ view {
   align-items: flex-start;
 
   color: var(--vice-text-color);
-  font-size: 15px;
+  font-size: 13px;
 }
 .LeftTxt_TopTxtBox{
   font-size: inherit;

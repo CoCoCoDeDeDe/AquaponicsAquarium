@@ -1,11 +1,19 @@
 <block wx:if="{{Options.IsShow_Component}}">
   <view class="Anchor">
 
-  <view class="ComponentContainer">
+    <view class="ComponentContainer">
 
-    
+      <view class="PopupBox">
 
-  </view>
+        <view class="PopupBoard">
+
+          
+
+        </view>
+
+      </view>
+
+    </view>
 
   </view>
 </block>

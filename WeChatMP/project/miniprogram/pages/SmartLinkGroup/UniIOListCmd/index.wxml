@@ -18,6 +18,10 @@
       </view>
 
       <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
+        <UniIOProfileCard UniIOProfile="{{item}}" bind:RefreshPage="RefreshPage"></UniIOProfileCard>
+      </block>
+
+      <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
         <view class="Card1x1_Box">
 
           <view class="Card1x1_UniIO_BgPatternBox">
@@ -56,6 +60,7 @@
           </view>
         </view>
       </block>
+
 
       <block wx:if="{{UniIOProfileList.length > 0}}">
         

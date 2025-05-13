@@ -10,7 +10,7 @@
         {
           "name": "智联组/UniIO表管理",
           "pathName": "pages/SmartLinkGroup/UniIOListCmd/index",
-          "query": "SLGroupId=6822ce6851ac8e63950dcc2c",
+          "query": "SLGroup_Id=6822ce6851ac8e63950dcc2c",
           "launchMode": "default",
           "scene": null
         },

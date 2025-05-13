@@ -183,23 +183,50 @@ Page({
       SLGroupProfileList: [],
       // UniIODataCardList: [],
     })
+    // console.log("options:", options)
 
     // 当前浏览的 SLGroup 默认由页面参数指定, 若无页面参数则默认用智联组表中第一个或者权重第一的或者标为重要的智联组
     // 获取用户的智联组简介表
     await this.GetSLGroupProfileList() // Debug Delete
 
     // 指定当前在浏览的智联组的页面参数
-    // console.log("options.SLGroupId:", options.SLGroupId)
+    // console.log("options.SLGroup_Id:", options.SLGroup_Id)
     if(this.data.SLGroupProfileList.length > 0) {
-      if(options.SLGroupId === undefined || options.SLGroupId === '' || options.SLGroupId === ' ' || options.SLGroupId === 'undefined') {
-        console.log("无传入 options.SLGroupId")
+
+      let Is_QueryValid = false
+
+      if(options.SLGroup_Id === undefined || options.SLGroup_Id === '' || options.SLGroup_Id === ' ' || options.SLGroup_Id === 'undefined') {
+        // console.log("无传入 options.SLGroup_Id:", options.SLGroup_Id)
+        // Is_QueryValid = false  // 默认 false
+      } else{
+        // console.log("有传入 options.SLGroup_Id:", options.SLGroup_Id)
+
+        // 校验传入的 SLGroup_Id 是否存在于刚刚获得的该用户的 SLGroup 列表中
+        let Mattched_SLGroup_Id_Count = 0
+        // console.log("传入的 SLGroup_Id", options.SLGroup_Id)
+        for(let i = 1; i < this.data.SLGroupProfileList.length; i++) {
+          // console.log(i, "轮遍历中", this.data.SLGroupProfileList[i].SLGroup_Id)
+          if(options.SLGroup_Id == this.data.SLGroupProfileList[i].SLGroup_Id) {
+            Mattched_SLGroup_Id_Count++
+          }
+        }
+        console.log("页面 Query 参数的匹配情况 Mattched_SLGroup_Id_Count:", Mattched_SLGroup_Id_Count)
+        if(Mattched_SLGroup_Id_Count == 1) {
+          Is_QueryValid = true
+        } else{
+          // Is_QueryValid = false  // 默认 false
+        }
+      }
+
+      if(Is_QueryValid) {
+        console.log("Query 的 SLGroup_Id 有效 options.SLGroup_Id:", options.SLGroup_Id)
         await this.setData({
-          'PageOption.SLGroup_Id': this.data.SLGroupProfileList[0].SLGroup_Id,
+          'PageOption.SLGroup_Id': options.SLGroup_Id
         })
       } else{
-        console.log("有传入 options.SLGroupId")
+        console.log("Query 的 SLGroup_Id 无效 options.SLGroup_Id:", options.SLGroup_Id)
         await this.setData({
-          'PageOption.SLGroup_Id': options.SLGroupId
+          'PageOption.SLGroup_Id': this.data.SLGroupProfileList[0].SLGroup_Id,
         })
       }
 
@@ -365,10 +392,10 @@ Page({
   },
 
   GoTo_UniIOListCmdPage(e) {
-    const Target_SLGroup_Id = this.data.PageOption.SLGroup_Id
+    const Target_SLGroup_Id = this.data.PageOption.SLGroupProfile.SLGroup_Id
     // console.log("Target_SLGroup_Id:", Target_SLGroup_Id)
-    const Target_Url = `/pages/SmartLinkGroup/UniIOListCmd/index?SLGroupId=${Target_SLGroup_Id}`
-    console.log("Target_Url:", Target_Url)
+    const Target_Url = `/pages/SmartLinkGroup/UniIOListCmd/index?SLGroup_Id=${Target_SLGroup_Id}`
+    // console.log("Target_Url:", Target_Url)
 
     wx.navigateTo({
       url: Target_Url,
@@ -408,19 +435,15 @@ Page({
 
   async Create_SLGroup(Para_SLGroup_Name) {
     // console.log("新智联组名称参数 Para_SLGroup_Name:", Para_SLGroup_Name)
-    // 校验参数
-    // 如果参数是数组则转数字为字符串
+    
     let Target_SLGroup_Name
-    // console.log("typeof Para_SLGroup_Name:", typeof Para_SLGroup_Name)
-    if(typeof Para_SLGroup_Name === 'number') {
-      Target_SLGroup_Name = Para_SLGroup_Name.toString()
-    } else{
-      Target_SLGroup_Name = Para_SLGroup_Name
-    }
-    // 校验字符串
-    if(Target_SLGroup_Name === undefined || Target_SLGroup_Name === null || typeof Target_SLGroup_Name !== 'string' || Target_SLGroup_Name.trim() === '') {
-      // console.log("新智联组名称无效 Target_SLGroup_Name:", Target_SLGroup_Name)
 
+    // 校验参数
+    if(VerifyIptString(Para_SLGroup_Name)) {
+      // console.log("新智联组名称有效 Target_SLGroup_Name:", Target_SLGroup_Name)
+      Target_SLGroup_Name = Para_SLGroup_Name
+    } else{
+      // console.log("新智联组名称无效 Target_SLGroup_Name:", Target_SLGroup_Name)
       // 提示
       wx.showToast({
         title: `新智联组名称无效: ${Target_SLGroup_Name}`,
@@ -428,11 +451,8 @@ Page({
         icon: 'none',
         mask: false,
       })
-
       // 结束
       return
-    } else{
-      // console.log("新智联组名称有效 Target_SLGroup_Name:", Target_SLGroup_Name)
     }
 
     // 请求 API
@@ -482,7 +502,7 @@ Page({
 
   GoTO_SLGroup(Target_SLGroup_Id) {
 
-    const Target_Url = `/pages/TabBar/SmartLinkGroup/index?SLGroupId=${Target_SLGroup_Id}`
+    const Target_Url = `/pages/TabBar/SmartLinkGroup/index?SLGroup_Id=${Target_SLGroup_Id}`
 
     wx.reLaunch({
       url: Target_Url,
@@ -493,12 +513,95 @@ Page({
 
   },
 
-  On_BindTap_Update_SLGroup(e) {
+  async On_BindTap_Update_SLGroup(e) {
     const Target_SLGroupProfile = e.currentTarget.dataset.slgroupprofile
+    // console.log("Target_SLGroupProfile:", Target_SLGroupProfile)
     // show SLG-EditPop
-    this.setData({
-      'SLG_EditPop_Options.IsShow_Component': true,
+    // 暂时废弃
+    // this.setData({
+    //   'SLG_EditPop_Options.IsShow_Component': true,
+    // })
+
+    // 显示输入弹窗
+    wx.showModal({
+      cancelColor: '#aaa',
+      cancelText: '取消',
+      confirmColor: '#9dd7f1',
+      confirmText: '确认',
+      content: Target_SLGroupProfile.SLGroup_Name,
+      editable: true,
+      placeholderText: '请输入新名称',
+      showCancel: true,
+      title: `为 ${Target_SLGroupProfile.SLGroup_Name} 更改名称`,
+      success: async (result) => {
+        if(result.cancel) {
+          return
+        }
+        if(result.confirm) {
+          this.Update_SLGroup(Target_SLGroupProfile, result.content)
+        }
+      },
+      fail: (res) => {},
+      complete: (res) => {},
     })
+
+  },
+
+  async Update_SLGroup(Target_SLGroupProfile, SLGroup_NewName) {
+    // 校验参数
+    if(VerifyIptString(SLGroup_NewName)) {
+      // console.log("新智联组名称有效 Target_SLGroup_Name:", Target_SLGroup_Name)
+      // 继续
+    } else{
+      // console.log("新智联组名称无效 Target_SLGroup_Name:", Target_SLGroup_Name)
+      // 提示
+      wx.showToast({
+        title: `新智联组名称无效: ${Target_SLGroup_Name}`,
+        duration: 1500,
+        icon: 'none',
+        mask: false,
+      })
+      // 结束
+      return
+    }
+
+    // 请求 API
+    console.log("SLGroup_NewName:", SLGroup_NewName)
+    let ResData
+    try{
+      ResData = await requestWithLafToken('POST', '/iot2/smartLinkGroup/EditSLGroup', 
+      {
+        SLGroup_Id: Target_SLGroupProfile.SLGroup_Id
+      }, 
+      {
+        SLGroup_Name: SLGroup_NewName,
+      })
+    } catch(err) {
+      switch(err.runCondition) {
+        case 'laf_token error':
+          on_laf_token_Invalid()
+          return
+        default:
+          on_common_error(err)
+          return
+      }
+    }
+
+    // 刷新页面
+    if(this.data.PageOption.SLGroupProfile.SLGroup_Id == ResData.Target_SLGroup_Id) {
+      // 情况1: 改名的是当前页面浏览的智联组, 刷新整页
+      // 重新进入TabBar智联组页面，传如入原智联组参数
+      const Target_Url = `/pages/TabBar/SmartLinkGroup/index?SLGroup_Id=${this.data.PageOption.SLGroupProfile.SLGroup_Id}`
+      wx.reLaunch({
+        url: Target_Url,
+        success: (res) => {},
+        fail: (res) => {},
+        complete: (res) => {},
+      })
+    } else{
+      // 重新获取用户的智联组简介表
+      await this.GetSLGroupProfileList() // Debug Delete
+    }
   },
 
   async On_BindTap_Delete_SLGroup(e) {
@@ -565,7 +668,7 @@ Page({
 
     // 删除后刷新页面
     // 刷新页面全部
-    // 分为两张删除情况：1. 删除本页面在浏览的智联组，2.删除不是本页面在浏览的智联组
+    // 分为两种删除情况：1. 删除本页面在浏览的智联组，2.删除不是本页面在浏览的智联组
     if(Target_IsCurrentSLGroup) { // 1. 删除本页面在浏览的智联组
       // 重新进入TabBar智联组页面，不传入目标智联组参数
       const Target_Url = `/pages/TabBar/SmartLinkGroup/index`
@@ -586,3 +689,21 @@ Page({
   
 
 })
+
+
+
+function VerifyIptString(Target_Str) {
+    let Tmp_Str
+    // console.log("typeof Para_SLGroup_Name:", typeof Para_SLGroup_Name)
+    if(typeof Target_Str === 'number') {
+      Tmp_Str = Target_Str.toString()
+    } else{
+      Tmp_Str = Target_Str
+    }
+    // 校验字符串
+    if(Tmp_Str === undefined || Tmp_Str === null || typeof Tmp_Str !== 'string' || Tmp_Str.trim() === '') {
+      return false
+    } else{
+      return true
+    }
+}

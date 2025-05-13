@@ -73,7 +73,7 @@ Page({
   async onLoad(options) {
     console.log("options:", options)
     await this.setData({
-      'PageOption.SLGroup_Id': options. SLGroupId
+      'PageOption.SLGroup_Id': options. SLGroup_Id
     })
 
     
@@ -82,13 +82,7 @@ Page({
     switch(Res_GetNewSLGroupProfile.errMsg) {
       case 'succeed':
 
-        // 获取本 SLGroup 的 UniIOProfileList
-        await this.GetNewUniIOProfileList()
-
-        // 设置导航栏标题
-        await wx.setNavigationBarTitle({
-          title: this.data.PageOption.SLGroup_Name,
-        })
+        this.RefreshPage()
         break
       default:
         const Duration = 1500
@@ -111,6 +105,16 @@ Page({
     }
 
     
+  },
+
+  async RefreshPage() {
+    // 获取本 SLGroup 的 UniIOProfileList
+    await this.GetNewUniIOProfileList()
+
+    // 设置导航栏标题
+    await wx.setNavigationBarTitle({
+      title: this.data.PageOption.SLGroup_Name,
+    })
   },
 
   /**

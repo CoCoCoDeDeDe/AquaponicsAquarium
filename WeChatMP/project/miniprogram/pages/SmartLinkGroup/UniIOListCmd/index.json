@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "UniIOProfileCard": "/components/UniIO/UniIOProfileCard"
+  },
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "智联组 UniIOList 管理",
