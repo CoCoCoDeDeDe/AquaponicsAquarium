@@ -1,4 +1,4 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/addSmartLinkGroup
+// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/CreateSmartLinkGroup
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 
@@ -13,7 +13,7 @@ export default async function addSmartGroup (ctx: FunctionContext) {
       console.log('laf_token 验证失败')
       return laf_token_VerifyRes  // token 错误, 退出
     default:
-      console.log('laf_token 验证成功')
+      // console.log('laf_token 验证成功')
       break
   }
 
@@ -28,17 +28,19 @@ export default async function addSmartGroup (ctx: FunctionContext) {
   } catch (err) {
     console.log('获取参数出错 err:', err)
     return {
-      runCondition: 'parameter error',
+      runCondition: 'para error',
       errMsg: '获取参数出错',
     }
   }
 
-  // insert smartGroup
   // 获取当前时间并格式化
   const currentDate = new Date();
   const formattedDate = common.formatDate(currentDate);
+
+  // 新增智联组记录
+  let Res_InsertSLGroup
   try {
-    db.collection('iot2_smartLinkGroups')
+    Res_InsertSLGroup = await db.collection('iot2_smartLinkGroups')
       .insertOne({
         name: smartGroup_name,
         user_id: new ObjectId(user._id),
@@ -53,10 +55,12 @@ export default async function addSmartGroup (ctx: FunctionContext) {
       errMsg: 'insert smartGroup err',
     }
   }
+  console.log('Res_InsertSLGroup:', Res_InsertSLGroup)
 
   return {
     runCondition: 'succeed',
     errMsg: 'succeed',
+    SLGroup_Id: Res_InsertSLGroup.insertedId.toString(),
   }
 
 }
