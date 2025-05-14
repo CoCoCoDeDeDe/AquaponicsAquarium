@@ -1,4 +1,4 @@
-// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/GetSLGroupInfo
+// https://dhb91nur4r.bja.sealos.run/iot2/smartLinkGroup/GetSmartLinkGroupInfo
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 

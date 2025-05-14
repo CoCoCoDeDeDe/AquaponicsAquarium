@@ -1,4 +1,4 @@
-<view class="Card1x1_Box">
+<view class="Card1x1_Box {{UniIOProfile.Is_Selected ? 'Card1x1_Box_Selected' : ''}}">
 
 <view class="Card1x1_UniIO_BgPatternBox">
 
@@ -6,7 +6,7 @@
 
 </view>
 
-<view class="Card1x1_Board Card1x1_Board_UniIO">
+<view class="Card1x1_Board Card1x1_Board_UniIO {{UniIOProfile.Is_Selected ? 'Card1x1_Board_Selected' : ''}}">
 
   <view class="Card1x1_UniIO_TopDecorBox">
   
@@ -22,6 +22,9 @@
     </view>
     <view class="Card1x1_UniIO_1Row2">
       {{UniIOProfile.Device_Name}}
+    </view>
+    <view class="Card1x1_UniIO_1Row2" wx:if="{{UniIOProfile.IsShow_SLGroup_Name}}">
+      {{UniIOProfile.SmartLinkGroup_Name}}
     </view>
     <view class="Card1x1_UniIO_1Row3">
       <block wx:for="{{UniIOCardBtnList}}" wx:key="BindTapHandlerName" wx:for-item="i">

@@ -158,10 +158,10 @@ export default async function EditSLGroup(ctx: FunctionContext) {
     }
   } else if (!(Res_Update_SLGroup.modifiedCount === 1 && Res_Update_SLGroup.matchedCount === 1)) {
     // 更改无效
-    console.log('未知更新结果, Res_Update_SLGroup:', Res_Update_SLGroup)
+    console.log('未知的更新结果 Res_Update_SLGroup:', Res_Update_SLGroup)
     return {
-      runCondition: 'succeed',
-      errMsg: '未知更新结果',
+      runCondition: 'update error',
+      errMsg: '未知的更新结果',
     }
   }
 
@@ -169,7 +169,8 @@ export default async function EditSLGroup(ctx: FunctionContext) {
   console.log('更改成功')
   return {
     runCondition: 'succeed',
-    errMsg: '更改无效，新旧名字相同',
+    errMsg: '更改成功',
+    Target_SLGroup_Id,
   }
 
 

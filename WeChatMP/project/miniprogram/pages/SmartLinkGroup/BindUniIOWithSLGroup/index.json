@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "UniIOProfileCard": "/components/UniIO/UniIOProfileCard"
+  },
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "绑定 UniIO",
+  "enableShareTimeline": true
+}

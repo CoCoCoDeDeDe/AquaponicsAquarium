@@ -17,51 +17,6 @@
         </view>
       </view>
 
-      <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
-        <UniIOProfileCard UniIOProfile="{{item}}" bind:RefreshPage="RefreshPage"></UniIOProfileCard>
-      </block>
-
-      <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
-        <view class="Card1x1_Box">
-
-          <view class="Card1x1_UniIO_BgPatternBox">
-          
-            <view class="Card1x1_UniIO_BgPattern_TxtUniIOType">{{item.UniIO_Type}}</view>
-
-          </view>
-
-          <view class="Card1x1_Board Card1x1_Board_UniIO">
-
-            <view class="Card1x1_UniIO_TopDecorBox">
-            
-              <view class="Card1x1_UniIO_TopDecor_Rectangle" style="background-color: {{item.UniIO_MainColor}};"></view>
-              <view class="Card1x1_UniIO_TopDecor_Dot" style="background-color: {{item.UniIO_MainColor}};"></view>
-
-            </view>
-
-            <view class="Card1x1_BoardMask">
-              
-              <view class="Card1x1_UniIO_1Row1">
-                {{item.UniIO_Name}}
-              </view>
-              <view class="Card1x1_UniIO_1Row2">
-                {{item.Device_Name}}
-              </view>
-              <view class="Card1x1_UniIO_1Row3">
-                <block wx:for="{{UniIOCardBtnList}}" wx:key="BindTapHandlerName" wx:for-item="i">
-                  <view class="Card1x1_UniIO_1Row3_BtnBox" bind:tap="{{i.BindTapHandlerName}}" data-uniioid="{{item.UniIO_Id}}">
-                    <image src="{{i.Img_Url}}" mode="aspectFit" class="Card1x1_UniIO_1Row3_BtnImg"/>
-                  </view>
-                </block>
-              </view>
-
-            </view>
-            
-          </view>
-        </view>
-      </block>
-
-
       <block wx:if="{{UniIOProfileList.length > 0}}">
         
         <view class="Card1x1_Box">
@@ -83,7 +38,13 @@
         </view>
 
       </block>
-      <block wx:else>
+      
+      <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
+        <UniIOProfileCard UniIOProfile="{{item}}" UniIOCardBtnList="{{UniIOCardBtnList}}" bind:RefreshPage="RefreshPage"></UniIOProfileCard>
+      </block>
+
+
+      <block wx:if="{{ UniIOProfileList.length <= 0 }}">
         
         <view class="Card1x1_Box">
           <view class="Card1x1_Board">

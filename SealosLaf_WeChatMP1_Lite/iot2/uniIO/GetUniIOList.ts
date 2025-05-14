@@ -4,12 +4,15 @@ import common from '../utils/common'
 
 const db = cloud.mongo.db
 
+// huawei_device_id
 // AQAQ25032901
+// smartLinkGroup_id
 // 681ad710ec955cc190f61ae8
 
 // 若传入 huawei_device_id 按 huawei_device_id 查找
 // 若传入 smartLinkGroup_id 按 smartLinkGroup_id 查找
 // 若同时传入 huawei_device_id 和 smartLinkGroup_id, 按 huawei_device_id 查找
+// 若 huawei_device_id 和 smartLinkGroup_id 都未传入，按 user_id 查找
 export default async function GetUniIOList (ctx: FunctionContext) {
 
   // 检验 laf_token 获取 user_id
@@ -19,12 +22,12 @@ export default async function GetUniIOList (ctx: FunctionContext) {
       console.log('laf_token 验证失败')
       return laf_token_VerifyRes  // token 错误, 退出
     default:
-      console.log('laf_token 验证成功')
+      // console.log('laf_token 验证成功')
       break
   }
   let user = laf_token_VerifyRes.user  // user._id 即 user_id
   user._id = new ObjectId(user._id)
-  console.log('user._id:', user._id)
+  // console.log('user._id:', user._id)
 
   // 获取参数 huawei_device_id, smartLinkGroup_id
   let param = {
@@ -61,11 +64,48 @@ export default async function GetUniIOList (ctx: FunctionContext) {
     }
     // 不进 if 则下一个循环
     // 如果到这里时 i >= paramArr.length - 1，则说明没有下一个循环了而且参数都没有匹配到
-    if(i >= paramArr.length - 1) {
-      console.log('无有效 Query 参数')
-      return {
-        runCondition: 'para error',
-        errMsg: '无有效 Query 参数',
+    if (i >= paramArr.length - 1) {
+      console.log('用 user_id')
+      
+      // 获取 user 的所有 device_id 组成 device_id 数组作为 uniIOs 的查询条件
+      let Res_Find_Device_Id
+      try{
+        Res_Find_Device_Id = await db.collection('iot2_devices')
+          .find(
+            {
+              user_id: { $eq: new ObjectId(user._id) }
+            },
+            {
+              projection: {
+                _id: 1,
+              }
+            }
+          ).toArray()
+      } catch (err) {
+        console.log('查找 device_id 错误 err:', err)
+        return {
+          runCondition: 'db error',
+          errMsg: '查找 device_id 错误',
+        }
+      }
+      // console.log('Res_Find_Device_Id:', Res_Find_Device_Id)
+      if (!Res_Find_Device_Id.length) {
+        console.log('查找 device_id为空')
+        return {
+          runCondition: 'records error',
+          errMsg: '用户没有任何设备',
+        }
+      }
+
+      // 将存有 Device_Id 的对象数组转化为 Device_Id ObjectId 数组
+      let Device_Id_List = []
+      for (let i = 0; i < Res_Find_Device_Id.length; i++) {
+        Device_Id_List[i] = new ObjectId(Res_Find_Device_Id[i]._id)
+      }
+      // console.log('Device_Id_List:', Device_Id_List)
+      // Device_Id_List = []
+      uniIOListFilter = {
+        device_id: { $in: Device_Id_List }
       }
     }
   }

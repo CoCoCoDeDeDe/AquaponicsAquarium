@@ -10,6 +10,14 @@
   flex-wrap: nowrap;
   padding: 4px 4px 8px 4px;
 }
+.Card1x1_Box:active{
+  top: 1px;
+  transform: scale(0.98);
+}
+.Card1x1_Box_Selected{
+  top: 0.8px;
+  transform: scale(0.99);
+}
 .Card1x1_Board{
   position: relative;
   height: 100%;
@@ -33,9 +41,16 @@
   text-align: center;
   white-space: wrap;
 }
-.Card1x1_Board_Add:active{
-  top: 0.8px;
-  transform: scale(0.99);
+.Card1x1_Board:active{
+
+  background-color: #f6f6f6;
+  box-shadow: 
+    0 -2px 8px rgba(0, 0, 0, 0.144) inset,
+    0 -2px 2px rgba(0, 0, 0, 0.082) inset,
+    0 2px 4px rgba(0, 0, 0, 0.068),
+    0 1px 0.1px rgba(0, 0, 0, 0.027);
+}
+.Card1x1_Board_Selected{
 
   background-color: #f6f6f6;
   box-shadow: 
@@ -121,13 +136,14 @@
   align-items: center;
   flex-wrap: nowrap;
   padding: 10px;
+  padding-bottom: 20px;
   
   text-align: center;
   white-space: wrap;
 }
 
 .Card1x1_UniIO_1Row1{
-  flex: 4 4 auto;
+  flex: 5 5 auto;
 
   display: flex;
   flex-direction: column;

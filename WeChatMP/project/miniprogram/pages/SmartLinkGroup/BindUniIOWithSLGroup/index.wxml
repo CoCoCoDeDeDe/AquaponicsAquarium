@@ -1,0 +1,76 @@
+<view class="page">
+
+<view class="WxNavDecor"></view>
+
+<scroll-view class="ScrollView" scroll-y="{{true}}" 	show-scrollbar="{{false}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-into-view="{{ViewOption.Scroll_Into_View_Target}}" 	enable-flex="{{true}}" enhanced="{{true}}" binddragstart="OnScrollView_DragStart" binddragend="OnScrollView_DragEnd">
+
+  <view class="ScrollViewUmbrella"></view>
+
+  <view class="Card2x1_OverView_Box" id="top">
+    <view class="Card2x1_OverView_Board">
+
+      <view class="Card2x1_OverView_1Row1_Txt_Bg">
+        Overview
+      </view>
+      
+      <view class="Card2x1_OverView_1Row" wx:for="{{SLGroupProfile_Pairs}}" wx:key="key">
+        <view class="Card2x1_OverView_1Row_Key">
+          {{item.key}}
+        </view>
+        <view class="Card2x1_OverView_1Row_Value">
+          {{item.value}}
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="Card2x1_CtrlBar_Box">
+    <view class="Card2x1_CtrlBar_Board">
+    
+      <view class="Card2x1_CtrlBar_BtnBox" wx:for="{{CtrlBarData.BtnDataList}}" wx:key="Title">
+        <view class="Card2x1_CtrlBar_BtnBoard" bind:tap="{{item.Event_BindTap}}">
+          {{item.Title}}
+        </view>
+      </view>
+    
+    </view>
+  </view>
+  
+  <block wx:for="{{UniIOProfileList}}" wx:key="UniIO_Id">
+    <UniIOProfileCard model:UniIOProfile="{{item}}" UniIOCardBtnList="{{UniIOCardBtnList}}" bind:tap="On_BindTap_UniIOProfileCard" data-UniIOProfile="{{item}}"></UniIOProfileCard>
+  </block>
+    
+    <UniIOProfileCard model:UniIOProfile="{{ToTopBtnOption}}" UniIOCardBtnList="{{[]}}" bind:tap="On_BindTap_ToTop" data-UniIOProfile="{{ToTopBtnOption}}"></UniIOProfileCard>
+
+  <block wx:if="{{ UniIOProfileList.length <= 0 }}">
+    <view class="Card1x1_Box">
+      <view class="Card1x1_Board">
+        
+        <view class="Card1x1_Prompt_1Row1">
+          <view class="Card1x1_Prompt_1Row1_Txt_Bg">
+            INFORM
+          </view>
+          <view class="Card1x1_Prompt_1Row1_Txt">
+            暂时没有 UniIO
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </block>
+
+  <view class="ScrollViewSteppingStone"></view>
+
+  <view class="SubmistBtnAnchor">
+    <view class="SubmistBtnBox">
+      <view class="SubmistBtnBoard {{ViewOption.Can_Submit?'SubmistBtnBoard_Allowed':''}} {{ViewOption.Is_Dragging?'SubmistBtnBoard_Hide':''}}" bind:tap="{{ViewOption.Can_Submit?'On_BindTap_Submit':''}}">
+        提交
+      </view>
+    </view>
+  </view>
+  
+</scroll-view>
+
+</view>
+

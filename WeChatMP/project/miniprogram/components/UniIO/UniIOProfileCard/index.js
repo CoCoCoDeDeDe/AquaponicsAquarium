@@ -9,7 +9,37 @@ Component({
   properties: {
     UniIOProfile: {
       type: Object,
-      value: {}
+      value: {
+        UniIO_Type: 'Type',
+        UniIO_MainColor: '#ccc',
+        UniIO_Name: 'UniIO_Name',
+        Device_Name: 'Device_Name',
+        UniIO_Id: 'UniIO_Id',
+        SmartLinkGroup_Name: 'SLGroup_Name',
+        Is_Selected: false,
+        IsShow_SLGroup_Name: false,
+      }
+    },
+
+    UniIOCardBtnList: {
+      type: Array,
+      value: [
+        {
+          Img_Url: '/static/images/icons/icon_deviceDetail_line_dekBlue@2x.png',
+          FunctionName: '查看',
+          BindTapHandlerName: 'On_BindTap_Read',
+        },
+        {
+          Img_Url: '/static/images/icons/icon_edit_line_darkBlue@2x.png',
+          FunctionName: '修改',
+          BindTapHandlerName: 'On_BindTap_Update',
+        },
+        {
+          Img_Url: '/static/images/icons/icon_delete_line_darkBlue@2x.png',
+          FunctionName: '删除',
+          BindTapHandlerName: 'On_BindTap_Delete',
+        },
+      ]
     }
   },
 
@@ -17,23 +47,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    UniIOCardBtnList: [
-      // {
-      //   Img_Url: '/static/images/icons/icon_deviceDetail_line_dekBlue@2x.png',
-      //   FunctionName: '查看',
-      //   BindTapHandlerName: 'On_BindTap_Read',
-      // },
-      // {
-      //   Img_Url: '/static/images/icons/icon_edit_line_darkBlue@2x.png',
-      //   FunctionName: '修改',
-      //   BindTapHandlerName: 'On_BindTap_Update',
-      // },
-      {
-        Img_Url: '/static/images/icons/icon_delete_line_darkBlue@2x.png',
-        FunctionName: '删除',
-        BindTapHandlerName: 'On_BindTap_Delete',
-      },
-    ],
+    
   },
 
   /**
@@ -103,8 +117,6 @@ Component({
       })
 
       // 调用双亲页面传入的刷新页面的函数即移除成功后要执行的函数
-
-  
       // 重新获取 UniIOList 刷新页面
 
       this.triggerEvent('RefreshPage', { data: {} })

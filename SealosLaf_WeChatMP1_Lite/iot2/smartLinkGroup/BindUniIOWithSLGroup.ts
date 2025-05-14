@@ -113,7 +113,7 @@ export default async function addUnIOsToSmartLinkGroup (ctx: FunctionContext) {
   // console.log('ctx.body.UniIOList:', ctx.body.UniIOList)
   // console.log('ctx.body.UniIOList.length:', ctx.body.UniIOList.length)
   try{
-    if (ctx.body === undefined || ctx.body.UniIOList === undefined || ctx.body.UniIOList === null) {
+    if (ctx.body === undefined || ctx.body.UniIOList === undefined || ctx.body.UniIOList === null || ctx.body.UniIOList.length <= 0) {
       throw new Error('传入的 UniIOList 无效')
     }
   } catch (err) {
@@ -265,6 +265,7 @@ export default async function addUnIOsToSmartLinkGroup (ctx: FunctionContext) {
   return {
     runCondition: 'succeed',
     errMsg: '绑定 UniIOs 与 SLGroup 成功',
+    Target_UniIOIdList,
   }
 
 }

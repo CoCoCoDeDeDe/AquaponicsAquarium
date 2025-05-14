@@ -10,6 +10,7 @@
     "pages/device/productList/index",
     "pages/device/bindUserWithDevice/index",
     "pages/SmartLinkGroup/UniIOListCmd/index",
+    "pages/SmartLinkGroup/BindUniIOWithSLGroup/index",
     "pages/test/index"
   ],
   "usingComponents": {},
