@@ -82,5 +82,7 @@
 }
 .btnIcon{
   display: flex;
-  height: 20px;
+  --edge-length: 21px;
+  height: var(--edge-length);
+  width: var(--edge-length);
 }

@@ -22,10 +22,11 @@
 }
 .navigatorIconBox {
   display: flex;
-  height: 29px;
 }
 .navigatorIcon {
-  height: 100%;
+  --edge-length: 34px;
+  height: var(--edge-length);
+  width: var(--edge-length);
 }
 .navigatorTextBox {
   padding-left: 15px;

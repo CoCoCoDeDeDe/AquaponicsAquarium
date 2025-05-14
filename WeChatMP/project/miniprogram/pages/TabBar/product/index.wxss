@@ -54,7 +54,10 @@
   display: flex;
 }
 .addDeviceIcon{
-  height: 23px;
+  /* height: 23px; */
+  --edge-length: 23px;
+  height: var(--edge-length);
+  width: var(--edge-length);
 }
 
 /* myDevice showMore */

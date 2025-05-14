@@ -36,7 +36,7 @@ Component({
         bindtap: 'onBindtapEditDevice'
       },
       {
-        imageSrc: '/static/images/icons/icon_delete_line_darkBlue@2x.png',
+        imageSrc: '/static/images/icons/icon_unbind_line_active.png',
         bindtap: 'onBindtapUnbindDevice'
       }
     ]

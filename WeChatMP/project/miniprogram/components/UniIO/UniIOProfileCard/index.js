@@ -35,7 +35,7 @@ Component({
           BindTapHandlerName: 'On_BindTap_Update',
         },
         {
-          Img_Url: '/static/images/icons/icon_delete_line_darkBlue@2x.png',
+          Img_Url: '/static/images/icons/icon_unbind_line_active.png',
           FunctionName: '删除',
           BindTapHandlerName: 'On_BindTap_Delete',
         },

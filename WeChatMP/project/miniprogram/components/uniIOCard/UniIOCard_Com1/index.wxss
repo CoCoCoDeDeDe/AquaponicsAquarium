@@ -114,7 +114,6 @@ view {
   position: absolute; /* 相对于最近的非 static 双亲盒子定位 */
   top: -40px;
   left: 10px;
-  /* z-index: -1; */
 
   width: 100%;
   height: 270px;
@@ -158,6 +157,8 @@ view {
 
 /* 下面：命令部分 */
 .ComponentSendCommandBox{
+  /* 防止图表盖不住标签 */
+  
   flex: 1 1 auto;
 
   padding: 6px 2px 0;
@@ -168,6 +169,7 @@ view {
   flex-wrap: wrap;
 }
 .Cmd_BtnBox{
+  
   position: relative;
   width: 22%;
   margin: 4px 0;
@@ -189,6 +191,7 @@ view {
     inset 0 -0.5px 0 rgba(0, 0, 0, 0.1);
 }
 .Cmd_IptBox{
+  
   flex: 4 4 auto;
   
   padding: 3px 0px 3px 8px;
@@ -202,12 +205,14 @@ view {
     0 -1px 0 rgba(0, 0, 0, 0.055);
 }
 .Cmd_Ipt{
+  
   padding: 2px 4px;
 
   color: var(--main-text-color);
   font-size:15px;
 }
 .Cmd_IptConfirmBox{
+  
   flex: 1 1 auto; /* 位置和大小 */
   margin: 0 0px 0 10px;
   position: relative;

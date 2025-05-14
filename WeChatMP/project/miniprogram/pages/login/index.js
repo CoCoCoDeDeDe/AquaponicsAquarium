@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    
     page_state_enum: {
       loginOrRegister: 'loginOrRegister',
       loginSucceed: 'loginSucceed',

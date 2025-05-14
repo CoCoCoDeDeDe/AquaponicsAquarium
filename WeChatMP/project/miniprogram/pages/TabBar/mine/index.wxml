@@ -29,9 +29,12 @@
     </view>
   </view> -->
 
-  <navigatorCardsCardBox navigatorCardList="{{serviceNavigatorCardList}}"></navigatorCardsCardBox>
+  <!-- <navigatorCardsCardBox navigatorCardList="{{serviceNavigatorCardList}}"></navigatorCardsCardBox>
 
-  <navigatorCardsCardBox navigatorCardList="{{programNavigatorCardList}}"></navigatorCardsCardBox>
+  <navigatorCardsCardBox navigatorCardList="{{programNavigatorCardList}}"></navigatorCardsCardBox> -->
+
+  <!-- 登录卡片 -->
+  <navigatorCard cardData="{{cardData_logIn}}" bind:tap="on_bindTap_GoToLogIn"></navigatorCard>
 
   <!-- 退出登录卡片 -->
   <navigatorCard cardData="{{cardData_logOff}}" bind:tap="on_bindTap_LogOff"></navigatorCard>

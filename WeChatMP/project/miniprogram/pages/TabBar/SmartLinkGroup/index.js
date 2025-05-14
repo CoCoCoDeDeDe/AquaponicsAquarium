@@ -19,7 +19,8 @@ Page({
         BindTapHandlerName: 'On_BindTap_Update_SLGroup',
       },
       {
-        Img_Url: '/static/images/icons/icon_delete_line_darkBlue@2x.png',
+        // /static/images/icons/icon_unbind_line_active.png
+        Img_Url: '/static/images/icons/icon_unbind_line_active.png',
         FunctionName: '删除',
         BindTapHandlerName: 'On_BindTap_Delete_SLGroup',
       },
@@ -336,6 +337,7 @@ Page({
     })
   },
 
+  // 获取智联组简介列表
   async GetSLGroupProfileList(e) {
     // console.log("GetSLGroupProfileList")
     let ResData
@@ -361,6 +363,7 @@ Page({
     })
   },
 
+  // 获取本也智联组简介
   async GetNewSLGroupProfile(e) {
     // console.log("GetNewSLGroupProfile")
     let ResData
@@ -387,10 +390,12 @@ Page({
     // console.log("this.data.PageOption.SLGroupProfile:", this.data.PageOption.SLGroupProfile)
   },
 
+  // 事件：点击去往管理 UniIO 列表的页面
   On_BindTap_GoTo_UniIOListCmdPage(e) {
     this.GoTo_UniIOListCmdPage()
   },
 
+  // 去往管理 UniIO 列表的页面
   GoTo_UniIOListCmdPage(e) {
     const Target_SLGroup_Id = this.data.PageOption.SLGroupProfile.SLGroup_Id
     // console.log("Target_SLGroup_Id:", Target_SLGroup_Id)
@@ -408,6 +413,7 @@ Page({
     })
   },
 
+  // 事件：点击新建智联组
   async On_BindTap_Create_SLGroup(e) {
     wx.showModal({
       cancelColor: '#aaa',
@@ -433,6 +439,7 @@ Page({
     })
   },
 
+  // 新建智联组
   async Create_SLGroup(Para_SLGroup_Name) {
     // console.log("新智联组名称参数 Para_SLGroup_Name:", Para_SLGroup_Name)
     
@@ -491,7 +498,7 @@ Page({
 
   },
 
-
+  // 事件：点击 查看点击的智联组
   On_BindTap_Read_SLGroup(e) {
     // console.log("e:", e)
     const Target_SLGroup_Id = e.currentTarget.dataset.slgroupprofile.SLGroup_Id
@@ -500,6 +507,7 @@ Page({
     
   },
 
+  // 查看点击的智联组
   GoTO_SLGroup(Target_SLGroup_Id) {
 
     const Target_Url = `/pages/TabBar/SmartLinkGroup/index?SLGroup_Id=${Target_SLGroup_Id}`
@@ -513,6 +521,7 @@ Page({
 
   },
 
+  // 事件：点击 修改智联组
   async On_BindTap_Update_SLGroup(e) {
     const Target_SLGroupProfile = e.currentTarget.dataset.slgroupprofile
     // console.log("Target_SLGroupProfile:", Target_SLGroupProfile)
@@ -547,6 +556,7 @@ Page({
 
   },
 
+  // 修改智联组
   async Update_SLGroup(Target_SLGroupProfile, SLGroup_NewName) {
     // 校验参数
     if(VerifyIptString(SLGroup_NewName)) {
@@ -604,6 +614,7 @@ Page({
     }
   },
 
+  // 事件：点击 删除智联组
   async On_BindTap_Delete_SLGroup(e) {
     // console.log("e:", e)
     const Target_SLGroupProfile = e.currentTarget.dataset.slgroupprofile
@@ -634,6 +645,7 @@ Page({
     
   },
 
+  // 删除智联组
   async Delete_SLGroup(Target_SLGroupProfile, Target_IsCurrentSLGroup) {
     // console.log("Delete_SLGroup Target_SLGroupProfile:", Target_SLGroupProfile)
     // console.log("Delete_SLGroup Target_IsCurrentSLGroup:", Target_IsCurrentSLGroup)
@@ -691,7 +703,7 @@ Page({
 })
 
 
-
+// 校验输入框输入的字符串是否有效
 function VerifyIptString(Target_Str) {
     let Tmp_Str
     // console.log("typeof Para_SLGroup_Name:", typeof Para_SLGroup_Name)

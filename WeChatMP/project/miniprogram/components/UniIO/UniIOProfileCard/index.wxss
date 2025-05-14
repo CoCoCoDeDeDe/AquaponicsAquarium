@@ -15,7 +15,7 @@
   transform: scale(0.98);
 }
 .Card1x1_Box_Selected{
-  top: 0.8px;
+  top: 0.7px;
   transform: scale(0.99);
 }
 .Card1x1_Board{
@@ -52,7 +52,7 @@
 }
 .Card1x1_Board_Selected{
 
-  background-color: #f6f6f6;
+  background-color: #eeeeee;
   box-shadow: 
     0 -2px 8px rgba(0, 0, 0, 0.144) inset,
     0 -2px 2px rgba(0, 0, 0, 0.082) inset,

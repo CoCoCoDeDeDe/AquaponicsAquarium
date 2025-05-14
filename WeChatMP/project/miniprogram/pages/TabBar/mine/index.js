@@ -7,6 +7,49 @@ Page({
    * 页面的初始数据
    */
   data: {
+    serviceNavigatorCardList: [
+      {
+        iconUrl: '/static/images/icons/icon_helpAndFeedback_block_darkBlue@2x.png',
+        title: '帮助与反馈',
+        navigateUrl: '/pages/mine/index'  // TODO 打造帮助与反馈页面
+      },
+      {
+        iconUrl: '/static/images/icons/icon_shoppingOrder_block_darkBlue@2x.png',
+        title: '购物记录',
+        navigateUrl: '/pages/mine/index'  // TODO 打造购物记录页面
+      },
+      {
+        iconUrl: '/static/images/icons/icon_afterService_block_darkBlue@2x.png',
+        title: '产品售后',
+        navigateUrl: '/pages/mine/index'  // TODO 打造产品售后页面
+      }
+    ],
+    programNavigatorCardList: [
+      {
+        iconUrl: '/static/images/icons/icon_programSetting_block_darkBlue@2x.png',
+        title: '设置',
+        navigateUrl: '/pages/mine/index'  // TODO 打造程序设置页面
+      }
+    ],
+
+    cardData_logIn: {
+      iconUrl: '/static/images/icons/icon_login_block_active.png',
+      title: '登录',
+      // methodName_bindTap: 'on_logOff',
+      // navigateUrl: null,
+    },
+
+    cardData_logOff: {
+      iconUrl: '/static/images/icons/icon_logoff_block_active_danger.png',
+      title: '退出登录',
+      // methodName_bindTap: 'on_logOff',
+      // navigateUrl: null,
+    },
+    userProfile: {
+      avatar_url: '/static/images/icons/defaultAvatar.png',
+      nickname: '默认昵称',
+      username: 'default user_name'
+    }
   },
 
   /**
@@ -24,41 +67,7 @@ Page({
   // 页面重置
   reset(e) {
     this.setData({
-      serviceNavigatorCardList: [
-        {
-          iconUrl: '/static/images/icons/icon_helpAndFeedback_block_darkBlue@2x.png',
-          title: '帮助与反馈',
-          navigateUrl: '/pages/mine/index'  // TODO 打造帮助与反馈页面
-        },
-        {
-          iconUrl: '/static/images/icons/icon_shoppingOrder_block_darkBlue@2x.png',
-          title: '购物记录',
-          navigateUrl: '/pages/mine/index'  // TODO 打造购物记录页面
-        },
-        {
-          iconUrl: '/static/images/icons/icon_afterService_block_darkBlue@2x.png',
-          title: '产品售后',
-          navigateUrl: '/pages/mine/index'  // TODO 打造产品售后页面
-        }
-      ],
-      programNavigatorCardList: [
-        {
-          iconUrl: '/static/images/icons/icon_programSetting_block_darkBlue@2x.png',
-          title: '设置',
-          navigateUrl: '/pages/mine/index'  // TODO 打造程序设置页面
-        }
-      ],
-      cardData_logOff: {
-        iconUrl: '/static/images/icons/icon_programSetting_block_darkBlue@2x.png',
-        title: '退出登录',
-        // methodName_bindTap: 'on_logOff',
-        // navigateUrl: null,
-      },
-      userProfile: {
-        avatar_url: '/static/images/icons/defaultAvatar.png',
-        nickname: '默认昵称',
-        username: 'default user_name'
-      }
+      
     })
   },
 
@@ -96,6 +105,19 @@ Page({
     console.log("this.data.userProfile", this.data.userProfile)
   },
 
+  // 点击事件：登录
+  async on_bindTap_GoToLogIn(e) {
+    this.GoToLogIn()
+  },
+
+  // 登录
+  async GoToLogIn(e) {
+    wx.navigateTo({
+      url: '/pages/login/index',
+    })
+  },
+
+  // 点击事件：退出登录
   on_bindTap_LogOff(e) {
     // 为退出登录函数嵌套确认弹窗
       wx.showModal({
@@ -122,6 +144,7 @@ Page({
       })
   },
 
+  // 退出登录
   onLogOff(e) {
     wx.removeStorage({
       key: 'laf_token',
@@ -144,6 +167,39 @@ Page({
     })
 
     this.reset()
-  }
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+    return {
+      title: '快来使用我们的小程序吧！', // 分享标题
+      path: '/pages/TabBar/SmartLinkGroup/index', // 分享路径，可带参数
+      // imageUrl: '/images/share.png', // 自定义分享图片路径
+      success(res) {
+        // 分享成功的回调函数
+        console.log('分享成功', res);
+        // 可以在这里添加分享成功后的奖励逻辑
+      },
+      fail(res) {
+        // 分享失败的回调函数
+        console.log('分享失败', res);
+      }
+    };
+  },
+
+  /**
+   * 用户点击右上角分享到朋友圈
+   */
+  onShareTimeline() {
+    return {
+      title: '分布式智能物联网平台',
+      query: {
+        // userId: '123', // 可携带的参数
+      },
+      imageUrl: '/path/to/share/image.jpg' // 必须是本地路径或临时路径
+    }
+  },
 
 })

@@ -236,7 +236,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Xh1M7-ou8zUhPZzafD54" name="taskTable">
-    <mxGraphModel dx="4780" dy="3300" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2998" dy="2099" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -658,10 +658,10 @@
         <mxCell id="Ruscn7dn7S_DIrgxad8w-59" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-4" target="Ruscn7dn7S_DIrgxad8w-57" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="4jHCbL6mN7QV4uFHF4mR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="P6r5Z6k3Mv99crbdrZTP-4" target="4jHCbL6mN7QV4uFHF4mR-2">
+        <mxCell id="4jHCbL6mN7QV4uFHF4mR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="P6r5Z6k3Mv99crbdrZTP-4" target="4jHCbL6mN7QV4uFHF4mR-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="P6r5Z6k3Mv99crbdrZTP-4" value="退出登录图标" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="P6r5Z6k3Mv99crbdrZTP-4" value="退出登录图标" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="890" y="220" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="P6r5Z6k3Mv99crbdrZTP-6" value="更新注册登录系统的请求处理" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
@@ -1436,11 +1436,25 @@
         <mxCell id="vDFkVOGway4GckNRW44I-42" value="封装抽象为组件&lt;div&gt;UniIOProfile 卡片&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="4240" y="610" width="105" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="4jHCbL6mN7QV4uFHF4mR-1" value="更丰富、细腻的动画" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="4jHCbL6mN7QV4uFHF4mR-1" value="更丰富、细腻的动画" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="4160" y="-110" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="4jHCbL6mN7QV4uFHF4mR-2" value="icon 太大，&lt;div&gt;要缩小&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
-          <mxGeometry x="990" y="420" width="120" height="60" as="geometry" />
+        <mxCell id="4jHCbL6mN7QV4uFHF4mR-2" value="&lt;div&gt;图片初始化时缩放问题&lt;/div&gt;&lt;div&gt;原因：没有固定的长宽，长宽在依赖的其他元素确定后才变化为合适的长宽&lt;/div&gt;" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="990" y="420" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ZQ8HzBriOOUxhwhPvDy3-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZQ8HzBriOOUxhwhPvDy3-2" target="P6r5Z6k3Mv99crbdrZTP-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1020" y="263.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZQ8HzBriOOUxhwhPvDy3-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZQ8HzBriOOUxhwhPvDy3-2" target="ZQ8HzBriOOUxhwhPvDy3-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZQ8HzBriOOUxhwhPvDy3-2" value="登录按键" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="550" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZQ8HzBriOOUxhwhPvDy3-4" value="登录图标" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="600" y="344.38" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
