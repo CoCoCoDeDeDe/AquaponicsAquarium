@@ -25,10 +25,10 @@ Page({
         BindTapHandlerName: 'On_BindTap_Delete_SLGroup',
       },
     ],
+
     Is_GroupCmdCard_Show: true,
 
     PageOption: {
-      SLGroup_Id: 'Default_SLGroup_Id',
       SLGroupProfile: {
         SLGroup_Id: 'Default_SLGroup_Id',
         SLGroup_Name: '默认智联组名称',
@@ -172,6 +172,7 @@ Page({
         }
       },
     ],
+
   },
 
   /**
@@ -182,7 +183,7 @@ Page({
     this.setData({  // 清空预览所用的数据
       PageOption: {},
       SLGroupProfileList: [],
-      // UniIODataCardList: [],
+      UniIODataList: [],
     })
     // console.log("options:", options)
 
@@ -222,25 +223,16 @@ Page({
       if(Is_QueryValid) {
         console.log("Query 的 SLGroup_Id 有效 options.SLGroup_Id:", options.SLGroup_Id)
         await this.setData({
-          'PageOption.SLGroup_Id': options.SLGroup_Id
+          'PageOption.SLGroupProfile.SLGroup_Id': options.SLGroup_Id
         })
       } else{
         console.log("Query 的 SLGroup_Id 无效 options.SLGroup_Id:", options.SLGroup_Id)
         await this.setData({
-          'PageOption.SLGroup_Id': this.data.SLGroupProfileList[0].SLGroup_Id,
+          'PageOption.SLGroupProfile.SLGroup_Id': this.data.SLGroupProfileList[0].SLGroup_Id,
         })
       }
-
-      // 获取本 SLGroup 的 Profile
-      await this.GetNewSLGroupProfile()
-
-      // 获取本 SLGroup 的所有的 UniIO 的 UniIODataCardList
-      await GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroup_Id})
-      
-      // 用定时器重复获取新 UniIODataList
-      this.data.timer = setInterval(() => {
-        GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroup_Id})
-      }, 10000)
+      // 至此，当前页面已有确定的正在浏览的 SLGroup_Id
+      this.RefreshPage()
 
     } else{ // 显示 智联组 为空时的提示
       // 若获取的该用户的智联组表为空，则本也为空智联组状态，很多智联组不为空时的操作和函数不执行或显示表为空的提示
@@ -255,8 +247,31 @@ Page({
       }, 1000);
 
     }
-    
 
+  },
+
+  async RefreshPage(e) {
+    // 获取用户的智联组简介表
+    await this.GetSLGroupProfileList()
+
+    if(this.data.SLGroupProfileList.length > 0) {
+      // 用户有智联组才执行
+
+      // 清除旧定时器（没有就没有）
+      await clearInterval(this.data.timer);
+
+      // 获取本 SLGroup 的 Profile
+      await this.GetNewSLGroupProfile()
+
+      // 获取本 SLGroup 的所有的 UniIO 的 UniIODataList
+      await GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroupProfile.SLGroup_Id})
+      
+      // 用定时器重复获取新 UniIODataList
+      this.data.timer = setInterval(() => {
+        GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroupProfile.SLGroup_Id})
+      }, 10000)
+    
+    }
   },
 
   /**
@@ -353,7 +368,6 @@ Page({
           return
       }
     }
-    // console.log("ResData:", ResData)
 
     // 整理数据
     let SLGroupProfileList_ToSave = ResData.SLGroupProfileList
@@ -365,10 +379,9 @@ Page({
 
   // 获取本也智联组简介
   async GetNewSLGroupProfile(e) {
-    // console.log("GetNewSLGroupProfile")
     let ResData
     try{
-      ResData = await requestWithLafToken('GET', '/iot2/smartLinkGroup/GetSmartLinkGroupInfo', {smartLinkGroup_id: this.data.PageOption.SLGroup_Id})
+      ResData = await requestWithLafToken('GET', '/iot2/smartLinkGroup/GetSmartLinkGroupInfo', {smartLinkGroup_id: this.data.PageOption.SLGroupProfile.SLGroup_Id})
     } catch(err) {
       switch(err.runCondition) {
         case 'laf_token error':
@@ -379,7 +392,6 @@ Page({
           return
       }
     }
-    console.log("ResData:", ResData)
 
     // 整理数据
     let SLGroupProfile_ToSave = ResData.SLGroupInfo
@@ -483,18 +495,12 @@ Page({
     const New_SLGroup_Id = Res_Create_SLGroup.SLGroup_Id
 
     // 新增成功后刷新页面，现在默认进入到新建的智联组的页面
-    const Duration = 1500
-    wx.showToast({
-      title: `新增智联组 ${Target_SLGroup_Name} 成功，即将自动跳转`,
-      duration: Duration,
-      icon: 'none',
-      mask: true,
+    // 设置本页面在浏览的智联组id为新建的智联组的id
+    this.setData({
+      'PageOption.SLGroupProfile.SLGroup_Id': New_SLGroup_Id,
     })
-    setTimeout(() => {
-      wx.reLaunch({
-        url: `/pages/TabBar/SmartLinkGroup/index?SLGroup_Id=${New_SLGroup_Id}`,
-      })
-    }, Duration)
+    // 刷新本页面全部
+    this.RefreshPage()
 
   },
 
@@ -664,7 +670,6 @@ Page({
           return
       }
     }
-    console.log("API DeleteSmartLinkGroup ResData:", ResData)
 
     // 显示删除成功的提示
     // Bug: 参数当前浏览的智联组时弹窗不显示
@@ -683,13 +688,15 @@ Page({
     // 分为两种删除情况：1. 删除本页面在浏览的智联组，2.删除不是本页面在浏览的智联组
     if(Target_IsCurrentSLGroup) { // 1. 删除本页面在浏览的智联组
       // 重新进入TabBar智联组页面，不传入目标智联组参数
-      const Target_Url = `/pages/TabBar/SmartLinkGroup/index`
-      wx.reLaunch({
-        url: Target_Url,
-        success: (res) => {},
-        fail: (res) => {},
-        complete: (res) => {},
-      })
+      // const Target_Url = `/pages/TabBar/SmartLinkGroup/index`
+      // wx.reLaunch({
+      //   url: Target_Url,
+      //   success: (res) => {},
+      //   fail: (res) => {},
+      //   complete: (res) => {},
+      // })
+
+      this.onLoad()
 
     } else{ // 2.删除不是本页面在浏览的智联组
 
