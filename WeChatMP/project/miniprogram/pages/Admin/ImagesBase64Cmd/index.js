@@ -15,10 +15,15 @@ Page({
 
     ImgBase64List: [],
 
-    UploadImgBtnOptions: {
+    UploadImgBtn_Options: {
       CanUpload: true,
       IsHiding: false,
-    }
+    },
+
+    ImgPopup_Options: {
+      IsShowing: false,
+      ShowingImg_Id: undefined,
+    },
   },
 
   /**
@@ -180,6 +185,10 @@ Page({
       ImgBase64List: Main_List,
       'ImgPreviewBase64List_Options.Total': Total,
     })
+    // 每次更新 Total 时更新 wx 顶部导航栏
+    wx.setNavigationBarTitle({
+      title: `图片库 (${this.data.ImgBase64List.length}/${Total})`,
+    })
 
   },
 
@@ -251,7 +260,7 @@ Page({
 
     // 隐藏上传图片按钮
     this.setData({
-      'UploadImgBtnOptions.IsHiding': true,
+      'UploadImgBtn_Options.IsHiding': true,
     })
   },
 
@@ -260,7 +269,7 @@ Page({
     
     // 取消隐藏上传图片按钮
     this.setData({
-      'UploadImgBtnOptions.IsHiding': false,
+      'UploadImgBtn_Options.IsHiding': false,
     })
   },
 
@@ -269,7 +278,9 @@ Page({
 
     // 获取点击参数
     const { _id } = e.currentTarget.dataset.imginfo
-    console.log("_id:", _id)
+    const imgidx = e.currentTarget.dataset.imgidx
+
+    console.log("imgidx", imgidx)
     
     
     // 获取要大图展示的内容
@@ -301,7 +312,6 @@ Page({
         })
         return  // 退出
       }
-      console.log("Res_GetImgData:", Res_GetImgData)
 
       // 将 Data 嵌入到本地图片数组中对应项中
       const { MimeType, Data } = Res_GetImgData.Res_GetImgData
@@ -322,9 +332,11 @@ Page({
       } // 嵌入完毕
     } // 指定图片已获得原图数据
 
+    // 获取指定图片的 idx
+
     // 指定大图弹窗要显示的图片并显示大图弹窗
-    this.ImgPopup_ShowImg({
-      Image_Id: _id,
+    await this.ImgPopup_ShowImg({
+      Image_Idx: imgidx,
     })
 
   },
@@ -339,7 +351,7 @@ Page({
       } = Options
 
       // 校验本函数的参数
-      if(!Image_Id) {
+      if(Image_Id == undefined) {
         console.log("参数无效 Image_Id:", Image_Id)
         return reject({
           runCondition: 'para error',
@@ -359,7 +371,7 @@ Page({
       }
 
       return resolve({
-        Res_GetImgData
+        Res_GetImgData,
       })
     } )
 
@@ -371,18 +383,22 @@ Page({
       try{
         // 获取本函数参数
         const {
-          Image_Id,
+          Image_Idx,
         } = Options
 
         // 校验本函数参数
-        if(!Image_Id) {
+        if(Image_Idx == undefined) {
           return reject({
             runCondition: 'para error',
             errMsg: '本地函数参数无效',
           })
         }
 
-        
+        await this.setData({
+          'ImgPopup_Options.IsShowing': true,
+          'ImgPopup_Options.ShowingImg_Idx': Image_Idx,
+          'ImgPopup_Options.ShowingImg_Url': this.data.ImgBase64List[Image_Idx].Data,
+        })
 
       } catch(err) {
         console.log("ImgPopup_ShowImg err:", err)
@@ -391,7 +407,25 @@ Page({
     } )
   },
 
+  async On_BindTap_ImgPopupImgBox(e) {
+    await this.ImgPopup_Hide()
+  },
 
+  // 隐藏大图弹窗
+  async ImgPopup_Hide(Options) {
+    return new Promise( (resolve, reject) => {
+      try{
+
+        this.setData({
+          'ImgPopup_Options.IsShowing': false
+        })
+
+      } catch(err) {
+        console.log("ImgPopup_Hide err:", err)
+        return reject(err)
+      }
+    } )
+  },
 
 
   // 可优化：大图可以点击左右换图，已经获取的图会缓存，一个页面声明周期中不重复获取

@@ -1,0 +1,229 @@
+/* pages/Admin/ImagesCmd/index.wxss */
+.page{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #0f0f0f;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page .WxNavDecor{
+  position: fixed;
+  top: -1px;
+  z-index: 200;
+  width: 110vw;
+  height: 4px;
+
+  background-color: rgb(0, 0, 0);
+  box-shadow: 
+    0px 2px 8px rgba(255, 255, 255, 0.24),
+    0px -0.5px 0.5px rgba(255, 255, 255, 0.144);
+}
+
+.page .ScrollView{
+  z-index: 100;
+  /* scroll-view 有固定高度才可使用 scroll-into-view 功能 */
+  height: 100vh;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 0px;
+}
+
+.page .ScrollView .Container{
+  width: 100%;
+  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-rows: auto; /* 行高自动适应内容 */
+}
+
+.page .ScrollView .Container .ImgPreviewBox{
+  /* grid 布局要固定子项高度 */
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page .ScrollView .Container .ImgPreviewBox .Img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 保持比例并裁剪 */
+}
+
+.page .ScrollView .Container .ImgPreviewBox .InfoBox{
+  width: 100%;
+}
+
+.page .ScrollView .Container .ImgPreviewBox .InfoBox .Size{
+  width: 100%;
+
+  white-space: nowrap;
+}
+
+.page .ScrollView .SteppingStone{
+  width: 100%;
+  height: 120px;
+}
+
+
+
+.page .UploadImgBtnBox{
+  z-index: 300;
+  position: fixed;
+  bottom: 50px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.page .UploadImgBtnBox .Board{
+  height: 50px;
+  width: 110px;
+
+  border-radius: 50px;
+  background-color: #dddddd;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  /* padding: 18px 40px; */
+
+  text-align: center;
+  white-space: nowrap;
+  font-size: 20px;
+  color: var(--vice-text-color);
+}
+
+.page .UploadImgBtnBox .Board_Allowed{
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #85b0f0, #1d77ec);
+  color: var(--main-text-color);
+}
+.page .UploadImgBtnBox .Board_Allowed:active{
+  transform: translateY(3px);
+  background: linear-gradient(135deg, #8fbcff, #207ffa);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page .UploadImgBtnBox_Hide{
+  transform: translateY(30px) scale(0.92, 0.86);
+  opacity: 0.6;
+}
+
+/*  大图片弹窗 */
+.page .ImgPopupBox{
+  z-index: 400;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #0000006f;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.page .ImgPopupBox .ImgBox{
+  flex: 1 1 auto;
+
+  width: 100vw;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.page .ImgPopupBox .ImgBox .Img{
+  width: 100%;
+  height: 100%;
+}
+
+.page .ImgPopupBox .InfoBox{
+  flex: 2 2 auto;
+  max-height: 40vh;
+
+  background-color: #f6f6f6;
+  border-radius: 18px 18px 0 0;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0 16px 16px;
+
+  white-space: wrap;
+}
+
+.page .ImgPopupBox .CmdBar{
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 8px 10px;
+}
+
+.page .ImgPopupBox .CmdBar .BtnBox {
+  flex: 1 1 auto;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.page .ImgPopupBox .CmdBar .Btn {
+  flex: 1 1 auto;
+
+  border-radius: 10px;
+  background-color: #eee;
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.123),
+    0 2px 1px rgba(0, 0, 0, 0.16),
+    0 -2px 6px rgba(0, 0, 0, 0.08) inset
+    ;
+
+  padding: 6px 12px;
+}
+
+.page .ImgPopupBox .InfoBox .Title{
+  font-size: 15px;
+  
+  padding: 0 4px;
+}
+
+.page .ImgPopupBox .InfoBox .Txt{
+  font-size: 14px;
+  
+  word-wrap: break-word;
+  word-break: break-all;
+
+  padding: 0 4px;
+  padding-bottom: 8px;
+}
+
+

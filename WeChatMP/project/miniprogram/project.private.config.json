@@ -9,7 +9,7 @@
       "list": [
         {
           "name": "Admin/图片管理",
-          "pathName": "pages/Admin/ImagesCmd/index",
+          "pathName": "pages/Admin/ImagesBase64Cmd/index",
           "query": "",
           "launchMode": "default",
           "scene": null

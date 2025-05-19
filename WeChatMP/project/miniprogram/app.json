@@ -11,7 +11,7 @@
     "pages/device/bindUserWithDevice/index",
     "pages/SmartLinkGroup/UniIOListCmd/index",
     "pages/SmartLinkGroup/BindUniIOWithSLGroup/index",
-    "pages/Admin/ImagesCmd/index",
+    "pages/Admin/ImagesBase64Cmd/index",
     "pages/test/index"
   ],
   "usingComponents": {},

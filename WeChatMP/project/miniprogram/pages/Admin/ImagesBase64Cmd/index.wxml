@@ -1,0 +1,61 @@
+<!--pages/Admin/ImagesCmd/index.wxml-->
+<!-- TODO: 获取网站上所有的图片并显示其id和本体（可优化为预览图） -->
+<!-- TODO: 可上传图片,上传成功后刷新页面 -->
+
+<view class="page">
+
+  <view class="WxNavDecor"></view>
+
+  <scroll-view class="ScrollView" scroll-y="{{true}}" 	show-scrollbar="{{false}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-into-view="{{ViewOption.Scroll_Into_View_Target}}" 	enable-flex="{{true}}" enhanced="{{true}}" binddragstart="OnScrollView_DragStart" binddragend="OnScrollView_DragEnd">
+
+    <view class="Container">
+      <view class="ImgPreviewBox" wx:for="{{ImgBase64List}}" wx:key="_id" wx:for-item="i" bind:tap="On_BindTap_CheckImg" data-imginfo="{{i}}" data-imgidx="{{index}}">
+        <image src="{{i.PreviewData}}" mode="aspectFill" class="Img"/>
+        <view class="InfoBox">
+          <!-- <view class="FileName">FileName: {{i.FileName}}</view> -->
+          <scroll-view class="Size" scroll-x="{{true}}">
+            <!-- Size: {{i.Size}} -->
+          </scroll-view>
+          <!-- <view class="User_Id">User_Id: {{i.User_Id}}</view> -->
+        </view>
+      </view>
+
+    </view>
+
+    <view class="SteppingStone"></view>
+    
+  </scroll-view>
+
+  <view class="UploadImgBtnBox {{UploadImgBtn_Options.IsHiding?'UploadImgBtnBox_Hide':''}}">
+    <view class="Board {{UploadImgBtn_Options.CanUpload?'Board_Allowed':''}}" bind:tap="{{UploadImgBtn_Options.CanUpload?'On_BindTap_UploadImgBtn':''}}">上传图片</view>
+  </view>
+
+  <view class="ImgPopupBox" wx:if="{{ImgPopup_Options.IsShowing}}">
+    <view class="ImgBox" bind:tap="On_BindTap_ImgPopupImgBox">
+      <image src="{{ImgPopup_Options.ShowingImg_Url}}" mode="aspectFit" class="Img"/>
+    </view>
+    <scroll-view scroll-y="{{true}}" class="InfoBox">
+      <view class="CmdBar">
+        <view class="BtnBox">
+          <view class="Btn">更改</view>
+        </view>
+        <view class="BtnBox">
+          <view class="Btn">删除</view>
+        </view>
+      </view>
+      <view class="Title">FileName: </view>
+      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx].FileName}}</view>
+      <view class="Title">MimeType: </view>
+      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx].MimeType}}</view>
+      <view class="Title">Size: </view>
+      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx].Size}}</view>
+      <view class="Title">UploadTime: </view>
+      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx].UploadTime}}</view>
+      <view class="Title">User_Id: </view>
+      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx].User_Id}}</view>
+      <view class="Title">_id: </view>
+      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx]._id}}</view>
+    </scroll-view>
+  </view>
+
+</view>
