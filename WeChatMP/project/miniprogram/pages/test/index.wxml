@@ -1,20 +1,6 @@
-<view class="page">
+<!-- pages\test\index.wxml -->
+<PageFrame-1>
 
-  <scroll-view class="container">
+  <view slot="content" class="content">这是插入的内容</view>
 
-    <view class="container">
-    
-      <view class="flexElement">11</view>
-  
-      <view class="flexElement">22</view>
-      
-      <view class="flexElement">33</view>
-    
-    </view>
-  
-
-  
-  
-  </scroll-view>
-
-</view>
+</PageFrame-1>

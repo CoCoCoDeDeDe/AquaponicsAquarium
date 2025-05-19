@@ -1,0 +1,43 @@
+.page{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #fafafa;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.WxNavDecor{
+  position: fixed;
+  top: -1px;
+  z-index: 200;
+  width: 110vw;
+  height: 4px;
+
+  background-color: rgb(255, 255, 255);
+  box-shadow: 
+    0px 2px 8px rgba(0, 0, 0, 0.13),
+    0px -0.5px 0.5px rgba(0, 0, 0, 0.05);
+}
+
+.ScrollView{
+  /* scroll-view 有固定高度才可使用 scroll-into-view 功能 */
+  height: 100vh;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 0px 4px 0px;
+}
+
+/* 顶部gap */
+.ScrollViewU_InnerTopGap{
+  width: 100%;
+  height: 14px;
+}
+

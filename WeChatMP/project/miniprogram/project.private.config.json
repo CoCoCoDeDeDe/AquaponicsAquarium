@@ -8,6 +8,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "Admin/图片管理",
+          "pathName": "pages/Admin/ImagesCmd/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "智联组/关联UniIO与智联组",
           "pathName": "pages/SmartLinkGroup/BindUniIOWithSLGroup/index",
           "query": "SLGroup_Id=6824985f1dabb3d3ff598ce5",

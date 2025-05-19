@@ -258,7 +258,7 @@ Page({
       // 用户有智联组才执行
 
       // 清除旧定时器（没有就没有）
-      await clearInterval(this.data.timer);
+      this.Switch_RepeatRequestUniIODataList(false)
 
       // 获取本 SLGroup 的 Profile
       await this.GetNewSLGroupProfile()
@@ -267,11 +267,27 @@ Page({
       await GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroupProfile.SLGroup_Id})
       
       // 用定时器重复获取新 UniIODataList
-      this.data.timer = setInterval(() => {
-        GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroupProfile.SLGroup_Id})
-      }, 10000)
-    
+      this.Switch_RepeatRequestUniIODataList(true)
     }
+  },
+
+  async Switch_RepeatRequestUniIODataList(bool) {
+    switch(bool) {
+      case true: 
+        // 用定时器重复获取新 UniIODataList
+        this.data.timer = setInterval(() => {
+          GetUniIODataList(this, {smartLinkGroup_id: this.data.PageOption.SLGroupProfile.SLGroup_Id})
+        }, 10000)
+        break
+      case false:
+        // 清除旧定时器（没有就没有）
+        await clearInterval(this.data.timer);
+        break
+      default:
+        console.log("参数错误 bool:", bool)
+        return
+    }
+    return
   },
 
   /**
@@ -285,21 +301,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.Switch_RepeatRequestUniIODataList(true)
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
+    this.Switch_RepeatRequestUniIODataList(false)
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+    this.Switch_RepeatRequestUniIODataList(false)
   },
 
   /**

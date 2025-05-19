@@ -1,0 +1,13 @@
+<!-- components\PageFrame\PageFrame-1\index.wxml -->
+<view class="page">
+
+  <view class="WxNavDecor"></view>
+
+  <scroll-view class="ScrollView" scroll-y="{{true}}" 	show-scrollbar="{{false}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-into-view="{{ViewOption.Scroll_Into_View_Target}}" 	enable-flex="{{true}}" enhanced="{{true}}" binddragstart="OnScrollView_DragStart" binddragend="OnScrollView_DragEnd">
+
+    <slot name="content"></slot>
+
+  </scroll-view>
+
+</view>
+

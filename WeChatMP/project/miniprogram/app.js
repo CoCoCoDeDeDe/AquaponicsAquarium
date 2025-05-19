@@ -20,46 +20,27 @@ App({
       });
     }
 
-    wx.loadFontFace({
-      family: 'webfont',
-      source: 'url("//at.alicdn.com/t/webfont_1f7b3qbimiv.eot")',
-      success: function (res) {
-          console.log(res.status) //  loaded
-      },
-      fail: function (res) {
-          console.log(res.status) //  error
-      },
-      complete: function (res) {
-          console.log(res.status);
-      }
-    });
+    // wx.loadFontFace({
+    //   family: 'webfont',
+    //   source: 'url("//at.alicdn.com/t/webfont_1f7b3qbimiv.eot")',
+    //   success: function (res) {
+    //       console.log(res.status) //  loaded
+    //   },
+    //   fail: function (res) {
+    //       console.log(res.status) //  error
+    //   },
+    //   complete: function (res) {
+    //       console.log(res.status);
+    //   }
+    // });
 
     this.reset()
 
-
-    // 本地缓存调试
-    // await wx.setStorage({
-    //   key: 'laf_token',
-    //   data: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODEwNjc4MjZiNDhkMzMzNGJhMDA4YzgiLCJleHAiOjE3NDY1MTA0MTksImlhdCI6MTc0NTkwNTYxOX0.s8jrxxhrX6bDUrHXF05u1iCNRJu2t4oFcakrpLDpVS4',
-    //   encrypt: false,
-    // }).then(res => {
-    //   console.log("存储laf_token到本地缓存测试成功，res:", res)
-    // })
-    // wx.getStorageInfo()
-    //   .then((res) => {
-    //     console.log("获取本地缓存信息成功，res:", res)
-    //   })
-
-    // 测试API
-    // register('testuser', '123456').catch(console.error)
-    // login('testuser', '123456').catch(console.error)
   },
 
   // 重置 app
   reset(e) {
-    this.globalData = {
-      laf_token_validity: false
-    }
+    
   },
 
 });

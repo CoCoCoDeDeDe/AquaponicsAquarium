@@ -1,11 +1,12 @@
-<view class="Page">
+<!-- pages\TabBar\SmartLinkGroup\index.wxml -->
+<view class="page">
 
-  <view class="WxNavigatorDecor"></view>
+  <view class="WxNavDecor"></view>
 
-  <scroll-view class="ScrollView" scroll-y="{{true}}"  scroll-with-animation="{{false}}" enable-back-to-top="{{false}}" enable-flex="{{true}}" show-scrollbar="{{true}}" enhanced="{{false}}">
+  <scroll-view class="ScrollView" scroll-y="{{true}}" 	show-scrollbar="{{false}}" scroll-with-animation="{{true}}" enable-back-to-top="{{true}}" scroll-into-view="{{ViewOption.Scroll_Into_View_Target}}" 	enable-flex="{{true}}" enhanced="{{true}}" binddragstart="OnScrollView_DragStart" binddragend="OnScrollView_DragEnd">
 
-    <view class="ScrollView_TopGap"></view>
-  
+    <view class="ScrollView_InnerTopGap"></view>
+
     <!-- 智联组盒子 -->
     <view class="TxtImgCard_Box TxtImgCard_Box_CustomGroup">
       <view class="TxtImgCard_Board TxtImgCard_Board_CustomGroup" bind:tap="On_BindTap_SwitchSLGroupCmdCardShow">
@@ -34,7 +35,7 @@
 
     <!-- 管理 智联组 的弹窗 -->
     <view class="GroupCmdCard_Box" wx:if="{{Is_GroupCmdCard_Show}}">
-    
+
       <view class="GroupCmdCard_Board">
 
         <view class="GroupCreateRow_Box">
@@ -76,7 +77,7 @@
         </block>
       
       </view>
-    
+
     </view>
 
     <block wx:if="{{UniIODataList.length > 0}}">
@@ -86,7 +87,7 @@
     </block>
     <block wx:else>
     <!-- 该智联组没有 UniIO 时 -->
-    
+
       <view class="InformCard_Box">
         <view class="InformCard_Board">
           当前智联组暂无 UniIO
@@ -101,6 +102,9 @@
 
   </scroll-view>
 
-  <view class="WxTabbarDecor"></view>
-
 </view>
+
+
+
+
+

@@ -125,7 +125,7 @@ export async function verify_laf_token() {
       switch(online_verify_laf_token_res.runCondition) {
         case 'succeed':
           break
-        case 'token error':
+        case 'laf_token token error':
           return {
             runCondition: 'laf_token error',
             errMsg: '网络验证 laf_token 错误',
@@ -168,7 +168,7 @@ export async function verify_laf_token_request(laf_token) {
               errMsg: 'laf_token verify succeed'
             })
           return
-          case 'token error':
+          case 'laf_token error':
             resolve({
               runCondition: 'error',
               errMsg: 'laf_token verify failed'
@@ -260,7 +260,7 @@ export async function requestWithLafToken( method, last_url, query='', data ) {
             return
         }
 
-        resolve(res.data) // 请求成功 进一步对 data.runCondition 进行错误识别
+        resolve(res.data) // 请求成功
         return
       },
       fail: (err) => {
@@ -272,6 +272,96 @@ export async function requestWithLafToken( method, last_url, query='', data ) {
         return
       }
     })
+
+  })
+}
+
+export async function UploadFile(Options) {
+  // 获取参数
+  const { 
+    Last_Url,
+    FilePath,
+    FormData = undefined,
+    Timeout = 10000,
+  } = Options
+
+  // Promise 风格
+  return new Promise(async (resolve, reject) => {
+    // 校验本函数的参数
+    if(!Last_Url || !FilePath ) {
+      return reject({
+        runCondition: 'invalid para',
+        errMsg: '本地调用函数参数无效'
+      })
+    }
+
+    try{
+
+      // 获取和校验本地 laf_token
+      let Res_Get_Local_Laf_Token
+      try{
+        Res_Get_Local_Laf_Token = await wx.getStorage({
+          key: 'laf_token'
+        })
+      } catch(err) {
+        console.log("获取本地 Laf_Token 错误 err:", err)
+        return {
+          runCondition: 'laf_token error',
+          errMsg: '本地无 Laf_Token',
+        }
+      }
+      const Local_Laf_Token = Res_Get_Local_Laf_Token.data
+      // console.log("Local_Laf_Token:", Local_Laf_Token)
+
+
+      // 上传文件
+      const UploadTask = await wx.uploadFile({
+        url: baseUrl + Last_Url,
+        filePath: FilePath,
+        name: 'file',
+        header: {
+          'Authorization': 'Bearer ' + Local_Laf_Token,
+        },
+        formData: FormData,
+        timeout: Timeout,
+
+        success: async (res) => {
+          // console.log("文件上传网络成功 res:", res)
+          // uploadFile 接收的 data 默认为字符串，将字符串解析为 JSON 对象
+          const Res_Data = JSON.parse(res.data);
+          res.data = Res_Data
+          console.log("文件上传网络成功 res:", res) 	// 方便 console dubug
+          // console.log("文件上传网络成功 Res_Data:", Res_Data)
+          switch(Res_Data.runCondition) {
+            case 'succeed':
+              break //继续
+            default:
+              reject(Res_Data)  // succeed  之外都在 catch 中
+              return
+          }
+
+          // succeed
+          resolve(res.data)
+        },
+        fail: async (err) => {
+          console.log("文件上传网络失败 err:", err)
+          return reject({
+            runCondition: 'request error',
+            errMsg: '网络请求失败',
+          })
+        },
+        complete: async (res) => {
+          // console.log("res:", res)
+        },
+      })
+
+    } catch(err) {
+      console.log("文件上传错误 err:", err)
+      return reject({
+        runCondition: 'local error',
+        errMsg: '文件上传 本地错误',
+      })
+    }
 
   })
 }
