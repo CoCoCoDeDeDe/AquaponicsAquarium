@@ -38,6 +38,14 @@ Page({
         Color_Main: '',
         Is_Forbidden: false,
       },
+      {
+        Path: '/pages/Admin/ImagesBase64Cmd/index',
+        Name: '管理员管理图片',
+        Intro: '管理员管理图片',
+        Icon_Url: '/static/images/icons/tabBar_mine_active.png',
+        Color_Main: '',
+        Is_Forbidden: false,
+      },
     ]
   },
 

@@ -24,6 +24,42 @@
     0px -0.5px 0.5px rgba(255, 255, 255, 0.144);
 }
 
+/* 悬浮按钮 */
+.page .FloatingBtnsBox{
+  z-index: 300;
+  position: fixed;
+  width: max-content;
+  height: max-content;
+  right: 10px;
+  bottom: 50px;
+
+  background-color: #ffffff6f;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+}
+
+.page .FloatingBtnsBox .BtnBox{
+  padding: 2px;
+}
+
+.page .FloatingBtnsBox .BtnBox .Btn{
+  
+  font-size: 14px;
+
+  padding: 4px;
+}
+
+.page .FloatingBtnsBox .BtnBox .Btn:active{
+  border-radius: 10px;
+  background-color: #f6f6f6;
+}
+
+/* 主要内容滑动区域 */
 .page .ScrollView{
   z-index: 100;
   /* scroll-view 有固定高度才可使用 scroll-into-view 功能 */
@@ -54,6 +90,11 @@
   align-items: center;
 }
 
+.page .ScrollView .Container .ImgPreviewBox:active{
+  transform: scale(1.2);
+  transition: all 0.4s ease-in;
+}
+
 .page .ScrollView .Container .ImgPreviewBox .Img{
   width: 100%;
   height: 100%;
@@ -70,8 +111,64 @@
   white-space: nowrap;
 }
 
-.page .ScrollView .SteppingStone{
+.page .ScrollView .Row{
   width: 100%;
+}
+
+.page .ScrollView .Row .ShowMoreBtnBox{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.page .ScrollView .Row .ShowMoreBtnBox:active{
+  background-color: #666;
+  transform: scale(0.98);
+  transition: all 0s ease-out;
+}
+
+.page .ScrollView .Row .ShowMoreBtnBox .Btn{
+  width: 100px;
+
+  border-top: 1.5px solid #999;
+  font-size: 14px;
+  color: #f6f6f6;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.page .ScrollView .Row .NotMoreTipsBox{
+  width: 100%;
+}
+
+.page .ScrollView .Row .NotMoreTipsBox .Tip{
+  width: 100%;
+
+  color: #f6f6f6;
+  font-size: 14px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+}
+
+.page .ScrollView .Row .NotMoreTipsBox .Tip:first-child{
+  font-size: 16px;
+  padding-top: 20px;
+}
+
+
+
+.page .ScrollView .Row .SteppingStone{
   height: 120px;
 }
 

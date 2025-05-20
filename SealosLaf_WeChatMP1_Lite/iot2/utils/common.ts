@@ -48,19 +48,19 @@ async function verifyTokenAndGetUser(ctx: any) {
         };
       } else {
         return {
-          runCondition: 'token error',
+          runCondition: 'laf_token error',
           error: 'Invalid or expired token'
         };
       }
     } catch (error) {
       return {
-        runCondition: 'token error',
+        runCondition: 'laf_token error',
         error: 'Invalid or expired token' 
       };
     }
   }
   return {
-    runCondition: 'token error',
+    runCondition: 'laf_token error',
     error: 'Invalid or expired token' 
   };
 }

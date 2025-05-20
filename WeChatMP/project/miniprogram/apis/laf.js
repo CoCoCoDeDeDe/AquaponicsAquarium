@@ -151,7 +151,6 @@ export async function verify_laf_token() {
 // 输出：验证结果（1：成功；2：token失效；3：请求失败）
 // 本地缓存的token作为证明登录的唯一凭证，也是用于获取在线信息时用于匹配指定用户的客户端唯一凭证
 export async function verify_laf_token_request(laf_token) {
-  
   return new Promise((resolve, reject) => {
     wx.request({
       method: 'GET',
@@ -185,14 +184,50 @@ export async function verify_laf_token_request(laf_token) {
         return
       }
     })
-
-
-
-
   })
+}
 
+// 解析 query 对象格式为字符串格式
+// 将 query 转化为 ?key1=value1&key2=value2的格式的字符串 query_str
+export async function QueryObjectToString(Options) {
+  return new Promise( (resolve, reject) => {
+    try{   
+      const {
+        Query = undefined
+      } = Options
 
+      if(Query == undefined) {
+        return reject({
+          runCondition: 'para error',
+          errMsg: 'QueryObjectToString 本地函数参数无效',
+          Query,
+        })
+      }
 
+      let query_str = '';
+      if (typeof Query === 'object' && Query!== null) {
+        // Object.entries() 将 query: { key1: 'value1', key2: 'value2' } 此类对象转化为数组，期内的键值对也用含两个元素的数组表示，两个元素分别对应键名和值，形式如 query: [ ['key1', 'value1'], ['key2', 'value2'] ] 此方法通常用于用遍历数组的方式遍历对象
+        // [key, value] 是将 map 向回调函数的参数 item 进行结构, item 的形式是 Object.entire() 将键值对对象转化得到的 ['key1', 'value1'] 数组, 对应转化前的一个键值对, 用 [key, value] 结构 ['key1', 'value1'] 可以将 'key1' 和 'value1' 分别赋值给 key 和 value 作为回调函数的参数
+        // encodeURIComponent解析: 因为转换后的 query 要作为 URL 的一部分使用, URL 有特殊的格式要求, 要在将 query 的 key 和 value 字符串拼入 URL 前用 encodeURIComponent() 对字符串进行编码, 将字符串中除了字母和数字以及部分特定字符（-、_、.、!、~、*、'、(、)）之外的所有字符都转为 URL 规范的格式, 为了避免出现 URL 的保留字符导致 URL 解析问题, URL 的保留字符有如 :, /, ?, #, ;, =, &, @, +, $, , 等. 被编码的字符会被转换为 UTF - 8 编码的转义序列
+        // 后端 解析 query 时要注意 query 中被 encodeURIComponent 转换后的 UTF - 9 编码的转义序列
+        // encodeURI 不同于 encodeURIComponent, 前者会保留 URL 保留字符, 因为前者用于对已经拼接完成的整个 URL 进行转换, 默认其中的 URL 保留字符是符合使用者要求的, 而后者是用于处理使用者明确了 其中的可能出现的 URL 保留字符不是用于 URL 格式解析的
+        // URL, URN, URI Fragment 是 URI 的子集, URI 统一资源标识符, URL 统一资源定位符, URI Fragment 片段标识符
+        const queryPairs = Object.entries(Query).map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+        if (queryPairs.length > 0) {
+          query_str = '?' + queryPairs.join('&');
+        }
+      }
+
+      return resolve(query_str)
+
+    } catch(err) {
+      console.log(`本地函数运行错误 err: ${err}`)
+      return reject({
+        runCondition: 'local error',
+        errMsg: `本地函数运行错误 err: ${err}`,
+      })
+    }
+  } )
 }
 
 // 前端调用laf 云函数 需要laf_token的 API 的通用函数
@@ -276,6 +311,7 @@ export async function requestWithLafToken( method, last_url, query='', data ) {
   })
 }
 
+// 上传文件到 API
 export async function UploadFile(Options) {
   // 获取参数
   const { 
@@ -283,86 +319,102 @@ export async function UploadFile(Options) {
     FilePath,
     FormData = undefined,
     Timeout = 10000,
+    Query = undefined,
   } = Options
 
   // Promise 风格
   return new Promise(async (resolve, reject) => {
-    // 校验本函数的参数
-    if(!Last_Url || !FilePath ) {
-      return reject({
-        runCondition: 'invalid para',
-        errMsg: '本地调用函数参数无效'
-      })
-    }
-
     try{
-
-      // 获取和校验本地 laf_token
-      let Res_Get_Local_Laf_Token
-      try{
-        Res_Get_Local_Laf_Token = await wx.getStorage({
-          key: 'laf_token'
+      // 校验本函数的参数
+      if(Last_Url == undefined || FilePath == undefined ) {
+        console.log("Last_Url:", Last_Url)
+        console.log("FilePath:", FilePath)
+        return reject({
+          runCondition: 'invalid para',
+          errMsg: 'UploadFile 本地调用函数参数无效',
+          Last_Url,
+          FilePath
         })
-      } catch(err) {
-        console.log("获取本地 Laf_Token 错误 err:", err)
-        return {
-          runCondition: 'laf_token error',
-          errMsg: '本地无 Laf_Token',
-        }
       }
-      const Local_Laf_Token = Res_Get_Local_Laf_Token.data
-      // console.log("Local_Laf_Token:", Local_Laf_Token)
 
-
-      // 上传文件
-      const UploadTask = await wx.uploadFile({
-        url: baseUrl + Last_Url,
-        filePath: FilePath,
-        name: 'file',
-        header: {
-          'Authorization': 'Bearer ' + Local_Laf_Token,
-        },
-        formData: FormData,
-        timeout: Timeout,
-
-        success: async (res) => {
-          // console.log("文件上传网络成功 res:", res)
-          // uploadFile 接收的 data 默认为字符串，将字符串解析为 JSON 对象
-          const Res_Data = JSON.parse(res.data);
-          res.data = Res_Data
-          console.log("文件上传网络成功 res:", res) 	// 方便 console dubug
-          // console.log("文件上传网络成功 Res_Data:", Res_Data)
-          switch(Res_Data.runCondition) {
-            case 'succeed':
-              break //继续
-            default:
-              reject(Res_Data)  // succeed  之外都在 catch 中
-              return
-          }
-
-          // succeed
-          resolve(res.data)
-        },
-        fail: async (err) => {
-          console.log("文件上传网络失败 err:", err)
-          return reject({
-            runCondition: 'request error',
-            errMsg: '网络请求失败',
+      try{
+        // 获取和校验本地 laf_token
+        let Res_Get_Local_Laf_Token
+        try{
+          Res_Get_Local_Laf_Token = await wx.getStorage({
+            key: 'laf_token'
           })
-        },
-        complete: async (res) => {
-          // console.log("res:", res)
-        },
-      })
+        } catch(err) {
+          console.log("获取本地 Laf_Token 错误 err:", err)
+          reject({
+            runCondition: 'laf_token error',
+            errMsg: '本地无 Laf_Token',
+          })
+        }
+        const Local_Laf_Token = Res_Get_Local_Laf_Token.data
+        // console.log("Local_Laf_Token:", Local_Laf_Token)
+
+        // 解析 query
+        let Query_Str = ''
+        if(Query) {
+          Query_Str = await QueryObjectToString({
+            Query: Query,
+          })
+        }
+
+        // 请求更新文件
+        const UploadTask = await wx.uploadFile({
+          url: baseUrl + Last_Url + Query_Str,
+          filePath: FilePath,
+          name: 'file',
+          header: {
+            'Authorization': 'Bearer ' + Local_Laf_Token,
+          },
+          formData: FormData,
+          timeout: Timeout,
+
+          success: async (res) => {
+            // console.log("文件上传网络成功 res:", res)
+            // uploadFile 接收的 data 默认为字符串，将字符串解析为 JSON 对象
+            const Res_Data = JSON.parse(res.data);
+            res.data = Res_Data
+            console.log("文件上传网络成功 res:", res) 	// 方便 console dubug
+            // console.log("文件上传网络成功 Res_Data:", Res_Data)
+            switch(Res_Data.runCondition) {
+              case 'succeed':
+                break //继续
+              default:
+                reject(Res_Data)  // succeed  之外都在 catch 中
+                return
+            }
+
+            // succeed
+            resolve(res.data)
+          },
+          fail: async (err) => {
+            console.log("文件上传网络失败 err:", err)
+            return reject({
+              runCondition: 'request error',
+              errMsg: '网络请求失败',
+            })
+          },
+        })
+
+      } catch(err) {
+        console.log("文件上传错误 err:", err)
+        return reject({
+          runCondition: 'local error',
+          errMsg: '文件上传 本地错误',
+        })
+      }
 
     } catch(err) {
-      console.log("文件上传错误 err:", err)
+      console.log(`本地函数运行错误 err: ${err}`)
       return reject({
         runCondition: 'local error',
-        errMsg: '文件上传 本地错误',
+        errMsg: `本地函数运行错误 err: ${err}`,
       })
     }
-
   })
 }
 

@@ -1,3 +1,4 @@
+// https://dhb91nur4r.bja.sealos.run/iot2/admin/readLateastHuaweiIAMUserToken
 import cloud from '@lafjs/cloud'
 import common from '../utils/common'
 
