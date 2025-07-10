@@ -14,7 +14,13 @@ Component({
         product_id: 'default_product_id',
         huawei_device_id: 'default_huawei_device_id',
         previewImg_url: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png', // 来自产品集合
-        name: '默认设备名称', // 用户自定的，来自设备集合
+        name: '默认设备名称', // 用户自定的，来自设备集合，
+        previewImg: {
+          "Id": "",
+          "FileName": "",
+          "MimeType": "",
+          "Data": ""
+        }
       }
       ,
       required: false,

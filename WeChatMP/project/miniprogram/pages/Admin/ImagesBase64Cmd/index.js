@@ -12,6 +12,7 @@ Page({
    */
   data: {
     FloatingBtn: {
+      IsHiding: false,
       ConfigList: [
         {
           EasyName: '刷新',
@@ -287,6 +288,7 @@ Page({
     // 隐藏上传图片按钮
     this.setData({
       'UploadImgBtn_Options.IsHiding': true,
+      'FloatingBtn.IsHiding': true,
     })
   },
 
@@ -296,6 +298,7 @@ Page({
     // 取消隐藏上传图片按钮
     this.setData({
       'UploadImgBtn_Options.IsHiding': false,
+      'FloatingBtn.IsHiding': false,
     })
   },
 
@@ -827,6 +830,24 @@ Page({
     } )
   },
 
+  // 点击图片 id 文本，复制 id 到剪切板
+  async On_BindTap_CopyImgId(e) {
+    this.Copy(this.data.ImgBase64List[this.data.ImgPopup_Options.ShowingImg_Idx]._id)
+  },
+
+  // 复制参数 data 到剪贴板
+  async Copy(data) {
+    wx.setClipboardData({
+      data,
+      success: (res) => {
+        wx.getClipboardData({
+          success: (res) => {
+            console.log("getClipboardData res:", res)
+          }
+        })
+      }
+    })
+  }
 
 
   // 可优化：大图可以点击左右换图，已经获取的图会缓存，一个页面声明周期中不重复获取

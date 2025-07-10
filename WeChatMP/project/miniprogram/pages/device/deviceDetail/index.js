@@ -1,5 +1,5 @@
 // pages/deviceDetail/index.js
-import { isValidNonEmptyString } from '../../../utils/common'
+import { isValidNonEmptyString, GetBase64ImgSrc } from '../../../utils/common'
 import { requestWithLafToken, on_laf_token_Invalid, on_request_error, on_db_error, on_param_error, on_unknown_error, on_common_error, GetUniIODataList } from '../../../apis/laf'
 Page({
 
@@ -23,7 +23,19 @@ Page({
         "previewImg_url": "https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png",
         "detailPoster_url": "https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/devicePoster1x1_22213.png",
         "intro": "默认产品简介",
-        "updateAt": "20250502T062058Z"
+        "updateAt": "20250502T062058Z",
+        "previewImg": {
+          "Id": "",
+          "FileName": "",
+          "MimeType": "",
+          "Data": ""
+        },
+        "detailPoster": {
+          "Id": "",
+          "FileName": "",
+          "MimeType": "",
+          "Data": ""
+        }
       }
     },
 
@@ -81,8 +93,11 @@ Page({
   /* 获取设备和产品信息( product_profile, device_profile, ) */
   async GetCommonInfo(huawei_device_id) {
     try{
-      const resData = await requestWithLafToken('GET', '/iot2/device/getDeviceInfo', { huawei_device_id : huawei_device_id })
-      // console.log("resData:", resData)
+      let resData = await requestWithLafToken('GET', '/iot2/device/getDeviceInfo', { huawei_device_id : huawei_device_id })
+      
+      resData.common_info.product_info.detailPoster.Data = GetBase64ImgSrc(resData.common_info.product_info.detailPoster)
+      resData.common_info.product_info.previewImg.Data = GetBase64ImgSrc(resData.common_info.product_info.previewImg)
+
       this.setData({
         common_info: resData.common_info
       })

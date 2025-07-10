@@ -46,6 +46,14 @@ Page({
         Color_Main: '',
         Is_Forbidden: false,
       },
+      {
+        Path: '/pages/Admin/DB/ManageCenter/index',
+        Name: '数据库管理中心',
+        Intro: '管理数据库',
+        Icon_Url: '/static/images/icons/tabBar_mine_active.png',
+        Color_Main: '',
+        Is_Forbidden: false,
+      },
     ]
   },
 

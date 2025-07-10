@@ -5,7 +5,7 @@
 <view class="page">
 
   <view class="WxNavDecor"></view>
-    <view class="FloatingBtnsBox"
+    <view class="FloatingBtnsBox {{FloatingBtn.IsHiding?'FloatingBtnsBox_Hide':''}}"
       style="left: {{buttonLeft}}px; top: {{buttonTop}}px;"
       bind:touchstart="FloatingBtnsBox_handleTouchStart" 
       bind:touchmove="FloatingBtnsBox_handleTouchMove" 
@@ -104,7 +104,7 @@
       <view class="Title">User_Id: </view>
       <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx].User_Id}}</view>
       <view class="Title">_id: </view>
-      <view class="Txt">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx]._id}}</view>
+      <view class="Txt" bind:tap="On_BindTap_CopyImgId">{{ImgBase64List[ImgPopup_Options.ShowingImg_Idx]._id}}</view>
     </scroll-view>
   </view>
 

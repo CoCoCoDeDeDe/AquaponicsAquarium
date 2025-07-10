@@ -8,28 +8,39 @@
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-around; */
   align-items: center;
+  gap: 10px;
+
+  padding: 6px 10px;
 }
 .imgBox-column{
-  padding: 6px 0px 6px 16px;
+  
 }
 .img{
-  height: 80px;
-  width: 80px;
+  --edge-length: 76px;
+  height: var(--edge-length);
+  width: var(--edge-length);
+
+  border-radius: 10px;
 }
 .textBox-column{
-  padding: 0 18px 0 0;
+  height: 80px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
 }
 .name-row{
 
   color: var(--main-text-color);
-  font-size: 20px;
+  font-size: 18px;
   text-align: right;
 }
 .intro-row{
 
   color: var(--vice-text-color);
-  font-size: 16px;
+  font-size: 14px;
   text-align: right;
 }

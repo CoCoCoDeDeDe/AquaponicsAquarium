@@ -43,6 +43,11 @@
   padding: 0px;
 }
 
+.page .FloatingBtnsBox_Hide{
+  right: -33px;
+  bottom: 40px;
+}
+
 .page .FloatingBtnsBox .BtnBox{
   padding: 2px;
 }
@@ -151,7 +156,7 @@
 .page .ScrollView .Row .NotMoreTipsBox .Tip{
   width: 100%;
 
-  color: #f6f6f6;
+  color: #aaa;
   font-size: 14px;
 
   display: flex;

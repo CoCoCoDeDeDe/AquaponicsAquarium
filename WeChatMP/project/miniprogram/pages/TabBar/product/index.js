@@ -1,5 +1,6 @@
 // pages/product/index.js
 import { requestWithLafToken, on_laf_token_Invalid, on_request_error, on_db_error, on_param_error, on_unknown_error, on_common_error } from '../../../apis/laf'
+import { GetBase64ImgSrc } from '../../../utils/common'
 
 Page({
 
@@ -10,6 +11,28 @@ Page({
 
     deviceList: [
     ],
+
+    AdverSwiperGroup: {
+      _id: String,
+      CommonInfo: {
+        
+      },
+      AdverSwiperItemList: [
+        {
+          _id: String,
+          NavOptions: {
+            NavType: String,
+            TargetURL: String
+          },
+          Img: {
+            _id: String,
+            FileName: String,
+            MimeType: String,
+            Data: String
+          }
+        }
+      ]
+    },
 
     advertisementSwiperItemList: [
       {
@@ -171,6 +194,12 @@ Page({
     // console.log("resData.deviceList", resData.deviceList)
     
     let mainList = this.data.deviceList
+
+    // 讲每个 device 的 previewImg 的 Data 改为 Base64 image src 可用格式
+    for(let i = 0; i < resData.deviceList.length; i ++) {
+      resData.deviceList[i].previewImg.Data = GetBase64ImgSrc(resData.deviceList[i].previewImg)
+    }
+
     // mainList = [...mainList, ...resData.deviceList]
     mainList.push(...resData.deviceList)  // push 的参数是数组的 item, 传入数组要展开为 item
     this.setData({

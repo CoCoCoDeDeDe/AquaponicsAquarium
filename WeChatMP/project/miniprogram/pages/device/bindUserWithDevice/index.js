@@ -1,6 +1,7 @@
 // pages/device/BindUserToDevice/index.js
 import { isValidNonEmptyString } from '../../../utils/common'
 import { requestWithLafToken, on_laf_token_Invalid, on_request_error, on_db_error, on_param_error, on_unknown_error, on_common_error } from '../../../apis/laf'
+import { GetBase64ImgSrc } from '../../../utils/common'
 
 Page({
 
@@ -45,7 +46,9 @@ Page({
 
   async onGetProductInfo(product_id) {
     try{
-      const resData = await requestWithLafToken('GET', '/iot2/product/getProductInfo', { product_id: product_id })
+      let resData = await requestWithLafToken('GET', '/iot2/product/getProductInfo', { product_id: product_id })
+
+      resData.productProfile.previewImg.Data = GetBase64ImgSrc(resData.productProfile.previewImg)
       this.setData({
         cardData: resData.productProfile
       })

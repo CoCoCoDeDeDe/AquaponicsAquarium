@@ -3,7 +3,7 @@
 
     <view class="column_PreviewImgAndTextInfo" bind:tap="onBindtapNavigateToDeviceDetailPage" data-deviceprofile="{{deviceProfile}}">
       <view class="columnPreviewImg">
-        <image src="{{deviceProfile.previewImg_url}}" mode="heightFix" class="previewImg"/>
+        <image src="{{deviceProfile.previewImg.Data}}" mode="heightFix" class="previewImg"/>
       </view>
 
       <view class="columnTextInfo">

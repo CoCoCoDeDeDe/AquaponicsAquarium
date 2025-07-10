@@ -3,7 +3,7 @@
 
   <view class="page-background">
     <!-- 插入画幅为1x1的产品海报 -->
-    <image src="{{common_info.product_info.detailPoster_url}}" mode="widthFix" class="page-background-img"/>
+    <image src="{{common_info.product_info.detailPoster.Data}}" mode="widthFix" class="page-background-img"/>
   </view>
 
   <view class="page-posterPlaceholder"></view>

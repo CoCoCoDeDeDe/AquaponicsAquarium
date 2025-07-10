@@ -1,0 +1,39 @@
+/* components/Commerce/SwiperAdverGroup/index.wxss */
+
+/* 滚动广告 */
+.advertisementSwiperArea{
+  padding: 15px 0px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.advertisementSwiper{
+  width: 375px;
+  height: 180px;
+}
+.shoppingAdvertisementSwiperItem{
+  /* height: fit-content; */
+  /* border-radius: 20rpx; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* overflow: hidden; */
+}
+.shoppingAdvertisementSwiperItemImgBox{
+  width: 100%;
+  height: fit-content;
+  padding: 0 15px;
+  /* border-radius: 30rpx; */
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.shoppingAdvertisementSwiperItemImg{
+  width: 100%;
+  border-radius: 15px;
+}

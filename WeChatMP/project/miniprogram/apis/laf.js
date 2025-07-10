@@ -234,7 +234,7 @@ export async function QueryObjectToString(Options) {
 // 传入的 query 的格式：一个query对象内有若干个键值对。query: { key1: 'value1', key2: 'value2' }
 // 成功的返回：runCondition、errMsg、API返回的结果  // 1种成功：request succeed // 在此基础上还要解析 runCondition 云函数是不是还有错误
 // 失败的返回：runCondition、errMsg // 2种失败：laf_token error、request error
-export async function requestWithLafToken( method, last_url, query='', data ) {
+export async function requestWithLafToken( method, last_url, query={}, data ) {
   if( method == null || last_url == null ) return
 
   // 将 query 转化为 ?key1=value1&key2=value2的格式的字符串 query_str
@@ -464,11 +464,20 @@ export async function on_param_error(title = '参数无效') {
 }
 
 export function on_common_error(err) {
+  console.log("err:", err)
+
   // 提示
   // const iconStr = err.errMsg.length < 8 ? 'error' : 'none'
 
+  let TitleSuffix = '未知错误消息'
+  if(typeof err.errMsg == 'undefined') {
+    TitleSuffix = err
+  } else {
+    TitleSuffix = err.errMsg
+  }
+
   wx.showToast({
-    title: 'errMsg: ' + err.errMsg,
+    title: 'err:' + TitleSuffix,
     duration: 1500,
     icon: 'none',
     mask: true,

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "deviceCard": "/components/deviceCard/index"
+    "deviceCard": "/components/deviceCard/index",
+    "SwiperAdverGroup": "/components/Commerce/SwiperAdverGroup/index"
   },
   "navigationBarBackgroundColor": "#ebf6ff",
   "enablePullDownRefresh": true

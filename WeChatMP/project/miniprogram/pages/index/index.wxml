@@ -35,4 +35,6 @@
     </view>
   </block>
 
+  <view class="SteppingStone"></view>
+
 </view>

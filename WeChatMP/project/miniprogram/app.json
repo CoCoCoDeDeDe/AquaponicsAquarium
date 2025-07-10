@@ -12,6 +12,7 @@
     "pages/SmartLinkGroup/UniIOListCmd/index",
     "pages/SmartLinkGroup/BindUniIOWithSLGroup/index",
     "pages/Admin/ImagesBase64Cmd/index",
+    "pages/Admin/DB/ManageCenter/index",
     "pages/test/index"
   ],
   "usingComponents": {},

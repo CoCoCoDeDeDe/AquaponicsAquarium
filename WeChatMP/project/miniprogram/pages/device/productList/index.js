@@ -1,5 +1,5 @@
 // pages/productList/index.js
-import { isValidNonEmptyString } from '../../../utils/common'
+import { isValidNonEmptyString, GetBase64ImgSrc } from '../../../utils/common'
 import { requestWithLafToken, on_laf_token_Invalid, on_request_error, on_db_error, on_param_error, on_unknown_error, on_common_error } from '../../../apis/laf'
 Page({
 
@@ -12,30 +12,30 @@ Page({
       {
         createdAt: "20250508T034732Z",
         name: "默认名字1",
-        previewImg_url: "https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png",
         updateAt: "20250508T034732Z",
         _id: "1",
+        PreviewImg_Base64URL: "",
       },
       {
         createdAt: "20250508T034732Z",
         name: "默认名字2",
-        previewImg_url: "https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png",
         updateAt: "20250508T034732Z",
         _id: "2",
+        PreviewImg_Base64URL: "",
       },
       {
         createdAt: "20250508T034732Z",
         name: "默认名字3",
-        previewImg_url: "https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png",
         updateAt: "20250508T034732Z",
         _id: "3",
+        PreviewImg_Base64URL: "",
       },
       {
         createdAt: "20250508T034732Z",
         name: "默认名字4",
-        previewImg_url: "https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png",
         updateAt: "20250508T034732Z",
         _id: "4",
+        PreviewImg_Base64URL: "",
       }
     ]
 
@@ -78,9 +78,17 @@ Page({
     // 请求追加产品
     let newProductList
     try{
-      const resData = await requestWithLafToken('GET', '/iot2/product/getProductList', { limit: this.data.requestOptions.limit, skip: this.data.requestOptions.skip })
+      let resData = await requestWithLafToken('GET', '/iot2/product/getProductList', { limit: this.data.requestOptions.limit, skip: this.data.requestOptions.skip })
+
+      // 将 resData.productList 中每一子项的 previewImg 的 Data 改写为前端标签可用的格式
+      await resData.productList.forEach( (CurrentValue, Index, Array) => {
+        console.log("CurrentValue:", CurrentValue)
+        CurrentValue.previewImg.Data = GetBase64ImgSrc(CurrentValue.previewImg)
+      })
+
       // console.log("resData", resData)
       newProductList = resData.productList
+
       this.setData({
         'dbInfo.total': resData.total
       })
@@ -122,7 +130,15 @@ Page({
     let productList
     try{
       const resData = await requestWithLafToken('GET', '/iot2/product/getProductList', { limit: this.data.requestOptions.limit, skip: this.data.requestOptions.skip })
+
+      // 将 resData.productList 中每一子项的 previewImg 的 Data 改写为前端标签可用的格式
+      await resData.productList.forEach( (CurrentValue, Index, Array) => {
+        console.log("CurrentValue:", CurrentValue)
+        CurrentValue.previewImg.Data = GetBase64ImgSrc(CurrentValue.previewImg)
+      })
+
       productList = resData.productList
+
       this.setData({
         'dbInfo.total': resData.total
       })

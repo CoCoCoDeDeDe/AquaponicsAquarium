@@ -9,8 +9,14 @@ Component({
       type: Object,
       value: {
         previewImg_url: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/previewImg_aqaq.png',
+        previewImg: {
+          "Id": "",
+          "FileName": "",
+          "MimeType": "",
+          "Data": ""
+        },
         name: '默认产品名字',
-        intro: '默认产品简介',
+        intro: '默认产品简介'
       },
       required: false,
     }

@@ -5,7 +5,7 @@
 
     <view class="imgBox-column">
 
-      <image src="{{cardData.previewImg_url}}" mode="heightFix" class="img"/>
+      <image src="{{cardData.previewImg.Data}}" mode="heightFix" class="img"/>
 
     </view>
 

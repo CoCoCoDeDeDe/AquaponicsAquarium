@@ -13,3 +13,8 @@ export function TimeStrConvert_ISO8601_To_HHmm(isoString) {
   // console.log("result:", result)
   return result
 }
+
+export function GetBase64ImgSrc(img) {
+  const { MimeType, Data } = img
+  return `data:${MimeType};base64,${Data}`
+}
