@@ -68,11 +68,9 @@ Component({
           }
         )
 
-        console.log("this.data:", this.data)
+        // console.log("this.data:", this.data)
 
       } catch(err) {
-        console.log("err:", err)
-
         switch(err.runCondition) {
           case 'laf_token error':
             on_laf_token_Invalid()
@@ -81,6 +79,30 @@ Component({
             on_common_error(err)
             return
         }
+      }
+    },
+
+    // 点击横滚广告
+    OnTapAdver: async function (e) {
+      try {
+        const TargetItem = e.currentTarget.dataset.item
+        const {
+          Img,
+          NavOptions,
+          RecordInfo,
+          _id
+        } = TargetItem
+  
+        // 根据 NavOptions.NavType 决定如何导航
+        switch(NavOptions.NavType) {
+          case 'URL':
+            console.log("未开发")
+          default:
+            throw new Error('Unexpected NavType')
+        }
+
+      } catch(err) {
+        on_common_error(err)
       }
     }
 

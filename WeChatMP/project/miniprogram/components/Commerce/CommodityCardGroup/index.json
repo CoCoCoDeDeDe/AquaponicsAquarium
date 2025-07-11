@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "CommodityCard": "/components/Commerce/CommodityCard/index"
+  }
+}

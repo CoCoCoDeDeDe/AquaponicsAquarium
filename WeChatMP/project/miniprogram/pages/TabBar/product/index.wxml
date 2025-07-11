@@ -58,39 +58,9 @@
     
     ></SwiperAdverGroup>
 
-    <view class="commodityCardsArea">
-      <block wx:for="{{commodityCardProfileList}}" wx:key="id" wx:for-item="item_profile">
-        
-        <view class="commodityCardArea">
-          <view class="commodityCardBoard" bind:tap="onToCommodityDetailPage" data-commodityProfile="{{item_profile}}">
-
-            <view class="commodityCardPreviewImgBox">
-              <image src="{{item_profile.previewImgUrl}}" mode="widthFix" class="commodityCardPreviewImg"/>
-            </view>
-
-            <view class="commodityCardTextBox">
-              <view class="commodityCardTitle">
-                {{item_profile.title}}
-              </view>
-              <scroll-view scroll-x="{{true}}" enable-flex show-scrollbar="{{false}}" enhanced="{{true}}" class="commodityCardPromotionsBox">
-                <block wx:for="{{item_profile.promotionList}}" wx:key="id" wx:for-item="item_promotion">
-                  <view class="commodityCardPromotionBox">
-                    <view class="commodityCardPromotionText">
-                      {{item_promotion.title_short}}
-                    </view>
-                  </view>
-                </block>
-              </scroll-view>
-              <view class="commodityCardPrice">
-                ¥ {{item_profile.price}}
-              </view>
-            </view>
-
-          </view>
-        </view>
-
-      </block>
-    </view>
+    <CommodityCardGroup
+      id="CommodityCardGroup"
+    ></CommodityCardGroup>
 
   </view>
 

@@ -5,8 +5,8 @@
 class="advertisementSwiper"
 indicator-dots="{{false}}"
 autoplay="{{true}}"
-interval="{{2500}}"
-duration="{{2000}}"
+interval="{{3000}}"
+duration="{{1000}}"
 circular="{{true}}"
 display-multiple-items="{{1}}"
 easing-function="easeInOutCubic"
@@ -14,12 +14,12 @@ easing-function="easeInOutCubic"
   <block 
   wx:for="{{AdverSwiperGroup.AdverSwiperItemList}}" 
   wx:for-index="idx" wx:for-item="item" 
-  wx:key="imgUrl">
+  wx:key="_id">
   
     <swiper-item 
     class="shoppingAdvertisementSwiperItem"
-    bind:tap="onToAdvertisementPage"
-    data-advertisementSwiperItem="{{item}}"
+    bind:tap="OnTapAdver"
+    data-Item="{{item}}"
     >
 
       <view class="shoppingAdvertisementSwiperItemImgBox">

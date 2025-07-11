@@ -1,0 +1,28 @@
+<!--components/Commerce/CommodityCard/index.wxml-->
+<view class="commodityCardArea">
+          <view class="commodityCardBoard" bind:tap="onToCommodityDetailPage" data-commodityProfile="{{item_profile}}">
+
+            <view class="commodityCardPreviewImgBox">
+              <image src="{{CommodityData.Image.Data}}" mode="widthFix" class="commodityCardPreviewImg"/>
+            </view>
+
+            <view class="commodityCardTextBox">
+              <view class="commodityCardTitle">
+                {{CommodityData.TextInfo.Title}}
+              </view>
+              <scroll-view scroll-x="{{true}}" enable-flex show-scrollbar="{{false}}" enhanced="{{true}}" class="commodityCardPromotionsBox">
+                <block wx:for="{{CommodityData.Promotions}}" wx:key="id" wx:for-item="item_promotion">
+                  <view class="commodityCardPromotionBox">
+                    <view class="commodityCardPromotionText">
+                      {{item_promotion.Title_Short}}
+                    </view>
+                  </view>
+                </block>
+              </scroll-view>
+              <view class="commodityCardPrice">
+                ¥ {{CommodityData.Price.Current}}
+              </view>
+            </view>
+
+          </view>
+        </view>

@@ -1,0 +1,15 @@
+<!--components/Commerce/CommodityCardGroup/index.wxml-->
+<view class="commodityCardsArea">
+  <block 
+    wx:for="{{CommodityCardList}}" 
+    wx:key="_id" 
+    wx:for-item="item_CommodityData"
+  >
+
+    <CommodityCard
+      CommodityData="{{item_CommodityData}}"
+    >
+    </CommodityCard>
+
+  </block>
+</view>

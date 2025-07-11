@@ -1,0 +1,12 @@
+/* components/Commerce/CommodityCardGroup/index.wxss */
+
+/* 商品卡片 */
+.commodityCardsArea{
+  padding: 0px 5px 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  /* background-color: #f6f6f6; */
+}

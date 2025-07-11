@@ -2,6 +2,8 @@
 import { requestWithLafToken, on_laf_token_Invalid, on_request_error, on_db_error, on_param_error, on_unknown_error, on_common_error } from '../../../apis/laf'
 import { GetBase64ImgSrc } from '../../../utils/common'
 
+const PUSH_COMMODITYCARD_NUM = 1
+
 Page({
 
   /**
@@ -32,117 +34,7 @@ Page({
           }
         }
       ]
-    },
-
-    advertisementSwiperItemList: [
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_1.jpg',
-        navigatePath: ''
-      },
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_2.jpg',
-        navigatePath: ''
-      },
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_3.jpg',
-        navigatePath: ''
-      },
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_4.jpg',
-        navigatePath: ''
-      },
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_5.jpg',
-        navigatePath: ''
-      },
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_6.jpg',
-        navigatePath: ''
-      },
-      {
-        imgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/advertisementImg_7.jpg',
-        navigatePath: ''
-      }
-    ],
-
-    commodityCardProfileList: [
-      {
-        id: '1',
-        previewImgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/commodityPreviewImg_111111111.jpg',
-        title: '默认标题默认标题默认标题默认标题默认标题默认标题默认标题默认标题',
-        price: '默认价格',
-        promotionList: [
-          {
-            id: 1,
-            title_short: '促销1'
-          },
-          {
-            id: 2,
-            title_short: '促销2'
-          },
-          {
-            id: 3,
-            title_short: '促销2'
-          },
-          {
-            id: 4,
-            title_short: '促销促销4'
-          },
-          {
-            id: 5,
-            title_short: '促销促销促销c5'
-          }
-        ]
-      },
-      {
-        id: '2',
-        previewImgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/commodityPreviewImg_222.jpg',
-        title: '默认标题默认标题默认标题默认标题',
-        price: '默认价格',
-        promotionList: [
-          {
-            id: 1,
-            title_short: '促销1'
-          }
-        ]
-      },
-      {
-        id: '3',
-        previewImgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/commodityPreviewImg_222.jpg',
-        title: '默认标题默认标题默认标题默认标题',
-        price: '默认价格',
-        promotionList: [
-          {
-            id: 1,
-            title_short: '促销1'
-          }
-        ]
-      },
-      {
-        id: '4',
-        previewImgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/commodityPreviewImg_111111111.jpg',
-        title: '默认标题默认标题默认标题默认标题默认标题默认标题默认标题默认标题',
-        price: '默认价格',
-        promotionList: [
-          {
-            id: 1,
-            title_short: '促销1'
-          }
-        ]
-      },
-      {
-        id: '5',
-        previewImgUrl: 'https://mp-1b9cd3c8-d666-4006-b791-11d5ce02e1be.cdn.bspapp.com/IoT1/test/commodityPreviewImg_111111111.jpg',
-        title: '默认标题默认标题默认标题默认标题',
-        price: '默认价格',
-        promotionList: [
-          {
-            id: 1,
-            title_short: '促销1'
-          }
-        ]
-      }
-    ],
+    }
 
   },
 
@@ -157,8 +49,20 @@ Page({
   // 生命周期函数--监听下拉刷新
   async onPullDownRefresh(e) {
     await this.reset()
+
+    // 刷新商品卡片组
+    const CommodityCardGroup = this.selectComponent("#CommodityCardGroup")
+    await CommodityCardGroup.Refresh()
+
     await this.requestPageData()
     wx.stopPullDownRefresh()
+  },
+
+  onReachBottom: async function (e) {
+    console.log("onReachBottom e:", e)
+
+    const CommodityCardGroup = this.selectComponent("#CommodityCardGroup")
+    CommodityCardGroup.PushCommodityCardByLimit(PUSH_COMMODITYCARD_NUM)
   },
   
   // 页面重置
