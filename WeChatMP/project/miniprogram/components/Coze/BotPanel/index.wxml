@@ -1,0 +1,162 @@
+<!--components/Coze/BotPanel/index.wxml-->
+
+<view 
+  class="Transparent"
+>
+
+  <!-- BotSelector -->
+  <view 
+    class="Border_FullRadius Flex_Horizontal_FromLeft Shadow_ForCard_Middle Board_Level1_BG MarginBtm_Middle"
+    style="height: 68px; gap: 10px;"
+  >
+    <view
+      class="Flex_AllCenter"
+      style="padding: 4px; padding-left: 6px;"
+    >
+      <image
+        class="Avatar_Big"
+        src="{{Bot_Info.icon_url}}"
+        alt="Bot 头像"
+      />
+    </view>
+    <view 
+      class="Flex_Vertical_Around"
+      style="height: 100%; padding: 8px 0"
+    >
+      <view
+        class="Flex_Horizontal_FromLeft Font_Main_Size18"
+        style="flex: 1;"
+      >{{Bot_Info.name}}</view>
+      <view
+        class="Flex_Horizontal_FromLeft Font_Vice_Size14"
+        style="flex: 1;"
+      >{{Bot_Info.update_time}}</view>
+    </view>
+  </view>
+
+  <!-- ConversationCommander -->
+  <view 
+    id="ConversationsCard"
+    class="Border_Radius_Middle Shadow_ForCard_Middle Board_Level1_BG MarginBtm_Middle"
+    style="padding:8px 8px 0 8px;"
+  >
+    <!-- 新会话按钮 -->
+    <view
+      id="Btn_NewConversation"
+      class="Btn2D_Blue Flex_AllCenter"
+      style="height: 42px;"
+    >
+      新会话
+    </view>
+
+    <!-- 已加载的会话列表 -->
+    <scroll-view
+      id="ConversationsListBox"
+      scroll-y="{{true}}"
+      scroll-top="{{10}}"
+      scroll-into-view="{{}}"
+      scroll-into-view-offset="{{0}}"
+      scroll-with-animation="{{true}}"
+      enable-back-to-top="{{true}}"
+      enable-passive="{{true}}"
+      refresher-enabled="{{false}}"
+      refresher-threshold="{{45}}"
+      refresher-default-style="white"
+      refresher-background=""
+      enhanced="{{true}}"
+      show-scrollbar="{{true}}"
+      bindrefresherrefresh=""
+      class=""
+      style="max-height: 260px; padding: 0px; margin: 10px; overflow: hidden;"
+    >
+
+      <block 
+        wx:for="{{ConversationsInfo.conversations}}"
+        wx:for-item="ConversationItem"
+        wx:for-index="ConversationIndex"
+        wx:key="id"
+      >
+        <view
+          id="ConversationCard"
+          style='height: 40px; display: grid; grid-template-areas: "Line Time Idx" "Line Id Idx"; grid-template-columns: 6px 1fr 60px; grid-template-rows: 2fr 1fr; gap: 0 10px; margin: 0 0 10px 0;'
+        >
+          <view
+            style="grid-area:Line; background-color: #c1d9f3; border-radius: 100px;"
+          ></view>
+          <view
+            class="Font_Vice_Size14"
+            style="grid-area:Time;"
+          >创建时间: {{ConversationItem.created_at}}</view>
+          <view
+            class="Font_Main_Size14"
+            style="grid-area:Id;"
+          >会话ID: {{ConversationItem.id}}</view>
+          <view
+            class="Font_Main_Size14 Flex_AllCenter"
+            style="grid-area:Idx; font-weight: 800; font-size: 16px; color: #d5e6f8;"
+          >{{ConversationIndex}}</view>
+        </view>
+      </block>
+
+      <block
+        wx:if="{{!ConversationsInfo.has_more && ConversationsInfo.conversations.length >= 3}}"
+      >
+        <view
+          id="Tip_NoMore"
+          class="Flex_AllCenter"
+          style="margin: 0 0 10px 0;"
+        >
+          <view
+            class="Font_Vice_Size14"
+          >没有更多了...</view>
+          <view
+            class="Font_Vice_Size12"
+          >已加载 {{ConversationsInfo.conversations.length}} 个会话</view>
+        </view>
+      </block>
+
+    </scroll-view>
+
+    <!-- 会话列表数据概览 -->
+
+
+  </view>
+
+
+  <!-- ModelInfo -->
+  <view 
+    id="ModelInfoCard"
+    class="Border_Radius_Middle Shadow_ForCard_Middle Board_Level1_BG"
+    style='height: 120px; display: grid; grid-template-areas: "name name name" "max_tokens context_round temperature"; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 3fr 4fr; padding: 10px;'
+  >
+
+    <view
+      id="ModelInfo_NameCard"
+      class="Font_Main_Size18"
+      style="grid-area: name; padding: 10px 4px 4px 4px; font-weight: 800; color: #6ab2ff; border-bottom: 1.5px solid #eaeaea; font-size: 18px;"
+    >{{Bot_Info.model_info.model_name}}</view>
+
+    <block
+      wx:for="{{Model_Info.ModelInfoCard_DataList}}"
+      wx:key="name"
+    >
+      <view
+        id="ModelInfoPropertyCard"
+        style="grid-area: {{item.name}}; display: flex; flex-direction: column; justify-content: space-around; align-items: flex-start; padding: 2px 6px;"
+      >
+        <view
+          id="ModelInfoPropertyCard_Name"
+          class="Font_Vice_Size14"
+          style=""
+        >{{item.name_CN}}</view>
+        <view
+          id="ModelInfoPropertyCard_Value"
+          class=""
+          style="font-weight: 800; font-size: 18px; color: #93c7ff;"
+        >{{item.value}}</view>
+      </view>
+    </block>
+  </view>
+
+
+</view>

@@ -59,8 +59,6 @@ Page({
   },
 
   onReachBottom: async function (e) {
-    console.log("onReachBottom e:", e)
-
     const CommodityCardGroup = this.selectComponent("#CommodityCardGroup")
     CommodityCardGroup.PushCommodityCardByLimit(PUSH_COMMODITYCARD_NUM)
   },

@@ -1,0 +1,9 @@
+/* components/Coze/BotPanel/index.wxss */
+
+@import "../../../utils/common.wxss";
+
+.Grid_BotCard_Container {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 3fr;
+}

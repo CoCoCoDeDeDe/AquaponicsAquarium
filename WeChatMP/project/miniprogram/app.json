@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/TabBar/SmartLinkGroup/index",
     "pages/TabBar/smartLink/index",
+    "pages/TabBar/AI/index",
     "pages/TabBar/product/index",
     "pages/TabBar/mine/index",
     "pages/login/index",
@@ -13,6 +14,8 @@
     "pages/SmartLinkGroup/BindUniIOWithSLGroup/index",
     "pages/Admin/ImagesBase64Cmd/index",
     "pages/Admin/DB/ManageCenter/index",
+    "pages/SmartLink/RuleCmd/index",
+    "pages/ChatAI/Conversation/index",
     "pages/test/index"
   ],
   "usingComponents": {},
@@ -45,10 +48,10 @@
         "selectedIconPath": "/static/images/icons/icon_tabbar_group_active.png"
       },
       {
-        "pagePath": "pages/TabBar/smartLink/index",
-        "text": "智联",
-        "iconPath": "/static/images/icons/tabBar_smartLink_inactive.png",
-        "selectedIconPath": "/static/images/icons/tabBar_smartLink_active.png"
+        "pagePath": "pages/TabBar/AI/index",
+        "text": "AI",
+        "iconPath": "/static/images/icons/tabBar_ai_inactive.png",
+        "selectedIconPath": "/static/images/icons/tabBar_ai_active.png"
       },
       {
         "pagePath": "pages/TabBar/product/index",

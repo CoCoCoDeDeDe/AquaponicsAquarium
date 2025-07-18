@@ -6,5 +6,11 @@
         "selectedIconPath": "/static/images/icons/tabBar_smartLink_active.png"
       },
 
+      {
+        "pagePath": "pages/TabBar/smartLink/index",
+        "text": "智联",
+        "iconPath": "/static/images/icons/tabBar_smartLink_inactive.png",
+        "selectedIconPath": "/static/images/icons/tabBar_smartLink_active.png"
+      },
       
     "serviceCard": "/components/serviceCard/index"

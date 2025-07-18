@@ -1,0 +1,3 @@
+/* pages/ChatAI/Conversation/index.wxss */
+
+@import "../../../utils/common.wxss"

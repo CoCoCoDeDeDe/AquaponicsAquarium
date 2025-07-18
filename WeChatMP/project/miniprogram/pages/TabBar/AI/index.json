@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "BotPanel": "/components/Coze/BotPanel/index",
+    "PageFrame_2": "/components/PageFrame/PageFrame_2/index"
+  },
+  "navigationBarBackgroundColor": "#ebf6ff",
+  "disableScroll": true
+}

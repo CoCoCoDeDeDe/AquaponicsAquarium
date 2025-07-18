@@ -1,0 +1,19 @@
+<!-- pages\TabBar\smartLink\index.wxml -->
+<view class="Page">
+
+  <view class="ContentArea">
+
+    <block wx:if="{{}}">
+      
+    </block>
+    <block wx:else="{{}}">
+      
+    </block>
+
+  </view>
+
+  <view class="TabbarArea">
+    
+  </view>
+
+</view>

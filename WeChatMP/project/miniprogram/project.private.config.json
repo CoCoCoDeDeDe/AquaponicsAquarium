@@ -8,6 +8,34 @@
     "miniprogram": {
       "list": [
         {
+          "name": "ChartAI-会话页面",
+          "pathName": "pages/ChatAI/Conversation/index",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
+          "name": "TabBar-AI",
+          "pathName": "pages/TabBar/AI/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "TabBar-智联页",
+          "pathName": "pages/TabBar/smartLink/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "智联-规则管理页面",
+          "pathName": "pages/SmartLink/RuleCmd/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "Admin/DB/数据库管理中心",
           "pathName": "pages/Admin/DB/ManageCenter/index",
           "query": "",
@@ -52,13 +80,6 @@
         {
           "name": "TabBar-我的页面",
           "pathName": "pages/TabBar/mine/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "TabBar-智联页",
-          "pathName": "pages/TabBar/smartLink/index",
           "query": "",
           "launchMode": "default",
           "scene": null

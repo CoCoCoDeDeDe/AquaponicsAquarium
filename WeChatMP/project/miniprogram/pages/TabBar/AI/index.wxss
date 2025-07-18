@@ -1,0 +1,3 @@
+/* pages/TabBar/AI/index.wxss */
+
+@import "../../../utils/common.wxss";

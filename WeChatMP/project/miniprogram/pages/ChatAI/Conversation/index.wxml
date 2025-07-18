@@ -1,0 +1,142 @@
+<!--pages/ChatAI/Conversation/index.wxml-->
+
+<scroll-view
+  id="PageRoot"
+  class="FullSize_v BG_Gray"
+  style="padding: 0 10px;"
+  scroll-y="{{true}}"
+  scroll-top="{{10}}"
+  scroll-into-view="{{ScrollIntoView}}"
+  scroll-into-view-offset="{{0}}"
+  scroll-with-animation="{{true}}"
+  enable-back-to-top="{{true}}"
+  enable-passive="{{true}}"
+  refresher-enabled="{{false}}"
+  refresher-threshold="{{45}}"
+  refresher-default-style="white"
+  refresher-background=""
+  enhanced="{{true}}"
+  show-scrollbar="{{false}}"
+  binddragstart="On_ScrollView_DragStart"
+  binddragend="On_ScrollView_DragEnd"
+>
+  <!-- 顶栏 -->
+  <view
+    id="topbar"
+    class="ZIndex_Level20"
+    style="width: 100%; position: fixed; top: {{Styles.topbar_TopDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: max-content 1fr max-content; grid-template-rows: 32px;"
+  >
+    <view
+      class="Flex_AllCenter Btn3D_Style3"
+      style="width: 32px;"
+    >
+      <image
+        class="Icon_Normal"
+        style=""
+        src="/static/images/icons/simpleArrowIcon_darkBlue_Left@2x.png"
+        mode="scaleToFill"
+      />
+    </view>
+    <view></view>
+    <view
+      class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
+      style="padding: 0 8px;"
+    >新会话</view>
+  </view>
+
+  <!-- 底栏 -->
+  <view
+    id="btmbar"
+    class="ZIndex_Level20"
+    style="width: 100%; position: fixed; bottom: {{Styles.btmbar_BtmDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: 1fr max-content; grid-template-rows: 40px; gap: 0px 10px;"
+  >
+    <view
+      class="Flex_AllCenter Btn3D_Style3"
+      style="padding: 4px;"
+    >
+      <input
+        id="Inputer"
+        class="FullSize_Parent"
+        style="text-align: left; padding: 0 4px;"
+        value="{{InputInfo.Value}}"
+        type="text"
+        placeholder="在此输入消息"
+        placeholder-style=""
+        cursor-spacing="{{10}}"
+        confirm-type="send"
+        confirm-hold="{{false}}"
+        adjust-position="{{true}}"
+        bindconfirm="On_Input_Confirm"
+      />
+    </view>
+    <view
+      class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
+      style="padding: 0 10px;"
+    >发送</view>
+  </view>
+
+  <!-- 顶部垫子 -->
+  <view
+    class="ZIndex_Level10"
+    style="height: 32px;"
+  ></view>
+  <block
+    wx:for="{{MessageInfo.MessageList}}"
+    wx:key="id"
+    wx:for-item="MessageList_item"
+    wx:for-index="MessageList_index"
+  >
+    <view
+      id="{{'message_'+MessageList_item.id}}"
+      class="MarginTop_20_NoFirst ZIndex_Level10"
+      style="display: grid; grid-template-columns: 40px 1fr; grid-template-rows: 1fr;"
+    >
+      <!-- 头像 -->
+      <image
+        class="Avatar_Normal"
+        style=""
+        src="{{RoleMap[MessageList_item.role].avatar_url}}"
+        mode=""
+      />
+      <!-- 用户名和消息板 -->
+      <view
+        class=""
+        style="display: grid; grid-template-columns: 1fr; grid-template-rows: 18px 1fr 18px;"
+      >
+        <!-- 用户名 -->
+        <view
+          class="Font_Main_Size14"
+          style=""
+        >{{MessageList_item.role}}</view>
+        <!-- 消息板 -->
+        <view
+          class="MessageBoard"
+          style=""
+        >
+          <!-- 消息体 -->
+          <view
+            class=""
+            style="font-weight: 200;"
+          >{{MessageList_item.content}}</view>
+        </view>
+        <!-- 消息其他信息 -->
+        <view
+          class=""
+          style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;"
+        >
+          <!-- 消息更新时间 -->
+          <view
+            class="Font_Vice_Size12"
+            style=""
+          >{{MessageList_item.updated_at}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!-- 底部垫子 -->
+  <view
+    class="ZIndex_Level10"
+    style="height: 80px;"
+  ></view>
+
+</scroll-view>

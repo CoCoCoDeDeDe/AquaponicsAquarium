@@ -1,0 +1,239 @@
+/* common\common.wxss */
+
+/* BG */
+.Transparent {
+  background-color: none;
+}
+.BG_PureWhite {
+  background-color: #ffffff;
+}
+.BG_Gray {
+  background-color: #f5f5f5;
+}
+
+/* Border */
+.Border_Radius_Middle {
+  border-radius: 14px;
+}
+.Border_FullRadius {
+  border-radius: 1000px;
+}
+
+/* Filter */
+.FilterInver {
+  filter: invert(100%);
+}
+
+/* Flex */
+.Flex_Vertical_FromTop {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.Flex_Vertical_Around {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.Flex_Horizontal_Layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.Flex_Horizontal_FromLeft {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.Flex_AllCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Font */
+.Font_Main_Size18 {
+  font-size: 18px;
+  color: #181441;
+}
+.Font_Vice_Size18 {
+  font-size: 18px;
+  color: #9f9f9f;
+}
+.Font_Main_Size16 {
+  font-size: 16px;
+  color: #181441;
+}
+.Font_Vice_Size16 {
+  font-size: 16px;
+  color: #9f9f9f;
+}
+.Font_Main_Size14 {
+  font-size: 14px;
+  color: #181441;
+}
+.Font_Vice_Size14 {
+  font-size: 14px;
+  color: #9f9f9f;
+}
+.Font_Vice_Size12 {
+  font-size: 12px;
+  color: #9f9f9f;
+}
+
+/* Padding */
+.Padding_Middle {
+  padding: 14px;
+  padding-top: 16px;
+}
+.Padding_Mini {
+  padding: 6px;
+  padding-top: 6px;
+}
+
+/* Shadow */
+.Shadow_ForCard_Middle {
+  /* x 偏移量 | y 偏移量 | 阴影模糊半径 | 扩散半径 | 阴影颜色 */
+  box-shadow: 1px 1px 4px 2px #0000000c;
+}
+
+/* Size */
+.FullSize_v {
+  width: 100vw;
+  height: 100vh;
+}
+.FullSize_Parent {
+  width: 100%;
+  height: 100%;
+}
+
+/* Transition */
+.TransitionAll {
+  transition: all 0.3s; /* 简单场景可用，但复杂元素谨慎使用 */
+}
+
+/* Margin */
+.MarginBtm_Middle {
+  margin-bottom: 10px;
+}
+.MarginTop_20_NoFirst {
+  margin-top: 8px;
+}
+.MarginTop_20_NoFirst:first-child {
+  margin-top: 0px;
+}
+
+/* z-index */
+.ZIndex_Level10 {
+  z-index: 10;
+  position: relative;
+}
+.ZIndex_Level11 {
+  z-index: 11;
+  position: relative;
+}
+.ZIndex_Level20 {
+  z-index: 20;
+  position: relative;
+}
+
+/* Usage */
+.Avatar_Big {
+  --Edge-Length: 58px;
+  width: var(--Edge-Length);
+  height: var(--Edge-Length);
+}
+.Avatar_Normal {
+  --Edge-Length: 32px;
+  width: var(--Edge-Length);
+  height: var(--Edge-Length);
+}
+.Board_Level1_BG {
+  background-color: #fff;
+}
+.Btn2D_Blue {
+  border-radius: 100px;
+  background-image: linear-gradient(-225deg, #83b1f74d 0%, #287dec5d 100%);
+
+  font-size: 16px;
+  letter-spacing: 0.5em;
+  color: #2181f0;
+
+  transition: all 0.1s; /* 简单场景可用，但复杂元素谨慎使用 */
+}
+.Btn2D_Blue:active {
+  background-image: linear-gradient(-225deg, #97bdf74d 0%, #3f8cf05d 100%);
+
+  color: #51a2ff;
+
+  transform: scale(0.98);
+}
+.Btn3D_Blue {
+  border-radius: 12px;
+  background-image: linear-gradient(-225deg, #83b1f7 0%, #287dec 100%);
+  box-shadow: 
+    0px 3px 7px rgba(0, 0, 0, 0.17),
+    0px -2px 4px rgba(0, 0, 0, 0.13) inset;
+}
+
+.Btn3D_Style2 {
+  /* 不指定颜色 */
+  
+  border-radius: 100px;
+  transition: all 0.2s ease-out;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  font-weight: 200;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.Btn3D_Style3 {
+  /* 不指定颜色 */
+  border-radius: 100px;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* 核心毛玻璃样式 */
+  background-color: rgba(255, 255, 255, 0.7); /* 半透明白色背景 */
+  backdrop-filter: blur(4px); /* 模糊背后内容（值越大越模糊） */
+  -webkit-backdrop-filter: blur(10px); /* 兼容旧版WebView */
+  text-align: center;
+  white-space: nowrap;
+}
+.Btn3D_Style3:active {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: scale(0.95);
+}
+
+.BtnBGC_Blue_Style2 {
+  background: linear-gradient(135deg, #85b0f0, #1d77ec);
+}
+
+.Icon_Normal {
+  --egde-length: 20px;
+  width: var(--egde-length);
+  height: var(--egde-length);
+}
+
+.MessageBoard {
+  width: fit-content;
+  background-color: #fff;
+  border-radius: 10px;
+  border-top-left-radius: 0px;
+  padding: 6px 8px;
+}
+
+.Page {
+  background-image: linear-gradient(-225deg, #ebf6ff 0%, #ebf6ff 80%);
+}
+
+.test {
+  background-color: red;
+}

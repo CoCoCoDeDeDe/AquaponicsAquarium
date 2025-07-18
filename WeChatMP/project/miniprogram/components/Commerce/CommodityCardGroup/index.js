@@ -62,7 +62,6 @@ Component({
     // 按 skip 和 limit 获取指定段落的商品卡片记录，当没有更多时提示
     PushCommodityCard: async function (Skip, Limit) {
       try {
-        console.log("typeof this.data.CommodityCardList_Total:", typeof this.data.CommodityCardList_Total )
 
         // 当现加载的卡片数量已经达到已知的总可获取的卡片数量，则提示并不在追加
         if(typeof this.data.CommodityCardList_Total == 'number' && this.data.CommodityCardList.length >= this.data.CommodityCardList_Total) {
@@ -100,7 +99,7 @@ Component({
           }
         )
 
-        console.log("PushCommodityCard() this.data:", this.data)
+        // console.log("PushCommodityCard() this.data:", this.data)
 
       } catch(err) {
         switch(err.runCondition) {

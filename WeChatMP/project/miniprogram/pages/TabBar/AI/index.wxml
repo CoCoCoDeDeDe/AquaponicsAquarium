@@ -1,0 +1,33 @@
+<!--pages/TabBar/AI/index.wxml-->
+
+<view class="Page">
+
+  <scroll-view
+    class="FullSize_v"
+    scroll-y="{{true}}"
+    scroll-top="{{10}}"
+    scroll-into-view="{{}}"
+    scroll-into-view-offset="{{0}}"
+    scroll-with-animation="{{true}}"
+    enable-back-to-top="{{true}}"
+    enable-passive="{{true}}"
+    refresher-enabled="{{false}}"
+    refresher-threshold="{{45}}"
+    refresher-default-style="white"
+    refresher-background=""
+    enhanced="{{true}}"
+    show-scrollbar="{{false}}"
+    bindrefresherrefresh=""
+  >
+    <view 
+      class="FullSize_Parent Flex_Vertical_FromTop  Padding_Middle"
+      style="padding: 12px; padding-top: 12px;"
+    >
+      
+      <BotPanel></BotPanel>
+
+    </view>
+
+  </scroll-view>
+
+</view>
