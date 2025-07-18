@@ -1,5 +1,8 @@
 // pages/ChatAI/Conversation/index.js
 
+import { formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from "../../../utils/common"
+import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestConversationMessageList } from "../../../apis/laf"
+
 const StyleDefaultValues = {
   topbar_TopDistance: 4,
   btmbar_BtmDistance: 16
@@ -11,15 +14,18 @@ Page({
    * 页面的初始数据
    */
   data: {
+    conversation_info: {
+
+    },
     ScrollIntoView: "",
-    Styles: {
+    styles: {
       topbar_TopDistance: StyleDefaultValues.topbar_TopDistance,
       btmbar_BtmDistance: StyleDefaultValues.btmbar_BtmDistance,
     },
-    InputInfo: {
+    input_info: {
       Value: ''
     },
-    RoleMap: {
+    role_map: {
       "assistant": {
         avatar_url: "https://lf9-appstore-sign.oceancloudapi.com/ocean-cloud-tos/FileBizType.BIZ_BOT_ICON/2094992681874336_1752332578980342463_pSvshsBxqi.png?lk3s=50ccb0c5&x-expires=1753280953&x-signature=GOGfa0EIm3Q1TeNW5a9ArzQfz88%3D"
       },
@@ -27,7 +33,7 @@ Page({
         avatar_url: "/static/images/icons/defaultAvatar_violet.png"
       }
     },
-    MessageInfo: {
+    message_info: {
       MessageList: [
         {
           bot_id: "7525815471376465929",
@@ -184,8 +190,54 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  async onLoad(options) {
+    try{
+      // 获取和校验页面 query 参数 id
+      const { id } = options
+      if(!id) {
+        // 参数缺失，退出本页面
+        console.log("参数缺失，退出本页面")
+        wx.navigateBack(
+          {
+            delta: 1
+          }
+        )
+        return
+      } else {
+        this.setData({
+          'conversation_info.conversation_id': id
+        })
+      }
 
+      // 获取在线 bot 数据
+      const res_requestBotInfo = await requestBotInfo()
+      this.setData({
+        bot_info: res_requestBotInfo
+      })
+
+      // 获取在线消息列表
+      const res_requestConversationMessageList = await requestConversationMessageList(
+        {
+          conversation_id: this.data.conversation_info.conversation_id,
+          order: 'asc',
+          before_id: undefined,
+          after_id: undefined,
+          limit: 50
+        }
+      )
+      console.log("res_requestConversationMessageList:", res_requestConversationMessageList)
+      this.setData({
+        'message_info.MessageList': res_requestConversationMessageList
+      })
+      // 在消息列表更新后让消息页面滑动到最新的一个消息
+      this.setData({
+        ScrollIntoView: "message_" + this.data.message_info.MessageList[this.data.message_info.MessageList.length - 1].id
+      })
+
+
+    } catch(err) {
+      console.log("onLoad(options) err:", err)
+    }
   },
 
   /**
@@ -199,9 +251,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.setData({
-      ScrollIntoView: "message_7527601796865343551"
-    })
+
   },
 
   /**
@@ -242,16 +292,16 @@ Page({
   // 开始滑动消息
   On_ScrollView_DragStart: function () {
     this.setData({
-      "Styles.topbar_TopDistance": -26,
-      "Styles.btmbar_BtmDistance": -30,
+      "styles.topbar_TopDistance": -26,
+      "styles.btmbar_BtmDistance": -30,
     })
   },
 
   // 结束滑动消息
   On_ScrollView_DragEnd: function () {
     this.setData({
-      "Styles.topbar_TopDistance": StyleDefaultValues.topbar_TopDistance,
-      "Styles.btmbar_BtmDistance": StyleDefaultValues.btmbar_BtmDistance,
+      "styles.topbar_TopDistance": StyleDefaultValues.topbar_TopDistance,
+      "styles.btmbar_BtmDistance": StyleDefaultValues.btmbar_BtmDistance,
     })
   }
 

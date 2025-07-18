@@ -10,7 +10,7 @@
         {
           "name": "ChartAI-会话页面",
           "pathName": "pages/ChatAI/Conversation/index",
-          "query": "",
+          "query": "id=7527613724430123034",
           "scene": null,
           "launchMode": "default"
         },

@@ -58,6 +58,7 @@ export function formatUnixTime_Type2(timestamp) {
 }
 
 export function convertObjToArray(obj) {
+
   // 获取对象所有键名，再映射为目标结构
   return Object.keys(obj).map(key => ({
     name: key,       // name属性为原对象的键名
@@ -66,6 +67,7 @@ export function convertObjToArray(obj) {
 }
 
 export function remainInArray(rawArray = [], remainIdxs = []) {
+
   let newArray = []
   for(let i = 0; i < remainIdxs.length; i ++) {
     newArray.push(rawArray[remainIdxs[i]])

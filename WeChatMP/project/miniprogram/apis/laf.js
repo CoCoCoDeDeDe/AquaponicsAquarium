@@ -1,4 +1,4 @@
-import { TimeStrConvert_ISO8601_To_HHmm } from '../utils/common'
+import { TimeStrConvert_ISO8601_To_HHmm, formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from '../utils/common'
 
 const baseUrl = 'https://dhb91nur4r.bja.sealos.run'
 
@@ -623,3 +623,167 @@ export async function on_request_kit( method, last_url, query, data ) {
     }
   }
 }
+
+// 在线获取 BotInfo
+export async function requestBotInfo() {
+  try {
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": "/bots/7525815471376465929",
+        "method": "GET",
+        "query": {},
+        "headers": {},
+        "body": {}
+      } // data
+    )
+
+    // 组装 model info card data
+    // 将 this.data.Bot_Info.model_Info 下目标的若干个键值对按指定 key 找出，转换为数组，每个元素为格式如下的对象 {name: 原Key, name_CN: 附加新中文名, value: 原value} 存储到 this.data.Model_Info
+    const map = [
+      {
+        key: 'context_round',
+        name_CN: '上下文轮数'
+      },
+      {
+        key: 'max_tokens',
+        name_CN: '最大 token'
+      },
+      {
+        key: 'temperature',
+        name_CN: '生成随机性'
+      }
+    ]
+    let Main_Model_Info = {
+      ModelInfoCard_DataList: []
+    }
+
+    Main_Model_Info.ModelInfoCard_DataList = convertObjToArray(response.data.data.model_info)
+
+    let to_remain = []
+        
+    for(let i = 0; i < Main_Model_Info.ModelInfoCard_DataList.length; i++) {
+      for(let j = 0; j < map.length; j++) {
+        if (Main_Model_Info.ModelInfoCard_DataList[i].name == map[j].key) {
+          Main_Model_Info.ModelInfoCard_DataList[i]['name_CN'] = map[j].name_CN
+          to_remain.push(i)
+          j = map.length  // 跳过当前 ModelInfoCard_DataList item 的剩下的与 map 的 item 的匹配，遍历下一个 ModelInfoCard_DataList item
+        }
+      }
+    }
+    Main_Model_Info.ModelInfoCard_DataList = remainInArray(Main_Model_Info.ModelInfoCard_DataList, to_remain)
+
+    response.data.data.model_info_toshow_list = Main_Model_Info.ModelInfoCard_DataList
+
+    // 格式化 BotInfo 中时间格式
+    let Main_BotInfo = response.data.data
+    Main_BotInfo.update_time_formated = formatUnixTime_Type2(Main_BotInfo.update_time)
+
+    return response.data.data
+  } catch(err) {
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 在线获取 ConversationList
+export async function requestConversationList() {
+  try {
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": "/conversations",
+        "method": "GET",
+        "query": {
+          "bot_id": "7525815471376465929",
+          "sort_order": "desc"
+        },
+        "headers": {},
+        "body": {}
+      } // data
+    )
+
+    // 格式化会话信息数组中时间格式
+    let main_conversation_list = response.data.data
+    for(let i = 0; i < main_conversation_list.length; i++) {
+      main_conversation_list[i].created_at_formated = formatUnixTime_Type1(main_conversation_list[i].created_at)
+    }
+    response.data.data = main_conversation_list
+
+    return response.data.data
+  } catch(err) {
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 获取在线的 会话消息列表
+export async function requestConversationMessageList(
+  config = {
+    conversation_id: '',
+    order: '',
+    before_id: '',
+    after_id: '',
+    limit: ''
+  }
+) {
+  try {
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": "/conversation/message/list",
+        "method": "GET",
+        "query": {
+          "conversation_id": config.conversation_id,
+        },
+        "headers": {},
+        "body": {
+          "order": config.order,
+          "before_id": config.before_id,
+          "after_id": config.after_id,
+          "limit": config.limit
+        }
+      } // data
+    )
+    
+    // 格式化消息数组中时间格式
+    let message_list = response.data.data
+
+    for(let i = 0; i < message_list.length; i++) {
+      message_list[i].created_at_formated = formatUnixTime_Type1(message_list[i].created_at)
+    }
+
+    return response.data.data
+  } catch(err) {
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+

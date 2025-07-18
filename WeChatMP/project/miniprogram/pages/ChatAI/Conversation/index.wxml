@@ -24,7 +24,7 @@
   <view
     id="topbar"
     class="ZIndex_Level20"
-    style="width: 100%; position: fixed; top: {{Styles.topbar_TopDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: max-content 1fr max-content; grid-template-rows: 32px;"
+    style="width: 100%; position: fixed; top: {{styles.topbar_TopDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: max-content 1fr max-content; grid-template-rows: 32px;"
   >
     <view
       class="Flex_AllCenter Btn3D_Style3"
@@ -48,7 +48,7 @@
   <view
     id="btmbar"
     class="ZIndex_Level20"
-    style="width: 100%; position: fixed; bottom: {{Styles.btmbar_BtmDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: 1fr max-content; grid-template-rows: 40px; gap: 0px 10px;"
+    style="width: 100%; position: fixed; bottom: {{styles.btmbar_BtmDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: 1fr max-content; grid-template-rows: 40px; gap: 0px 10px;"
   >
     <view
       class="Flex_AllCenter Btn3D_Style3"
@@ -58,7 +58,7 @@
         id="Inputer"
         class="FullSize_Parent"
         style="text-align: left; padding: 0 4px;"
-        value="{{InputInfo.Value}}"
+        value="{{input_info.Value}}"
         type="text"
         placeholder="在此输入消息"
         placeholder-style=""
@@ -81,7 +81,7 @@
     style="height: 32px;"
   ></view>
   <block
-    wx:for="{{MessageInfo.MessageList}}"
+    wx:for="{{message_info.MessageList}}"
     wx:key="id"
     wx:for-item="MessageList_item"
     wx:for-index="MessageList_index"
@@ -95,7 +95,7 @@
       <image
         class="Avatar_Normal"
         style=""
-        src="{{RoleMap[MessageList_item.role].avatar_url}}"
+        src="{{role_map[MessageList_item.role].avatar_url}}"
         mode=""
       />
       <!-- 用户名和消息板 -->
@@ -116,7 +116,7 @@
           <!-- 消息体 -->
           <view
             class=""
-            style="font-weight: 200;"
+            style="font-weight: 200; white-space: pre-wrap;"
           >{{MessageList_item.content}}</view>
         </view>
         <!-- 消息其他信息 -->
@@ -128,7 +128,7 @@
           <view
             class="Font_Vice_Size12"
             style=""
-          >{{MessageList_item.updated_at}}</view>
+          >{{MessageList_item.created_at_formated}}</view>
         </view>
       </view>
     </view>

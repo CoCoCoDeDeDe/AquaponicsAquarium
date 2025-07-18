@@ -7,7 +7,7 @@
   <!-- BotSelector -->
   <view 
     class="Border_FullRadius Flex_Horizontal_FromLeft Shadow_ForCard_Middle Board_Level1_BG MarginBtm_Middle"
-    style="height: 68px; gap: 10px;"
+    style="width: fit-content; height: 68px; gap: 10px; padding-right: 20px;"
   >
     <view
       class="Flex_AllCenter"
@@ -15,7 +15,7 @@
     >
       <image
         class="Avatar_Big"
-        src="{{Bot_Info.icon_url}}"
+        src="{{bot_info.icon_url}}"
         alt="Bot 头像"
       />
     </view>
@@ -26,11 +26,11 @@
       <view
         class="Flex_Horizontal_FromLeft Font_Main_Size18"
         style="flex: 1;"
-      >{{Bot_Info.name}}</view>
+      >{{bot_info.name}}</view>
       <view
         class="Flex_Horizontal_FromLeft Font_Vice_Size14"
         style="flex: 1;"
-      >{{Bot_Info.update_time}}</view>
+      >{{bot_info.update_time}}</view>
     </view>
   </view>
 
@@ -71,7 +71,7 @@
     >
 
       <block 
-        wx:for="{{ConversationsInfo.conversations}}"
+        wx:for="{{conversations_info.conversations}}"
         wx:for-item="ConversationItem"
         wx:for-index="ConversationIndex"
         wx:key="id"
@@ -99,7 +99,7 @@
       </block>
 
       <block
-        wx:if="{{!ConversationsInfo.has_more && ConversationsInfo.conversations.length >= 3}}"
+        wx:if="{{!conversations_info.has_more && conversations_info.conversations.length >= 3}}"
       >
         <view
           id="Tip_NoMore"
@@ -111,7 +111,7 @@
           >没有更多了...</view>
           <view
             class="Font_Vice_Size12"
-          >已加载 {{ConversationsInfo.conversations.length}} 个会话</view>
+          >已加载 {{conversations_info.conversations.length}} 个会话</view>
         </view>
       </block>
 
@@ -134,10 +134,10 @@
       id="ModelInfo_NameCard"
       class="Font_Main_Size18"
       style="grid-area: name; padding: 10px 4px 4px 4px; font-weight: 800; color: #6ab2ff; border-bottom: 1.5px solid #eaeaea; font-size: 18px;"
-    >{{Bot_Info.model_info.model_name}}</view>
+    >{{bot_info.model_info.model_name}}</view>
 
     <block
-      wx:for="{{Model_Info.ModelInfoCard_DataList}}"
+      wx:for="{{bot_info.model_info_toshow_list}}"
       wx:key="name"
     >
       <view

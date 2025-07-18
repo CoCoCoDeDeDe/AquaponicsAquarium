@@ -1,6 +1,7 @@
 // components/Coze/BotPanel/index.js
 
 import { formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from "../../../utils/common"
+import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList } from "../../../apis/laf"
 
 Component({
 
@@ -15,7 +16,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    Bot_Info: {
+    bot_info: {
       model_info: {
         max_tokens : 4096,
         model_id : "1737521813",
@@ -56,7 +57,7 @@ Component({
       name: "基元智联AI管家西瓜",
       icon_url : "https://lf9-appstore-sign.oceancloudapi.com/ocean-cloud-tos/FileBizType.BIZ_BOT_ICON/2094992681874336_1752332578980342463_pSvshsBxqi.png?lk3s=50ccb0c5&x-expires=1753280953&x-signature=GOGfa0EIm3Q1TeNW5a9ArzQfz88%3D"
     },
-    ConversationsInfo: {
+    conversations_info: {
       has_more: false,
       conversations: [
         {
@@ -72,35 +73,25 @@ Component({
   },
 
   lifetimes: {
-    attached(options) {
-      let Main_ConversationsInfo = this.data.ConversationsInfo
+    async attached(options) {
+      try {
+        // 获取在线 bot 数据
+        const res_requestBotInfo = await requestBotInfo()
+        this.setData({
+          bot_info: res_requestBotInfo
+        })
+        console.log("this.data.bot_info:", this.data.bot_info)
 
-      for(let i = 0; i < Main_ConversationsInfo.conversations.length; i++) {
-        Main_ConversationsInfo.conversations[i].created_at = formatUnixTime_Type1(Main_ConversationsInfo.conversations[i].created_at)
+        // 获取在线 conversation 数据
+        const res_requestConversationList = await requestConversationList()
+        this.setData({
+          conversations_info: res_requestConversationList
+        })
+        console.log("this.data.conversations_info:", this.data.conversations_info)
+
+      } catch(err) {
+        console.log("attached err:", err)
       }
-
-      let Main_BotInfo = this.data.Bot_Info
-
-      Main_BotInfo.update_time = formatUnixTime_Type2(Main_BotInfo.update_time)
-
-      // 组装 model info card data
-      let Model_Info = {
-        ModelInfoCard_DataList: []
-      }
-
-      Model_Info.ModelInfoCard_DataList = convertObjToArray(this.data.Bot_Info.model_info )
-
-      Model_Info.ModelInfoCard_DataList = remainInArray(Model_Info.ModelInfoCard_DataList, [0, 4, 5])
-
-      Model_Info.ModelInfoCard_DataList[0].name_CN = "最大 token"
-      Model_Info.ModelInfoCard_DataList[1].name_CN = "上下文轮数"
-      Model_Info.ModelInfoCard_DataList[2].name_CN = "生成随机性"
-
-      this.setData({
-        Bot_Info: Main_BotInfo,
-        ConversationsInfo: Main_ConversationsInfo,
-        Model_Info
-      })
     }
   },
 
