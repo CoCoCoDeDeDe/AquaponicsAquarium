@@ -61,7 +61,9 @@ async function verifyTokenAndGetUser(ctx: any) {
   }
   return {
     runCondition: 'laf_token error',
-    error: 'Invalid or expired token' 
+    error: 'Invalid or expired token',
+    code: 400,
+    errMsg: '用户验证失败'
   };
 }
 
@@ -69,5 +71,10 @@ function isValidNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+function GetBase64ImgSrc(img: { MimeType: String, Data: String }) {
+  const { MimeType, Data } = img
+  return `data:${MimeType};base64,${Data}`
+}
 
-export default { formatDate, verifyTokenAndGetUser, isValidNonEmptyString }
+
+export default { formatDate, verifyTokenAndGetUser, isValidNonEmptyString, GetBase64ImgSrc }
