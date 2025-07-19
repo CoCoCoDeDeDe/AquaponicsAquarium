@@ -24,24 +24,35 @@
   <view
     id="topbar"
     class="ZIndex_Level20"
-    style="width: 100%; position: fixed; top: {{styles.topbar_TopDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: max-content 1fr max-content; grid-template-rows: 32px;"
+    style="width: 100%; position: fixed; top: {{styles.topbar_TopDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: max-content 1fr max-content max-content; grid-template-rows: 32px; gap: 0 4px;"
   >
     <view
       class="Flex_AllCenter Btn3D_Style3"
-      style="width: 32px;"
+      style="width: 32px; height: 32px;"
       bind:tap="onTapNavigateBackBtn"
     >
       <image
         class="Icon_Normal"
         style=""
         src="/static/images/icons/simpleArrowIcon_darkBlue_Left@2x.png"
-        mode="scaleToFill"
       />
     </view>
     <view></view>
     <view
+      class="Flex_AllCenter Btn3D_Style3"
+      style="width: 32px; height: 32px;"
+      bind:tap="onTapRefreshPage"
+    >
+      <image
+        class="Icon_Normal"
+        style=""
+        src="/static/images/icons/icon_refresh_linear_dark_blue.svg"
+      />
+    </view>
+    <view
       class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
       style="padding: 0 8px;"
+      bind:tap="onTapNewConversation"
     >新会话</view>
   </view>
 
@@ -49,38 +60,58 @@
   <view
     id="btmbar"
     class="ZIndex_Level20"
-    style="width: 100%; position: fixed; bottom: {{styles.btmbar_BtmDistance}}px; left: 0; padding: 0 10px; display: grid; grid-template-columns: 1fr max-content; grid-template-rows: 40px; gap: 0px 10px;"
+    style='width: 100%; position: fixed; bottom: 14px; left: 0; padding: 0 10px; display: grid; grid-template-areas: "input message chat" "input statistics statistics"; grid-template-columns: 1fr max-content max-content; grid-template-rows: max-content; gap: 0px 4px;'
   >
-    <view
-      class="Flex_AllCenter Btn3D_Style3"
-      style="padding: 4px;"
-    >
-      <input
-        id="Inputer"
-        class="FullSize_Parent"
-        style="text-align: left; padding: 0 4px;"
-        value="{{input_info.Value}}"
-        type="text"
-        placeholder="在此输入消息"
-        placeholder-style=""
-        cursor-spacing="{{10}}"
-        confirm-type="send"
-        confirm-hold="{{false}}"
-        adjust-position="{{true}}"
-        bindconfirm="On_Input_Confirm"
-      />
-    </view>
+    <textarea
+      id="Inputer"
+      class="Btn3D_Style3"
+      style="grid-area: input; text-align: left; max-height: 100px; width: auto; padding: 10px; border-radius: 10px;"
+      model:value="{{input_value}}"
+      placeholder="在此输入消息"
+      placeholder-style="color: #afafaf; font-size: 15px; font-weight: 200;"
+      disabled="{{false}}"
+      maxlength="{{256}}"
+      auto-focus="{{true}}"
+      auto-height="{{true}}"
+      cursor-spacing="{{20}}"
+      adjust-position="{{true}}"
+      hold-keyboard="{{false}}"
+      confirm-type="return"
+      confirm-hold="{{true}}"
+      adjust-keyboard-to="bottom"
+      bindlinechange="onInputLineChange"
+    />
     <view
       class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
-      style="padding: 0 10px;"
-    >发送</view>
+      style="grid-area: message; padding: 0 7px; height: 40px; border-radius: 12px;"
+      bind:tap="onTapNewMessage"
+    >消息</view>
+    <view
+      class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
+      style="grid-area: chat; padding: 0 7px; height: 40px; border-radius: 12px;"
+      bind:tap="onTapNewChat"
+    >对话</view>
+    <view
+      class="Flex_AllCenter Btn3D_Style3"
+      style="grid-area: statistics; display: {{ input_info.is_statistics_show ? 'block' : 'none' }}; margin-top: 6px; height: 40px; border-radius: 12px; text-align: left; padding: 2px 6px;"
+    >
+      <view
+        class="Font_Main_Size14"
+        style=""
+      >字符数:</view>
+      <view
+        class="Font_Vice_Size12 text_1line"
+        style="max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+      >{{input_value.length}}</view>
+    </view>
   </view>
 
-  <!-- 顶部垫子 -->
+  <!-- 消息列表顶部垫子 -->
   <view
     class="ZIndex_Level10"
     style="height: 32px;"
   ></view>
+  <!-- 消息列表 -->
   <block
     wx:for="{{message_info.MessageList}}"
     wx:key="id"
@@ -138,10 +169,10 @@
       </view>
     </view>
   </block>
-  <!-- 底部垫子 -->
+  <!-- 消息列表底部垫子 -->
   <view
     class="ZIndex_Level10"
-    style="height: 80px;"
+    style="height: 140px;"
   ></view>
 
 </scroll-view>

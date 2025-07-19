@@ -1,7 +1,8 @@
 // pages/ChatAI/Conversation/index.js
 
 import { formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from "../../../utils/common"
-import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestConversationMessageList, requestConversationRetrive, requestDeleteMessage } from "../../../apis/laf"
+
+import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestConversationMessageList, requestConversationRetrive, requestDeleteMessage, requestCreateConversation, requestCreateMessage, requestCreateChat, requestUserProfile, readLocalLafCloudToken } from "../../../apis/laf"
 
 const StyleDefaultValues = {
   topbar_TopDistance: 4,
@@ -10,20 +11,25 @@ const StyleDefaultValues = {
 
 Page({
 
-  /**
-   * 页面的初始数据
-   */
+  // 页面的初始数据
   data: {
-    conversation_info: {
-
+    user_info: {
+      createdAt: String,
+      id: String,
+      updateAt: String,
+      username: String
     },
-    ScrollIntoView: "",
+    ScrollIntoView: String,
     styles: {
       topbar_TopDistance: StyleDefaultValues.topbar_TopDistance,
       btmbar_BtmDistance: StyleDefaultValues.btmbar_BtmDistance,
     },
+    input_value: "",
     input_info: {
-      Value: ''
+      is_statistics_show: true
+    },
+    conversation_info: {
+
     },
     role_map: {
       "assistant": {
@@ -55,9 +61,7 @@ Page({
     }
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  // 生命周期函数--监听页面加载
   async onLoad(options) {
     try{
       // 获取和校验页面 query 参数 id
@@ -77,6 +81,61 @@ Page({
         })
       }
 
+      await this.refreshPage()
+
+    } catch(err) {
+      console.log("onLoad(options) err:", err)
+    }
+  },
+
+  // 生命周期函数--监听页面初次渲染完成
+  onReady() {
+  },
+  
+  // 生命周期函数--监听页面显示
+  onShow() {
+  },
+
+  // 生命周期函数--监听页面隐藏
+  onHide() {
+  },
+
+  // 生命周期函数--监听页面卸载
+  onUnload() {
+  },
+
+  // 页面相关事件处理函数--监听用户下拉动作
+  onPullDownRefresh() {
+  },
+
+  // 页面上拉触底事件的处理函数
+  onReachBottom() {
+  },
+
+  // 用户点击右上角分享
+  onShareAppMessage() {
+  },
+
+  // 点击刷新页面按钮
+  onTapRefreshPage: async function() {
+    try{
+
+      this.refreshPage()
+
+    } catch(err) {
+      console.log("onTapRefreshPage() err:", err)
+    }
+  },
+
+  // 刷新页面
+  refreshPage: async function() {
+    try{
+      // 获取用户的 laf_cloud id
+      const res_requestUserProfile = await requestUserProfile()
+      this.setData({
+        user_info: res_requestUserProfile
+      })
+
       // 获取在线 bot 数据
       const res_requestBotInfo = await requestBotInfo()
       this.setData({
@@ -85,74 +144,33 @@ Page({
 
       // 获取在线会话消息
       const res_requestConversationRetrive = await requestConversationRetrive({conversation_id: this.data.conversation_info.id})
-      console.log("res_requestConversationRetrive:", res_requestConversationRetrive)
+      // console.log("res_requestConversationRetrive:", res_requestConversationRetrive)
       await this.setData({
         conversation_info: {
           ...this.data.conversation_info,
           ...res_requestConversationRetrive
         }
       })
-      console.log("this.data.conversation_info:", this.data.conversation_info)
+      // console.log("this.data.conversation_info:", this.data.conversation_info)
       
       // 获取在线消息列表
       await this.refreshConversationMessageList()
       
       // 在消息列表更新后让消息页面滑动到最新的一个消息
-      this.viewIntoMessage({ message_id: this.data.message_info.MessageList[this.data.message_info.MessageList.length - 1].id })
-
+      if(this.data.message_info.MessageList.length > 0) {
+        this.viewIntoMessage({ message_id: this.data.message_info.MessageList[this.data.message_info.MessageList.length - 1].id })
+      } else{
+        wx.showToast({
+          title: '无消息',
+          duration: 1000,
+          icon: 'none',
+          mask: false
+        })
+      }
 
     } catch(err) {
-      console.log("onLoad(options) err:", err)
+      console.log("refreshPage() err:", err)
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
   },
 
   // 开始滑动
@@ -208,7 +226,7 @@ Page({
         limit: 50
       }
     )
-    console.log("res_requestConversationMessageList:", res_requestConversationMessageList)
+    // console.log("res_requestConversationMessageList:", res_requestConversationMessageList)
     this.setData({
       'message_info.MessageList': res_requestConversationMessageList
     })
@@ -306,7 +324,7 @@ Page({
       })
 
       // 刷新本地消息列表
-      this.refreshConversationMessageList()
+      await this.refreshConversationMessageList()
 
       // 让视野滑动到上次删除的消息的下一个消息
       this.viewIntoMessage( { message_id: next_message_id } )
@@ -314,6 +332,210 @@ Page({
     } catch(err) {
       console.log("onLongPressMessageBoard() err:", err)
     }
+  },
+
+  // 输入框高度变化响应事件
+  onInputLineChange: async function( event ) {
+    try{
+      // 获取参数
+      const { height, heightRpx, lineCount } = event.detail
+      // console.log("onInputLineChange() height, heightRpx, lineCount:", height, heightRpx, lineCount)
+
+      if(height >= 30) {
+        this.setData({
+          "input_info.is_statistics_show": true
+        })
+      } else{
+        this.setData({
+          "input_info.is_statistics_show": false
+        })
+      }
+
+    } catch(err) {
+      console.log("onInputLineChange() err:", err)
+    }
+  },
+
+  // 点击发送消息按钮
+  onTapNewMessage: async function() {
+    try{
+
+      await this.newMessage()
+
+    } catch(err) {
+      console.log("onTapNewMessage() err:", err)
+    }
+  },
+
+  // 发送消息
+  newMessage: async function() {
+    try{
+      // 获取和校验输入 content
+      if(this.data.input_value.trim().length <= 0) {
+        wx.showToast({
+          title: '不可发送空消息',
+          duration: 1000,
+          mask: false,
+        })
+        return
+      }
+
+      // 组成新建消息参数
+      const options = {
+        conversation_id: this.data.conversation_info.id,
+        role: 'user',
+        content: this.data.input_value,
+        content_type: 'text'
+      }
+
+      // 请求 API
+      const res_requestCreateMessage = await requestCreateMessage(options)
+
+      console.log("res_requestCreateMessage:", res_requestCreateMessage)
+
+      // 清空输入栏
+      this.setData(
+        {
+          input_value: ''
+        }
+      )
+
+      // 刷新消息列表
+      await this.refreshConversationMessageList()
+
+      return
+    } catch(err) {
+      console.log("newMessage() err:", err)
+    }
+  },
+
+  // 点击创建对话按钮
+  onTapNewChat: async function() {
+    try{
+      this.newChat()
+    } catch(err) {
+      console.log("onTapNewChat() err:", err)
+    }
+  },
+
+  // 创建新对话
+  newChat: async function() {
+    try{
+      // 根据输入栏是否有新消息决定是否加上附加消息
+      let main_additional_messages = []
+      if(this.data.input_value.trim().length <= 0) {
+        // 输入栏没有消息
+      } else{
+        // 输入栏有消息
+        main_additional_messages = [
+          {
+            role: "user",
+            type: "question",
+            content_type: "text",
+            content: this.data.input_value
+          }
+        ]
+      }
+      
+      // 读取用户的本地 laf_cloud id
+      const res_readLocalLafCloudToken = await readLocalLafCloudToken()
+
+      // 组成新建消息参数
+      const options = {
+        conversation_id: this.data.conversation_info.id,
+        bot_id: this.data.bot_info.bot_id,
+        user_id: this.data.user_info.id,
+        stream: true,
+        additional_messages: main_additional_messages,
+        auto_save_history: true,
+        custom_variables: {
+          Authorization: res_readLocalLafCloudToken.Authorization
+        }
+      }
+
+      console.log("newChat() 新建对话网络API请求的参数 options:", options)
+
+      // 请求 API
+      const res_requestCreateChat = await requestCreateChat(options)
+
+      console.log("res_requestCreateChat:", res_requestCreateChat)
+
+      // 清空输入栏
+      this.setData(
+        {
+          input_value: ''
+        }
+      )
+
+      // 刷新消息列表
+      await this.refreshConversationMessageList()
+
+      return
+    } catch(err) {
+      console.log("newChat() err:", err)
+    }
+  },
+
+  // 点击新建会话
+  onTapNewConversation: async function() {
+    try{
+
+      this.newConversation()
+
+    } catch(err) {
+      console.log("onTapNewConversation() err:", err)
+    }
+  },
+
+  // 新建会话
+  newConversation: async function() {
+    try{
+      // 新建会话并插入模板消息
+      const res_requestCreateConversation = await requestCreateConversation(
+        {
+          bot_id: this.data.bot_info.bot_id,
+          messages: [
+            {
+              content: '你好！'
+            },
+            {
+              content: '我是基元智联平台的 AI 智能体西瓜，我可以帮你管理各种平台资源，获取最新的数据。'
+            }
+          ]
+        }
+      )
+
+      console.log("res_requestCreateConversation:", res_requestCreateConversation)
+
+      const {
+        created_at,
+        id,
+        last_section_id,
+        meta_data
+      } = res_requestCreateConversation
+
+      // 跳转到指定新建的会话的页面
+      wx.navigateTo({
+        url: `/pages/ChatAI/Conversation/index?id=${id}`,
+        success: (result) => {},
+        fail: (res) => {
+          wx.showToast({
+            title: '跳转错误',
+            duration: 1000,
+            icon: 'error',
+            mask: false
+          })
+          console.log("newConversation() 跳转到指定新建的会话的页面 fail() res:", res)
+        },
+        complete: (res) => {},
+      })
+
+    } catch(err) {
+      console.log("newConversation() err:", err)
+    }
   }
+
+
+
 
 })

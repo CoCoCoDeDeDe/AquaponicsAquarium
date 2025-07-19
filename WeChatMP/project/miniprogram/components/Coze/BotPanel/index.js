@@ -1,7 +1,7 @@
 // components/Coze/BotPanel/index.js
 
 import { formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from "../../../utils/common"
-import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList } from "../../../apis/laf"
+import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestCreateConversation } from "../../../apis/laf"
 
 Component({
 
@@ -135,8 +135,65 @@ Component({
       }
     },
 
-    // 新建会话
 
+    // 点击新建会话
+    onTapNewConversation: async function() {
+      try{
+
+        this.newConversation()
+
+      } catch(err) {
+        console.log("onTapNewConversation() err:", err)
+      }
+    },
+
+    // 新建会话
+    newConversation: async function() {
+      try{
+        // 新建会话并插入模板消息
+        const res_requestCreateConversation = await requestCreateConversation(
+          {
+            bot_id: this.data.bot_info.bot_id,
+            messages: [
+              {
+                content: '你好！'
+              },
+              {
+                content: '我是基元智联平台的 AI 智能体西瓜，我可以帮你管理各种平台资源，获取最新的数据。'
+              }
+            ]
+          }
+        )
+
+        console.log("res_requestCreateConversation:", res_requestCreateConversation)
+
+        const {
+          created_at,
+          id,
+          last_section_id,
+          meta_data
+        } = res_requestCreateConversation
+
+        // 跳转到指定新建的会话的页面
+        wx.navigateTo({
+          url: `/pages/ChatAI/Conversation/index?id=${id}`,
+          success: (result) => {},
+          fail: (res) => {
+            wx.showToast({
+              title: '跳转错误',
+              duration: 1000,
+              icon: 'error',
+              mask: false
+            })
+            console.log("newConversation() 跳转到指定新建的会话的页面 fail() res:", res)
+          },
+          complete: (res) => {},
+        })
+
+      } catch(err) {
+        console.log("newConversation() err:", err)
+      }
+    },
 
   }
 })

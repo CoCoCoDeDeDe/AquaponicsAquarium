@@ -276,7 +276,16 @@ export async function requestWithLafToken( method, last_url, query={}, data ) {
     }
 
     // 根据参数（ method, last_url, data ）请求云函数
-    console.log("开始请求API:", baseUrl + last_url + query_str)
+    console.log()
+    console.log(
+      "开始请求API:", 
+      {
+      url: baseUrl + last_url + query_str,
+      method: method,
+      query: query,
+      body: data
+    })
+
     await wx.request({
       method: method,
       url: baseUrl + last_url + query_str,
@@ -561,27 +570,6 @@ export const GetUniIODataList = async (Pgae, Query) => {
 
 }
 
-// requestWithLafToken() 与其错误处理函数 on_laf_token_Invalid() on_request_error() 打包, 自动处理 laf_token error 和 request error 的错误。
-// 网络 API 返回的其他错误需要在改函数后另外识别和处理
-// 调用该函数记得 await
-// 该函数目前弃用
-export async function on_request_kit( method, last_url, query, data ) {
-  try{
-    const requestRes = await requestWithLafToken(method, last_url, query, data)
-    return requestRes
-  } catch(err) {
-    console.log("请求失败 err:", err)
-    switch(err.runCondition) {
-      case 'laf_token error':
-        on_laf_token_Invalid()
-        return
-      case 'request error':
-        on_request_error()
-        return
-    }
-  }
-}
-
 // 在线获取 BotInfo
 export async function requestBotInfo() {
   try {
@@ -590,7 +578,7 @@ export async function requestBotInfo() {
       '/iot2/Coze/Relay', // last url
       {}, // query
       {
-        "url": "/bots/7525815471376465929",
+        "url": "/v1/bots/7525815471376465929",
         "method": "GET",
         "query": {},
         "headers": {},
@@ -661,7 +649,7 @@ export async function requestConversationList() {
       '/iot2/Coze/Relay', // last url
       {}, // query
       {
-        "url": "/conversations",
+        "url": "/v1/conversations",
         "method": "GET",
         "query": {
           "bot_id": "7525815471376465929",
@@ -713,7 +701,7 @@ export async function requestConversationMessageList(
       '/iot2/Coze/Relay', // last url
       {}, // query
       {
-        "url": "/conversation/message/list",
+        "url": "/v1/conversation/message/list",
         "method": "GET",
         "query": {
           "conversation_id": options.conversation_id,
@@ -761,7 +749,7 @@ export async function requestConversationRetrive(
       '/iot2/Coze/Relay', // last url
       {}, // query
       {
-        "url": "/conversation/retrieve",
+        "url": "/v1/conversation/retrieve",
         "method": "GET",
         "query": {
           "conversation_id": options.conversation_id,
@@ -771,7 +759,7 @@ export async function requestConversationRetrive(
       } // data
     )
 
-    console.log("response.data.data:", response.data.data)
+    // console.log("response.data.data:", response.data.data)
 
     return response.data.data
   } catch(err) {
@@ -800,7 +788,7 @@ export async function requestDeleteMessage(
       '/iot2/Coze/Relay', // last url
       {}, // query
       {
-        "url": "conversation/message/delete",
+        "url": "/v1/conversation/message/delete",
         "method": "GET",
         "query": {
           "conversation_id": options.conversation_id,
@@ -813,6 +801,7 @@ export async function requestDeleteMessage(
 
     return response.data.data
   } catch(err) {
+    console.log("requestDeleteMessage() err:", err)
     switch(err.runCondition) {
       case 'laf_token error': 
         on_laf_token_Invalid()
@@ -824,3 +813,234 @@ export async function requestDeleteMessage(
     return
   }
 }
+
+// 新建会话
+export async function requestCreateConversation(
+  options = {
+    bot_id: '',
+    messages: [
+      {
+        content: ''
+      }
+    ]
+  }
+) {
+  try {
+    // 将 options.messages 中每个 item 的 content 取出到机器人 message item 模板中组成新的 messages 数组
+    let main_messages = []
+    const messages_item_template = {
+      "content_type": "text",
+      "role": "assistant",
+      "type": "answer"
+    }
+    for(let i = 0; i < options.messages.length; i++) {
+      main_messages[i] = {...messages_item_template}  // 将对象引用解构为普通对象再重构
+      main_messages[i]['content'] = options.messages[i].content
+    }
+
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": "/v1/conversation/create",
+        "method": "GET",
+        "query": {},
+        "headers": {},
+        "body": {
+          "bot_id": options.bot_id,
+          "messages": main_messages
+        }
+      } // data
+    )
+
+    return response.data.data
+  } catch(err) {
+    console.log("requestCreateConversation() err:", err)
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 创建新消息
+export async function requestCreateMessage(
+  options = {
+    conversation_id: '',
+    role: 'user',
+    content: '',
+    content_type: 'text'
+  }
+) {
+  try {
+    console.log("requestCreateMessage(options) options:", options)
+
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": `/v1/conversation/message/create?conversation_id=${options.conversation_id}`,
+        "method": "POST",
+        "query": {},
+        "headers": {},
+        "body": {
+          "role": options.role,
+          "content": options.content,
+          "content_type": options.content_type
+        }
+      } // data
+    )
+
+    return response.data.data
+  } catch(err) {
+    console.log("requestCreateMessage() err:", err)
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 创建新对话
+export async function requestCreateChat(
+  options = {
+    conversation_id: String,
+    bot_id: String,
+    user_id: String,
+    stream: Boolean,
+    additional_messages: [
+      {
+        role: "user",
+        type: "question",
+        content_type: "text",
+        content: String
+      }
+    ],
+    auto_save_history: Boolean,
+    custom_variables: {
+      Authorization: String
+    }
+  }
+) {
+  try {
+    console.log("requestCreateChat(options) options:", options)
+
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": `/v3/chat?conversation_id=${options.conversation_id}`,
+        "method": "POST",
+        "query": {},
+        "headers": {},
+        "body": {
+          "bot_id": options.bot_id,
+          "user_id": options.user_id,
+          "stream": options.stream,
+          "additional_messages": options.additional_messages,
+          "auto_save_history": options.auto_save_history,
+          "custom_variables": options.custom_variables
+        }
+      } // data
+    )
+
+    return response.data.data
+  } catch(err) {
+    console.log("requestCreateChat() err:", err)
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 获取用户的 laf_cloud 简介
+export async function requestUserProfile() {
+  try{
+
+    const response = await requestWithLafToken(
+      'GET', // method
+      '/iot2/user/getUserProfile', // last url
+      {}, // query
+      {} // data
+    )
+
+    return {
+      id: response.userProfile._id,
+      ...response.userProfile
+    }
+  } catch(err) {
+    console.log("requestLafCloudId() err:", err)
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 读取本地 laf_cloud token
+export async function readLocalLafCloudToken() {
+  try {
+    // 读取本地laf_token
+    let res_get_local_laf_token
+
+    res_get_local_laf_token = await wx.getStorage({
+      key: 'laf_token'
+    })
+    if(res_get_local_laf_token.data === null || res_get_local_laf_token.data === '') {
+      throw new Error('本地 laf_token 为空')
+    }
+    console.log("读取到本地 laf_token", res_get_local_laf_token)
+
+    return {
+      Authorization: `Bearer ${res_get_local_laf_token.data}`
+    }
+
+  } catch(err) {
+    console.log("readLocalLafCloudToken() err:", err)
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+

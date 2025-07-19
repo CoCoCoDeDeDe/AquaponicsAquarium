@@ -98,7 +98,7 @@
           <view
             class="Font_Main_Size14 Flex_AllCenter"
             style="grid-area:Idx; font-weight: 800; font-size: 16px; color: #d5e6f8;"
-          >{{ConversationIndex}}</view>
+          >{{conversations_info.conversations.length - ConversationIndex}}</view>
         </view>
       </block>
 
@@ -131,7 +131,7 @@
   <view 
     id="ModelInfoCard"
     class="Border_Radius_Middle Shadow_ForCard_Middle Board_Level1_BG"
-    style='height: 120px; display: grid; grid-template-areas: "name name name" "max_tokens context_round temperature"; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 3fr 4fr; padding: 10px;'
+    style='height: 120px; display: grid; grid-template-areas: "name name name" "max_tokens context_round temperature"; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 3fr 4fr; padding: 10px; margin-bottom: 10px;'
   >
 
     <view
@@ -162,5 +162,81 @@
     </block>
   </view>
 
+  <!-- plugin info list -->
+  <view 
+    id="plugin_info_list_card"
+    class="Border_Radius_Middle Shadow_ForCard_Middle Board_Level1_BG"
+    style='display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; padding: 10px; margin-bottom: 10px;'
+  >
+
+    <view
+      id="plugin_info_list_card_title"
+      class="Font_Main_Size18"
+      style="padding: 10px 4px 4px 4px; font-weight: 400; color: #6ab2ff; border-bottom: 1.5px solid #eaeaea; font-size: 18px;"
+    >插件</view>
+
+    <block
+      wx:for="{{bot_info.plugin_info_list}}"
+      wx:key="plugin_id"
+      wx:for-item="plugin_item"
+      wx:for-index="plugin_index"
+    >
+      <view
+        id="plugin_info_card"
+        style='padding: 6px 6px; display: grid; grid-template-areas: "icon name api" "icon desc api"; grid-template-columns: max-content 1fr max-content; grid-template-rows: max-content max-content; gap: 0px 6px;'
+      >
+        <image
+          id="plugin_info_icon"
+          class=""
+          style="grid-area: icon; width: 40px; height: 40px; border-radius: 10px;"
+          src="{{plugin_item.icon_url}}"
+        />
+        <view
+          id="plugin_info_name"
+          class="Font_Main_Size16"
+          style="grid-area: name;"
+        >
+          {{plugin_item.name}}
+        </view>
+        <view
+          id="plugin_info_description"
+          class="Font_Vice_Size14 text_1line"
+          style="grid-area: desc;"
+        >
+          {{plugin_item.description}}
+        </view>
+        <view
+          id="plugin_info_api"
+          class=""
+          style="grid-area: api; display: grid; grid-template-rows: max-content max-content; grid-template-columns: 1fr;"
+        >
+          <view
+            class="Font_Main_Size16"
+            style="font-weight: 800; color: #93c7ff;"
+          >APIs</view>
+          <view
+            class="Flex_AllCenter"
+            style="font-weight: 800; color: #93c7ff;"
+          >{{plugin_item.api_info_list.length}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- btm additional info -->
+  <view 
+    id="plugin_info_list_card"
+    class=""
+    style='height: 140px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch;'
+  >
+    <view
+      class="Flex_AllCenter Font_Vice_Size12"
+      style=""
+    >AI 服务由火山引擎提供</view>
+  </view>
 
 </view>
+
+<template name="">
+  
+</template>

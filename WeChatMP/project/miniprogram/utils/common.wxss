@@ -119,6 +119,13 @@
 }
 
 /* Transition */
+.transform_when_active_shallow {
+  transition: all 0.2s ease-in-out;
+}
+.transform_when_active_shallow:active {
+  transform: scale(0.98);
+}
+
 .TransitionAll {
   transition: all 0.3s; /* 简单场景可用，但复杂元素谨慎使用 */
 }
@@ -220,6 +227,12 @@
 
 .BtnBGC_Blue_Style2 {
   background: linear-gradient(135deg, #85b0f0, #1d77ec);
+}
+
+.text_1line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Icon_Normal {
