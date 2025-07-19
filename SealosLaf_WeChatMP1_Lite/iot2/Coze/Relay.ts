@@ -78,8 +78,8 @@ export default async function Relay (ctx: FunctionContext) {
 
 
   } catch(err) {
-    console.log('iot2/Coze/Relay', '失败:', err)
-    console.log('err.response:', err.response)
+    // console.log('iot2/Coze/Relay', '失败:', err)
+    // console.log('err.response:', err.response)
     console.log('err.response.data:', err.response.data)
     return {
       code: 500,
