@@ -433,36 +433,6 @@ export async function on_laf_token_Invalid( title = '请在登录后使用' ) {
   })
 }
 
-export async function on_request_error(title = '网络请求失败') {
-  // 提示
-  wx.showToast({
-    title: title,
-    duration: 1500,
-    icon: 'error',
-    mask: true,
-  })
-}
-
-export async function on_db_error(title = '数据库错误') {
-  // 提示
-  wx.showToast({
-    title: title,
-    duration: 1500,
-    icon: 'error',
-    mask: true,
-  })
-}
-
-export async function on_param_error(title = '参数无效') {
-  // 提示
-  wx.showToast({
-    title: title,
-    duration: 1500,
-    icon: 'error',
-    mask: true,
-  })
-}
-
 export function on_common_error(err) {
   console.log("err:", err)
 
@@ -483,7 +453,6 @@ export function on_common_error(err) {
     mask: true,
   })
 }
-
 
 /* 通过 huawei_device_id 或 SmartLinkGroup_Id 获取 uniIOCardDataList。数据由 html 的 wx:for 用于渲染卡片 */
 export const GetUniIODataList = async (Pgae, Query) => {
@@ -590,17 +559,6 @@ export const GetUniIODataList = async (Pgae, Query) => {
     UniIODataList: UniIODataList,
   })
 
-}
-
-// 已弃用
-export async function on_unknown_error(title = '未知错误') {
-  // 提示
-  wx.showToast({
-    title: title,
-    duration: 1500,
-    icon: 'error',
-    mask: true,
-  })
 }
 
 // requestWithLafToken() 与其错误处理函数 on_laf_token_Invalid() on_request_error() 打包, 自动处理 laf_token error 和 request error 的错误。
@@ -715,14 +673,18 @@ export async function requestConversationList() {
     )
 
     // 格式化会话信息数组中时间格式
-    let main_conversation_list = response.data.data
+    let main_conversation_list = response.data.data.conversations
+    console.log("main_conversation_list:", main_conversation_list)
     for(let i = 0; i < main_conversation_list.length; i++) {
       main_conversation_list[i].created_at_formated = formatUnixTime_Type1(main_conversation_list[i].created_at)
     }
-    response.data.data = main_conversation_list
+    response.data.data.conversations = main_conversation_list
+
+    console.log("response.data.data:", response.data.data)
 
     return response.data.data
   } catch(err) {
+    console.log("requestConversationList() err:", err)
     switch(err.runCondition) {
       case 'laf_token error': 
         on_laf_token_Invalid()
@@ -737,7 +699,7 @@ export async function requestConversationList() {
 
 // 获取在线的 会话消息列表
 export async function requestConversationMessageList(
-  config = {
+  options = {
     conversation_id: '',
     order: '',
     before_id: '',
@@ -754,14 +716,14 @@ export async function requestConversationMessageList(
         "url": "/conversation/message/list",
         "method": "GET",
         "query": {
-          "conversation_id": config.conversation_id,
+          "conversation_id": options.conversation_id,
         },
         "headers": {},
         "body": {
-          "order": config.order,
-          "before_id": config.before_id,
-          "after_id": config.after_id,
-          "limit": config.limit
+          "order": options.order,
+          "before_id": options.before_id,
+          "after_id": options.after_id,
+          "limit": options.limit
         }
       } // data
     )
@@ -787,3 +749,78 @@ export async function requestConversationMessageList(
   }
 }
 
+// 获取在线的 会话消息列表
+export async function requestConversationRetrive(
+  options = {
+    conversation_id: ''
+  }
+) {
+  try {
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": "/conversation/retrieve",
+        "method": "GET",
+        "query": {
+          "conversation_id": options.conversation_id,
+        },
+        "headers": {},
+        "body": {}
+      } // data
+    )
+
+    console.log("response.data.data:", response.data.data)
+
+    return response.data.data
+  } catch(err) {
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}
+
+// 获取删除指定消息
+export async function requestDeleteMessage(
+  options = {
+    conversation_id,
+    message_id,
+  }
+) {
+  try {
+    const response = await requestWithLafToken(
+      'POST', // method
+      '/iot2/Coze/Relay', // last url
+      {}, // query
+      {
+        "url": "conversation/message/delete",
+        "method": "GET",
+        "query": {
+          "conversation_id": options.conversation_id,
+          "message_id": options.message_id,
+        },
+        "headers": {},
+        "body": {}
+      } // data
+    )
+
+    return response.data.data
+  } catch(err) {
+    switch(err.runCondition) {
+      case 'laf_token error': 
+        on_laf_token_Invalid()
+        break
+      default:
+        on_common_error()
+        break
+    }
+    return
+  }
+}

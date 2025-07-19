@@ -10,6 +10,12 @@
 .BG_Gray {
   background-color: #f5f5f5;
 }
+.BG_WhenActive_Style1 {
+  transition: all 0.2s ease-in-out;
+}
+.BG_WhenActive_Style1:active {
+  background-color: #d7e6fc;
+}
 
 /* Border */
 .Border_Radius_Middle {

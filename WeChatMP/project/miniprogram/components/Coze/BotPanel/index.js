@@ -99,6 +99,44 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 点击-新建会话
+    onTapNewConversation: async function() {
+      try{
+        console.log("onTapNewConversation()")
+
+      } catch(err) {
+        console.log("err:", err)
+      }
+    },
+
+    // 点击-导航到指定会话
+    onTapNavigateToConversation: async function(options) {
+      try{
+        const {
+          conversation_id
+        } = options.currentTarget.dataset
+        console.log("conversation_id:", conversation_id)
+
+        wx.navigateTo({
+          url: `/pages/ChatAI/Conversation/index?id=${conversation_id}`,
+          success: (result) => {
+            console.log("success result:", result)
+          },
+          fail: (res) => {
+            console.log("fail res:", res)
+          },
+          complete: (res) => {
+            console.log("complete res:", res)
+          },
+        })
+
+      } catch(err) {
+        console.log("err:", err)
+      }
+    },
+
+    // 新建会话
+
 
   }
 })

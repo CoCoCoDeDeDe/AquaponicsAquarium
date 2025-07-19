@@ -25,7 +25,7 @@
     >
       <view
         class="Flex_Horizontal_FromLeft Font_Main_Size18"
-        style="flex: 1;"
+        style="flex: 1; font-weight: 400;"
       >{{bot_info.name}}</view>
       <view
         class="Flex_Horizontal_FromLeft Font_Vice_Size14"
@@ -44,7 +44,8 @@
     <view
       id="Btn_NewConversation"
       class="Btn2D_Blue Flex_AllCenter"
-      style="height: 42px;"
+      style="height: 42px; font-weight: 400;"
+      bind:tap="onTapNewConversation"
     >
       新会话
     </view>
@@ -52,6 +53,8 @@
     <!-- 已加载的会话列表 -->
     <scroll-view
       id="ConversationsListBox"
+      class=""
+      style="max-height: 260px; padding: 0px; margin: 10px 0 0 0; overflow: hidden;"
       scroll-y="{{true}}"
       scroll-top="{{10}}"
       scroll-into-view="{{}}"
@@ -66,8 +69,6 @@
       enhanced="{{true}}"
       show-scrollbar="{{true}}"
       bindrefresherrefresh=""
-      class=""
-      style="max-height: 260px; padding: 0px; margin: 10px; overflow: hidden;"
     >
 
       <block 
@@ -78,7 +79,10 @@
       >
         <view
           id="ConversationCard"
+          class="BG_WhenActive_Style1"
           style='height: 40px; display: grid; grid-template-areas: "Line Time Idx" "Line Id Idx"; grid-template-columns: 6px 1fr 60px; grid-template-rows: 2fr 1fr; gap: 0 10px; margin: 0 0 10px 0;'
+          bind:tap="onTapNavigateToConversation"
+          data-conversation_id="{{ConversationItem.id}}"
         >
           <view
             style="grid-area:Line; background-color: #c1d9f3; border-radius: 100px;"
@@ -86,7 +90,7 @@
           <view
             class="Font_Vice_Size14"
             style="grid-area:Time;"
-          >创建时间: {{ConversationItem.created_at}}</view>
+          >创建时间: {{ConversationItem.created_at_formated}}</view>
           <view
             class="Font_Main_Size14"
             style="grid-area:Id;"
@@ -133,7 +137,7 @@
     <view
       id="ModelInfo_NameCard"
       class="Font_Main_Size18"
-      style="grid-area: name; padding: 10px 4px 4px 4px; font-weight: 800; color: #6ab2ff; border-bottom: 1.5px solid #eaeaea; font-size: 18px;"
+      style="grid-area: name; padding: 10px 4px 4px 4px; font-weight: 400; color: #6ab2ff; border-bottom: 1.5px solid #eaeaea; font-size: 18px;"
     >{{bot_info.model_info.model_name}}</view>
 
     <block

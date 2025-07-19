@@ -1,7 +1,7 @@
 // pages/ChatAI/Conversation/index.js
 
 import { formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from "../../../utils/common"
-import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestConversationMessageList } from "../../../apis/laf"
+import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestConversationMessageList, requestConversationRetrive, requestDeleteMessage } from "../../../apis/laf"
 
 const StyleDefaultValues = {
   topbar_TopDistance: 4,
@@ -37,140 +37,8 @@ Page({
       MessageList: [
         {
           bot_id: "7525815471376465929",
-          chat_id: "7527602655481593866",
-          content: "哎呀，我没办法直接获取你现在位置的经纬度呢😅 不过要是你在基元智联平台上关联了能定位的设备，你把平台token给我，我就能用相关功能找找看设备信息里有没有位置数据，说不定就能知道你的位置经纬度啦。快把token给我，咱们一起试试看呀！",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656573,
-          id: "7527602662280544265",
-          meta_data: {
-          },
-          reasoning_content: "",
-          role: "assistant",
-          section_id: "7527585244585803817",
-          type: "answer",
-          updated_at: 1752656575
-        },
-        {
-          bot_id: "",
-          chat_id: "7527602655481593866",
-          content: "我现在位置的经纬度是多少",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656572,
-          id: "7527602657704280073",
-          meta_data: {
-            Key_1: ""
-          },
-          reasoning_content: "",
-          role: "user",
-          section_id: "7527585244585803817",
-          type: "question",
-          updated_at: 1752656572
-        },
-        {
-          bot_id: "7525815471376465929",
-          chat_id: "7527602431849611306",
-          content: "我没办法查看对话请求里extra_params的数据哟😔 你快把基元智联平台的token给我，我这就带着它去调用合适的功能，好好帮你管理平台上的设备和资源，就像超级管家一样把一切安排得妥妥当当！ ",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656521,
-          id: "7527602436631216170",
-          meta_data: {
-          },
-          reasoning_content: "",
-          role: "assistant",
-          section_id: "7527585244585803817",
-          type: "answer",
-          updated_at: 1752656525
-        },
-        {
-          bot_id: "7525815471376465929",
-          chat_id: "7527602431849611306",
-          content: "你能查看对话请求中extra_params的数据吗",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656520,
-          id: "7527602431849644074",
-          meta_data: {
-            Key_1: ""
-          },
-          reasoning_content: "",
-          role: "user",
-          section_id: "7527585244585803817",
-          type: "question",
-          updated_at: 1752656520
-        },
-        {
-          bot_id: "7525815471376465929",
-          chat_id: "7527602200395202612",
-          content: "我没办法直接查看对话请求中parameters的数据呢🤔 你直接把基元智联平台的token告诉我就好啦。有了这个关键的token，我就能访问相关的插件和API，帮你管理设备和资源啦，就像拿到了宝藏大门的钥匙一样！",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656468,
-          id: "7527602209526284340",
-          meta_data: {
-          },
-          reasoning_content: "",
-          role: "assistant",
-          section_id: "7527585244585803817",
-          type: "answer",
-          updated_at: 1752656470
-        },
-        {
-          bot_id: "",
-          chat_id: "7527602200395202612",
-          content: "你能查看对话请求中parameters的数据吗",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656466,
-          id: "7527602200395235380",
-          meta_data: {
-            Key_1: ""
-          },
-          reasoning_content: "",
-          role: "user",
-          section_id: "7527585244585803817",
-          type: "question",
-          updated_at: 1752656466
-        },
-        {
-          bot_id: "7525815471376465929",
-          chat_id: "7527601953019576371",
-          content: "我还不知道你的秘密呢😜 不过要是你愿意把基元智联平台的token给我，我就能通过它开启一些“小调查”，去获取你在平台上的用户信息、设备信息啥的。说不定在这个过程中，能发现一些关于你在平台上的“小秘密”哦。快把token分享给我吧，咱们一起去探索探索！",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656411,
-          id: "7527601963467374618",
-          meta_data: {
-          },
-          reasoning_content: "",
-          role: "assistant",
-          section_id: "7527585244585803817",
-          type: "answer",
-          updated_at: 1752656414
-        },
-        {
-          bot_id: "",
-          chat_id: "7527601953019576371",
-          content: "你知道我的秘密吗",
-          content_type: "text",
-          conversation_id: "7527585244585803817",
-          created_at: 1752656409,
-          id: "7527601954919301170",
-          meta_data: {
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2ODE0NzBhYzY1OGI1MDQ1NjZjYTJjMjUiLCJleHAiOjE3NTI2NDk0NjcsImlhdCI6MTc1MjA0NDY2N30.JTwnMgTUnus-QJr8-USaKWvL06_ZF6lpyjKdXnoOzbg"
-          },
-          reasoning_content: "",
-          role: "user",
-          section_id: "7527585244585803817",
-          type: "question",
-          updated_at: 1752656409
-        },
-        {
-          bot_id: "7525815471376465929",
           chat_id: "7527601781916926006",
-          content: "哎呀，我没办法直接看到对话的meta_data呢😅 你可以直接把基元智联平台的token提供给我，这样我就能开启“资源管理小能手”模式，为你在平台上大展身手啦！有了这个token，我就能去调用各种功能，帮你把设备和资源安排得明明白白。",
+          content: "",
           content_type: "text",
           conversation_id: "7527585244585803817",
           created_at: 1752656372,
@@ -205,7 +73,7 @@ Page({
         return
       } else {
         this.setData({
-          'conversation_info.conversation_id': id
+          'conversation_info.id': id
         })
       }
 
@@ -215,24 +83,22 @@ Page({
         bot_info: res_requestBotInfo
       })
 
-      // 获取在线消息列表
-      const res_requestConversationMessageList = await requestConversationMessageList(
-        {
-          conversation_id: this.data.conversation_info.conversation_id,
-          order: 'asc',
-          before_id: undefined,
-          after_id: undefined,
-          limit: 50
+      // 获取在线会话消息
+      const res_requestConversationRetrive = await requestConversationRetrive({conversation_id: this.data.conversation_info.id})
+      console.log("res_requestConversationRetrive:", res_requestConversationRetrive)
+      await this.setData({
+        conversation_info: {
+          ...this.data.conversation_info,
+          ...res_requestConversationRetrive
         }
-      )
-      console.log("res_requestConversationMessageList:", res_requestConversationMessageList)
-      this.setData({
-        'message_info.MessageList': res_requestConversationMessageList
       })
+      console.log("this.data.conversation_info:", this.data.conversation_info)
+      
+      // 获取在线消息列表
+      await this.refreshConversationMessageList()
+      
       // 在消息列表更新后让消息页面滑动到最新的一个消息
-      this.setData({
-        ScrollIntoView: "message_" + this.data.message_info.MessageList[this.data.message_info.MessageList.length - 1].id
-      })
+      this.viewIntoMessage({ message_id: this.data.message_info.MessageList[this.data.message_info.MessageList.length - 1].id })
 
 
     } catch(err) {
@@ -289,7 +155,7 @@ Page({
 
   },
 
-  // 开始滑动消息
+  // 开始滑动
   On_ScrollView_DragStart: function () {
     this.setData({
       "styles.topbar_TopDistance": -26,
@@ -297,12 +163,157 @@ Page({
     })
   },
 
-  // 结束滑动消息
+  // 结束滑动
   On_ScrollView_DragEnd: function () {
     this.setData({
       "styles.topbar_TopDistance": StyleDefaultValues.topbar_TopDistance,
       "styles.btmbar_BtmDistance": StyleDefaultValues.btmbar_BtmDistance,
     })
+  },
+
+  // 点击返回上一页按钮
+  onTapNavigateBackBtn: function() {
+    try{
+      wx.navigateBack({
+        delta: 1,
+        success: (res) => {
+          // console.log("navigateBack success() res", res)
+        },
+        fail: (res) => {
+          console.log("navigateBack fail() res", res)
+          wx.showToast({
+            title: res.errMsg,
+            duration: 1000,
+            icon: 'none',
+            mask: false,
+          })
+        },
+        complete: (res) => {
+          // console.log("navigateBack complete() res", res)
+        },
+      })
+    } catch(err) {
+      console.log("onTapNavigateBackBtn() err:", err)
+    }
+  },
+
+  // 刷新消息列表
+  refreshConversationMessageList: async function() {
+    const res_requestConversationMessageList = await requestConversationMessageList(
+      {
+        conversation_id: this.data.conversation_info.id,
+        order: 'asc',
+        before_id: undefined,
+        after_id: undefined,
+        limit: 50
+      }
+    )
+    console.log("res_requestConversationMessageList:", res_requestConversationMessageList)
+    this.setData({
+      'message_info.MessageList': res_requestConversationMessageList
+    })
+  },
+
+  // 让视野滑动到指定消息
+  viewIntoMessage: async function( options = { message_id: '' } ) {
+    try{
+      // 1. 校验参数：确保 message_id 是有效的非空字符串
+      if (!options || typeof options !== 'object') {
+        console.warn('viewIntoMessage: 无效的参数格式，需传入对象');
+        return;
+      }
+      const { message_id } = options;
+      if (typeof message_id !== 'string' || message_id.trim().length === 0) {
+        console.warn('viewIntoMessage: message_id 必须是非空字符串');
+        return;
+      }
+
+      this.setData({
+        ScrollIntoView: "message_" + options.message_id
+      })
+    } catch(err) {
+      console.log("viewIntoMessage() err:", err)
+    }
+  },
+  
+  // 点击指定消息消息板
+  onTapMessageBoard: function(options) {
+    try{
+      // 获取点击数据
+      const { message_id } = options.currentTarget.dataset
+
+    } catch(err) {
+      console.log("onTapMessageBoard() err:", err)
+    }
+  },
+
+  // 长按指定消息消息板
+  onLongPressMessageBoard: function(options) {
+    try{
+      // console.log("onLongPressMessageBoard() options:", options)
+      // 获取长按数据
+      const { message_id, message_idx } = options.currentTarget.dataset
+
+      // 弹出是否删除消息框
+      wx.showModal({
+        title: '是否删除该消息',
+        content: '删除后将无法恢复',
+        showCancel: true,
+        cancelText: '取消',
+        cancelColor: '#181441',
+        confirmText: '删除',
+        confirmColor: '#e75247',
+        editable: false,
+        placeholderText: '',
+        complete: (res) => {
+          if (res.cancel) {
+            return
+          }
+      
+          if (res.confirm) {
+            // 执行删除目标消息
+            this.deleteMessage( { message_id, next_message_id: this.data.message_info.MessageList[message_idx + 1].id } )
+          }
+        }
+      })  // showModal
+
+    } catch(err) {
+      console.log("onLongPressMessageBoard() err:", err)
+    }
+  },
+
+  // 删除指定消息
+  deleteMessage: async function( options = { message_id, next_message_id } ) {
+    try{
+      // 获取目标 id
+      const { message_id, next_message_id } = options
+
+      // 发出删除请求
+      const res_requestDeleteMessage = await requestDeleteMessage(
+        {
+          conversation_id: this.data.conversation_info.id,
+          message_id
+        }
+      )
+      console.log("res_requestDeleteMessage:", res_requestDeleteMessage)
+
+      // 提示用户已经成功删除
+      wx.showToast({
+        title: `成功删除消息 ${message_id}`,
+        icon: 'success',
+        duration: 1000,
+        mask: false,
+      })
+
+      // 刷新本地消息列表
+      this.refreshConversationMessageList()
+
+      // 让视野滑动到上次删除的消息的下一个消息
+      this.viewIntoMessage( { message_id: next_message_id } )
+
+    } catch(err) {
+      console.log("onLongPressMessageBoard() err:", err)
+    }
   }
 
 })

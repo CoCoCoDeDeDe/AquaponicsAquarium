@@ -29,6 +29,7 @@
     <view
       class="Flex_AllCenter Btn3D_Style3"
       style="width: 32px;"
+      bind:tap="onTapNavigateBackBtn"
     >
       <image
         class="Icon_Normal"
@@ -112,6 +113,10 @@
         <view
           class="MessageBoard"
           style=""
+          bind:tap="onTapMessageBoard"
+          bind:longpress="onLongPressMessageBoard"
+          data-message_id="{{MessageList_item.id}}"
+          data-message_idx="{{MessageList_index}}"
         >
           <!-- 消息体 -->
           <view
