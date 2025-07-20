@@ -41,7 +41,7 @@
       <view
         class=""
         style=""
-      >test</view>
+      ></view>
     </view>
     <view
       class="Flex_AllCenter Btn3D_Style3"

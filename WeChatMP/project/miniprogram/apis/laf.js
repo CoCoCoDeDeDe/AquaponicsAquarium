@@ -1042,6 +1042,9 @@ export async function requestCreateChat(
       timeout: 20000,
       dataType: 'json',
       responseType: 'arraybuffer',
+      useHighPerformanceMode: true,
+      enableHttp2: true,
+      enableCache: false,
       enableChunked: true,
       success: (result) => {
         console.log("chat success() result:", result)
@@ -1057,8 +1060,13 @@ export async function requestCreateChat(
     // 收到新分块数据的响应和处理
     requestTask.onChunkReceived( async (event) => {
       // 1. 将 ArrayBuffer 转换为 UTD-8 字符串
-      const decoder = await new TextDecoder('utf-8')
-      const chunkStr = await decoder.decode(event.data)
+      // const decoder = new TextDecoder('utf-8')
+      // const chunkStr = await decoder.decode(event.data)
+
+      const uint8Array = new Uint8Array(event.data)
+      let chunkStr = String.fromCharCode.apply(null, uint8Array)
+      chunkStr = decodeURIComponent(escape(chunkStr))
+
       // console.log("解码后的字符串 chunkStr:", chunkStr)
 
       // 2. 处理 SSE 格式（过滤 data: 前缀和空行）
@@ -1216,6 +1224,7 @@ export async function requestCreateChat(
 
     })
 
+    return requestTask
 
   } catch(err) {
     console.log("requestCreateChat() err:", err)
