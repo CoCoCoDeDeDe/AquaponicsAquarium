@@ -11,20 +11,24 @@
     scroll-with-animation="{{true}}"
     enable-back-to-top="{{true}}"
     enable-passive="{{true}}"
-    refresher-enabled="{{false}}"
+    refresher-enabled="{{true}}"
     refresher-threshold="{{45}}"
     refresher-default-style="white"
-    refresher-background=""
+    refresher-background="#eee"
+    model:refresher-triggered="{{scroll_view_refresher_triggered}}"
+    bindrefresherrefresh="onScrollViewRefresherRefresh"
     enhanced="{{true}}"
     show-scrollbar="{{false}}"
-    bindrefresherrefresh=""
   >
     <view 
       class="FullSize_Parent Flex_Vertical_FromTop  Padding_Middle"
       style="padding: 12px; padding-top: 12px;"
     >
       
-      <BotPanel></BotPanel>
+      <!-- 智能体信息 -->
+      <BotPanel
+        id="bot_panel"
+      ></BotPanel>
 
     </view>
 

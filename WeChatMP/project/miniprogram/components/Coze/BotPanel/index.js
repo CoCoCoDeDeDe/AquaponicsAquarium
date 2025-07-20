@@ -4,17 +4,11 @@ import { formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainIn
 import { requestWithLafToken, on_laf_token_Invalid, on_common_error, requestBotInfo, requestConversationList, requestCreateConversation } from "../../../apis/laf"
 
 Component({
-
-  /**
-   * 组件的属性列表
-   */
+  // 组件的属性列表
   properties: {
-
   },
 
-  /**
-   * 组件的初始数据
-   */
+  // 组件的初始数据
   data: {
     bot_info: {
       model_info: {
@@ -72,9 +66,28 @@ Component({
     }
   },
 
+  // 组件生命周期函数
   lifetimes: {
     async attached(options) {
       try {
+        // 刷新组件
+        this.refreshComponent()
+      } catch(err) {
+        console.log("attached err:", err)
+      }
+    }
+  },
+
+  // 组件原函数
+  onPullDownRefresh: async function(event) {
+    console.log("onPullDownRefresh() event:", event)
+  },
+
+  // 组件的方法列表
+  methods: {
+    // 刷新组件
+    refreshComponent: async function() {
+      try{
         // 获取在线 bot 数据
         const res_requestBotInfo = await requestBotInfo()
         this.setData({
@@ -88,24 +101,18 @@ Component({
           conversations_info: res_requestConversationList
         })
         console.log("this.data.conversations_info:", this.data.conversations_info)
-
       } catch(err) {
-        console.log("attached err:", err)
+        console.log("refreshComponent() err:", err)
       }
-    }
-  },
+    },
 
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-    // 点击-新建会话
-    onTapNewConversation: async function() {
+    // 点击-智能体选择器
+    onTapBotSelector: async function() {
       try{
-        console.log("onTapNewConversation()")
-
+        // 测试用
+        this.refreshComponent()
       } catch(err) {
-        console.log("err:", err)
+        console.log("onTapBotSelector() err:", err)
       }
     },
 
@@ -134,7 +141,6 @@ Component({
         console.log("err:", err)
       }
     },
-
 
     // 点击新建会话
     onTapNewConversation: async function() {

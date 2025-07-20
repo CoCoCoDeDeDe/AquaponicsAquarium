@@ -13,6 +13,21 @@ Page({
 
   // 页面的初始数据
   data: {
+    test: {
+
+    },
+    chat_stream: {
+      is_processing: false,
+      chunks: [],
+      message: {
+        content: ''
+      },
+      current_chunk: {
+        event: '',
+        data: {}
+      },
+      message_delta_times: 0
+    },
     user_info: {
       createdAt: String,
       id: String,
@@ -33,14 +48,16 @@ Page({
     },
     role_map: {
       "assistant": {
-        avatar_url: "https://lf9-appstore-sign.oceancloudapi.com/ocean-cloud-tos/FileBizType.BIZ_BOT_ICON/2094992681874336_1752332578980342463_pSvshsBxqi.png?lk3s=50ccb0c5&x-expires=1753280953&x-signature=GOGfa0EIm3Q1TeNW5a9ArzQfz88%3D"
+        avatar_url: "https://lf9-appstore-sign.oceancloudapi.com/ocean-cloud-tos/FileBizType.BIZ_BOT_ICON/2094992681874336_1752332578980342463_pSvshsBxqi.png?lk3s=50ccb0c5&x-expires=1753280953&x-signature=GOGfa0EIm3Q1TeNW5a9ArzQfz88%3D",
+        nick_name: "西瓜"
       },
       "user": {
-        avatar_url: "/static/images/icons/defaultAvatar_violet.png"
+        avatar_url: "/static/images/icons/defaultAvatar_violet.png",
+        nick_name: "我"
       }
     },
     message_info: {
-      MessageList: [
+      message_list: [
         {
           bot_id: "7525815471376465929",
           chat_id: "7527601781916926006",
@@ -49,13 +66,13 @@ Page({
           conversation_id: "7527585244585803817",
           created_at: 1752656372,
           id: "7527601796865343551",
-          meta_data: {
-          },
+          meta_data: {},
           reasoning_content: "",
           role: "assistant",
           section_id: "7527585244585803817",
           type: "answer",
-          updated_at: 1752656374
+          updated_at: 1752656374,
+          is_bg_shing: false
         }
       ]
     }
@@ -157,8 +174,8 @@ Page({
       await this.refreshConversationMessageList()
       
       // 在消息列表更新后让消息页面滑动到最新的一个消息
-      if(this.data.message_info.MessageList.length > 0) {
-        this.viewIntoMessage({ message_id: this.data.message_info.MessageList[this.data.message_info.MessageList.length - 1].id })
+      if(this.data.message_info.message_list.length > 0) {
+        this.viewIntoMessage({ message_id: this.data.message_info.message_list[this.data.message_info.message_list.length - 1].id })
       } else{
         wx.showToast({
           title: '无消息',
@@ -217,19 +234,22 @@ Page({
 
   // 刷新消息列表
   refreshConversationMessageList: async function() {
-    const res_requestConversationMessageList = await requestConversationMessageList(
-      {
-        conversation_id: this.data.conversation_info.id,
-        order: 'asc',
-        before_id: undefined,
-        after_id: undefined,
-        limit: 50
-      }
-    )
-    // console.log("res_requestConversationMessageList:", res_requestConversationMessageList)
-    this.setData({
-      'message_info.MessageList': res_requestConversationMessageList
-    })
+    try{
+      const res_requestConversationMessageList = await requestConversationMessageList(
+        {
+          conversation_id: this.data.conversation_info.id,
+          order: 'asc',
+          before_id: undefined,
+          after_id: undefined,
+          limit: 50
+        }
+      )
+      await this.setData({
+        'message_info': res_requestConversationMessageList
+      })
+    } catch(err) {
+      console.log("refreshConversationMessageList() err:", err)
+    }
   },
 
   // 让视野滑动到指定消息
@@ -290,7 +310,7 @@ Page({
       
           if (res.confirm) {
             // 执行删除目标消息
-            this.deleteMessage( { message_id, next_message_id: this.data.message_info.MessageList[message_idx + 1].id } )
+            this.deleteMessage( { message_id, next_message_id: this.data.message_info.message_list[message_idx + 1].id } )
           }
         }
       })  // showModal
@@ -359,7 +379,16 @@ Page({
   // 点击发送消息按钮
   onTapNewMessage: async function() {
     try{
-
+      if ( this.data.chat_stream.is_processing ) {
+        wx.showToast({
+          title: '已有对话在处理',
+          duration: 1000,
+          icon: 'none',
+          mask: false
+        })
+        return
+      }
+      
       await this.newMessage()
 
     } catch(err) {
@@ -412,6 +441,16 @@ Page({
   // 点击创建对话按钮
   onTapNewChat: async function() {
     try{
+      if ( this.data.chat_stream.is_processing ) {
+        wx.showToast({
+          title: '已有对话在处理',
+          duration: 1000,
+          icon: 'none',
+          mask: false
+        })
+        return
+      }
+
       this.newChat()
     } catch(err) {
       console.log("onTapNewChat() err:", err)
@@ -422,22 +461,16 @@ Page({
   newChat: async function() {
     try{
       // 根据输入栏是否有新消息决定是否加上附加消息
-      let main_additional_messages = []
+      let main_additional_message_content
       if(this.data.input_value.trim().length <= 0) {
         // 输入栏没有消息
+        main_additional_message_content = undefined
       } else{
         // 输入栏有消息
-        main_additional_messages = [
-          {
-            role: "user",
-            type: "question",
-            content_type: "text",
-            content: this.data.input_value
-          }
-        ]
+        main_additional_message_content = this.data.input_value
       }
       
-      // 读取用户的本地 laf_cloud id
+      // 读取用户的本地 laf_cloud token
       const res_readLocalLafCloudToken = await readLocalLafCloudToken()
 
       // 组成新建消息参数
@@ -445,8 +478,7 @@ Page({
         conversation_id: this.data.conversation_info.id,
         bot_id: this.data.bot_info.bot_id,
         user_id: this.data.user_info.id,
-        stream: true,
-        additional_messages: main_additional_messages,
+        additional_message_content: main_additional_message_content,
         auto_save_history: true,
         custom_variables: {
           Authorization: res_readLocalLafCloudToken.Authorization
@@ -456,9 +488,14 @@ Page({
       console.log("newChat() 新建对话网络API请求的参数 options:", options)
 
       // 请求 API
-      const res_requestCreateChat = await requestCreateChat(options)
+      const res_requestCreateChat = await requestCreateChat(
+        options,
+        {
+          page: this
+        }
+      )
 
-      console.log("res_requestCreateChat:", res_requestCreateChat)
+      // console.log("res_requestCreateChat:", res_requestCreateChat)
 
       // 清空输入栏
       this.setData(
@@ -466,6 +503,8 @@ Page({
           input_value: ''
         }
       )
+
+      return
 
       // 刷新消息列表
       await this.refreshConversationMessageList()

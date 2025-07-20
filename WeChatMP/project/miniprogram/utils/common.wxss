@@ -17,6 +17,80 @@
   background-color: #d7e6fc;
 }
 
+/* 动态循环背景样式类 */
+.dynamic-color-bg-style2 {
+  /* 背景渐变定义 */
+  background: linear-gradient(
+    135deg, 
+    #ff6b6b, #feca57, #48dbfb, #1dd1a1, 
+    #5f27cd, #ff9ff3, #ff6b6b
+  );
+  background-size: 400% 400%;
+  
+  /* 组合动画效果 */
+  animation: 
+    colorShift 20s ease infinite,    /* 颜色渐变动画 */
+    subtlePulse 8s ease-in-out infinite;  /* 轻微呼吸效果 */
+}
+
+.dynamic-color-bg {
+  position: relative; /* 作为子元素的定位基准 */
+  overflow: hidden; /* 防止模糊背景溢出 */
+  
+    z-index: 10; /* 确保在内容下方 */
+}
+.dynamic-color-bg::before {
+  
+  /* 背景渐变定义 */
+  background: linear-gradient(
+    135deg, 
+    #ff6b6b, #feca57, #48dbfb, #1dd1a1, 
+    #5f27cd, #ff9ff3, #ff6b6b
+  );
+  background-size: 400% 400%;
+  
+  /* 组合动画效果 */
+  animation: 
+    colorShift 20s ease infinite,    /* 颜色渐变动画 */
+    subtlePulse 8s ease-in-out infinite;  /* 轻微呼吸效果 */
+    
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* 关键：只对背景应用模糊 */
+  filter: blur(8px);
+  /* 扩大背景尺寸避免模糊后边缘出现空白 */
+  transform: scale(1.1);
+  z-index: 1; /* 确保在内容下方 */
+}
+/* 颜色渐变动画关键帧 */
+@keyframes colorShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 轻微呼吸效果动画 */
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.005);
+    opacity: 0.98;
+  }
+}
+
 /* Border */
 .Border_Radius_Middle {
   border-radius: 14px;
@@ -123,7 +197,7 @@
   transition: all 0.2s ease-in-out;
 }
 .transform_when_active_shallow:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
 .TransitionAll {

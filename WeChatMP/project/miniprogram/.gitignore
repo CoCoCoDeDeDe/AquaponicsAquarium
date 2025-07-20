@@ -1,0 +1,5 @@
+# 忽略环境配置文件
+/config/dev.js
+/config/prod.js
+# 可选：忽略本地临时配置
+/config/local.js

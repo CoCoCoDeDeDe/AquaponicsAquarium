@@ -1,13 +1,13 @@
 import { TimeStrConvert_ISO8601_To_HHmm, formatUnixTime_Type1, formatUnixTime_Type2, convertObjToArray, remainInArray } from '../utils/common'
 
-const baseUrl = 'https://dhb91nur4r.bja.sealos.run'
+const global_config = require('../config/index')
 
 // register
 export async function register(username, password) {
   return new Promise((resolve, reject) => {
     wx.request({
       method: "POST",
-      url: baseUrl + "/iot2/user/register",
+      url: global_config.laf.base_url + "/iot2/user/register",
       header: {
         "Content-Type": "application/json"
       },
@@ -45,7 +45,7 @@ export async function login(username, password) {
   return new Promise((resolve, reject) => {
     wx.request({
       method: "POST",
-      url: baseUrl + "/iot2/user/login",
+      url: global_config.laf.base_url + "/iot2/user/login",
       header: {
         "Content-Type": "application/json"
       },
@@ -154,7 +154,7 @@ export async function verify_laf_token_request(laf_token) {
   return new Promise((resolve, reject) => {
     wx.request({
       method: 'GET',
-      url: baseUrl + '/iot2/user/verifyLafToken',
+      url: global_config.laf.base_url + '/iot2/user/verifyLafToken',
       header: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + laf_token
@@ -280,7 +280,7 @@ export async function requestWithLafToken( method, last_url, query={}, data ) {
     console.log(
       "开始请求API:", 
       {
-      url: baseUrl + last_url + query_str,
+      url: global_config.laf.base_url + last_url + query_str,
       method: method,
       query: query,
       body: data
@@ -288,7 +288,7 @@ export async function requestWithLafToken( method, last_url, query={}, data ) {
 
     await wx.request({
       method: method,
-      url: baseUrl + last_url + query_str,
+      url: global_config.laf.base_url + last_url + query_str,
       header: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + laf_token,
@@ -373,7 +373,7 @@ export async function UploadFile(Options) {
 
         // 请求更新文件
         const UploadTask = await wx.uploadFile({
-          url: baseUrl + Last_Url + Query_Str,
+          url: global_config.laf.base_url + Last_Url + Query_Str,
           filePath: FilePath,
           name: 'file',
           header: {
@@ -427,6 +427,7 @@ export async function UploadFile(Options) {
   })
 }
 
+// 处理 laf_token 无效错误
 export async function on_laf_token_Invalid( title = '请在登录后使用' ) {
   // 提示登录
   wx.showToast({
@@ -442,6 +443,7 @@ export async function on_laf_token_Invalid( title = '请在登录后使用' ) {
   })
 }
 
+// 处理 common 错误
 export function on_common_error(err) {
   console.log("err:", err)
 
@@ -662,13 +664,10 @@ export async function requestConversationList() {
 
     // 格式化会话信息数组中时间格式
     let main_conversation_list = response.data.data.conversations
-    console.log("main_conversation_list:", main_conversation_list)
     for(let i = 0; i < main_conversation_list.length; i++) {
       main_conversation_list[i].created_at_formated = formatUnixTime_Type1(main_conversation_list[i].created_at)
     }
     response.data.data.conversations = main_conversation_list
-
-    console.log("response.data.data:", response.data.data)
 
     return response.data.data
   } catch(err) {
@@ -723,7 +722,12 @@ export async function requestConversationMessageList(
       message_list[i].created_at_formated = formatUnixTime_Type1(message_list[i].created_at)
     }
 
-    return response.data.data
+    return {
+      message_list: response.data.data,
+      first_id: response.data.first_id,
+      last_id: response.data.last_id,
+      has_more: response.data.has_more
+    }
   } catch(err) {
     switch(err.runCondition) {
       case 'laf_token error': 
@@ -758,8 +762,6 @@ export async function requestConversationRetrive(
         "body": {}
       } // data
     )
-
-    // console.log("response.data.data:", response.data.data)
 
     return response.data.data
   } catch(err) {
@@ -914,50 +916,292 @@ export async function requestCreateMessage(
 }
 
 // 创建新对话
+/**
+ * 创建新对话请求函数
+ * 
+ * 用于向服务器发送创建新对话的请求，支持流式响应处理
+ * 
+ * @param {Object} options - 请求配置选项
+ * @param {String} options.conversation_id - 对话ID，用于指定要继续的对话（新建对话时可省略）
+ * @param {String} options.bot_id - 机器人ID，指定使用哪个机器人进行对话
+ * @param {String} options.user_id - 用户ID，标识发起对话的用户
+ * @param {Boolean} [options.stream=false] - 是否使用流式响应，默认为false
+ * @param {String} options.additional_message_content - 附加的消息内容，作为对话的初始消息
+ * @param {Boolean} [options.auto_save_history=true] - 是否自动保存对话历史，默认为true
+ * @param {Object} options.custom_variables - 自定义请求变量
+ * @param {String} options.custom_variables.Authorization - 授权令牌，用于身份验证
+ * 
+ * @param {Object} config - 客户端处理配置
+ * @param {Page} config.page - 调用当前函数的页面实例，用于处理页面级别的状态更新
+ * @param {Function} config.onChunkParsed - 流式响应处理函数
+ *   当stream为true时，每收到一块数据就会调用此函数
+ *   @param {Object} chunk - 接收到的单块数据
+ *   @returns {void}
+ * 
+ * @returns {Promise<Object>} 返回一个Promise对象，解析为服务器响应结果
+ *   当stream为true时，会通过onChunkParsed逐步返回数据
+ */
 export async function requestCreateChat(
   options = {
     conversation_id: String,
     bot_id: String,
     user_id: String,
     stream: Boolean,
-    additional_messages: [
-      {
-        role: "user",
-        type: "question",
-        content_type: "text",
-        content: String
-      }
-    ],
+    additional_message_content: String,
     auto_save_history: Boolean,
     custom_variables: {
       Authorization: String
     }
+  },
+  config = {
+    page,
+    onChunkParsed,
+    onMessageCreated,
   }
 ) {
   try {
+    // 函数: 设置目标页面的 chat_stream.is_processing 标志位
+    const setIsProcessing = ( whether, page ) => {
+      page.setData({
+        ['chat_stream.is_processing']: whether
+      })
+    }
+
+    // 函数：刷新 chat
+    const refreshChatConfig = (page) => {
+      // 清零 delta 次数
+      page.setData({
+        ['chat_stream.message_delta_times']: 0
+      })
+
+      // 清除处理中标志位
+      setIsProcessing(false, page)
+
+      // 重置新 chat 的 message 的 is_bg_shing
+      let main_message_list = [...page.data.message_info.message_list]
+      main_message_list[main_message_list.length - 1]['is_bg_shing'] = false
+      page.setData({
+        ['message_info.message_list']: main_message_list
+      })
+    }
+
     console.log("requestCreateChat(options) options:", options)
-
-    const response = await requestWithLafToken(
-      'POST', // method
-      '/iot2/Coze/Relay', // last url
-      {}, // query
-      {
-        "url": `/v3/chat?conversation_id=${options.conversation_id}`,
-        "method": "POST",
-        "query": {},
-        "headers": {},
-        "body": {
-          "bot_id": options.bot_id,
-          "user_id": options.user_id,
-          "stream": options.stream,
-          "additional_messages": options.additional_messages,
-          "auto_save_history": options.auto_save_history,
-          "custom_variables": options.custom_variables
-        }
-      } // data
+    // 验证用户 token
+    const res_verifyLafToken = await requestWithLafToken(
+      'GET',
+      '/iot2/user/verifyAccessToken',
+      {},
+      {}
     )
+    const user = {
+      id: res_verifyLafToken.user._id
+    }
 
-    return response.data.data
+    // 直接请求 coze
+    // 提前准备 request data
+    let request_createChat_data = {
+      bot_id: options.bot_id,
+      user_id: options.user_id,
+      stream: true,
+      auto_save_history: options.auto_save_history,
+      custom_variables: options.custom_variables
+    }
+
+    // 如果有消息内容就加入消息列表到请求 data 中
+    if ( options.additional_message_content ) {
+      request_createChat_data['additional_messages'] = [
+        {
+          role: "user",
+          type: "question",
+          content_type: "text",
+          content: options.additional_message_content
+        }
+      ]
+    }
+
+    // 开始请求
+    console.log("request_createChat_data", request_createChat_data)
+    const requestTask = wx.request({
+      url: global_config.coze.base_url + `/v3/chat?conversation_id=${options.conversation_id}`,
+      method: 'POST',
+      header: {
+        Authorization: `Bearer ${global_config.coze.token}`,
+        "Content-Type": "application/json"
+      },
+      data: request_createChat_data,
+      timeout: 20000,
+      dataType: 'json',
+      responseType: 'arraybuffer',
+      enableChunked: true,
+      success: (result) => {
+        console.log("chat success() result:", result)
+      },
+      fail: (err) => {
+        console.log("chat fail() err:", err)
+      },
+      complete: (res) => {
+        console.log("chat complete() res:", res)
+      },
+    })
+    
+    // 收到新分块数据的响应和处理
+    requestTask.onChunkReceived( async (event) => {
+      // 1. 将 ArrayBuffer 转换为 UTD-8 字符串
+      const decoder = await new TextDecoder('utf-8')
+      const chunkStr = await decoder.decode(event.data)
+      // console.log("解码后的字符串 chunkStr:", chunkStr)
+
+      // 2. 处理 SSE 格式（过滤 data: 前缀和空行）
+      // SSE（Server-Sent Events，服务器发送事件）是一种基于 HTTP 协议的服务器向客户端单向推送实时数据的技术格式规范。它允许服务器主动、持续地向客户端发送数据，而无需客户端频繁发起请求，非常适合实时更新场景（如实时通知、股票行情、日志流等）。
+      // 每条 SSE 消息由一个或多个 “字段行” 组成，字段行的格式为 字段名: 值\n（注意是换行符 \n 结尾），且整条消息必须以两个连续的换行符 \n\n 结束。
+      const lines = await chunkStr.split('\n')
+      const valid_lines_data = await lines
+        .filter( line => line.startsWith('data:') ) // 保留 data: 开头的行
+        .map(line => line.replace( 'data:', '' ).trim())  // 去除 data: 前缀
+      const valid_lines_event = await lines
+        .filter( line => line.startsWith('event:') ) // 保留 event: 开头的行
+        .map(line => line.replace( 'event:', '' ).trim())  // 去除 event: 前缀
+
+      // 解析每一行的 JSON 并提取内容
+      const parsed_data_list = await valid_lines_data.map( line => {
+        try {
+          return JSON.parse(line)
+          // console.log("解析出的一行 JSON 数据 data:", data)
+        } catch(err) {
+          console.log("解析 data 分块 JSON 失败 err:", err, '原始内容 line:', line)
+          return null
+        }
+      })
+
+      // 生命周期函数-流式数据块解析完成
+      if (config.onChunkParsed) {
+        config.onChunkParsed()
+      }
+
+      // event data 组合成每个元素为 event 和 data 组合的对象的数组。同时存储到 page.data.chat_stream.current_event\current_data
+      // 确保 event 和 data 的长度匹配（避免索引越界）
+      const minLength = Math.min(valid_lines_event.length, parsed_data_list.length);
+      let new_chunks = []
+      for(let i = 0; i < minLength; i++) { // 用最小长度循环，避免越界
+        const tmp_chunk = {
+          event: valid_lines_event[i],
+          data: parsed_data_list[i] // 此时是解析后的对象（或 null）
+        }
+        new_chunks.push(tmp_chunk);
+        config.page.setData({
+          ['chat_stream.current_chunk']: tmp_chunk
+        })
+      }
+      let main_chunks = Array.isArray(config.page.data.chat_stream.chunks) ? config.page.data.chat_stream.chunks : []
+      main_chunks.push(...new_chunks)
+      config.page.setData({
+        'chat_stream.chunks': main_chunks
+      });
+
+      // 处理响应-遍历本 chunk 的 消息
+      // 获取当前目标 page 的 message_list
+      // console.log("config.page:", config.page)
+      let main_message_list = [...config.page.data.message_info.message_list]
+      for(let i = 0; i < new_chunks.length; i++) {
+        switch(new_chunks[i].event) {
+          case 'conversation.chat.created':
+            // 置标志位
+            setIsProcessing(true, config.page)
+
+            // 拼装和 push 新的在处理的 message 并同步 UI
+            const main_message = {
+              bot_id: new_chunks[i].data.bot_id,
+              chat_id: new_chunks[i].data.chat_id,
+              content: '',
+              // content_type: 'text',
+              conversation_id: new_chunks[i].data.conversation_id,
+              created_at: new_chunks[i].data.created_at,
+              // id: "7527601796865343551",
+              meta_data: {},  // 主动设置默认值
+              // reasoning_content: "",
+              role: "assistant",  // 主动设置默认值
+              section_id: new_chunks[i].data.section_id,
+              // type: "answer",
+              // updated_at: 1752656374,
+              is_bg_shing: true
+            }
+            main_message_list.push(main_message)
+            config.page.setData({
+              ['message_info.message_list']: main_message_list
+            })
+
+            break
+          case 'conversation.chat.in_progress':
+            
+            break
+          case 'conversation.message.delta':
+            // 计数 delta 次数
+            let main_message_delta_times = config.page.data.chat_stream.message_delta_times
+            main_message_delta_times++
+            config.page.setData({
+              ['chat_stream.message_delta_times']: main_message_delta_times
+            })
+
+            // 拼接非内容数据到 page 的指定的 message。仅仅第一次 delta 时
+            if (main_message_delta_times == 1) {
+              main_message_list[main_message_list.length - 1]['content_type'] = new_chunks[i].data.content_type
+              main_message_list[main_message_list.length - 1]['id'] = new_chunks[i].data.id
+              main_message_list[main_message_list.length - 1]['role'] = new_chunks[i].data.role
+              main_message_list[main_message_list.length - 1]['type'] = new_chunks[i].data.type
+              // 保存 message_info.message_list 改动
+              config.page.setData({
+                ['message_info.message_list']: main_message_list
+              })
+            }
+
+            // 运行生命周期函数-消息创建：仅当传入onMessageCreated时执行
+            if (config.onMessageCreated) {
+              config.onMessageCreated()
+            }
+
+            // 拼接 content 到 page 的指定的 message。
+            main_message_list[main_message_list.length - 1].content = main_message_list[main_message_list.length - 1].content + new_chunks[i].data.content
+            // 保存 message_info.message_list 改动
+            config.page.setData({
+              ['message_info.message_list']: main_message_list
+            })
+
+            break
+          case 'conversation.audio.delta':
+            
+            break
+          case 'conversation.message.completed':
+            
+            break
+          case 'conversation.chat.completed':
+            
+            break
+          case 'conversation.chat.failed':
+            // 刷新 chat
+            refreshChatConfig(config.page)
+            break
+          case 'conversation.chat.requires_action':
+            // 刷新 chat
+            refreshChatConfig(config.page)
+            break
+          case 'error':
+            // 刷新 chat
+            refreshChatConfig(config.page)
+            break
+          case 'done':
+            // 刷新 chat
+            refreshChatConfig(config.page)
+            break
+          default:
+            throw new Error('未知的 event')
+            break
+        }
+      }
+
+
+    })
+
+
   } catch(err) {
     console.log("requestCreateChat() err:", err)
     switch(err.runCondition) {
@@ -1032,13 +1276,6 @@ export async function readLocalLafCloudToken() {
     return
   }
 }
-
-
-
-
-
-
-
 
 
 

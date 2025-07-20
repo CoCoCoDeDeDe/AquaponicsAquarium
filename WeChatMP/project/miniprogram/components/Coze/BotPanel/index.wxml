@@ -6,8 +6,9 @@
 
   <!-- BotSelector -->
   <view 
-    class="Border_FullRadius Flex_Horizontal_FromLeft Shadow_ForCard_Middle Board_Level1_BG MarginBtm_Middle"
+    class="Border_FullRadius Flex_Horizontal_FromLeft Shadow_ForCard_Middle Board_Level1_BG MarginBtm_Middle transform_when_active_shallow"
     style="width: fit-content; height: 68px; gap: 10px; padding-right: 20px;"
+    bind:tap="onTapBotSelector"
   >
     <view
       class="Flex_AllCenter"
@@ -78,7 +79,7 @@
         wx:key="id"
       >
         <view
-          id="ConversationCard"
+          id="ConversationCard transform_when_active_shallow"
           class="BG_WhenActive_Style1"
           style='height: 40px; display: grid; grid-template-areas: "Line Time Idx" "Line Id Idx"; grid-template-columns: 6px 1fr 60px; grid-template-rows: 2fr 1fr; gap: 0 10px; margin: 0 0 10px 0;'
           bind:tap="onTapNavigateToConversation"
@@ -130,7 +131,7 @@
   <!-- ModelInfo -->
   <view 
     id="ModelInfoCard"
-    class="Border_Radius_Middle Shadow_ForCard_Middle Board_Level1_BG"
+    class="Border_Radius_Middle Shadow_ForCard_Middle Board_Level1_BG transform_when_active_shallow"
     style='height: 120px; display: grid; grid-template-areas: "name name name" "max_tokens context_round temperature"; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 3fr 4fr; padding: 10px; margin-bottom: 10px;'
   >
 
@@ -183,6 +184,7 @@
     >
       <view
         id="plugin_info_card"
+        class="transform_when_active_shallow"
         style='padding: 6px 6px; display: grid; grid-template-areas: "icon name api" "icon desc api"; grid-template-columns: max-content 1fr max-content; grid-template-rows: max-content max-content; gap: 0px 6px;'
       >
         <image

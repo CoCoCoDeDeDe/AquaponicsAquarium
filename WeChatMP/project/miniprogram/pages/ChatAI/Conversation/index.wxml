@@ -37,7 +37,12 @@
         src="/static/images/icons/simpleArrowIcon_darkBlue_Left@2x.png"
       />
     </view>
-    <view></view>
+    <view>
+      <view
+        class=""
+        style=""
+      >test</view>
+    </view>
     <view
       class="Flex_AllCenter Btn3D_Style3"
       style="width: 32px; height: 32px;"
@@ -83,11 +88,11 @@
     />
     <view
       class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
-      style="grid-area: message; padding: 0 7px; height: 40px; border-radius: 12px;"
+      style="grid-area: message; padding: 0 7px; height: 40px; border-radius: 12px; {{ chat_stream.is_processing ? 'background-color: #ddd;' : '' }}"
       bind:tap="onTapNewMessage"
     >消息</view>
     <view
-      class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16"
+      class="Flex_AllCenter Btn3D_Style3 Font_Main_Size16 {{ chat_stream.is_processing ? 'dynamic-color-bg-style2' : '' }}"
       style="grid-area: chat; padding: 0 7px; height: 40px; border-radius: 12px;"
       bind:tap="onTapNewChat"
     >对话</view>
@@ -113,13 +118,13 @@
   ></view>
   <!-- 消息列表 -->
   <block
-    wx:for="{{message_info.MessageList}}"
+    wx:for="{{message_info.message_list}}"
     wx:key="id"
-    wx:for-item="MessageList_item"
-    wx:for-index="MessageList_index"
+    wx:for-item="message_list_item"
+    wx:for-index="message_list_index"
   >
     <view
-      id="{{'message_'+MessageList_item.id}}"
+      id="{{'message_'+message_list_item.id}}"
       class="MarginTop_20_NoFirst ZIndex_Level10"
       style="display: grid; grid-template-columns: 40px 1fr; grid-template-rows: 1fr;"
     >
@@ -127,7 +132,7 @@
       <image
         class="Avatar_Normal"
         style=""
-        src="{{role_map[MessageList_item.role].avatar_url}}"
+        src="{{role_map[message_list_item.role].avatar_url}}"
         mode=""
       />
       <!-- 用户名和消息板 -->
@@ -137,23 +142,23 @@
       >
         <!-- 用户名 -->
         <view
-          class="Font_Main_Size14"
+          class="Font_Main_Size14 Font_Vice_Size12"
           style=""
-        >{{MessageList_item.role}}</view>
+        >{{role_map[message_list_item.role].nick_name}}</view>
         <!-- 消息板 -->
         <view
-          class="MessageBoard"
+          class="MessageBoard {{ message_list_item.is_bg_shing ? 'dynamic-color-bg' : '' }}"
           style=""
           bind:tap="onTapMessageBoard"
           bind:longpress="onLongPressMessageBoard"
-          data-message_id="{{MessageList_item.id}}"
-          data-message_idx="{{MessageList_index}}"
+          data-message_id="{{message_list_item.id}}"
+          data-message_idx="{{message_list_index}}"
         >
           <!-- 消息体 -->
           <view
             class=""
-            style="font-weight: 200; white-space: pre-wrap;"
-          >{{MessageList_item.content}}</view>
+            style="font-weight: 200; white-space: pre-wrap; position: relative; z-index: 2;"
+          >{{message_list_item.content}}</view>
         </view>
         <!-- 消息其他信息 -->
         <view
@@ -164,15 +169,15 @@
           <view
             class="Font_Vice_Size12"
             style=""
-          >{{MessageList_item.created_at_formated}}</view>
+          >{{message_list_item.created_at_formated}}</view>
         </view>
       </view>
     </view>
   </block>
   <!-- 消息列表底部垫子 -->
   <view
-    class="ZIndex_Level10"
+    class="ZIndex_Level10 Flex_AllCenter Font_Vice_Size12"
     style="height: 140px;"
-  ></view>
+  >内容由 AI 生成，请注意甄别</view>
 
 </scroll-view>
