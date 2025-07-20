@@ -31,7 +31,7 @@ Page({
         Is_Forbidden: false,
       },
       {
-        Path: '/pages/ChatAI/Conversation/index',
+        Path: '/pages/ChatAI/Conversation/index?id=7529009638365282346',
         Name: 'AI 聊天页面',
         Intro: '与基元智联 AI 助手进行对话',
         Icon_Url: '/static/images/icons/tabBar_ai_active.png',

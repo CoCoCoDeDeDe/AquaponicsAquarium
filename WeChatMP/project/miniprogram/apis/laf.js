@@ -741,7 +741,7 @@ export async function requestConversationMessageList(
   }
 }
 
-// 获取在线的 会话消息列表
+// 获取在线的 会话消息
 export async function requestConversationRetrive(
   options = {
     conversation_id: ''
@@ -934,9 +934,8 @@ export async function requestCreateMessage(
  * @param {Object} config - 客户端处理配置
  * @param {Page} config.page - 调用当前函数的页面实例，用于处理页面级别的状态更新
  * @param {Function} config.onChunkParsed - 流式响应处理函数
- *   当stream为true时，每收到一块数据就会调用此函数
- *   @param {Object} chunk - 接收到的单块数据
- *   @returns {void}
+ * @param {Function} config.onMessageCreated
+ * @param {Function} config.onChatOver
  * 
  * @returns {Promise<Object>} 返回一个Promise对象，解析为服务器响应结果
  *   当stream为true时，会通过onChunkParsed逐步返回数据
@@ -957,6 +956,7 @@ export async function requestCreateChat(
     page,
     onChunkParsed,
     onMessageCreated,
+    onChatOver,
   }
 ) {
   try {
@@ -968,21 +968,31 @@ export async function requestCreateChat(
     }
 
     // 函数：刷新 chat
-    const refreshChatConfig = (page) => {
+    const refreshChatConfig = (
+      object = {
+        page,
+        onChatOver
+      }
+    ) => {
       // 清零 delta 次数
-      page.setData({
+      object.page.setData({
         ['chat_stream.message_delta_times']: 0
       })
 
       // 清除处理中标志位
-      setIsProcessing(false, page)
+      setIsProcessing(false, object.page)
 
       // 重置新 chat 的 message 的 is_bg_shing
-      let main_message_list = [...page.data.message_info.message_list]
+      let main_message_list = [...object.page.data.message_info.message_list]
       main_message_list[main_message_list.length - 1]['is_bg_shing'] = false
-      page.setData({
+      object.page.setData({
         ['message_info.message_list']: main_message_list
       })
+
+      // 执行生命周期函数-chat over
+      if ( object.onChatOver ) {
+        object.onChatOver()
+      }
     }
 
     console.log("requestCreateChat(options) options:", options)
@@ -1178,19 +1188,24 @@ export async function requestCreateChat(
             break
           case 'conversation.chat.failed':
             // 刷新 chat
-            refreshChatConfig(config.page)
+            refreshChatConfig(
+              {
+                page: config.page,
+                onChatOver: config.onChatOver
+              }
+            )
             break
           case 'conversation.chat.requires_action':
             // 刷新 chat
-            refreshChatConfig(config.page)
+            refreshChatConfig({page: config.page, onChatOver: config.onChatOver})
             break
           case 'error':
             // 刷新 chat
-            refreshChatConfig(config.page)
+            refreshChatConfig({page: config.page, onChatOver: config.onChatOver})
             break
           case 'done':
             // 刷新 chat
-            refreshChatConfig(config.page)
+            refreshChatConfig({page: config.page, onChatOver: config.onChatOver})
             break
           default:
             throw new Error('未知的 event')

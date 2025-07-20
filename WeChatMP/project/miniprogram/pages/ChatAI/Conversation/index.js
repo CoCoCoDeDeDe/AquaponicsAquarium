@@ -485,17 +485,37 @@ Page({
         }
       }
 
-      console.log("newChat() 新建对话网络API请求的参数 options:", options)
+      // 在本地嵌入要发送的消息
+      let main_message_list = [...this.data.message_info.message_list]
+      main_message_list.push({
+        bot_id: this.data.bot_info.bot_id,
+        chat_id: "7527601781916926006",
+        content: this.data.input_value,
+        content_type: "text",
+        conversation_id: this.data.conversation_info.id,
+        // created_at: 1752656372,
+        // id: "7527601796865343551",
+        // meta_data: {},
+        // reasoning_content: "",
+        role: "user",
+        // section_id: "7527585244585803817",
+        type: "question",
+        // updated_at: 1752656374,
+        is_bg_shing: false
+      })
+      this.setData({
+        ['message_info.message_list']: main_message_list
+      })
 
       // 请求 API
       const res_requestCreateChat = await requestCreateChat(
         options,
         {
-          page: this
+          page: this,
+          onChatOver: this.refreshConversationMessageList
         }
       )
-
-      // console.log("res_requestCreateChat:", res_requestCreateChat)
+      console.log("res_requestCreateChat:", res_requestCreateChat)
 
       // 清空输入栏
       this.setData(
@@ -503,11 +523,6 @@ Page({
           input_value: ''
         }
       )
-
-      return
-
-      // 刷新消息列表
-      await this.refreshConversationMessageList()
 
       return
     } catch(err) {
